@@ -6,6 +6,7 @@ services:
     image: postgres
     env_file:
       - ./docker/env/db_variables.env
+      - ./docker/env/envkey.env
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 10s
@@ -22,6 +23,7 @@ services:
     env_file:
       - ./docker/env/db_variables.env
       - ./docker/env/django_variables.env
+      - ./docker/env/envkey.env
     entrypoint: ./server-entrypoint.sh
     volumes:
       - static_volume:/app/django_static
@@ -56,4 +58,4 @@ services:
 
 volumes:
   static_volume: {}
-  postgres_data: # Add empty mapping ({}) if you don't want the DB to be persistent
+  postgres_data: {}
