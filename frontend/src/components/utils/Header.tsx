@@ -35,7 +35,11 @@ function Header() {
             title: "admin -> Doctor categories", // TODO: admin submenu
             icon: "fa-gear",
         },
-        // admin -> Doctor specialities
+        {
+            to: "doctors/specialities",
+            title: "admin -> Doctor specialities", // TODO: admin submenu
+            icon: "fa-gear",
+        },
         // admin -> Doctors
         // admin -> Usage stats
         // Login / Logout

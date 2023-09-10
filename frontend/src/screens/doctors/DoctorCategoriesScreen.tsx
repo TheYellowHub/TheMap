@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 
-import useDoctorCategories from "../../../hooks/doctors/useDoctorCategories";
-import LoadingWrapper from "../../../components/utils/LoadingWrapper";
-import { DoctorCategoty, newDoctorCategory } from "../../../types/doctors/doctorCategory";
-import DoctorCategoriesTable from "../../../components/doctors/categories/DoctorCategoriesTable";
-import DoctorCategoriesModal from "../../../components/doctors/categories/DoctorCategoriesModal";
-import Button from "../../../components/utils/Button";
-import Title from "../../../components/utils/Title";
+import useDoctorCategories from "../../hooks/doctors/useDoctorCategories";
+import LoadingWrapper from "../../components/utils/LoadingWrapper";
+import { DoctorCategory, newDoctorCategory } from "../../types/doctors/doctorCategory";
+import DoctorCategoriesTable from "../../components/doctors/categories/DoctorCategoriesTable";
+import DoctorCategoriesModal from "../../components/doctors/categories/DoctorCategoriesModal";
+import Button from "../../components/utils/Button";
+import Title from "../../components/utils/Title";
 
 function DoctorCategoriesScreen() {
     const {
@@ -22,7 +22,7 @@ function DoctorCategoriesScreen() {
         mutateError,
     } = useDoctorCategories();
 
-    const [currentCategory, setCurrentCategory] = useState<DoctorCategoty | null>(null);
+    const [currentCategory, setCurrentCategory] = useState<DoctorCategory | null>(null);
 
     useEffect(() => {
         if (isMutateSuccess) {
@@ -36,7 +36,7 @@ function DoctorCategoriesScreen() {
             <LoadingWrapper isLoading={isListLoading} isError={isListError} error={ListError}>
                 <DoctorCategoriesTable
                     categories={data}
-                    setCurrentCategory={(doctorCategory: DoctorCategoty | null) => {
+                    setCurrentCategory={(doctorCategory: DoctorCategory | null) => {
                         resetMutation();
                         setCurrentCategory(doctorCategory);
                     }}

@@ -1,17 +1,20 @@
 import { createColumnHelper } from "@tanstack/react-table";
 
-import { DoctorCategory } from "../../../types/doctors/doctorCategory";
+import { DoctorSpeciality } from "../../../types/doctors/DoctorSpeciality";
 import Button from "../../utils/Button";
 import Table from "../../utils/Table";
 import Icon from "../../utils/Icon";
 
-interface DoctorCategoriesTableProps {
-    categories: DoctorCategory[];
-    setCurrentCategory: (doctorCategory: DoctorCategory | null) => void;
+interface DoctorSpecialitiesTableProps {
+    specialities: DoctorSpeciality[];
+    setCurrentSpeciality: (doctorSpeciality: DoctorSpeciality | null) => void;
 }
 
-function DoctorCategoriesTable({ categories, setCurrentCategory }: DoctorCategoriesTableProps) {
-    const columnHelper = createColumnHelper<DoctorCategory>();
+function DoctorSpecialitiesTable({
+    specialities,
+    setCurrentSpeciality,
+}: DoctorSpecialitiesTableProps) {
+    const columnHelper = createColumnHelper<DoctorSpeciality>();
 
     const columns = [
         columnHelper.accessor("id", {
@@ -31,13 +34,13 @@ function DoctorCategoriesTable({ categories, setCurrentCategory }: DoctorCategor
                 <Button
                     label="Edit"
                     variant="success"
-                    onClick={() => setCurrentCategory(props!.row!.original)}
+                    onClick={() => setCurrentSpeciality(props!.row!.original)}
                 />
             ), // TODO: fix types and git rid of the !!
         }),
     ];
 
-    return <Table<DoctorCategory> data={categories} columns={columns} />;
+    return <Table<DoctorSpeciality> data={specialities} columns={columns} />;
 }
 
-export default DoctorCategoriesTable;
+export default DoctorSpecialitiesTable;

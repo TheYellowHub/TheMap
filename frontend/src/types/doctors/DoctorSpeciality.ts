@@ -1,12 +1,12 @@
 import { ID } from "../id";
 
-export type DoctorCategory = {
+export type DoctorSpeciality = {
     id: ID;
     name: string;
     active: boolean;
 };
 
-export const newDoctorCategory = (): DoctorCategory => {
+export const newDoctorSpeciality = (): DoctorSpeciality => {
     return {
         id: null,
         name: "",

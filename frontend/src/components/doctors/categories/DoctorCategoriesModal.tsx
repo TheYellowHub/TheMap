@@ -1,11 +1,11 @@
-import { DoctorCategoty } from "../../../types/doctors/doctorCategory";
+import { DoctorCategory } from "../../../types/doctors/doctorCategory";
 import Modal, { type ModalFieldType, type ModalField } from "../../utils/Modal";
 
 interface DoctorCategoriesModalProps {
-    doctorCategory: DoctorCategoty;
+    doctorCategory: DoctorCategory;
     showModal: boolean;
     onCancel: () => void;
-    onSave: (doctorCategoty: DoctorCategoty) => void;
+    onSave: (DoctorCategory: DoctorCategory) => void;
     isSaving: boolean;
     isSavingError: boolean;
     savingError: any; // TODO: change unknown ?
@@ -20,25 +20,25 @@ function DoctorCategoriesModal({
     isSavingError,
     savingError,
 }: DoctorCategoriesModalProps) {
-    const fields: ModalField<DoctorCategoty>[] = [
+    const fields: ModalField<DoctorCategory>[] = [
         {
             label: "ID",
-            getter: (doctorCategory: DoctorCategoty) => doctorCategory.name,
+            getter: (doctorCategory: DoctorCategory) => doctorCategory.name,
             setter: undefined,
             readonly: true,
         },
         {
             label: "Name",
-            getter: (doctorCategory: DoctorCategoty) => doctorCategory.name,
-            setter: (doctorCategory: DoctorCategoty, newName: ModalFieldType) => {
+            getter: (doctorCategory: DoctorCategory) => doctorCategory.name,
+            setter: (doctorCategory: DoctorCategory, newName: ModalFieldType) => {
                 return { ...doctorCategory, name: newName as string };
             },
             readonly: false,
         },
         {
             label: "Active",
-            getter: (doctorCategory: DoctorCategoty) => doctorCategory.active,
-            setter: (doctorCategory: DoctorCategoty, newState: ModalFieldType) => {
+            getter: (doctorCategory: DoctorCategory) => doctorCategory.active,
+            setter: (doctorCategory: DoctorCategory, newState: ModalFieldType) => {
                 return { ...doctorCategory, active: newState as boolean };
             },
             readonly: false,
@@ -46,10 +46,10 @@ function DoctorCategoriesModal({
     ];
 
     return (
-        <Modal<DoctorCategoty>
+        <Modal<DoctorCategory>
             t={doctorCategory}
             fields={fields}
-            getTitle={(doctorCategory: DoctorCategoty) => {
+            getTitle={(doctorCategory: DoctorCategory) => {
                 return (
                     "Doctor Category - " +
                     (doctorCategory.id !== null

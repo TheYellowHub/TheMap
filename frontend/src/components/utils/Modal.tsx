@@ -6,6 +6,8 @@ import Button from "./Button";
 
 export type ModalFieldType = string | number | undefined | boolean;
 
+// TODO: support comboboxes and multiple checkboxes & maybe split to different types of fields
+
 interface EditableModalField<T> {
     label: string;
     getter: (t: T) => ModalFieldType;
@@ -31,7 +33,7 @@ interface ModalProps<T> {
     onSave: (t: T) => void;
     isSaving: boolean;
     isSavingError: boolean;
-    savingError: any; // TODO: change unknown ?
+    savingError: unknown; // TODO: change unknown ?
 }
 
 function Modal<T>({
