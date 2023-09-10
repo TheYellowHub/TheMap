@@ -52,9 +52,9 @@ function DoctorCategoriesModal({
             getTitle={(doctorCategory: DoctorCategoty) => {
                 return (
                     "Doctor Category - " +
-                    (doctorCategory
+                    (doctorCategory.id !== null
                         ? `${doctorCategory.id} ${doctorCategory.name}`
-                        : "Add a new category")
+                        : "New")
                 );
             }}
             showModal={showModal}

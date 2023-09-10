@@ -48,8 +48,8 @@ function Modal<T>({
     const [dataChanged, setDataChanged] = useState(false);
 
     return (
-        <ReactModal show={showModal} onHide={onCancel} centered>
-            <ReactModal.Header closeButton={false}>
+        <ReactModal show={showModal} backdrop="static" onHide={onCancel} centered>
+            <ReactModal.Header closeButton={true}>
                 <ReactModal.Title>{getTitle(t)}</ReactModal.Title>
             </ReactModal.Header>
             <ReactModal.Body>
