@@ -1,25 +1,26 @@
-import React from "react";
-import logo from "./logo.svg";
-import "./App.css";
+import { HashRouter as Router } from "react-router-dom";
+import { Container } from "react-bootstrap";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+import AppRouter from "./AppRouter";
+import Header from "./components/utils/Header";
+import Footer from "./components/utils/Footer";
 
 function App() {
+    const queryClient = new QueryClient();
+
     return (
-        <div className="App">
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <p>
-                    Edit <code>src/App.tsx</code> and save to reload.
-                </p>
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Learn React
-                </a>
-            </header>
-        </div>
+        <Router>
+            <QueryClientProvider client={queryClient}>
+                <Container className="app">
+                    <Header />
+                    <main>
+                        <AppRouter />
+                    </main>
+                    <Footer />
+                </Container>
+            </QueryClientProvider>
+        </Router>
     );
 }
 
