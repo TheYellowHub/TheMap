@@ -58,7 +58,9 @@ MIDDLEWARE = [
 ]
 
 REST_FRAMEWORK = {
-    "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"]
+    "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
+    "DEFAULT_AUTHENTICATION_CLASSES": [],  # TODO: change! At the moment there is no auth
+    "DEFAULT_PERMISSION_CLASSES": [],  # TODO: the same
 }
 
 ROOT_URLCONF = "base.urls"
