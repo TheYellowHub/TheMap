@@ -105,6 +105,11 @@ DATABASES_OPTIONS = {
 DATABASES = {"default": DATABASES_OPTIONS[os.environ.get("DJANGO_DB", DB_SQLITE)]}
 
 
+# Initial data
+
+FIXTURE_DIRS = [BASE_DIR / "fixtures"]
+
+
 # Auth
 
 AUTH_DEFAULT_ADMIN_USERNAME = os.environ.get("DJANGO_AUTH_DEFAULT_ADMIN_USERNAME")

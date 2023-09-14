@@ -30,12 +30,12 @@ class DoctorCategoryTests(APITransactionTestCase):
         response = self.client.post(url, data, format="json")
         return response.status_code, json.loads(response.content)
 
-    def update_category(self, pk, name):
+    def update_category(self, pk, name, active):
         """
         Update an existing category.
         """
         url = reverse("update-category", kwargs={"pk": pk})
-        data = {"name": name}
+        data = {"name": name, "active": active}
         response = self.client.patch(url, data, format="json")
         return response.status_code, json.loads(response.content)
 
@@ -51,7 +51,11 @@ class DoctorCategoryTests(APITransactionTestCase):
         status_code, data = self.list_categories()
         self.assertEqual(status_code, status.HTTP_200_OK)
         self.assertEqual(
-            data, [{"id": i + 1, "name": name} for (i, name) in enumerate(names)]
+            data,
+            [
+                {"id": i + 1, "name": name, "active": True}
+                for (i, name) in enumerate(names)
+            ],
         )
 
     def test_create_category(self):
@@ -63,7 +67,7 @@ class DoctorCategoryTests(APITransactionTestCase):
             pk = i + 1
             status_code, data = self.create_category(name=name)
             self.assertEqual(status_code, status.HTTP_201_CREATED)
-            self.assertEqual(data, {"id": pk, "name": name})
+            self.assertEqual(data, {"id": pk, "name": name, "active": True})
             self.assertEqual(DoctorCategory.objects.latest("id").name, name)
             self.assertEqual(DoctorCategory.objects.latest("id").pk, pk)
             self.assertEqual(DoctorCategory.objects.count(), pk)
@@ -76,9 +80,9 @@ class DoctorCategoryTests(APITransactionTestCase):
         self.create_category(name=names[0])
         pk = DoctorCategory.objects.latest("id").pk
         counts = DoctorCategory.objects.count()
-        status_code, data = self.update_category(pk=pk, name=names[1])
+        status_code, data = self.update_category(pk=pk, name=names[1], active=False)
         self.assertEqual(status_code, status.HTTP_200_OK)
-        self.assertEqual(data, {"id": pk, "name": names[1]})
+        self.assertEqual(data, {"id": pk, "name": names[1], "active": False})
         self.assertEqual(DoctorCategory.objects.latest("id").name, names[1])
         self.assertEqual(DoctorCategory.objects.latest("id").pk, pk)
         self.assertEqual(DoctorCategory.objects.count(), counts)

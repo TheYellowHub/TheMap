@@ -30,12 +30,12 @@ class DoctorSpecialityTests(APITransactionTestCase):
         response = self.client.post(url, data, format="json")
         return response.status_code, json.loads(response.content)
 
-    def update_speciality(self, pk, name):
+    def update_speciality(self, pk, name, active):
         """
         Update an existing speciality.
         """
         url = reverse("update-speciality", kwargs={"pk": pk})
-        data = {"name": name}
+        data = {"name": name, "active": active}
         response = self.client.patch(url, data, format="json")
         return response.status_code, json.loads(response.content)
 
@@ -51,7 +51,11 @@ class DoctorSpecialityTests(APITransactionTestCase):
         status_code, data = self.list_specialities()
         self.assertEqual(status_code, status.HTTP_200_OK)
         self.assertEqual(
-            data, [{"id": i + 1, "name": name} for (i, name) in enumerate(names)]
+            data,
+            [
+                {"id": i + 1, "name": name, "active": True}
+                for (i, name) in enumerate(names)
+            ],
         )
 
     def test_create_speciality(self):
@@ -63,7 +67,7 @@ class DoctorSpecialityTests(APITransactionTestCase):
             pk = i + 1
             status_code, data = self.create_speciality(name=name)
             self.assertEqual(status_code, status.HTTP_201_CREATED)
-            self.assertEqual(data, {"id": pk, "name": name})
+            self.assertEqual(data, {"id": pk, "name": name, "active": True})
             self.assertEqual(DoctorSpeciality.objects.latest("id").name, name)
             self.assertEqual(DoctorSpeciality.objects.latest("id").pk, pk)
             self.assertEqual(DoctorSpeciality.objects.count(), pk)
@@ -76,9 +80,9 @@ class DoctorSpecialityTests(APITransactionTestCase):
         self.create_speciality(name=names[0])
         pk = DoctorSpeciality.objects.latest("id").pk
         counts = DoctorSpeciality.objects.count()
-        status_code, data = self.update_speciality(pk=pk, name=names[1])
+        status_code, data = self.update_speciality(pk=pk, name=names[1], active=False)
         self.assertEqual(status_code, status.HTTP_200_OK)
-        self.assertEqual(data, {"id": pk, "name": names[1]})
+        self.assertEqual(data, {"id": pk, "name": names[1], "active": False})
         self.assertEqual(DoctorSpeciality.objects.latest("id").name, names[1])
         self.assertEqual(DoctorSpeciality.objects.latest("id").pk, pk)
         self.assertEqual(DoctorSpeciality.objects.count(), counts)

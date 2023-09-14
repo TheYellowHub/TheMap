@@ -1,7 +1,11 @@
 #!/bin/bash
 
+apt-get update -y
+apt-get install vim -y
+
 echo "Apply database migrations"
 python manage.py migrate
+python manage.py loaddata doctorCategories.json
 
 echo "Collect static files"
 python manage.py collectstatic --noinput 
