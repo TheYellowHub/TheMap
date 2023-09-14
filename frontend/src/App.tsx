@@ -12,7 +12,7 @@ function App() {
     return (
         <Router>
             <QueryClientProvider client={queryClient}>
-                <Container className="app">
+                <Container className="app" fluid>
                     <Header />
                     <main>
                         <AppRouter />
