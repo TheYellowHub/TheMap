@@ -22,26 +22,26 @@ function DoctorSpecialitiesModal({
 }: DoctorSpecialitiesModalProps) {
     const fields: ModalField<DoctorSpeciality>[] = [
         {
+            type: "number",
             label: "ID",
-            getter: (doctorSpeciality: DoctorSpeciality) => doctorSpeciality.name,
+            getter: (doctorSpeciality: DoctorSpeciality) => doctorSpeciality.id as number,
             setter: undefined,
-            readonly: true,
         },
         {
+            type: "text",
             label: "Name",
             getter: (doctorSpeciality: DoctorSpeciality) => doctorSpeciality.name,
             setter: (doctorSpeciality: DoctorSpeciality, newName: ModalFieldType) => {
                 return { ...doctorSpeciality, name: newName as string };
             },
-            readonly: false,
         },
         {
+            type: "boolean",
             label: "Active",
             getter: (doctorSpeciality: DoctorSpeciality) => doctorSpeciality.active,
             setter: (doctorSpeciality: DoctorSpeciality, newState: ModalFieldType) => {
                 return { ...doctorSpeciality, active: newState as boolean };
             },
-            readonly: false,
         },
     ];
 

@@ -1,5 +1,5 @@
 import { DoctorCategory } from "../../../types/doctors/doctorCategory";
-import Modal, { type ModalFieldType, type ModalField } from "../../utils/Modal";
+import Modal, { type NumberField, type ModalFieldType, type ModalField } from "../../utils/Modal";
 
 interface DoctorCategoriesModalProps {
     doctorCategory: DoctorCategory;
@@ -22,26 +22,26 @@ function DoctorCategoriesModal({
 }: DoctorCategoriesModalProps) {
     const fields: ModalField<DoctorCategory>[] = [
         {
+            type: "number",
             label: "ID",
-            getter: (doctorCategory: DoctorCategory) => doctorCategory.name,
+            getter: (doctorCategory: DoctorCategory) => doctorCategory.id as number,
             setter: undefined,
-            readonly: true,
         },
         {
+            type: "text",
             label: "Name",
             getter: (doctorCategory: DoctorCategory) => doctorCategory.name,
             setter: (doctorCategory: DoctorCategory, newName: ModalFieldType) => {
                 return { ...doctorCategory, name: newName as string };
             },
-            readonly: false,
         },
         {
+            type: "boolean",
             label: "Active",
             getter: (doctorCategory: DoctorCategory) => doctorCategory.active,
             setter: (doctorCategory: DoctorCategory, newState: ModalFieldType) => {
                 return { ...doctorCategory, active: newState as boolean };
             },
-            readonly: false,
         },
     ];
 
