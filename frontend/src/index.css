@@ -39,3 +39,23 @@ td {
 .form-control {
     padding: 0.5rem;
 }
+
+input,
+.form-select,
+.react-datetime-picker__wrapper  {
+    padding: 0.5rem;
+}
+
+.react-datetime-picker,
+.react-datetime-picker__wrapper {
+    border: 0px;
+    background-color: transparent;
+}
+
+/* TODO: improve */
+.formTable {    
+    border:  3px solid #f7f7f9  !important;
+    border-radius: 5%;
+    width:fit-content;
+    /* TODO: headers -> lower case */
+}

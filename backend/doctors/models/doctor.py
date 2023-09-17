@@ -13,7 +13,7 @@ class Doctor(models.Model):
     A doctor info.
     """
 
-    STATUS = Choices("PENDING_APPROVAL", "APPROVED", "REJECTED", "DELETED")
+    STATUS = Choices("PENDING_APPROVAL", "APPROVED", "REJECTED")
 
     full_name = models.CharField(max_length=100)
     categories = models.ManyToManyField(DoctorCategory, blank=True)
@@ -21,13 +21,14 @@ class Doctor(models.Model):
     websites = ArrayField(models.URLField(), default=list, null=True, blank=True)
     i_care_better = models.URLField(blank=True)
     nancys_nook = models.BooleanField(default=False)
-    image = models.ImageField(blank=True)
+    image = models.ImageField(blank=True, null=True, upload_to="images")
     status = StatusField()
     # added_by  # TODO
     added_at = models.DateTimeField(auto_now_add=True)
     approved_at = MonitorField(monitor="status", when=["APPROVED"])  # type: ignore
+    rejected_at = MonitorField(monitor="status", when=["REJECTED"])  # type: ignore
     updated_at = models.DateTimeField(auto_now=True)
-    # replies - one-to-many
+    # reviews - one-to-many
     # average rating - calculated
 
     def __str__(self) -> str:
@@ -44,7 +45,8 @@ class DoctorLocation(models.Model):
     hospital_name = models.CharField(max_length=200, blank=True)
     private_only = models.BooleanField(default=False)
     address = models.CharField(max_length=200, blank=True)
-    phones = ArrayField(PhoneNumberField(), default=list, null=True, blank=True)
+    phone = PhoneNumberField(null=True, blank=True)
+    # phones = ArrayField(PhoneNumberField(), default=list, null=True, blank=True)  # TODO?
 
     def __str__(self) -> str:
         return f"{self.address} / {self.hospital_name}"

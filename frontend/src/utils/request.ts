@@ -5,21 +5,21 @@ import { ID } from "../types/id";
 export type RequestUrl = string;
 
 export type RequestDataItem = {
-    id: ID;
+    id?: ID;
 };
 
 export type RequestData = RequestDataItem | Array<RequestDataItem>;
 
-function getConfig() {
+function getConfig(multipartFormData = false) {
     return {
         headers: {
-            "Content-type": "application/json",
+            "Content-type": multipartFormData ? "multipart/form-data" : "application/json",
             // Authorization: `Bearer ${accessToken}`,  TODO
         },
     };
 }
 
-function excludeId(data: RequestData, shouldExcludeId = true) {
+function prepareData(data: RequestData, shouldExcludeId = true, multipartFormData = false) {
     if (shouldExcludeId) {
         let dataWithoutId = null;
         if (Array.isArray(data)) {
@@ -31,10 +31,10 @@ function excludeId(data: RequestData, shouldExcludeId = true) {
             const { id: _, ...dataItemWithoutId } = data;
             dataWithoutId = dataItemWithoutId;
         }
-        return dataWithoutId;
-    } else {
-        return data;
+        data = dataWithoutId;
     }
+
+    return multipartFormData ? axios.toFormData(data) : data;
 }
 
 export function get(url: RequestUrl) {
@@ -42,13 +42,21 @@ export function get(url: RequestUrl) {
 }
 
 export function post(url: RequestUrl, data: RequestData, shouldExcludeId = true) {
-    return axios.post(url, excludeId(data, shouldExcludeId), getConfig());
+    return axios.post(url, prepareData(data, shouldExcludeId), getConfig());
 }
 
 export function patch(url: RequestUrl, data: RequestData, shouldExcludeId = true) {
-    return axios.patch(url, excludeId(data, shouldExcludeId), getConfig());
+    let multipartFormData = false;
+    for (const property in data) {
+        if ((data as any)[property] instanceof File) {
+            multipartFormData = true;
+            break;
+        }
+    }
+
+    return axios.patch(url, prepareData(data, shouldExcludeId, multipartFormData), getConfig(multipartFormData));
 }
 
 export function put(url: RequestUrl, data: RequestData, shouldExcludeId = true) {
-    return axios.put(url, excludeId(data, shouldExcludeId), getConfig());
+    return axios.put(url, prepareData(data, shouldExcludeId), getConfig());
 }

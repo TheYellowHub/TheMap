@@ -31,6 +31,11 @@ function Header() {
             icon: "fa-duotone fa-map-location",
         },
         {
+            to: "doctors/doctors",
+            title: "admin -> Doctors", // TODO: admin submenu
+            icon: "fa-user-doctor",
+        },
+        {
             to: "doctors/categories",
             title: "admin -> Doctor categories", // TODO: admin submenu
             icon: "fa-gear",
@@ -40,7 +45,6 @@ function Header() {
             title: "admin -> Doctor specialities", // TODO: admin submenu
             icon: "fa-gear",
         },
-        // admin -> Doctors
         // admin -> Usage stats
         // Login / Logout
         // Notifications

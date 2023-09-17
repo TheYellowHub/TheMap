@@ -1,5 +1,6 @@
 import { DoctorCategory } from "../../../types/doctors/doctorCategory";
-import Modal, { type NumberField, type ModalFieldType, type ModalField } from "../../utils/Modal";
+import Modal from "../../utils/Modal";
+import { ModalField } from "../../../types/fields";
 
 interface DoctorCategoriesModalProps {
     doctorCategory: DoctorCategory;
@@ -24,23 +25,24 @@ function DoctorCategoriesModal({
         {
             type: "number",
             label: "ID",
-            getter: (doctorCategory: DoctorCategory) => doctorCategory.id as number,
+            getter: (doctorCategory) => doctorCategory.id,
             setter: undefined,
         },
         {
             type: "text",
             label: "Name",
-            getter: (doctorCategory: DoctorCategory) => doctorCategory.name,
-            setter: (doctorCategory: DoctorCategory, newName: ModalFieldType) => {
-                return { ...doctorCategory, name: newName as string };
+            required: true,
+            getter: (doctorCategory) => doctorCategory.name,
+            setter: (doctorCategory, newName) => {
+                return { ...doctorCategory, name: newName };
             },
         },
         {
             type: "boolean",
             label: "Active",
-            getter: (doctorCategory: DoctorCategory) => doctorCategory.active,
-            setter: (doctorCategory: DoctorCategory, newState: ModalFieldType) => {
-                return { ...doctorCategory, active: newState as boolean };
+            getter: (doctorCategory) => doctorCategory.active,
+            setter: (doctorCategory, newState) => {
+                return { ...doctorCategory, active: newState };
             },
         },
     ];
@@ -52,9 +54,7 @@ function DoctorCategoriesModal({
             getTitle={(doctorCategory: DoctorCategory) => {
                 return (
                     "Doctor Category - " +
-                    (doctorCategory.id !== null
-                        ? `${doctorCategory.id} ${doctorCategory.name}`
-                        : "New")
+                    (doctorCategory.id !== null ? `${doctorCategory.id} ${doctorCategory.name}` : "New")
                 );
             }}
             showModal={showModal}

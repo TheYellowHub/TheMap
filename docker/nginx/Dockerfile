@@ -7,7 +7,14 @@ RUN npm ci --legacy-peer-deps
 COPY ./frontend/ ./
 RUN npm run build
 
-# Copy react static files and start nginx
+# Nginx 
 FROM nginx:stable-alpine
+
+# Handle permissions to django media root
+RUN mkdir -p /app/media
+# TODO: change nobody to the specific user used during post/patch requests
+RUN chown -R nobody:nobody /app/media 
+
+# Copy react static files and start nginx
 COPY --from=build /app/frontend/build /usr/share/nginx/html
 CMD ["nginx", "-g", "daemon off;"]

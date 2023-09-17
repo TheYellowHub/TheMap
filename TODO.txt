@@ -1,6 +1,6 @@
 Milestone 1:
 1. Modal - fields types redesign (should support: combobox, checkboxes group) V 
-2. Doctors list - admin screen
+2. Doctors list - admin screen VX (left: image)
 6. Doctor big card 
 3. Table - support filtering
 4. Doctor small card

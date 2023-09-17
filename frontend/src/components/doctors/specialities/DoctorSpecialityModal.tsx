@@ -1,5 +1,6 @@
 import { DoctorSpeciality } from "../../../types/doctors/DoctorSpeciality";
-import Modal, { type ModalFieldType, type ModalField } from "../../utils/Modal";
+import Modal from "../../utils/Modal";
+import { ModalField } from "../../../types/fields";
 
 interface DoctorSpecialitiesModalProps {
     doctorSpeciality: DoctorSpeciality;
@@ -24,23 +25,24 @@ function DoctorSpecialitiesModal({
         {
             type: "number",
             label: "ID",
-            getter: (doctorSpeciality: DoctorSpeciality) => doctorSpeciality.id as number,
+            getter: (doctorSpeciality) => doctorSpeciality.id,
             setter: undefined,
         },
         {
             type: "text",
             label: "Name",
-            getter: (doctorSpeciality: DoctorSpeciality) => doctorSpeciality.name,
-            setter: (doctorSpeciality: DoctorSpeciality, newName: ModalFieldType) => {
-                return { ...doctorSpeciality, name: newName as string };
+            required: true,
+            getter: (doctorSpeciality) => doctorSpeciality.name,
+            setter: (doctorSpeciality, newName) => {
+                return { ...doctorSpeciality, name: newName };
             },
         },
         {
             type: "boolean",
             label: "Active",
-            getter: (doctorSpeciality: DoctorSpeciality) => doctorSpeciality.active,
-            setter: (doctorSpeciality: DoctorSpeciality, newState: ModalFieldType) => {
-                return { ...doctorSpeciality, active: newState as boolean };
+            getter: (doctorSpeciality) => doctorSpeciality.active,
+            setter: (doctorSpeciality, newState) => {
+                return { ...doctorSpeciality, active: newState };
             },
         },
     ];
@@ -52,9 +54,7 @@ function DoctorSpecialitiesModal({
             getTitle={(doctorSpeciality: DoctorSpeciality) => {
                 return (
                     "Doctor Speciality - " +
-                    (doctorSpeciality.id !== null
-                        ? `${doctorSpeciality.id} ${doctorSpeciality.name}`
-                        : "New")
+                    (doctorSpeciality.id !== null ? `${doctorSpeciality.id} ${doctorSpeciality.name}` : "New")
                 );
             }}
             showModal={showModal}

@@ -7,13 +7,14 @@ interface ButtonProps extends React.PropsWithChildren {
     label: string;
     disabled?: boolean;
     variant?: Variant;
+    type?: "button" | "submit" | "reset";
     icon?: string;
     onClick?: React.MouseEventHandler;
 }
 
-function Button({ label, disabled, variant, icon, onClick, children }: ButtonProps) {
+function Button({ label, disabled, variant, type, icon, onClick, children }: ButtonProps) {
     return (
-        <ReactButton onClick={onClick} variant={variant} disabled={disabled}>
+        <ReactButton onClick={onClick} variant={variant} type={type} disabled={disabled}>
             {label}
             {children}
             {icon && <Icon icon={icon} />}
