@@ -59,3 +59,7 @@ input,
     width:fit-content;
     /* TODO: headers -> lower case */
 }
+
+.doctorBigCard {
+    background-color: aqua; /* TODO */
+}

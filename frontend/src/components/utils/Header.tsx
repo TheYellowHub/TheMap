@@ -26,6 +26,12 @@ function Header() {
     // TODO: pre/post login links
     const links: Link[] = [
         {
+            // TODO: delete
+            to: "dev",
+            title: "DEV",
+            icon: "fa-smile",
+        },
+        {
             to: "",
             title: "The Map",
             icon: "fa-duotone fa-map-location",
@@ -55,13 +61,7 @@ function Header() {
         <header>
             <Navbar expand={false} className="bg-light bg-body-tertiary" collapseOnSelect>
                 <Navbar.Toggle aria-controls="navbarCollapse" />
-                <Nav.Link
-                    as={Link}
-                    to="/"
-                    className="no-padding"
-                    eventKey="home"
-                    onClick={() => setSelectedPage(null)}
-                >
+                <Nav.Link as={Link} to="/" className="no-padding" eventKey="home" onClick={() => setSelectedPage(null)}>
                     <Navbar.Brand>
                         <Image src={logoUrl} className="logo" />
                         {appName}

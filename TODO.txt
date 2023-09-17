@@ -1,10 +1,17 @@
 Milestone 1:
 1. Modal - fields types redesign (should support: combobox, checkboxes group) V 
 2. Doctors list - admin screen VX (left: image)
+
+*. Before handover to Brandon:
+3. Add email field to doctor model + modal
+4. Initial data (in the backend code) - Dr. Johanna White
+5. Review TODOs
+
+
 6. Doctor big card 
-3. Table - support filtering
-4. Doctor small card
-5. Doctor search UI
-7. Initial data (in the backend code)
-8. Doctor model tests
-9. Styles
+7. Doctor small card
+8. Styles
+
+9. Table - support filtering
+10. Doctor search UI
+11. Doctor model tests

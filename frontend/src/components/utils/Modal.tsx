@@ -136,9 +136,7 @@ function Modal<T>({
                     e.preventDefault();
                     e.stopPropagation();
                     if (e.currentTarget.checkValidity() === true) {
-                        console.log("onSave start");
                         onSave(dataObject);
-                        console.log("onSave done");
                     }
                 }}
             >

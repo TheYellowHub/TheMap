@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 
-import { RequestDataItem, get, patch, post, put } from "../utils/request";
+import { RequestDataItem, get, patch, post } from "../utils/request";
 
 export default function genericApiHook<T extends RequestDataItem>(
     urlDirectory: string,
@@ -30,20 +30,25 @@ export default function genericApiHook<T extends RequestDataItem>(
         const updateItem = async (t: T) => {
             const newItem = t.id === undefined;
             let fileProperties = {};
-            const tWithoutfileProperties = { ...t };
+            const withoutfileProperties = { ...t };
             for (const property in t) {
                 if (t[property] instanceof File) {
                     fileProperties = { ...fileProperties, property: t[property] };
-                    delete tWithoutfileProperties[property];
+                    delete withoutfileProperties[property];
                 }
             }
-            const url = `/api/${urlDirectory}` + (newItem ? "/create" : `/${t.id}/update`);
-            let response = newItem ? await post(url, tWithoutfileProperties) : await patch(url, tWithoutfileProperties);
+            let response;
+            let id = t.id;
+            if (1 < Object.keys(withoutfileProperties).length) {
+                const url = `/api/${urlDirectory}` + (newItem ? "/create" : `/${id}/update`);
+                response = newItem ? await post(url, withoutfileProperties) : await patch(url, withoutfileProperties);
+                id = response.data.id;
+            }
             if (0 < Object.keys(fileProperties).length) {
-                const url = `/api/${urlDirectory}/${response.data.id}/update`;
+                const url = `/api/${urlDirectory}/${id}/update`;
                 response = await patch(url, fileProperties);
             }
-            return response.data;
+            return response?.data;
         };
 
         const mutation = useMutation({
