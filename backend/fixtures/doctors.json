@@ -1,0 +1,41 @@
+[
+    {
+        "model": "doctors.doctor",
+        "fields": {
+            "full_name": "Helen Smith",
+            "gender": "F",
+            "categories": [
+                1
+            ],
+            "specialities": [
+                5,
+                6
+            ],
+            "websites": [
+                "www.google.com"
+            ],
+            "i_care_better": "https://icarebetter.com/doctor/dr-andrea-vidali/",
+            "nancys_nook": true,
+            "status": "APPROVED",
+            "added_at": "2023-09-18 11:11:11"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "fields": {
+            "full_name": "Brandon",
+            "gender": "M",
+            "categories": [
+                2
+            ],
+            "specialities": [
+                2,
+                5,
+                6
+            ],
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-09-18 11:11:11"
+        }
+    }
+]

@@ -2,7 +2,7 @@
     {
         "model": "doctors.doctorCategory",
         "fields": {
-            "name": "Excision specialist"
+            "name": "Excision surgeon"
         }
     },
     {

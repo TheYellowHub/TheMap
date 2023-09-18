@@ -13,9 +13,17 @@ class Doctor(models.Model):
     A doctor info.
     """
 
+    GENDER_CHOICES = (
+        ("M", "Male"),
+        ("F", "Female"),
+    )
+
     STATUS = Choices("PENDING_APPROVAL", "APPROVED", "REJECTED")
 
-    full_name = models.CharField(max_length=100)
+    full_name = models.CharField(max_length=100, unique=True)
+    gender = models.CharField(
+        max_length=1, choices=GENDER_CHOICES, default=GENDER_CHOICES[0][0]
+    )
     categories = models.ManyToManyField(DoctorCategory, blank=True)
     specialities = models.ManyToManyField(DoctorSpeciality, blank=True)
     websites = ArrayField(models.URLField(), default=list, null=True, blank=True)
@@ -24,10 +32,10 @@ class Doctor(models.Model):
     image = models.ImageField(blank=True, null=True, upload_to="images")
     status = StatusField()
     # added_by  # TODO
-    added_at = models.DateTimeField(auto_now_add=True)
-    approved_at = MonitorField(monitor="status", when=["APPROVED"])  # type: ignore
-    rejected_at = MonitorField(monitor="status", when=["REJECTED"])  # type: ignore
-    updated_at = models.DateTimeField(auto_now=True)
+    added_at = models.DateTimeField(auto_now_add=True, null=True)
+    approved_at = MonitorField(monitor="status", when=["APPROVED"], null=True)  # type: ignore
+    rejected_at = MonitorField(monitor="status", when=["REJECTED"], null=True)  # type: ignore
+    updated_at = models.DateTimeField(auto_now=True, null=True)
     # reviews - one-to-many
     # average rating - calculated
 
@@ -43,10 +51,13 @@ class DoctorLocation(models.Model):
 
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     hospital_name = models.CharField(max_length=200, blank=True)
-    private_only = models.BooleanField(default=False)
     address = models.CharField(max_length=200, blank=True)
     phone = PhoneNumberField(null=True, blank=True)
-    # phones = ArrayField(PhoneNumberField(), default=list, null=True, blank=True)  # TODO?
+    email = models.EmailField(null=True, blank=True)
+    private_only = models.BooleanField(default=False)
+
+    class Meta:
+        unique_together = ["doctor", "hospital_name"]
 
     def __str__(self) -> str:
         return f"{self.address} / {self.hospital_name}"

@@ -1,0 +1,38 @@
+[
+    {
+        "model": "doctors.doctorspeciality",
+        "fields": {
+            "name": "Colon"
+        }
+    },
+    {
+        "model": "doctors.doctorspeciality",
+        "fields": {
+            "name": "Bowel"
+        }
+    },
+    {
+        "model": "doctors.doctorspeciality",
+        "fields": {
+            "name": "Urology"
+        }
+    },
+    {
+        "model": "doctors.doctorspeciality",
+        "fields": {
+            "name": "Thoracic"
+        }
+    },
+    {
+        "model": "doctors.doctorspeciality",
+        "fields": {
+            "name": "Nerves"
+        }
+    },
+    {
+        "model": "doctors.doctorspeciality",
+        "fields": {
+            "name": "Fertility"
+        }
+    }
+]
