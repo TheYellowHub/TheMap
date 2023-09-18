@@ -1,6 +1,6 @@
 import { Form } from "react-bootstrap";
 
-import { ComboboxField, SelectOption } from "../../../types/fields";
+import { ComboboxField, SelectOption } from "../../../utils/fields";
 
 interface ComboboxFormFieldProps<T> {
     field: ComboboxField<T>;

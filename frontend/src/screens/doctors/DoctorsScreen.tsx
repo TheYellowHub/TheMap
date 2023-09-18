@@ -8,13 +8,14 @@ import DoctorModal from "../../components/doctors/doctors/DoctorModal";
 import Button from "../../components/utils/Button";
 import Title from "../../components/utils/Title";
 import objectsDiff from "../../utils/utils";
+import { ResponseError } from "../../utils/request";
 
 function DoctorsScreen() {
     const {
         data,
         isListLoading,
         isListError,
-        ListError,
+        listError,
         mutateItem,
         resetMutation,
         isMutateLoading,
@@ -34,7 +35,7 @@ function DoctorsScreen() {
     return (
         <>
             <Title>Doctors</Title>
-            <LoadingWrapper isLoading={isListLoading} isError={isListError} error={ListError}>
+            <LoadingWrapper isLoading={isListLoading} isError={isListError} error={listError as ResponseError}>
                 <DoctorsTable
                     doctors={data}
                     setCurrentDoctor={(doctorDoctor: Doctor | null) => {
@@ -53,7 +54,7 @@ function DoctorsScreen() {
                         }}
                         isSaving={isMutateLoading}
                         isSavingError={isMutateError}
-                        savingError={mutateError}
+                        savingError={mutateError as ResponseError}
                     />
                 )}
                 <Button label="Add doctor" variant="success" onClick={() => setCurrentDoctor(newDoctor())} />

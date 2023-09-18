@@ -1,10 +1,11 @@
+import { ResponseError } from "../../utils/request";
 import Loader from "./Loader";
 import Message from "./Message";
 
 interface LoadingWrapperProps extends React.PropsWithChildren {
     isLoading: boolean;
     isError: boolean;
-    error: unknown; // TODO: change unknown ?
+    error: ResponseError;
 }
 
 function LoadingWrapper({ isLoading, isError, error, children }: LoadingWrapperProps) {
@@ -13,7 +14,11 @@ function LoadingWrapper({ isLoading, isError, error, children }: LoadingWrapperP
             {isLoading ? (
                 <Loader />
             ) : isError && error ? (
-                <Message variant="danger">{String(error)}</Message>
+                <Message variant="danger">
+                    {error.message}
+                    <br />
+                    {JSON.stringify(error.response.data)}
+                </Message>
             ) : (
                 <>{children}</>
             )}

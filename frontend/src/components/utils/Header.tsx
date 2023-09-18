@@ -51,10 +51,13 @@ function Header() {
             title: "admin -> Doctor specialities", // TODO: admin submenu
             icon: "fa-gear",
         },
+        // TODO:
         // admin -> Usage stats
         // Login / Logout
+        // My profile / data -> doctors I added
+        // My profile / data > my reviews
+        // My profile / data -> Faviorite doctors
         // Notifications
-        // My profile
     ];
 
     return (

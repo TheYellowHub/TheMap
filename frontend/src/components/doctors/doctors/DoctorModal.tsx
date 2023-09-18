@@ -8,11 +8,17 @@ import {
     doctorStatusToString,
     DoctorLocation,
     newDoctorLocation,
+    DoctorGender,
+    doctorGenders,
+    doctorGenderToString,
 } from "../../../types/doctors/doctor";
 import { DoctorCategory } from "../../../types/doctors/doctorCategory";
-import { Url } from "../../../types/url";
+import { Url } from "../../../types/utils/url";
 import Modal from "../../utils/Modal";
-import { ListField, ModalField } from "../../../types/fields";
+import { ListField, ModalField } from "../../../utils/fields";
+import { Phone } from "../../../types/utils/phone";
+import { Email } from "../../../types/utils/email";
+import { ResponseError } from "../../../utils/request";
 
 interface DoctorModalProps {
     doctor: Doctor;
@@ -21,7 +27,7 @@ interface DoctorModalProps {
     onSave: (Doctor: Doctor) => void;
     isSaving: boolean;
     isSavingError: boolean;
-    savingError: any; // TODO: change unknown ?
+    savingError: ResponseError;
 }
 
 function DoctorModal({ doctor, showModal, onCancel, onSave, isSaving, isSavingError, savingError }: DoctorModalProps) {
@@ -43,6 +49,20 @@ function DoctorModal({ doctor, showModal, onCancel, onSave, isSaving, isSavingEr
             setter: (doctor, newName) => {
                 return { ...doctor, fullName: newName };
             },
+        },
+        {
+            type: "combobox",
+            label: "Gender",
+            getter: (doctor) => doctor.gender,
+            setter: (doctor, newValue) => {
+                return { ...doctor, gender: newValue as DoctorGender };
+            },
+            options: doctorGenders.map((gender) => {
+                return {
+                    key: gender,
+                    value: doctorGenderToString(gender),
+                };
+            }),
         },
         {
             type: "list",
@@ -70,11 +90,19 @@ function DoctorModal({ doctor, showModal, onCancel, onSave, isSaving, isSavingEr
                     },
                 },
                 {
-                    type: "text", // TODO: "phone" type w/ validation?
-                    label: "Phones",
+                    type: "tel",
+                    label: "Phone",
                     getter: (location) => location.phone,
-                    setter: (location, newPhone) => {
+                    setter: (location: DoctorLocation, newPhone: Phone) => {
                         return { ...location, phone: newPhone };
+                    },
+                },
+                {
+                    type: "email",
+                    label: "email",
+                    getter: (location) => location.email,
+                    setter: (location: DoctorLocation, newEmail: Email) => {
+                        return { ...location, email: newEmail };
                     },
                 },
                 {
@@ -150,7 +178,7 @@ function DoctorModal({ doctor, showModal, onCancel, onSave, isSaving, isSavingEr
             getter: (doctor) => doctor.image,
             setter: (doctor, newValue) => {
                 return { ...doctor, image: newValue };
-                // TODO: - file upload from the frontend still doesn't work + present current image (download link)
+                // TODO: file upload from the frontend still doesn't work
             },
         },
         // TODO: replace status with action buttons ?

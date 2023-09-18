@@ -35,7 +35,6 @@ export default function Table<T>({ columns, data }: TableProps<T>) {
         // TODO: filters
         <ReactTable responsive hover>
             <thead>
-                {/* TODO: thead style */}
                 {table.getHeaderGroups().map((headerGroup) => (
                     <tr key={headerGroup.id}>
                         {headerGroup.headers.map((header) => (
@@ -43,16 +42,11 @@ export default function Table<T>({ columns, data }: TableProps<T>) {
                                 {header.isPlaceholder ? null : (
                                     <div
                                         {...{
-                                            className: header.column.getCanSort()
-                                                ? "cursor-pointer select-none"
-                                                : "",
+                                            className: header.column.getCanSort() ? "cursor-pointer select-none" : "",
                                             onClick: header.column.getToggleSortingHandler(),
                                         }}
                                     >
-                                        {flexRender(
-                                            header.column.columnDef.header,
-                                            header.getContext()
-                                        )}
+                                        {flexRender(header.column.columnDef.header, header.getContext())}
                                         <Icon
                                             icon={
                                                 {
@@ -88,16 +82,11 @@ export default function Table<T>({ columns, data }: TableProps<T>) {
                                 {header.isPlaceholder ? null : (
                                     <div
                                         {...{
-                                            className: header.column.getCanSort()
-                                                ? "cursor-pointer select-none"
-                                                : "",
+                                            className: header.column.getCanSort() ? "cursor-pointer select-none" : "",
                                             onClick: header.column.getToggleSortingHandler(),
                                         }}
                                     >
-                                        {flexRender(
-                                            header.column.columnDef.header,
-                                            header.getContext()
-                                        )}
+                                        {flexRender(header.column.columnDef.header, header.getContext())}
                                         <Icon
                                             icon={
                                                 {

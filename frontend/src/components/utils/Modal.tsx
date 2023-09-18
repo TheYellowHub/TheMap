@@ -3,27 +3,27 @@ import { ReactNode, useState } from "react";
 
 import LoadingWrapper from "./LoadingWrapper";
 import Button from "./Button";
-import { ListField, ModalField } from "../../types/fields";
-import TextFormField from "./form/textField";
-import UrlFormField from "./form/urlField";
-import NumberFormField from "./form/numberField";
+import { ListField, ModalField } from "../../utils/fields";
+import InputFormField from "./form/inputField";
 import DateTimeFormField from "./form/datetimeField";
 import BooleanFormField from "./form/booleanField";
 import CheckboxesGroupFormField from "./form/checkboxesGroupField";
 import ComboboxFormField from "./form/comboboxField";
 import Icon from "./Icon";
 import FileFormField from "./form/fileField";
+import { ResponseError } from "../../utils/request";
 
 interface ModalProps<T> {
     t: T;
-    fields: (ModalField<T> | ListField<T, any>)[]; // TODO: change any ?
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    fields: (ModalField<T> | ListField<T, any>)[];
     getTitle: (t: T) => string;
     showModal: boolean;
     onCancel: () => void;
     onSave: (t: T) => void;
     isSaving: boolean;
     isSavingError: boolean;
-    savingError: unknown; // TODO: change unknown ?
+    savingError: ResponseError;
 }
 
 function Modal<T>({
@@ -40,7 +40,7 @@ function Modal<T>({
     const [dataChanged, setDataChanged] = useState(false);
     const [dataObject, setDataObject] = useState({ ...t });
 
-    // TODO: stylish evalidaition error messages
+    // TODO: stylish validaition error messages
 
     function fieldToComponent<O>(
         field: ModalField<O>,
@@ -79,20 +79,12 @@ function Modal<T>({
 
         switch (field.type) {
             case "text":
-                return reacteNodeWrapperTwoColumns(
-                    <TextFormField<O> field={field} object={object} onChange={onChange} />,
-                    wrapAsFormRow
-                );
-                break;
             case "url":
-                return reacteNodeWrapperTwoColumns(
-                    <UrlFormField<O> field={field} object={object} onChange={onChange} />,
-                    wrapAsFormRow
-                );
-                break;
+            case "email":
+            case "tel":
             case "number":
                 return reacteNodeWrapperTwoColumns(
-                    <NumberFormField<O> field={field} object={object} onChange={onChange} />,
+                    <InputFormField<O> field={field} object={object} onChange={onChange} />,
                     wrapAsFormRow
                 );
                 break;

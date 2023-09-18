@@ -1,7 +1,7 @@
 import { Col, Container } from "react-bootstrap";
 import CheckboxGroup from "react-checkbox-group/lib/CheckboxGroup";
 
-import { CheckboxesGroupField, SelectOption } from "../../../types/fields";
+import { CheckboxesGroupField, SelectOption } from "../../../utils/fields";
 
 interface CheckboxesGroupFormFieldProps<T> {
     field: CheckboxesGroupField<T>;

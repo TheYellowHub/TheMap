@@ -10,10 +10,7 @@ interface DoctorSpecialitiesTableProps {
     setCurrentSpeciality: (doctorSpeciality: DoctorSpeciality | null) => void;
 }
 
-function DoctorSpecialitiesTable({
-    specialities,
-    setCurrentSpeciality,
-}: DoctorSpecialitiesTableProps) {
+function DoctorSpecialitiesTable({ specialities, setCurrentSpeciality }: DoctorSpecialitiesTableProps) {
     const columnHelper = createColumnHelper<DoctorSpeciality>();
 
     const columns = [
@@ -30,13 +27,9 @@ function DoctorSpecialitiesTable({
         }),
         columnHelper.display({
             id: "edit",
-            cell: (props) => (
-                <Button
-                    label="Edit"
-                    variant="success"
-                    onClick={() => setCurrentSpeciality(props!.row!.original)}
-                />
-            ), // TODO: fix types and git rid of the !!
+            cell: (props: { row: { original: DoctorSpeciality } }) => (
+                <Button label="Edit" variant="success" onClick={() => setCurrentSpeciality(props.row.original)} />
+            ),
         }),
     ];
 

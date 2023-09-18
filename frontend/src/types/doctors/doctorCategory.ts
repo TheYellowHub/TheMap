@@ -1,4 +1,4 @@
-import { ID } from "../id";
+import { ID } from "../utils/id";
 
 export type DoctorCategory = {
     id?: ID;

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { ID } from "../types/id";
+import { ID } from "../types/utils/id";
 
 export type RequestUrl = string;
 
@@ -9,6 +9,8 @@ export type RequestDataItem = {
 };
 
 export type RequestData = RequestDataItem | Array<RequestDataItem>;
+
+export type ResponseError = { message: string; response: { data: unknown } };
 
 function getConfig(multipartFormData = false) {
     return {

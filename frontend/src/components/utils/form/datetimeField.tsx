@@ -1,7 +1,7 @@
 import { FocusEvent } from "react";
 import DateTimePicker from "react-datetime-picker";
 
-import { DateTimeField } from "../../../types/fields";
+import { DateTimeField } from "../../../utils/fields";
 
 interface DateTimeFormFieldProps<T> {
     field: DateTimeField<T>;

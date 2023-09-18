@@ -1,7 +1,7 @@
 import { Form } from "react-bootstrap";
 import { FocusEvent } from "react";
 
-import { BooleanField } from "../../../types/fields";
+import { BooleanField } from "../../../utils/fields";
 
 interface BooleanFormFieldProps<T> {
     field: BooleanField<T>;

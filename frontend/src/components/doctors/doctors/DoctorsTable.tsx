@@ -43,9 +43,9 @@ function DoctorsTable({ doctors, setCurrentDoctor }: DoctorsTableProps) {
         // TODO: additional fields ?
         columnHelper.display({
             id: "edit",
-            cell: (props) => (
-                <Button label="Edit" variant="success" onClick={() => setCurrentDoctor(props!.row!.original)} />
-            ), // TODO: fix types and git rid of the !!
+            cell: (props: { row: { original: Doctor } }) => (
+                <Button label="Edit" variant="success" onClick={() => setCurrentDoctor(props.row.original)} />
+            ),
         }),
     ];
 

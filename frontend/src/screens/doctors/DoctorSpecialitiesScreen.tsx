@@ -7,13 +7,14 @@ import DoctorSpecialitiesTable from "../../components/doctors/specialities/Docto
 import DoctorSpecialitiesModal from "../../components/doctors/specialities/DoctorSpecialityModal";
 import Button from "../../components/utils/Button";
 import Title from "../../components/utils/Title";
+import { ResponseError } from "../../utils/request";
 
 function DoctorSpecialitiesScreen() {
     const {
         data,
         isListLoading,
         isListError,
-        ListError,
+        listError,
         mutateItem,
         resetMutation,
         isMutateLoading,
@@ -33,7 +34,7 @@ function DoctorSpecialitiesScreen() {
     return (
         <>
             <Title>Doctor specialities</Title>
-            <LoadingWrapper isLoading={isListLoading} isError={isListError} error={ListError}>
+            <LoadingWrapper isLoading={isListLoading} isError={isListError} error={listError as ResponseError}>
                 <DoctorSpecialitiesTable
                     specialities={data}
                     setCurrentSpeciality={(doctorSpeciality: DoctorSpeciality | null) => {
@@ -49,7 +50,7 @@ function DoctorSpecialitiesScreen() {
                         onSave={mutateItem}
                         isSaving={isMutateLoading}
                         isSavingError={isMutateError}
-                        savingError={mutateError}
+                        savingError={mutateError as ResponseError}
                     />
                 )}
                 <Button

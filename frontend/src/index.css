@@ -56,10 +56,29 @@ input,
 .formTable {    
     border:  3px solid #f7f7f9  !important;
     border-radius: 5%;
-    width:fit-content;
-    /* TODO: headers -> lower case */
+    width:fit-content;    
 }
 
-.doctorBigCard {
-    background-color: aqua; /* TODO */
+th {
+    font-size: inherit;
+    text-transform: capitalize;
+}
+
+.doctorSearchResult {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.doctorSmallCard {
+    background-color: mediumaquamarine; /* TODO: delete */
+    width: 20rem; /* TODO: change? */
+}
+
+.doctorBigCard div {
+    background-color: plum; /* TODO: delete */
+}
+
+.map {
+    background: url(https://i.stack.imgur.com/dApg7.png); /* TODO: delete */
 }

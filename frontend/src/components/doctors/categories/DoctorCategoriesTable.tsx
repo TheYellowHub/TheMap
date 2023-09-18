@@ -27,13 +27,9 @@ function DoctorCategoriesTable({ categories, setCurrentCategory }: DoctorCategor
         }),
         columnHelper.display({
             id: "edit",
-            cell: (props) => (
-                <Button
-                    label="Edit"
-                    variant="success"
-                    onClick={() => setCurrentCategory(props!.row!.original)}
-                />
-            ), // TODO: fix types and git rid of the !!
+            cell: (props: { row: { original: DoctorCategory } }) => (
+                <Button label="Edit" variant="success" onClick={() => setCurrentCategory(props.row.original)} />
+            ),
         }),
     ];
 

@@ -1,10 +1,14 @@
-import { ID } from "../id";
-import { Url } from "../url";
+import { DateTime } from "../utils/dateTime";
+import { Email } from "../utils/email";
+import { ID } from "../utils/id";
+import { Phone } from "../utils/phone";
+import { Url } from "../utils/url";
 
 export type DoctorLocation = {
     hospitalName?: string;
     address?: string;
-    phone?: string;
+    phone?: Phone;
+    email?: Email;
     privateOnly: boolean;
 };
 
@@ -12,15 +16,22 @@ export const newDoctorLocation = (): DoctorLocation => {
     return { privateOnly: false };
 };
 
-export type DateTime = string; // TODO
-
 export const doctorStatuses = ["PENDING_APPROVAL", "APPROVED", "REJECTED"] as const;
 export type DoctorStatus = (typeof doctorStatuses)[number];
 export const doctorStatusToString = (status: DoctorStatus) => status.replaceAll("_", " ");
 
+export const doctorGenders = ["M", "F"] as const;
+export type DoctorGender = (typeof doctorGenders)[number];
+export const doctorGenderToString = (gender: DoctorGender) =>
+    new Map([
+        ["M", "Male"],
+        ["F", "Female"],
+    ]).get(gender) as string;
+
 export type Doctor = {
     id?: ID;
     fullName: string;
+    gender: DoctorGender;
     locations: DoctorLocation[];
     categories: string[]; // TODO: leave as string[]?
     specialities: string[]; // Same
@@ -41,6 +52,7 @@ export type Doctor = {
 export const newDoctor = (): Doctor => {
     return {
         fullName: "",
+        gender: "M",
         locations: [],
         categories: [],
         specialities: [],

@@ -21,7 +21,7 @@ export default function genericApiHook<T extends RequestDataItem>(
             data,
             isLoading: isListLoading,
             isError: isListError,
-            error: ListError,
+            error: listError,
         } = useQuery({
             queryKey: [key],
             queryFn: fetchList,
@@ -69,7 +69,7 @@ export default function genericApiHook<T extends RequestDataItem>(
             data: data || [],
             isListLoading,
             isListError,
-            ListError,
+            listError,
             mutateItem,
             resetMutation,
             isMutateLoading,

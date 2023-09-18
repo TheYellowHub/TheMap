@@ -1,6 +1,7 @@
 import { DoctorSpeciality } from "../../../types/doctors/DoctorSpeciality";
 import Modal from "../../utils/Modal";
-import { ModalField } from "../../../types/fields";
+import { ModalField } from "../../../utils/fields";
+import { ResponseError } from "../../../utils/request";
 
 interface DoctorSpecialitiesModalProps {
     doctorSpeciality: DoctorSpeciality;
@@ -9,7 +10,7 @@ interface DoctorSpecialitiesModalProps {
     onSave: (DoctorSpeciality: DoctorSpeciality) => void;
     isSaving: boolean;
     isSavingError: boolean;
-    savingError: unknown; // TODO: change unknown ?
+    savingError: ResponseError;
 }
 
 function DoctorSpecialitiesModal({

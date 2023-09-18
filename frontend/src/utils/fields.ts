@@ -1,5 +1,7 @@
-import { DateTime } from "./doctors/doctor";
-import { Url } from "./url";
+import { DateTime } from "../types/utils/dateTime";
+import { Email } from "../types/utils/email";
+import { Phone } from "../types/utils/phone";
+import { Url } from "../types/utils/url";
 
 export type ModalFieldType = string | number | undefined | boolean;
 
@@ -20,14 +22,24 @@ export interface UrlField<T> extends Field<T, Url | undefined> {
     setter?: (t: T, newValue: Url) => T;
 }
 
-export interface DateTimeField<T> extends Field<T, DateTime | undefined> {
-    type: "datetime";
-    setter?: (t: T, newValue: DateTime) => T;
+export interface PhoneField<T> extends Field<T, Phone | undefined> {
+    type: "tel";
+    setter?: (t: T, newValue: Phone) => T;
+}
+
+export interface EmailField<T> extends Field<T, Email | undefined> {
+    type: "email";
+    setter?: (t: T, newValue: Email) => T;
 }
 
 export interface NumberField<T> extends Field<T, number | undefined> {
     type: "number";
     setter?: (t: T, newValue: number) => T;
+}
+
+export interface DateTimeField<T> extends Field<T, DateTime | undefined> {
+    type: "datetime";
+    setter?: (t: T, newValue: DateTime) => T;
 }
 
 export interface BooleanField<T> extends Field<T, boolean | undefined> {
@@ -60,8 +72,10 @@ export interface FileField<T> extends Field<T, File | undefined> {
 export type ModalField<T> =
     | TextField<T>
     | UrlField<T>
-    | DateTimeField<T>
+    | EmailField<T>
+    | PhoneField<T>
     | NumberField<T>
+    | DateTimeField<T>
     | BooleanField<T>
     | ComboboxField<T>
     | CheckboxesGroupField<T>
