@@ -15,8 +15,8 @@ function MapScreen() {
 
     const [nameIncludes, setNameIncluds] = useState("");
 
-    const matchedDoctors: Doctor[] = doctors.filter((doctor: Doctor) =>
-        doctor.fullName.toLowerCase().includes(nameIncludes.toLowerCase())
+    const matchedDoctors: Doctor[] = doctors.filter(
+        (doctor: Doctor) => doctor.fullName?.toLowerCase().includes(nameIncludes.toLowerCase())
     );
 
     return (

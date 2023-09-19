@@ -38,9 +38,11 @@ interface TableProps<T> {
 export default function Table<T>({ columns, columnsFilters, actionButton, data }: TableProps<T>) {
     const [sorting, setSorting] = useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
-        columnsFilters?.map((columnFilter) => {
-            return { id: columnFilter.id, value: columnFilter.initialValue };
-        }) || []
+        columnsFilters
+            ?.filter((columnFilter) => columnFilter.initialValue !== undefined)
+            .map((columnFilter) => {
+                return { id: columnFilter.id, value: columnFilter.initialValue };
+            }) || []
     );
 
     const table = useReactTable<T>({
