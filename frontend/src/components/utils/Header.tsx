@@ -89,7 +89,7 @@ function Header() {
             ],
         },
         {
-            to: "",
+            to: "logout",
             title: "Logout",
             icon: "fa-door-open",
         },
