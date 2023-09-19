@@ -29,6 +29,15 @@ footer {
 
 .navbar {
     padding: 0.5rem;
+    width: 100vw;
+}
+
+.navbar-collapse {
+    justify-content: end;
+}
+
+.nav-item {
+    margin-right: 0rem;
 }
 
 th,

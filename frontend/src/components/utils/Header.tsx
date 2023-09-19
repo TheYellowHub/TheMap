@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Image, Nav, Navbar } from "react-bootstrap";
+import { Container, Image, Nav, NavDropdown, Navbar } from "react-bootstrap";
 import { EventKey, SelectCallback } from "@restart/ui/esm/types";
 
 import config from "../../config.json";
@@ -18,51 +18,86 @@ function Header() {
     type Link = {
         to: string;
         title: string;
-        icon: string;
+        icon?: string;
         onClick?: React.MouseEventHandler;
         // requiredPermission?: Permission; // TODO
     };
 
+    type LinksGroup = {
+        title: string;
+        icon?: string;
+        links: Link[];
+    };
+
+    function isGroup(link: Link | LinksGroup): link is LinksGroup {
+        return (link as LinksGroup).links !== undefined;
+    }
+
     // TODO: pre/post login links
-    const links: Link[] = [
-        {
-            // TODO: delete
-            to: "dev",
-            title: "DEV",
-            icon: "fa-smile",
-        },
+    const links: (Link | LinksGroup)[] = [
         {
             to: "",
             title: "The Map",
-            icon: "fa-duotone fa-map-location",
+            icon: "fa-map-location-dot",
         },
         {
-            to: "doctors/doctors",
-            title: "admin -> Doctors", // TODO: admin submenu
-            icon: "fa-user-doctor",
+            title: "Personal zone",
+            icon: "fa-user",
+            links: [
+                {
+                    to: "user/notifications",
+                    title: "Notifications",
+                },
+                {
+                    to: "user/profile",
+                    title: "My profile",
+                },
+                {
+                    to: "user/addeddoctors",
+                    title: "Doctors I added",
+                },
+                {
+                    to: "user/faviorite",
+                    title: "Faviorite doctors",
+                },
+                {
+                    to: "user/reviews",
+                    title: "My reviews",
+                },
+            ],
         },
         {
-            to: "doctors/categories",
-            title: "admin -> Doctor categories", // TODO: admin submenu
+            title: "admin",
             icon: "fa-gear",
+            links: [
+                {
+                    to: "doctors/doctors",
+                    title: "Doctors",
+                },
+                {
+                    to: "doctors/categories",
+                    title: "Doctor categories",
+                },
+                {
+                    to: "doctors/specialities",
+                    title: "Doctor specialities",
+                },
+                {
+                    to: "usage",
+                    title: "Usage statictics",
+                },
+            ],
         },
         {
-            to: "doctors/specialities",
-            title: "admin -> Doctor specialities", // TODO: admin submenu
-            icon: "fa-gear",
+            to: "",
+            title: "Logout",
+            icon: "fa-door-open",
         },
-        // TODO:
-        // admin -> Usage stats
-        // Login / Logout
-        // My profile / data -> doctors I added
-        // My profile / data > my reviews
-        // My profile / data -> Faviorite doctors
-        // Notifications
     ];
 
     return (
         <header>
-            <Navbar expand={false} className="bg-light bg-body-tertiary" collapseOnSelect>
+            <Navbar expand="lg" className="bg-light bg-body-tertiary" collapseOnSelect>
                 <Navbar.Toggle aria-controls="navbarCollapse" />
                 <Nav.Link as={Link} to="/" className="no-padding" eventKey="home" onClick={() => setSelectedPage(null)}>
                     <Navbar.Brand>
@@ -75,25 +110,48 @@ function Header() {
                     Hello user{/* TODO: Login / Hello user / Logout */}
                 </Navbar.Text>
                 <Navbar.Collapse id="navbarCollapse">
-                    <Nav
-                        className="ml-auto"
-                        activeKey={selectedPage as EventKey}
-                        onSelect={setSelectedPage as SelectCallback}
-                    >
-                        <>
-                            {links.map((link) => (
-                                <Nav.Link
-                                    key={link.to}
-                                    as={Link}
-                                    to={`/${link.to}`}
-                                    onClick={link.onClick}
-                                    eventKey={link.to}
-                                >
-                                    <Icon icon={link.icon} />
-                                    {link.title}
-                                </Nav.Link>
-                            ))}
-                        </>
+                    <Nav activeKey={selectedPage as EventKey} onSelect={setSelectedPage as SelectCallback}>
+                        {links.map((link: LinksGroup | Link) => {
+                            if (isGroup(link)) {
+                                return (
+                                    <NavDropdown
+                                        key={link.title}
+                                        title={
+                                            <>
+                                                {link.icon && <Icon icon={link.icon} />}
+                                                {link.title}
+                                            </>
+                                        }
+                                    >
+                                        {link.links.map((link) => (
+                                            <NavDropdown.Item
+                                                key={link.to}
+                                                as={Link}
+                                                to={`/${link.to}`}
+                                                onClick={link.onClick}
+                                                eventKey={link.to}
+                                            >
+                                                {link.icon && <Icon icon={link.icon} />}
+                                                {link.title}
+                                            </NavDropdown.Item>
+                                        ))}
+                                    </NavDropdown>
+                                );
+                            } else {
+                                return (
+                                    <Nav.Link
+                                        key={link.to}
+                                        as={Link}
+                                        to={`/${link.to}`}
+                                        onClick={link.onClick}
+                                        eventKey={link.to}
+                                    >
+                                        {link.icon && <Icon icon={link.icon} />}
+                                        {link.title}
+                                    </Nav.Link>
+                                );
+                            }
+                        })}
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
