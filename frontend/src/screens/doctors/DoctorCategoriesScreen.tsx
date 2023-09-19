@@ -41,6 +41,13 @@ function DoctorCategoriesScreen() {
                         resetMutation();
                         setCurrentCategory(doctorCategory);
                     }}
+                    actionButton={
+                        <Button
+                            label="Add category"
+                            variant="success"
+                            onClick={() => setCurrentCategory(newDoctorCategory())}
+                        />
+                    }
                 />
                 {currentCategory && (
                     <DoctorCategoriesModal
@@ -53,11 +60,6 @@ function DoctorCategoriesScreen() {
                         savingError={mutateError as ResponseError}
                     />
                 )}
-                <Button
-                    label="Add category"
-                    variant="success"
-                    onClick={() => setCurrentCategory(newDoctorCategory())}
-                />
             </LoadingWrapper>
         </>
     );

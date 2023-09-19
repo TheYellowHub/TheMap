@@ -4,13 +4,15 @@ import { DoctorSpeciality } from "../../../types/doctors/DoctorSpeciality";
 import Button from "../../utils/Button";
 import Table, { ColumnFilter } from "../../utils/Table";
 import Icon from "../../utils/Icon";
+import { ReactNode } from "react";
 
 interface DoctorSpecialitiesTableProps {
     specialities: DoctorSpeciality[];
     setCurrentSpeciality: (doctorSpeciality: DoctorSpeciality | null) => void;
+    actionButton?: ReactNode;
 }
 
-function DoctorSpecialitiesTable({ specialities, setCurrentSpeciality }: DoctorSpecialitiesTableProps) {
+function DoctorSpecialitiesTable({ specialities, setCurrentSpeciality, actionButton }: DoctorSpecialitiesTableProps) {
     const columnHelper = createColumnHelper<DoctorSpeciality>();
 
     const columns = [
@@ -45,7 +47,14 @@ function DoctorSpecialitiesTable({ specialities, setCurrentSpeciality }: DoctorS
         },
     ];
 
-    return <Table<DoctorSpeciality> data={specialities} columns={columns} columnsFilters={columnsFilters} />;
+    return (
+        <Table<DoctorSpeciality>
+            data={specialities}
+            columns={columns}
+            columnsFilters={columnsFilters}
+            actionButton={actionButton}
+        />
+    );
 }
 
 export default DoctorSpecialitiesTable;

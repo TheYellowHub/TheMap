@@ -4,13 +4,15 @@ import { DoctorCategory } from "../../../types/doctors/doctorCategory";
 import Button from "../../utils/Button";
 import Table, { ColumnFilter } from "../../utils/Table";
 import Icon from "../../utils/Icon";
+import { ReactNode } from "react";
 
 interface DoctorCategoriesTableProps {
     categories: DoctorCategory[];
     setCurrentCategory: (doctorCategory: DoctorCategory | null) => void;
+    actionButton?: ReactNode;
 }
 
-function DoctorCategoriesTable({ categories, setCurrentCategory }: DoctorCategoriesTableProps) {
+function DoctorCategoriesTable({ categories, setCurrentCategory, actionButton }: DoctorCategoriesTableProps) {
     const columnHelper = createColumnHelper<DoctorCategory>();
 
     const columns = [
@@ -45,7 +47,14 @@ function DoctorCategoriesTable({ categories, setCurrentCategory }: DoctorCategor
         },
     ];
 
-    return <Table<DoctorCategory> data={categories} columns={columns} columnsFilters={columnsFilters} />;
+    return (
+        <Table<DoctorCategory>
+            data={categories}
+            columns={columns}
+            columnsFilters={columnsFilters}
+            actionButton={actionButton}
+        />
+    );
 }
 
 export default DoctorCategoriesTable;

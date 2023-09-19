@@ -1,4 +1,5 @@
 import { createColumnHelper } from "@tanstack/react-table";
+import { ReactNode } from "react";
 
 import { Doctor, doctorStatusToString, doctorStatuses } from "../../../types/doctors/doctor";
 import Button from "../../utils/Button";
@@ -8,9 +9,10 @@ import Message from "../../utils/Message";
 interface DoctorsTableProps {
     doctors: Doctor[];
     setCurrentDoctor: (doctor: Doctor | null) => void;
+    actionButton?: ReactNode;
 }
 
-function DoctorsTable({ doctors, setCurrentDoctor }: DoctorsTableProps) {
+function DoctorsTable({ doctors, setCurrentDoctor, actionButton }: DoctorsTableProps) {
     const columnHelper = createColumnHelper<Doctor>();
 
     const columns = [
@@ -69,9 +71,17 @@ function DoctorsTable({ doctors, setCurrentDoctor }: DoctorsTableProps) {
             ),
             initialValue: "PENDING_APPROVAL",
         },
+        {
+            id: "addedAt",
+            componentProvider: (value, onChange, header) => (
+                <input type="date" value={value as string} onChange={onChange} />
+            ),
+        },
     ];
 
-    return <Table<Doctor> data={doctors} columns={columns} columnsFilters={columnsFilters} />;
+    return (
+        <Table<Doctor> data={doctors} columns={columns} columnsFilters={columnsFilters} actionButton={actionButton} />
+    );
 }
 
 export default DoctorsTable;

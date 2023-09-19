@@ -6,12 +6,14 @@ import {
     getCoreRowModel,
     getFilteredRowModel,
     getSortedRowModel,
+    getPaginationRowModel,
     useReactTable,
     Header,
 } from "@tanstack/react-table";
 import { ChangeEvent, ReactNode, useState } from "react";
-import { Table as ReactTable } from "react-bootstrap";
+import { Col, Container, Table as ReactTable, Row } from "react-bootstrap";
 import Icon from "./Icon";
+import Button from "./Button";
 
 export type ColumnFilterComponentProvider<T> = (
     value: unknown,
@@ -29,10 +31,11 @@ interface TableProps<T> {
     // eslint-disable-next-line
     columns: ColumnDef<T, any>[];
     columnsFilters?: ColumnFilter<T>[];
+    actionButton?: ReactNode;
     data: T[];
 }
 
-export default function Table<T>({ columns, columnsFilters, data }: TableProps<T>) {
+export default function Table<T>({ columns, columnsFilters, actionButton, data }: TableProps<T>) {
     const [sorting, setSorting] = useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
         columnsFilters?.map((columnFilter) => {
@@ -51,6 +54,7 @@ export default function Table<T>({ columns, columnsFilters, data }: TableProps<T
         onColumnFiltersChange: setColumnFilters,
         getSortedRowModel: getSortedRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
+        getPaginationRowModel: getPaginationRowModel(),
         getCoreRowModel: getCoreRowModel(),
     });
 
@@ -59,97 +63,163 @@ export default function Table<T>({ columns, columnsFilters, data }: TableProps<T
     );
 
     return (
-        // TODO: handle pagination ?
-        <ReactTable responsive hover>
-            <thead>
-                {table.getHeaderGroups().map((headerGroup) => (
-                    <tr key={headerGroup.id}>
-                        {headerGroup.headers.map((header) => (
-                            <th key={header.id}>
-                                {header.isPlaceholder ? null : (
-                                    <>
-                                        <div
-                                            {...{
-                                                className: header.column.getCanSort()
-                                                    ? "cursor-pointer select-none"
-                                                    : "",
-                                                onClick: header.column.getToggleSortingHandler(),
-                                            }}
-                                        >
-                                            {flexRender(header.column.columnDef.header, header.getContext())}
-                                            <Icon
-                                                icon={
-                                                    {
-                                                        asc: "fa-arrow-up",
-                                                        desc: "fa-arrow-down",
-                                                    }[header.column.getIsSorted() as string] ?? null
-                                                }
-                                            />
-                                        </div>
-                                        <div>
-                                            {header.column.getCanFilter() &&
-                                                (
-                                                    columnsFilters?.find(
-                                                        (columnFilter) => columnFilter.id === header.column.id
-                                                    )?.componentProvider || defaultColumnFilterComponentProvider
-                                                )(
-                                                    header.column.getFilterValue(),
-                                                    (e) => {
-                                                        header.column.setFilterValue(
-                                                            e.target.type === "checkbox"
-                                                                ? (e as ChangeEvent<HTMLInputElement>).target.checked
-                                                                : e.target.value
-                                                        );
-                                                    },
-                                                    header
-                                                )}
-                                        </div>
-                                    </>
-                                )}
-                            </th>
+        <Container fluid>
+            <Row>
+                <ReactTable responsive hover>
+                    <thead>
+                        {table.getHeaderGroups().map((headerGroup) => (
+                            <tr key={headerGroup.id}>
+                                {headerGroup.headers.map((header) => (
+                                    <th key={header.id}>
+                                        {header.isPlaceholder ? null : (
+                                            <>
+                                                <div
+                                                    {...{
+                                                        className: header.column.getCanSort()
+                                                            ? "cursor-pointer select-none"
+                                                            : "",
+                                                        onClick: header.column.getToggleSortingHandler(),
+                                                    }}
+                                                >
+                                                    {flexRender(header.column.columnDef.header, header.getContext())}
+                                                    <Icon
+                                                        icon={
+                                                            {
+                                                                asc: "fa-arrow-up",
+                                                                desc: "fa-arrow-down",
+                                                            }[header.column.getIsSorted() as string] ?? null
+                                                        }
+                                                    />
+                                                </div>
+                                                <div>
+                                                    {header.column.getCanFilter() &&
+                                                        (
+                                                            columnsFilters?.find(
+                                                                (columnFilter) => columnFilter.id === header.column.id
+                                                            )?.componentProvider || defaultColumnFilterComponentProvider
+                                                        )(
+                                                            header.column.getFilterValue(),
+                                                            (e) => {
+                                                                header.column.setFilterValue(
+                                                                    e.target.type === "checkbox"
+                                                                        ? (e as ChangeEvent<HTMLInputElement>).target
+                                                                              .checked
+                                                                        : e.target.value
+                                                                );
+                                                            },
+                                                            header
+                                                        )}
+                                                </div>
+                                            </>
+                                        )}
+                                    </th>
+                                ))}
+                            </tr>
                         ))}
-                    </tr>
-                ))}
-            </thead>
-            <tbody>
-                {table.getRowModel().rows.map((row) => (
-                    <tr key={row.id}>
-                        {row.getVisibleCells().map((cell) => (
-                            <td key={cell.id} className="jus">
-                                {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                            </td>
+                    </thead>
+                    <tbody>
+                        {table.getRowModel().rows.map((row) => (
+                            <tr key={row.id}>
+                                {row.getVisibleCells().map((cell) => (
+                                    <td key={cell.id} className="jus">
+                                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                    </td>
+                                ))}
+                            </tr>
                         ))}
-                    </tr>
-                ))}
-            </tbody>
-            <tfoot>
-                {table.getFooterGroups().map((footerGroup) => (
-                    <tr key={footerGroup.id}>
-                        {footerGroup.headers.map((header) => (
-                            <th key={header.id}>
-                                {header.isPlaceholder ? null : (
-                                    <div
-                                        {...{
-                                            className: header.column.getCanSort() ? "cursor-pointer select-none" : "",
-                                            onClick: header.column.getToggleSortingHandler(),
-                                        }}
-                                    >
-                                        {flexRender(header.column.columnDef.header, header.getContext())}
-                                        <Icon
-                                            icon={
-                                                {
-                                                    asc: "fa-arrow-up",
-                                                    desc: "fa-arrow-down",
-                                                }[header.column.getIsSorted() as string] ?? null
-                                            }
-                                        />
-                                    </div>
-                                )}
-                            </th>
+                    </tbody>
+                    <tfoot>
+                        {table.getFooterGroups().map((footerGroup) => (
+                            <tr key={footerGroup.id}>
+                                {footerGroup.headers.map((header) => (
+                                    <th key={header.id}>
+                                        {header.isPlaceholder ? null : (
+                                            <div
+                                                {...{
+                                                    className: header.column.getCanSort()
+                                                        ? "cursor-pointer select-none"
+                                                        : "",
+                                                    onClick: header.column.getToggleSortingHandler(),
+                                                }}
+                                            >
+                                                {flexRender(header.column.columnDef.header, header.getContext())}
+                                                <Icon
+                                                    icon={
+                                                        {
+                                                            asc: "fa-arrow-up",
+                                                            desc: "fa-arrow-down",
+                                                        }[header.column.getIsSorted() as string] ?? null
+                                                    }
+                                                />
+                                            </div>
+                                        )}
+                                    </th>
+                                ))}
+                            </tr>
                         ))}
-                    </tr>
-                ))}
-            </tfoot>
-        </ReactTable>
+                    </tfoot>
+                </ReactTable>
+            </Row>
+
+            <Row className="align-items-center m-3">
+                <Col>{actionButton}</Col>
+                <Col className="align-items-center text-center">
+                    <Button
+                        className="border rounded p-1 m-1"
+                        onClick={() => table.setPageIndex(0)}
+                        disabled={!table.getCanPreviousPage()}
+                        label="<<"
+                    />
+                    <Button
+                        className="border rounded p-1  m-1"
+                        onClick={() => table.previousPage()}
+                        disabled={!table.getCanPreviousPage()}
+                        label="<"
+                    />
+                    <span className="m-1">
+                        Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
+                    </span>
+                    <Button
+                        className="border rounded p-1  m-1"
+                        onClick={() => table.nextPage()}
+                        disabled={!table.getCanNextPage()}
+                        label=">"
+                    />
+                    <Button
+                        className="border rounded p-1  m-1"
+                        onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+                        disabled={!table.getCanNextPage()}
+                        label=">>"
+                    />
+                </Col>
+                {/* TODO: delete? 
+                    <Col>
+                        Go to page:
+                        <input
+                            type="number"
+                            defaultValue={table.getState().pagination.pageIndex + 1}
+                            onChange={(e) => {
+                                const page = e.target.value ? Number(e.target.value) - 1 : 0;
+                                table.setPageIndex(page);
+                            }}
+                        />
+                    </Col> 
+                    <Col>
+                        <select
+                            value={table.getState().pagination.pageSize}
+                            onChange={(e) => {
+                                table.setPageSize(Number(e.target.value));
+                            }}
+                        >
+                            {[5, 10, 20, 30, 40, 50].map((pageSize) => (
+                                <option key={pageSize} value={pageSize}>
+                                    Show {pageSize}
+                                </option>
+                            ))}
+                        </select>
+                    </Col> */}
+                <Col className="row justify-content-end">{table.getRowModel().rows.length} Rows</Col>
+            </Row>
+        </Container>
     );
 }
