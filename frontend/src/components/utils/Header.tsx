@@ -107,7 +107,7 @@ function Header() {
                 </Nav.Link>
                 <Navbar.Text>
                     <Icon icon="fa-user" />
-                    Hello user{/* TODO: Login / Hello user / Logout */}
+                    Hellooooo user{/* TODO: Login / Hello user / Logout */}
                 </Navbar.Text>
                 <Navbar.Collapse id="navbarCollapse">
                     <Nav activeKey={selectedPage as EventKey} onSelect={setSelectedPage as SelectCallback}>
