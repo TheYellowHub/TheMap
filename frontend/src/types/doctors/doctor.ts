@@ -33,8 +33,8 @@ export type Doctor = {
     fullName: string;
     gender: DoctorGender;
     locations: DoctorLocation[];
-    categories: string[]; // TODO: leave as string[]?
-    specialities: string[]; // Same
+    categories: string[];
+    specialities: string[];
     websites: Url[];
     iCareBetter?: Url;
     nancysNook?: boolean;
