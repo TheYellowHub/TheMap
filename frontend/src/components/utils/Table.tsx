@@ -12,8 +12,9 @@ import {
 } from "@tanstack/react-table";
 import { ChangeEvent, ReactNode, useState } from "react";
 import { Col, Container, Table as ReactTable, Row } from "react-bootstrap";
+
 import Icon from "./Icon";
-import Button from "./Button";
+import Pagination from "./Pagination";
 
 export type ColumnFilterComponentProvider<T> = (
     value: unknown,
@@ -165,62 +166,15 @@ export default function Table<T>({ columns, columnsFilters, actionButton, data }
 
             <Row className="align-items-center m-3">
                 <Col>{actionButton}</Col>
-                <Col className="align-items-center text-center">
-                    <Button
-                        className="border rounded p-1 m-1"
-                        onClick={() => table.setPageIndex(0)}
-                        disabled={!table.getCanPreviousPage()}
-                        label="<<"
-                    />
-                    <Button
-                        className="border rounded p-1  m-1"
-                        onClick={() => table.previousPage()}
-                        disabled={!table.getCanPreviousPage()}
-                        label="<"
-                    />
-                    <span className="m-1">
-                        Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
-                    </span>
-                    <Button
-                        className="border rounded p-1  m-1"
-                        onClick={() => table.nextPage()}
-                        disabled={!table.getCanNextPage()}
-                        label=">"
-                    />
-                    <Button
-                        className="border rounded p-1  m-1"
-                        onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-                        disabled={!table.getCanNextPage()}
-                        label=">>"
+                <Col className="col-10">
+                    <Pagination
+                        rowsCount={table.getRowModel().rows.length}
+                        pageIndex={table.getState().pagination.pageIndex}
+                        pageSize={table.getState().pagination.pageSize}
+                        setPageIndex={table.setPageIndex}
+                        setPageSize={table.setPageSize}
                     />
                 </Col>
-                {/* TODO: delete? 
-                    <Col>
-                        Go to page:
-                        <input
-                            type="number"
-                            defaultValue={table.getState().pagination.pageIndex + 1}
-                            onChange={(e) => {
-                                const page = e.target.value ? Number(e.target.value) - 1 : 0;
-                                table.setPageIndex(page);
-                            }}
-                        />
-                    </Col> 
-                    <Col>
-                        <select
-                            value={table.getState().pagination.pageSize}
-                            onChange={(e) => {
-                                table.setPageSize(Number(e.target.value));
-                            }}
-                        >
-                            {[5, 10, 20, 30, 40, 50].map((pageSize) => (
-                                <option key={pageSize} value={pageSize}>
-                                    Show {pageSize}
-                                </option>
-                            ))}
-                        </select>
-                    </Col> */}
-                <Col className="row justify-content-end">{table.getRowModel().rows.length} Rows</Col>
             </Row>
         </Container>
     );

@@ -40,19 +40,28 @@ footer {
     margin-right: 0rem;
 }
 
+th {
+    font-size: inherit;
+    text-transform: capitalize;
+}
+
 th,
 td {
     padding: 0.5rem !important;
 }
 
-.form-control {
-    padding: 0.5rem;
-}
-
 input,
 .form-select,
-.react-datetime-picker__wrapper  {
-    padding: 0.5rem;
+.react-datetime-picker__wrapper,
+.form-control {
+    margin: 0.3rem;
+    padding: 0.3rem;
+}
+
+input[type="checkbox"] {
+    width: 1rem;
+    height: 1rem;
+    margin-inline-end: 0.3rem;
 }
 
 .react-datetime-picker,
@@ -61,16 +70,10 @@ input,
     background-color: transparent;
 }
 
-/* TODO: improve */
 .formTable {    
     border:  3px solid #f7f7f9  !important;
     border-radius: 5%;
     width:fit-content;    
-}
-
-th {
-    font-size: inherit;
-    text-transform: capitalize;
 }
 
 .doctorSearchResult {
@@ -79,9 +82,15 @@ th {
     gap: 1rem;
 }
 
+.checkboxesGroup {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: 1rem;
+}
+
 .doctorSmallCard {
     background-color: mediumaquamarine; /* TODO: delete */
-    width: 20rem; /* TODO: change? */
+    width: 13rem; /* TODO: change? */
 }
 
 .doctorBigCard div {
@@ -90,4 +99,5 @@ th {
 
 .map {
     background: url(https://i.stack.imgur.com/dApg7.png); /* TODO: delete */
+    height: 100%;
 }

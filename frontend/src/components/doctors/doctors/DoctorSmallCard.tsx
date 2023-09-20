@@ -8,7 +8,9 @@ interface DoctorSmallCardProps {
 function DoctorSmallCard({ doctor, onClick }: DoctorSmallCardProps) {
     return (
         <div className="doctorSmallCard" onClick={onClick}>
-            {doctor.fullName} {doctor.categories}
+            {doctor.fullName}
+            <br />
+            {doctor.categories}
         </div>
     );
 }
