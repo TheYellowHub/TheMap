@@ -178,7 +178,6 @@ function DoctorModal({ doctor, showModal, onCancel, onSave, isSaving, isSavingEr
             getter: (doctor) => doctor.image,
             setter: (doctor, newValue) => {
                 return { ...doctor, image: newValue };
-                // TODO: file upload from the frontend still doesn't work
             },
         },
         // TODO: replace status with action buttons ?

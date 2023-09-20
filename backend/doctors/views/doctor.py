@@ -4,9 +4,13 @@ Doctor model related APIs
 
 from rest_framework import generics
 from django_filters import rest_framework as filters
+import logging
 
 from ..models.doctor import Doctor
 from ..serializers.doctor import DoctorBasicSerializer, DoctorExtendedSerializer
+
+
+logger = logging.getLogger(__name__)
 
 
 class DoctorFilter(filters.FilterSet):
@@ -59,6 +63,10 @@ class DoctorUpdateView(generics.UpdateAPIView):
 
     queryset = Doctor.objects.all()
     serializer_class = DoctorBasicSerializer
+
+    def patch(self, request, *args, **kwargs):
+        logger.debug(f"Doctor update - patch request data: {request.data}")
+        return super().patch(request, *args, **kwargs)
 
 
 class DoctorCreateView(generics.CreateAPIView):

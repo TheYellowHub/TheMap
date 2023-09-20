@@ -33,7 +33,7 @@ export default function genericApiHook<T extends RequestDataItem>(
             const withoutfileProperties = { ...t };
             for (const property in t) {
                 if (t[property] instanceof File) {
-                    fileProperties = { ...fileProperties, property: t[property] };
+                    fileProperties = { ...fileProperties, [property]: t[property] };
                     delete withoutfileProperties[property];
                 }
             }

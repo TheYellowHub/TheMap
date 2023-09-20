@@ -1,9 +1,13 @@
 from rest_framework import serializers
 from drf_writable_nested.serializers import WritableNestedModelSerializer
+import logging
 
 from ..models.doctor import Doctor, DoctorLocation
 from ..models.doctorCategory import DoctorCategory
 from ..models.doctorSpeciality import DoctorSpeciality
+
+
+logger = logging.getLogger(__name__)
 
 
 class DoctorLocationSerializer(serializers.ModelSerializer):
@@ -33,6 +37,10 @@ class DoctorBasicSerializer(WritableNestedModelSerializer):
     specialities = serializers.SlugRelatedField(
         many=True, queryset=DoctorSpeciality.objects.all(), slug_field="name"
     )
+
+    def update(self, instance, validated_data):
+        logger.debug(f"Doctor update - validated data: {validated_data}")
+        return super().update(instance, validated_data)
 
 
 class DoctorExtendedSerializer(DoctorBasicSerializer):
