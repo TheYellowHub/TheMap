@@ -11,7 +11,7 @@ interface FileFormFieldProps<T> {
 }
 
 export default function FileFormField<T>({ field, object, onChange = undefined }: FileFormFieldProps<T>) {
-    const currentFileLink = field.getter(object) as any as string;
+    const currentFileLink = field.getter(object);
     return (
         <>
             <Form.Control

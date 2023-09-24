@@ -15,7 +15,7 @@ interface Field<T, F> {
 export interface TextField<T> extends Field<T, string | undefined> {
     type: "text";
     setter?: (t: T, newValue: string) => T;
-}
+} // TODO: separate field for address with autocomplete (gmaps)
 
 export interface UrlField<T> extends Field<T, Url | undefined> {
     type: "url";
@@ -64,9 +64,9 @@ export interface CheckboxesGroupField<T> extends Field<T, string[]> {
     setter?: (t: T, newValue: string[]) => T;
 }
 
-export interface FileField<T> extends Field<T, File | undefined> {
+export interface FileField<T> extends Field<T, File | string | undefined> {
     type: "file";
-    setter?: (t: T, newValue: File) => T;
+    setter?: (t: T, newValue: File | string) => T;
 }
 
 export type ModalField<T> =

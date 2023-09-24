@@ -48,6 +48,7 @@ function Pagination({ rowsCount, pageIndex, pageSize, setPageIndex, setPageSize 
                 <Col className="align-items-center text-center">
                     Go to
                     <input
+                        id="page-index-input"
                         type="number"
                         className="p-1  m-1"
                         min={1}
@@ -62,6 +63,7 @@ function Pagination({ rowsCount, pageIndex, pageSize, setPageIndex, setPageSize 
                 <Col className="align-items-center text-center">
                     Show
                     <input
+                        id="page-size-input"
                         type="number"
                         className="p-1  m-1"
                         min={1}

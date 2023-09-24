@@ -50,6 +50,7 @@ export function post(url: RequestUrl, data: RequestData, shouldExcludeId = true)
 export function patch(url: RequestUrl, data: RequestData, shouldExcludeId = true) {
     let multipartFormData = false;
     for (const property in data) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         if ((data as any)[property] instanceof File) {
             multipartFormData = true;
             break;

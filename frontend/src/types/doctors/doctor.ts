@@ -7,6 +7,7 @@ import { Url } from "../utils/url";
 export type DoctorLocation = {
     hospitalName?: string;
     address?: string;
+    // TODO: lat & lng
     phone?: Phone;
     email?: Email;
     privateOnly: boolean;
@@ -38,7 +39,7 @@ export type Doctor = {
     websites: Url[];
     iCareBetter?: Url;
     nancysNook?: boolean;
-    image?: File;
+    image?: File | string;
     status?: DoctorStatus;
     // TODO: addedBy?: User;
     addedAt?: DateTime;

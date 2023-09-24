@@ -34,6 +34,7 @@ function DoctorModal({ doctor, showModal, onCancel, onSave, isSaving, isSavingEr
     const { data: categories } = useDoctorCategories();
     const { data: specialities } = useDoctorSpecialities();
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const fields: (ModalField<Doctor> | ListField<Doctor, any>)[] = [
         {
             type: "number",

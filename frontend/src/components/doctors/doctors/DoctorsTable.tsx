@@ -59,7 +59,7 @@ function DoctorsTable({ doctors, setCurrentDoctor, actionButton }: DoctorsTableP
     const columnsFilters: ColumnFilter<Doctor>[] = [
         {
             id: "status",
-            componentProvider: (value, onChange, header) => (
+            componentProvider: (value, onChange) => (
                 <select key="filterStatus" value={value as string} onChange={onChange}>
                     <option value="">Select status</option>
                     {doctorStatuses.map((status) => (
@@ -73,9 +73,7 @@ function DoctorsTable({ doctors, setCurrentDoctor, actionButton }: DoctorsTableP
         },
         {
             id: "addedAt",
-            componentProvider: (value, onChange, header) => (
-                <input type="date" value={value as string} onChange={onChange} />
-            ),
+            componentProvider: (value, onChange) => <input type="date" value={value as string} onChange={onChange} />,
         },
     ];
 

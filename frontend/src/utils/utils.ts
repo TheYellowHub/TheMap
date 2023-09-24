@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export default function objectsDiff<T>(previousObject: T, currentObject: T): T {
     let diff = {};
     for (const property in currentObject) {
