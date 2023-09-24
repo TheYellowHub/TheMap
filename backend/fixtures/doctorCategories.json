@@ -1,0 +1,26 @@
+[
+    {
+        "model": "doctors.doctorCategory",
+        "fields": {
+            "name": "Excision surgeon"
+        }
+    },
+    {
+        "model": "doctors.doctorCategory",
+        "fields": {
+            "name": "OB/GYN"
+        }
+    },
+    {
+        "model": "doctors.doctorCategory",
+        "fields": {
+            "name": "Pelvic pain specialists"
+        }
+    },
+    {
+        "model": "doctors.doctorCategory",
+        "fields": {
+            "name": "Pelvic floor therapists"
+        }
+    }
+]

@@ -1,0 +1,24 @@
+[
+    {
+        "model": "doctors.doctorLocation",
+        "fields": {
+            "doctor": 1,
+            "hospital_name": "Domus Medica",
+            "address": "Egilsgata 3, 101 Reykjavík, Iceland",
+            "phone": "+12345678901",
+            "email": "aaaa@DomusMedica.com",
+            "private_only": false
+        }
+    },
+    {
+        "model": "doctors.doctorLocation",
+        "fields": {
+            "doctor": 1,
+            "hospital_name": "Hospital2",
+            "address": "312 Fulwood Rd, Sheffield S10 3BN, UK",
+            "phone": "+98765432101",
+            "email": "bbb@bbb.com",
+            "private_only": true
+        }
+    }
+]

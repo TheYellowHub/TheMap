@@ -7,7 +7,9 @@ RUN npm ci --legacy-peer-deps
 COPY ./frontend/ ./
 RUN npm run build
 
-# Copy react static files and start nginx
+# Nginx 
 FROM nginx:stable-alpine
+
+# Copy react static files and start nginx
 COPY --from=build /app/frontend/build /usr/share/nginx/html
 CMD ["nginx", "-g", "daemon off;"]

@@ -1,0 +1,11 @@
+{
+    "auth0": {
+        "domain": "",
+        "clientId": "",
+        "audience": ""
+    },
+    "app": {
+        "name": "",
+        "logoUrl": ""
+    }
+}

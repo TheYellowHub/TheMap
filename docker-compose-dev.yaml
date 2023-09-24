@@ -14,6 +14,7 @@ services:
       retries: 5
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./htmlcov:/app/htmlcov # TODO: save it in the host automatically somehow
 
   server:
     restart: unless-stopped
@@ -27,6 +28,7 @@ services:
     entrypoint: ./server-entrypoint.sh
     volumes:
       - static_volume:/app/django_static
+      - media:/app/media
     expose:
       - 8000
     healthcheck:
@@ -51,6 +53,7 @@ services:
       - 80:80
     volumes:
       - static_volume:/app/django_static
+      - media:/app/media
       - ./docker/nginx/development:/etc/nginx/conf.d
     depends_on:
       server:
@@ -58,4 +61,5 @@ services:
 
 volumes:
   static_volume: {}
+  media: {}
   postgres_data: {}
