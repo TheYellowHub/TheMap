@@ -98,8 +98,8 @@ function MapScreen() {
                 <Row>
                     <Col>
                         <Row className="border p-2 m-2">
-                            {/* // TODO: collapse? */}
                             <Form>
+                                {/* TODO: form fields refactoring */}
                                 <Form.Group as={Row}>
                                     <Form.Label column htmlFor="address">
                                         Address
@@ -108,7 +108,7 @@ function MapScreen() {
                                         <AddressInputFormField<undefined>
                                             field={{
                                                 type: "address",
-                                                label: "Address",
+                                                label: "address",
                                                 getter: () => {
                                                     return address;
                                                 },
@@ -274,7 +274,7 @@ function MapScreen() {
                                                 onClick: () => setCurrentDoctor(doctor),
                                             };
                                         })
-                                        .filter((markersGroup) => markersGroup.locations.length > 0)}
+                                        .filter((markersGroup) => markersGroup.locations.length > 0)} // TODO: solve the double info window issue + markers style ?
                                 />
                             )}
                         </Container>

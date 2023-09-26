@@ -119,7 +119,3 @@ input[type="checkbox"] {
 .modal-backdrop {
     z-index: 10;        
 }
-
-:invalid {
-    background-color: red;
-}
