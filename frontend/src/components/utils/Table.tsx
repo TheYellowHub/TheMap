@@ -62,7 +62,13 @@ export default function Table<T>({ columns, columnsFilters, actionButton, data }
     });
 
     const defaultColumnFilterComponentProvider: ColumnFilterComponentProvider<T> = (value, onChange, header) => (
-        <input value={value as string} onChange={onChange} placeholder={`Search ${header.column.columnDef.header}`} />
+        <input
+            id={`filter-${header.column.columnDef.header}`}
+            key={`filter-${header.column.columnDef.header}`}
+            value={value as string}
+            onChange={onChange}
+            placeholder={`Search ${header.column.columnDef.header}`}
+        />
     );
 
     return (

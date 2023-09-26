@@ -60,7 +60,7 @@ function DoctorsTable({ doctors, setCurrentDoctor, actionButton }: DoctorsTableP
         {
             id: "status",
             componentProvider: (value, onChange) => (
-                <select key="filterStatus" value={value as string} onChange={onChange}>
+                <select id="filterStatus" key="filterStatus" value={value as string} onChange={onChange}>
                     <option value="">Select status</option>
                     {doctorStatuses.map((status) => (
                         <option value={status} key={status}>

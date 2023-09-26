@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Col, Container, Form, Row } from "react-bootstrap";
-import { Autocomplete } from "@react-google-maps/api";
 
 import { Doctor, newDoctor } from "../types/doctors/doctor";
 import { DoctorCategory } from "../types/doctors/doctorCategory";
@@ -16,6 +15,7 @@ import LoadingWrapper from "../components/utils/LoadingWrapper";
 import { ResponseError } from "../utils/request";
 import GoogleMap from "../components/map/GoogleMap";
 import useGoogleMaps, { Location } from "../utils/googleMaps/useGoogleMaps";
+import AddressInputFormField from "../components/utils/form/addressField";
 
 function MapScreen() {
     const { setCurrentLocation, getAddress, getLocation } = useGoogleMaps();
@@ -105,28 +105,25 @@ function MapScreen() {
                                         Address
                                     </Form.Label>
                                     <Col sm={9}>
-                                        <Autocomplete
-                                            options={{
-                                                types: ["geocode", "establishment"],
-                                                fields: ["formatted_address"],
-                                            }}
-                                        >
-                                            <Form.Control
-                                                type="text"
-                                                id="address"
-                                                autoComplete="off"
-                                                defaultValue={address}
-                                                onBlur={(e) => {
-                                                    const newAddress = e.target.value;
+                                        <AddressInputFormField<undefined>
+                                            field={{
+                                                type: "address",
+                                                label: "Address",
+                                                getter: () => {
+                                                    return address;
+                                                },
+                                                setter: (_: undefined, newAddress: string) => {
                                                     setAddress(newAddress);
                                                     getLocation(newAddress).then((location) => {
                                                         if (location !== undefined) {
                                                             setLocation(location);
                                                         }
                                                     });
-                                                }}
-                                            />
-                                        </Autocomplete>
+                                                    return undefined;
+                                                },
+                                            }}
+                                            object={undefined}
+                                        />
                                     </Col>
                                 </Form.Group>
                                 <Form.Group as={Row}>
@@ -165,7 +162,6 @@ function MapScreen() {
                                         <Form.Control
                                             type="text"
                                             id="name"
-                                            autoComplete="off"
                                             value={nameIncludes}
                                             onChange={(e) => setNameIncluds(e.target.value)}
                                         />
@@ -257,18 +253,28 @@ function MapScreen() {
                             {location && (
                                 <GoogleMap
                                     center={location}
-                                    markers={matchedDoctors.map((doctor) => {
-                                        return {
-                                            name: doctor.fullName,
-                                            locations: doctor.locations.map((doctorLocation) => {
-                                                return {
-                                                    lat: location.lat + doctor.id!,
-                                                    lng: location.lng + doctor.id!,
-                                                }; // TODO: replace with the location lat/ lng
-                                            }),
-                                            onClick: () => setCurrentDoctor(doctor),
-                                        };
-                                    })}
+                                    markers={matchedDoctors
+                                        .map((doctor) => {
+                                            return {
+                                                name: doctor.fullName,
+                                                locations: doctor.locations
+                                                    .filter(
+                                                        (doctorLocation) =>
+                                                            doctorLocation.lat !== undefined &&
+                                                            doctorLocation.lat !== null &&
+                                                            doctorLocation.lng !== undefined &&
+                                                            doctorLocation.lng !== null
+                                                    )
+                                                    .map((doctorLocation) => {
+                                                        return {
+                                                            lat: Number(doctorLocation.lat!),
+                                                            lng: Number(doctorLocation.lng!),
+                                                        };
+                                                    }),
+                                                onClick: () => setCurrentDoctor(doctor),
+                                            };
+                                        })
+                                        .filter((markersGroup) => markersGroup.locations.length > 0)}
                                 />
                             )}
                         </Container>

@@ -12,6 +12,7 @@ import ComboboxFormField from "./form/comboboxField";
 import Icon from "./Icon";
 import FileFormField from "./form/fileField";
 import { ResponseError } from "../../utils/request";
+import AddressInputFormField from "./form/addressField";
 
 interface ModalProps<T> {
     t: T;
@@ -46,10 +47,11 @@ function Modal<T>({
         field: ModalField<O>,
         object: O,
         wrapAsFormRow: boolean = true,
-        onChange: (newObject: O) => void
+        onChange: (newObject: O) => void,
+        index?: number
     ): ReactNode {
-        if (field.setter === undefined && field.getter(object) === undefined) {
-            return <></>;
+        if (field.setter === undefined && (field.getter(object) === undefined || field.type === "number")) {
+            return <p className="form-label">{field.getter(object) as string}</p>;
         }
 
         const reacteNodeWrapperSingleColumn = (reacteNode: ReactNode, key: string, wrap: boolean = true) => {
@@ -68,7 +70,9 @@ function Modal<T>({
             if (wrap) {
                 return (
                     <Form.Group as={Row} key={key}>
-                        <Form.Label column>{field.label}</Form.Label>
+                        <Form.Label column htmlFor={field.label}>
+                            {field.label}
+                        </Form.Label>
                         <Col sm={9}>{reacteNode}</Col>
                     </Form.Group>
                 );
@@ -77,14 +81,31 @@ function Modal<T>({
             }
         };
 
+        if (index !== undefined) {
+            field = { ...field, label: `${field.label}-${index}` };
+        }
+
         switch (field.type) {
             case "text":
             case "url":
             case "email":
             case "tel":
+                return reacteNodeWrapperTwoColumns(
+                    <InputFormField<O> field={field} object={object} onChange={onChange} />,
+                    field.label,
+                    wrapAsFormRow
+                );
+                break;
             case "number":
                 return reacteNodeWrapperTwoColumns(
                     <InputFormField<O> field={field} object={object} onChange={onChange} />,
+                    field.label,
+                    wrapAsFormRow
+                );
+                break;
+            case "address":
+                return reacteNodeWrapperTwoColumns(
+                    <AddressInputFormField<O> field={field} object={object} onChange={onChange} />,
                     field.label,
                     wrapAsFormRow
                 );
@@ -194,7 +215,8 @@ function Modal<T>({
                                                                                 )
                                                                             );
                                                                         }
-                                                                    }
+                                                                    },
+                                                                    index
                                                                 )}
                                                             </td>
                                                         ))}

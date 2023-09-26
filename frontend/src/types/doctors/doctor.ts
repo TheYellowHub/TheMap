@@ -7,7 +7,8 @@ import { Url } from "../utils/url";
 export type DoctorLocation = {
     hospitalName?: string;
     address?: string;
-    // TODO: lat & lng
+    lat?: number;
+    lng?: number;
     phone?: Phone;
     email?: Email;
     privateOnly: boolean;

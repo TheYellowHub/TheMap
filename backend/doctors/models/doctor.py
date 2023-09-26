@@ -52,6 +52,8 @@ class DoctorLocation(models.Model):
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     hospital_name = models.CharField(max_length=200, blank=True)
     address = models.CharField(max_length=200, blank=True)
+    lat = models.DecimalField(max_digits=22, decimal_places=16, blank=True, null=True)
+    lng = models.DecimalField(max_digits=22, decimal_places=16, blank=True, null=True)
     phone = PhoneNumberField(null=True, blank=True)
     email = models.EmailField(null=True, blank=True)
     private_only = models.BooleanField(default=False)

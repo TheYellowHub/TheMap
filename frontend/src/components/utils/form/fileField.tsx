@@ -15,6 +15,7 @@ export default function FileFormField<T>({ field, object, onChange = undefined }
     return (
         <>
             <Form.Control
+                id={field.label}
                 type="file"
                 readOnly={field.setter === undefined}
                 onChange={(e: FocusEvent<HTMLInputElement>) => {

@@ -53,10 +53,12 @@ td {
 input,
 .form-select,
 .react-datetime-picker__wrapper,
-.form-control {
+.form-control,
+.form-label {
     margin: 0.3rem;
     padding: 0.3rem;
 }
+
 
 input[type="checkbox"] {
     width: 1rem;
@@ -99,4 +101,25 @@ input[type="checkbox"] {
 
 .map {
     height: 80vh;   /* TODO: fix */
+}
+
+.pac-container {
+    position: fixed;
+    z-index: 30;
+}
+
+.modal {
+    z-index: 20;   
+}
+
+.modal-dialog {
+    max-width: none;
+}
+
+.modal-backdrop {
+    z-index: 10;        
+}
+
+:invalid {
+    background-color: red;
 }

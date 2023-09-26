@@ -11,6 +11,7 @@ interface ComboboxFormFieldProps<T> {
 export default function ComboboxFormField<T>({ field, object, onChange = undefined }: ComboboxFormFieldProps<T>) {
     return (
         <Form.Select
+            id={field.label}
             value={field.getter(object)}
             disabled={field.setter === undefined}
             onChange={(e) => {

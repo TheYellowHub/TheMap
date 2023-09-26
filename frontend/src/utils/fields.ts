@@ -15,7 +15,12 @@ interface Field<T, F> {
 export interface TextField<T> extends Field<T, string | undefined> {
     type: "text";
     setter?: (t: T, newValue: string) => T;
-} // TODO: separate field for address with autocomplete (gmaps)
+}
+
+export interface AddressField<T> extends Field<T, string | undefined> {
+    type: "address";
+    setter?: (t: T, newValue: string) => T;
+}
 
 export interface UrlField<T> extends Field<T, Url | undefined> {
     type: "url";
@@ -71,6 +76,7 @@ export interface FileField<T> extends Field<T, File | string | undefined> {
 
 export type ModalField<T> =
     | TextField<T>
+    | AddressField<T>
     | UrlField<T>
     | EmailField<T>
     | PhoneField<T>
@@ -85,5 +91,5 @@ export interface ListField<T, L> extends Field<T, L[]> {
     type: "list";
     setter?: (t: T, newValue: L[]) => T;
     newRecordProvider?: () => L;
-    fields: (TextField<L> | UrlField<L> | DateTimeField<L> | NumberField<L> | BooleanField<L>)[];
+    fields: (TextField<L> | AddressField<L> | UrlField<L> | DateTimeField<L> | NumberField<L> | BooleanField<L>)[];
 }
