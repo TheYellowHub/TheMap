@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Col, Container, Form, Row } from "react-bootstrap";
-import { usePlacesWidget } from "react-google-autocomplete";
+import { Autocomplete } from "@react-google-maps/api";
 
 import { Doctor, newDoctor } from "../types/doctors/doctor";
 import { DoctorCategory } from "../types/doctors/doctorCategory";
@@ -40,13 +40,6 @@ function MapScreen() {
     const [pageSize, setPageSize] = useState(10); // TODO: initial value according to the view, i.e. how many doctors fit in?
 
     const { isLoaded: googleMapsIsLoaded } = useGoogleMaps();
-
-    const { ref: addressInputRef } = usePlacesWidget<HTMLInputElement>({
-        options: {
-            types: ["geocode", "establishment"],
-            fields: ["formatted_address"],
-        },
-    });
 
     const sortOptions: Map<string, (a: Doctor, b: Doctor) => number> = new Map([
         [
@@ -112,22 +105,28 @@ function MapScreen() {
                                         Address
                                     </Form.Label>
                                     <Col sm={9}>
-                                        <Form.Control
-                                            type="text"
-                                            id="address"
-                                            ref={addressInputRef} // TODO: understand why this is not stable
-                                            autoComplete="off"
-                                            defaultValue={address}
-                                            onBlur={(e) => {
-                                                const newAddress = e.target.value;
-                                                setAddress(newAddress);
-                                                getLocation(newAddress).then((location) => {
-                                                    if (location !== undefined) {
-                                                        setLocation(location);
-                                                    }
-                                                });
+                                        <Autocomplete
+                                            options={{
+                                                types: ["geocode", "establishment"],
+                                                fields: ["formatted_address"],
                                             }}
-                                        />
+                                        >
+                                            <Form.Control
+                                                type="text"
+                                                id="address"
+                                                autoComplete="off"
+                                                defaultValue={address}
+                                                onBlur={(e) => {
+                                                    const newAddress = e.target.value;
+                                                    setAddress(newAddress);
+                                                    getLocation(newAddress).then((location) => {
+                                                        if (location !== undefined) {
+                                                            setLocation(location);
+                                                        }
+                                                    });
+                                                }}
+                                            />
+                                        </Autocomplete>
                                     </Col>
                                 </Form.Group>
                                 <Form.Group as={Row}>

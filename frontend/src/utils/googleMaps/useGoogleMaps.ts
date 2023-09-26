@@ -44,14 +44,8 @@ function getAddress(location: Location): Promise<string | undefined> {
         });
 }
 
-const libraries: Libraries = ["places"];
-
 export default function useGoogleMaps() {
-    const { isLoaded } = useLoadScript({
-        id: "google-map-script",
-        googleMapsApiKey: apiKey as string,
-        libraries: libraries,
-    });
+    const isLoaded = window.google?.maps !== undefined;
 
     return {
         isLoaded: isLoaded,

@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import AppRouter from "./AppRouter";
 import Header from "./components/utils/Header";
 import Footer from "./components/utils/Footer";
+import GoogleMapsLoader from "./utils/googleMaps/GoogleMapsLoader";
 
 function App() {
     const queryClient = new QueryClient();
@@ -12,13 +13,15 @@ function App() {
     return (
         <Router>
             <QueryClientProvider client={queryClient}>
-                <Container className="app" fluid>
-                    <Header />
-                    <main>
-                        <AppRouter />
-                    </main>
-                    <Footer />
-                </Container>
+                <GoogleMapsLoader>
+                    <Container className="app" fluid>
+                        <Header />
+                        <main>
+                            <AppRouter />
+                        </main>
+                        <Footer />
+                    </Container>
+                </GoogleMapsLoader>
             </QueryClientProvider>
         </Router>
     );
