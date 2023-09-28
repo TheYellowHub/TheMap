@@ -1,69 +1,58 @@
-import { useEffect, useState } from "react";
-import { GoogleMap as Map, useJsApiLoader, InfoWindow, Marker, Libraries } from "@react-google-maps/api";
+// import { useEffect, useState } from "react";
+import { GoogleMap as Map, Marker, InfoWindowF } from "@react-google-maps/api";
 
 import useGoogleMaps, { Location } from "../../utils/googleMaps/useGoogleMaps";
 
-interface MarkersGroup {
-    name: string;
+interface MarkersGroup<T> {
+    obj: T;
+    title: string;
     locations: Location[];
+    showInfoWindow: (t: T) => boolean;
+    onClosingInfoWindow?: () => void;
     onClick?: () => void;
 }
 
-interface GoogleMapProps {
+interface GoogleMapProps<T> {
     center: Location;
     zoom?: number;
-    markers?: MarkersGroup[];
-    // TODO: marker style?
+    markers?: MarkersGroup<T>[];
 }
 
-const emptyMarkersArray: MarkersGroup[] = [];
+const emptyMarkersArray: MarkersGroup<unknown>[] = [];
 
-function GoogleMap({ center, zoom = 15, markers = emptyMarkersArray }: GoogleMapProps) {
+function GoogleMap<T>({ center, zoom = 13, markers = emptyMarkersArray as MarkersGroup<T>[] }: GoogleMapProps<T>) {
     const { isLoaded } = useGoogleMaps();
 
-    const [allMarkers, setAllMarkers] = useState<MarkersGroup[]>([]);
-    const [selectedMarkersGroup, setSelectedMarkersGroup] = useState<MarkersGroup | undefined>();
-    const [selectedLocation, setSelectedLocation] = useState<Location | undefined>();
-
     const locationToStr = (location: Location) => `location-${location.lat}/${location.lng}`;
-
-    useEffect(() => {
-        const centerMarker: MarkersGroup = {
-            name: "Your location",
-            locations: [center],
-        };
-        setAllMarkers([...markers, centerMarker]);
-    }, [center, markers]);
 
     return (
         <div id="map">
             {isLoaded && (
                 <Map mapContainerClassName="map" center={center} zoom={zoom} key={locationToStr(center)}>
-                    {allMarkers.map((markersGroup) =>
+                    {markers.map((markersGroup) =>
                         markersGroup.locations.map((location) => (
-                            <Marker
-                                key={locationToStr(location)}
-                                position={location}
-                                onClick={() => {
-                                    setSelectedMarkersGroup(markersGroup);
-                                    setSelectedLocation(location);
-                                    if (markersGroup.onClick !== undefined) {
-                                        markersGroup.onClick();
-                                    }
-                                }}
-                            />
+                            <>
+                                <Marker
+                                    key={`marker-${locationToStr(location)}`}
+                                    title={markersGroup.title}
+                                    position={location}
+                                    onClick={() => {
+                                        if (markersGroup.onClick !== undefined) {
+                                            markersGroup.onClick();
+                                        }
+                                    }}
+                                />
+                                {markersGroup.showInfoWindow(markersGroup.obj) && (
+                                    <InfoWindowF
+                                        key={`info-window-${locationToStr(location)}`}
+                                        position={location}
+                                        onCloseClick={markersGroup.onClosingInfoWindow}
+                                    >
+                                        <p>{markersGroup.title}</p>
+                                    </InfoWindowF>
+                                )}
+                            </>
                         ))
-                    )}
-                    {selectedMarkersGroup && selectedLocation && (
-                        <InfoWindow
-                            position={selectedLocation}
-                            onCloseClick={() => {
-                                setSelectedMarkersGroup(undefined);
-                                setSelectedLocation(undefined);
-                            }}
-                        >
-                            <p>{selectedMarkersGroup.name}</p>
-                        </InfoWindow>
                     )}
                 </Map>
             )}

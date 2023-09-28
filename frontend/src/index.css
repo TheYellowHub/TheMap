@@ -97,6 +97,7 @@ input[type="checkbox"] {
 
 .doctorBigCard div {
     background-color: plum; /* TODO: delete */
+    max-width: 60%;
 }
 
 .map {

@@ -1,13 +1,7 @@
-import { get } from "../request";
-
 export type Location = {
     lat: number;
     lng: number;
 };
-
-const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
-
-const urlPrefix = "https://maps.googleapis.com/maps/api";
 
 const locationPerAddressCache = new Map<string, Location>();
 
@@ -24,17 +18,25 @@ function setCurrentLocation(setLocation: (location: Location) => void): void {
 // TODO: error handler
 
 function getLocation(address: string): Promise<Location | undefined> {
-    const url = `${urlPrefix}/geocode/json?address=${address}&components=geometry&key=${apiKey}`;
     if (address === undefined || address === "") {
         return Promise.resolve(undefined);
     } else if (locationPerAddressCache.has(address)) {
         return Promise.resolve(locationPerAddressCache.get(address));
     } else {
-        return get(url)
-            .then((response) => {
-                const location = response.data.results[0].geometry.location;
-                locationPerAddressCache.set(address, location);
-                return location;
+        const geocoder = new window.google.maps.Geocoder();
+        return geocoder
+            .geocode({ address: address })
+            .then((geocoderResponse: google.maps.GeocoderResponse) => {
+                if (geocoderResponse.results !== null && geocoderResponse.results.length > 0) {
+                    const location = {
+                        lat: geocoderResponse.results[0].geometry.location.lat(),
+                        lng: geocoderResponse.results[0].geometry.location.lng(),
+                    };
+                    locationPerAddressCache.set(address, location);
+                    return location;
+                } else {
+                    throw "Empty results";
+                }
             })
             .catch((reason: any /* TODO: change any */) => {
                 console.log(`getLocation error: ${reason}, address = (${address})`); // TODO: Log?
@@ -44,15 +46,20 @@ function getLocation(address: string): Promise<Location | undefined> {
 }
 
 function getAddress(location: Location): Promise<string | undefined> {
-    const url = `${urlPrefix}/geocode/json?latlng=${location.lat},${location.lng}&result_type=street_address&key=${apiKey}`;
     if (addressPerlocationCache.has(location)) {
         return Promise.resolve(addressPerlocationCache.get(location));
     } else {
-        return get(url)
-            .then((response) => {
-                const address = response.data.results[0].formatted_address;
-                addressPerlocationCache.set(location, address);
-                return address;
+        const geocoder = new window.google.maps.Geocoder();
+        return geocoder
+            .geocode({ location: location })
+            .then((geocoderResponse: google.maps.GeocoderResponse) => {
+                if (geocoderResponse.results !== null && geocoderResponse.results.length > 0) {
+                    const address = geocoderResponse.results[0].formatted_address;
+                    addressPerlocationCache.set(location, address);
+                    return address;
+                } else {
+                    throw "Empty results";
+                }
             })
             .catch((reason: any /* TODO: change any */) => {
                 console.log(`getAddress error: ${reason}, location = (${location})`); // TODO: Log?
@@ -61,14 +68,18 @@ function getAddress(location: Location): Promise<string | undefined> {
     }
 }
 
+function getDistance(from: Location, to: Location): number {
+    return window.google.maps.geometry.spherical.computeDistanceBetween(from, to) / 1000;
+}
+
 export default function useGoogleMaps() {
     const isLoaded = window.google?.maps !== undefined;
 
     return {
         isLoaded: isLoaded,
-        apiKey: apiKey,
         setCurrentLocation: setCurrentLocation,
         getLocation: getLocation,
         getAddress: getAddress,
+        getDistance: getDistance,
     };
 }

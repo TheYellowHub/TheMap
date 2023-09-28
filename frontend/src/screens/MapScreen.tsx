@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Col, Container, Form, Row } from "react-bootstrap";
 
-import { Doctor, newDoctor } from "../types/doctors/doctor";
+import { Doctor, doctorDistanceFromLocation, newDoctor } from "../types/doctors/doctor";
 import { DoctorCategory } from "../types/doctors/doctorCategory";
 import { DoctorSpeciality } from "../types/doctors/DoctorSpeciality";
 import useDoctors from "../hooks/doctors/useDoctors";
@@ -27,14 +27,18 @@ function MapScreen() {
     const [matchedDoctors, setMatchedDoctors] = useState<Doctor[]>([]);
     const [doctorsInPage, setDoctorsInPage] = useState<Doctor[]>([]);
     const [currentDoctor, setCurrentDoctor] = useState<Doctor | null>(null);
+    const [previousDoctor, setPreviousDoctor] = useState<Doctor | null>(null);
 
-    const [nameIncludes, setNameIncluds] = useState("");
     const [location, setLocation] = useState<Location | undefined>();
     const [address, setAddress] = useState("");
-    const [distance, setDistance] = useState(50);
+    const [distance, setDistance] = useState<number | undefined>(50);
     const [distanceUnitsAsKm, setDistanceUnitsAsKm] = useState(false);
+    const distanceUnit = distanceUnitsAsKm ? "KM" : "Mile";
+
+    const [nameIncludes, setNameIncluds] = useState("");
     const [categoriesFilter, setCategoriesFilter] = useState<string[]>([]);
     const [specialitiesFilter, setSpecialitiesFilter] = useState<string[]>([]);
+
     const [sortKey, setSortKey] = useState<string>("Name");
     const [pageIndex, setPageIndex] = useState(0);
     const [pageSize, setPageSize] = useState(10); // TODO: initial value according to the view, i.e. how many doctors fit in?
@@ -54,6 +58,18 @@ function MapScreen() {
                 return (a.id === undefined ? 0 : a.id) - (b.id === undefined ? 0 : b.id);
             },
         ],
+        [
+            "Distance",
+            (a, b) => {
+                if (location === undefined) {
+                    return 0;
+                } else {
+                    const distanceA = doctorDistanceFromLocation(a, location, distanceUnit);
+                    const distanceB = doctorDistanceFromLocation(b, location, distanceUnit);
+                    return distanceA < distanceB ? -1 : distanceB < distanceA ? 1 : 0;
+                }
+            },
+        ],
     ]);
 
     useEffect(() => {
@@ -70,23 +86,25 @@ function MapScreen() {
     }, [googleMapsIsLoaded]);
 
     useEffect(() => {
-        // TODO: delete
-        const manyDoctors: Doctor[] = [...doctors];
-        for (let i = 0; i < 50; ++i) {
-            manyDoctors.push({ ...newDoctor(), id: 100 - i, fullName: `Doctor ${i}` });
-        }
-
         setMatchedDoctors(() =>
-            manyDoctors
-                .filter(
-                    (doctor: Doctor) =>
+            doctors
+                .filter((doctor: Doctor) => {
+                    const doctorDistance =
+                        distance === undefined || location === undefined
+                            ? undefined
+                            : doctorDistanceFromLocation(doctor, location, distanceUnit);
+                    return (
                         doctor.fullName?.toLowerCase().includes(nameIncludes.toLowerCase()) &&
                         categoriesFilter.every((category) => doctor.categories.includes(category)) &&
-                        specialitiesFilter.every((speciality) => doctor.specialities.includes(speciality))
-                ) // TODO: filter by distance from location
+                        specialitiesFilter.every((speciality) => doctor.specialities.includes(speciality)) &&
+                        (distance === undefined ||
+                            location === undefined ||
+                            (doctorDistance && doctorDistance <= distance))
+                    );
+                })
                 .sort(sortOptions.get(sortKey))
         );
-    }, [doctors, nameIncludes, categoriesFilter, specialitiesFilter, sortKey]);
+    }, [doctors, location, distance, nameIncludes, categoriesFilter, specialitiesFilter, sortKey]);
 
     useEffect(() => {
         setDoctorsInPage(() => matchedDoctors.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize));
@@ -135,7 +153,9 @@ function MapScreen() {
                                             type="number"
                                             id="distance"
                                             value={distance}
-                                            onChange={(e) => setDistance(Number(e.target.value))}
+                                            onChange={(e) =>
+                                                setDistance(e.target.value ? Number(e.target.value) : undefined)
+                                            }
                                         />
                                     </Col>
                                     <Col sm={4}>
@@ -230,9 +250,10 @@ function MapScreen() {
                                     <DoctorSmallCard
                                         key={doctor.id}
                                         doctor={doctor}
+                                        locationForDistanceCalculation={location}
+                                        distanceUnit={distanceUnit}
                                         onClick={() => {
                                             setCurrentDoctor(doctor);
-                                            // TODO: something with the doctor marker/s on the map
                                         }}
                                     />
                                 ))}
@@ -251,12 +272,14 @@ function MapScreen() {
                     <Col className="border p-2 m-2">
                         <Container className="map">
                             {location && (
-                                <GoogleMap
+                                <GoogleMap<Doctor>
                                     center={location}
+                                    // TODO: zoom according to the markers
                                     markers={matchedDoctors
                                         .map((doctor) => {
                                             return {
-                                                name: doctor.fullName,
+                                                obj: doctor,
+                                                title: doctor.fullName,
                                                 locations: doctor.locations
                                                     .filter(
                                                         (doctorLocation) =>
@@ -271,10 +294,19 @@ function MapScreen() {
                                                             lng: Number(doctorLocation.lng!),
                                                         };
                                                     }),
-                                                onClick: () => setCurrentDoctor(doctor),
+                                                showInfoWindow: (doctor: Doctor) =>
+                                                    currentDoctor === doctor ||
+                                                    (currentDoctor === null && previousDoctor === doctor),
+                                                onClosingInfoWindow: () => {
+                                                    setPreviousDoctor(currentDoctor);
+                                                    setCurrentDoctor(null);
+                                                },
+                                                onClick: () => {
+                                                    setCurrentDoctor(doctor);
+                                                },
                                             };
                                         })
-                                        .filter((markersGroup) => markersGroup.locations.length > 0)} // TODO: solve the double info window issue + markers style ?
+                                        .filter((markersGroup) => markersGroup.locations.length > 0)}
                                 />
                             )}
                         </Container>
@@ -286,7 +318,10 @@ function MapScreen() {
                 <DoctorBigCard
                     doctor={currentDoctor}
                     show={currentDoctor !== null}
-                    onClose={() => setCurrentDoctor(null)}
+                    onClose={() => {
+                        setPreviousDoctor(currentDoctor);
+                        setCurrentDoctor(null);
+                    }}
                 />
             )}
         </LoadingWrapper>

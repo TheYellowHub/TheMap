@@ -1,15 +1,13 @@
-import { ReactElement } from "react";
+import { ReactElement, useMemo } from "react";
 import { Libraries, LoadScriptNext } from "@react-google-maps/api";
-
-import useGoogleMaps from "./useGoogleMaps";
 
 interface GoogleMapsLoaderProps {
     children: ReactElement;
 }
 
 function GoogleMapsLoader({ children }: GoogleMapsLoaderProps) {
-    const { apiKey } = useGoogleMaps();
-    const libraries: Libraries = ["places"];
+    const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
+    const libraries = useMemo<Libraries>(() => ["places", "geometry"], []);
 
     return (
         <LoadScriptNext googleMapsApiKey={apiKey!} libraries={libraries}>

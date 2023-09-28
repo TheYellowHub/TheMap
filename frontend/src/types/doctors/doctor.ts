@@ -1,3 +1,5 @@
+import { DistanceUnit, kmToMile } from "../../components/utils/DistanceUnit";
+import useGoogleMaps, { Location } from "../../utils/googleMaps/useGoogleMaps";
 import { DateTime } from "../utils/dateTime";
 import { Email } from "../utils/email";
 import { ID } from "../utils/id";
@@ -61,3 +63,25 @@ export const newDoctor = (): Doctor => {
         websites: [],
     };
 };
+
+export function doctorDistanceFromLocation(doctor: Doctor, location: Location, distanceUnit: DistanceUnit): number {
+    const { isLoaded, getDistance } = useGoogleMaps();
+
+    if (!isLoaded) {
+        return Infinity;
+    }
+
+    let distance = Math.min(
+        ...doctor.locations
+            .filter((doctorLocation) => doctorLocation.lat && doctorLocation.lng)
+            .map((doctorLocation) =>
+                getDistance(location, { lat: Number(doctorLocation.lat!), lng: Number(doctorLocation.lng!) })
+            )
+    );
+
+    if (distanceUnit === "Mile" && distance !== Infinity) {
+        distance = kmToMile(distance);
+    }
+
+    return distance;
+}
