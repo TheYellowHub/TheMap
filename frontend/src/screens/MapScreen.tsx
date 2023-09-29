@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Col, Container, Form, Row } from "react-bootstrap";
 
-import { Doctor, doctorDistanceFromLocation, newDoctor } from "../types/doctors/doctor";
+import { Doctor, doctorDistanceFromLocation } from "../types/doctors/doctor";
 import { DoctorCategory } from "../types/doctors/doctorCategory";
 import { DoctorSpeciality } from "../types/doctors/DoctorSpeciality";
 import useDoctors from "../hooks/doctors/useDoctors";
@@ -18,7 +18,7 @@ import useGoogleMaps, { Location } from "../utils/googleMaps/useGoogleMaps";
 import AddressInputFormField from "../components/utils/form/addressField";
 
 function MapScreen() {
-    const { setCurrentLocation, getAddress, getLocation } = useGoogleMaps();
+    const { setCurrentLocation, getAddress, getLocation, isLoaded: isGoogleMapsLoaded } = useGoogleMaps();
 
     const { data: doctors, isListLoading, isListError, listError } = useDoctors();
     const { data: categories } = useDoctorCategories();
@@ -42,8 +42,6 @@ function MapScreen() {
     const [sortKey, setSortKey] = useState<string>("Name");
     const [pageIndex, setPageIndex] = useState(0);
     const [pageSize, setPageSize] = useState(10); // TODO: initial value according to the view, i.e. how many doctors fit in?
-
-    const { isLoaded: googleMapsIsLoaded } = useGoogleMaps();
 
     const sortOptions: Map<string, (a: Doctor, b: Doctor) => number> = new Map([
         [
@@ -73,17 +71,15 @@ function MapScreen() {
     ]);
 
     useEffect(() => {
-        if (googleMapsIsLoaded) {
-            setCurrentLocation((location: Location) => {
-                setLocation(location);
-                getAddress(location).then((address) => {
-                    if (address !== undefined) {
-                        setAddress(address);
-                    }
-                });
+        setCurrentLocation((location: Location) => {
+            setLocation(location);
+            getAddress(location).then((address) => {
+                if (address !== undefined) {
+                    setAddress(address);
+                }
             });
-        }
-    }, [googleMapsIsLoaded]);
+        });
+    }, [isGoogleMapsLoaded]);
 
     useEffect(() => {
         setMatchedDoctors(() =>

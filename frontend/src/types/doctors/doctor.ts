@@ -65,11 +65,7 @@ export const newDoctor = (): Doctor => {
 };
 
 export function doctorDistanceFromLocation(doctor: Doctor, location: Location, distanceUnit: DistanceUnit): number {
-    const { isLoaded, getDistance } = useGoogleMaps();
-
-    if (!isLoaded) {
-        return Infinity;
-    }
+    const { getDistance } = useGoogleMaps();
 
     let distance = Math.min(
         ...doctor.locations
@@ -77,6 +73,7 @@ export function doctorDistanceFromLocation(doctor: Doctor, location: Location, d
             .map((doctorLocation) =>
                 getDistance(location, { lat: Number(doctorLocation.lat!), lng: Number(doctorLocation.lng!) })
             )
+            .filter((distance) => distance !== undefined)
     );
 
     if (distanceUnit === "Mile" && distance !== Infinity) {

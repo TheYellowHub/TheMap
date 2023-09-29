@@ -15,56 +15,72 @@ function setCurrentLocation(setLocation: (location: Location) => void): void {
     }
 }
 
-// TODO: error handler
+function handleError(error: Error, title: string) {
+    if (process.env.NODE_ENV === "development") {
+        console.log(`${title}: ${error}`);
+    }
+}
 
 function getLocation(address: string): Promise<Location | undefined> {
-    if (address === undefined || address === "") {
+    if (!isLoaded() || address === undefined || address === "") {
         return Promise.resolve(undefined);
     } else if (locationPerAddressCache.has(address)) {
         return Promise.resolve(locationPerAddressCache.get(address));
     } else {
-        const geocoder = new window.google.maps.Geocoder();
-        return geocoder
-            .geocode({ address: address })
-            .then((geocoderResponse: google.maps.GeocoderResponse) => {
-                if (geocoderResponse.results !== null && geocoderResponse.results.length > 0) {
-                    const location = {
-                        lat: geocoderResponse.results[0].geometry.location.lat(),
-                        lng: geocoderResponse.results[0].geometry.location.lng(),
-                    };
-                    locationPerAddressCache.set(address, location);
-                    return location;
-                } else {
-                    throw "Empty results";
-                }
-            })
-            .catch((reason: any /* TODO: change any */) => {
-                console.log(`getLocation error: ${reason}, address = (${address})`); // TODO: Log?
-                return undefined;
-            });
+        try {
+            const geocoder = new window.google.maps.Geocoder();
+            return geocoder
+                .geocode({ address: address })
+                .then((geocoderResponse: google.maps.GeocoderResponse) => {
+                    if (geocoderResponse.results !== null && geocoderResponse.results.length > 0) {
+                        const location = {
+                            lat: geocoderResponse.results[0].geometry.location.lat(),
+                            lng: geocoderResponse.results[0].geometry.location.lng(),
+                        };
+                        locationPerAddressCache.set(address, location);
+                        return location;
+                    } else {
+                        throw "Empty results";
+                    }
+                })
+                .catch((error: Error) => {
+                    handleError(error, `getLocation error, address = (${address})`);
+                    return undefined;
+                });
+        } catch (error) {
+            handleError(error as Error, `getLocation error, address = (${address})`);
+            return Promise.resolve(undefined);
+        }
     }
 }
 
 function getAddress(location: Location): Promise<string | undefined> {
-    if (addressPerlocationCache.has(location)) {
+    if (!isLoaded() || location === undefined) {
+        return Promise.resolve(undefined);
+    } else if (addressPerlocationCache.has(location)) {
         return Promise.resolve(addressPerlocationCache.get(location));
     } else {
-        const geocoder = new window.google.maps.Geocoder();
-        return geocoder
-            .geocode({ location: location })
-            .then((geocoderResponse: google.maps.GeocoderResponse) => {
-                if (geocoderResponse.results !== null && geocoderResponse.results.length > 0) {
-                    const address = geocoderResponse.results[0].formatted_address;
-                    addressPerlocationCache.set(location, address);
-                    return address;
-                } else {
-                    throw "Empty results";
-                }
-            })
-            .catch((reason: any /* TODO: change any */) => {
-                console.log(`getAddress error: ${reason}, location = (${location})`); // TODO: Log?
-                return undefined;
-            });
+        try {
+            const geocoder = new window.google.maps.Geocoder();
+            return geocoder
+                .geocode({ location: location })
+                .then((geocoderResponse: google.maps.GeocoderResponse) => {
+                    if (geocoderResponse.results !== null && geocoderResponse.results.length > 0) {
+                        const address = geocoderResponse.results[0].formatted_address;
+                        addressPerlocationCache.set(location, address);
+                        return address;
+                    } else {
+                        throw "Empty results";
+                    }
+                })
+                .catch((error: Error) => {
+                    handleError(error, `getAddress error, location = (${location})`);
+                    return undefined;
+                });
+        } catch (error) {
+            handleError(error as Error, `getAddress error, location = (${location})`);
+            return Promise.resolve(undefined);
+        }
     }
 }
 
@@ -72,9 +88,11 @@ function getDistance(from: Location, to: Location): number {
     return window.google.maps.geometry.spherical.computeDistanceBetween(from, to) / 1000;
 }
 
-export default function useGoogleMaps() {
-    const isLoaded = window.google?.maps !== undefined;
+function isLoaded() {
+    return window.google?.maps !== undefined;
+}
 
+export default function useGoogleMaps() {
     return {
         isLoaded: isLoaded,
         setCurrentLocation: setCurrentLocation,

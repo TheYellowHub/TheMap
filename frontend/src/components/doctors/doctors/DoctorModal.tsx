@@ -97,12 +97,12 @@ function DoctorModal({ doctor, showModal, onCancel, onSave, isSaving, isSavingEr
                 {
                     type: "number",
                     label: "lat",
-                    getter: (location) => location.lat,
+                    getter: (location) => location.lat && Number(location.lat).toFixed(2),
                 },
                 {
                     type: "number",
                     label: "lng",
-                    getter: (location) => location.lng,
+                    getter: (location) => location.lng && Number(location.lng).toFixed(2),
                 },
                 {
                     type: "tel",

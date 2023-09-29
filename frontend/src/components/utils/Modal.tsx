@@ -149,7 +149,7 @@ function Modal<T>({
     }
 
     return (
-        <ReactModal show={showModal} backdrop="static" onHide={onCancel} centered>
+        <ReactModal key={getTitle(t)} show={showModal} backdrop="static" onHide={onCancel} centered>
             <Form
                 onSubmit={(e) => {
                     e.preventDefault();
