@@ -37,7 +37,7 @@ function GoogleMapsLoader({ setGoogleMapsIsLoaded, children }: GoogleMapsLoaderP
 
     return (
         <LoadScriptNext
-            googleMapsApiKey={apiKey! + "1"}
+            googleMapsApiKey={apiKey!}
             libraries={libraries}
             onError={(error: Error) => handleLoadingError(error)}
             onLoad={() => setWasLoaded(true)}
