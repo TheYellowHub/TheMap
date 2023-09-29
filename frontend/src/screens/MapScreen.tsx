@@ -270,7 +270,6 @@ function MapScreen() {
                             {location && (
                                 <GoogleMap<Doctor>
                                     center={location}
-                                    // TODO: zoom according to the markers
                                     markers={matchedDoctors
                                         .map((doctor) => {
                                             return {
