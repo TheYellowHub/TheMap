@@ -12,6 +12,8 @@ interface DateTimeFormFieldProps<T> {
 export default function DateTimeFormField<T>({ field, object, onChange = undefined }: DateTimeFormFieldProps<T>) {
     return (
         <DateTimePicker
+            id={field.label}
+            key={field.label}
             className="form-control"
             value={field.getter(object)}
             disabled={field.setter === undefined}

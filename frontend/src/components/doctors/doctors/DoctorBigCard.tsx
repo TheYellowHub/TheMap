@@ -30,6 +30,22 @@ function DoctorBigCard({ doctor, show, onClose }: DoctorBigCardProps) {
     return (
         <ReactModal className="doctorBigCard" show={show} onHide={onClose} centered>
             {JSON.stringify(doctor)}
+            <br />
+            {doctor.locations.map((location, index) => (
+                <>
+                    <br />
+                    {location.address}
+                    <a
+                        href={`http://maps.google.com/maps/dir/?api=1&dir_action=navigate&destination=${location.address}`}
+                        key={`navigation-${index}`}
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        Navigate
+                    </a>
+                </>
+            ))}{" "}
+            {/* TODO: Present as part of the specific shown location */}
         </ReactModal>
     );
 }

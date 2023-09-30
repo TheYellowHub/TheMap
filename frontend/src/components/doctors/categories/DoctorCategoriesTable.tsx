@@ -40,7 +40,7 @@ function DoctorCategoriesTable({ categories, setCurrentCategory, actionButton }:
     const columnsFilters: ColumnFilter<DoctorCategory>[] = [
         {
             id: "active",
-            componentProvider: (value, onChange, header) => (
+            componentProvider: (value, onChange) => (
                 <input type="checkbox" defaultChecked={value as boolean} onChange={onChange} />
             ),
             initialValue: true,

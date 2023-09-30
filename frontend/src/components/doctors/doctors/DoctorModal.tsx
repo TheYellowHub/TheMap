@@ -19,6 +19,7 @@ import { ListField, ModalField } from "../../../utils/fields";
 import { Phone } from "../../../types/utils/phone";
 import { Email } from "../../../types/utils/email";
 import { ResponseError } from "../../../utils/request";
+import useGoogleMaps from "../../../utils/googleMaps/useGoogleMaps";
 
 interface DoctorModalProps {
     doctor: Doctor;
@@ -34,6 +35,9 @@ function DoctorModal({ doctor, showModal, onCancel, onSave, isSaving, isSavingEr
     const { data: categories } = useDoctorCategories();
     const { data: specialities } = useDoctorSpecialities();
 
+    const { getLocation } = useGoogleMaps();
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const fields: (ModalField<Doctor> | ListField<Doctor, any>)[] = [
         {
             type: "number",
@@ -82,12 +86,23 @@ function DoctorModal({ doctor, showModal, onCancel, onSave, isSaving, isSavingEr
                     },
                 },
                 {
-                    type: "text",
+                    type: "address",
                     label: "Address",
                     getter: (location) => location.address,
-                    setter: (location, newAddress) => {
-                        return { ...location, address: newAddress };
+                    setter: async (location, newAddress) => {
+                        const newLatLng = await getLocation(newAddress);
+                        return { ...location, address: newAddress, lat: newLatLng?.lat, lng: newLatLng?.lng };
                     },
+                },
+                {
+                    type: "number",
+                    label: "lat",
+                    getter: (location) => location.lat && Number(location.lat).toFixed(2),
+                },
+                {
+                    type: "number",
+                    label: "lng",
+                    getter: (location) => location.lng && Number(location.lng).toFixed(2),
                 },
                 {
                     type: "tel",
