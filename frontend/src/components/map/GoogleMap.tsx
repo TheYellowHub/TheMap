@@ -1,7 +1,7 @@
-import { GoogleMap as Map, Marker, InfoWindowF } from "@react-google-maps/api";
+import { GoogleMap as Map, MarkerF, InfoWindowF } from "@react-google-maps/api";
 
 import { Location } from "../../utils/googleMaps/useGoogleMaps";
-import { Fragment, useEffect } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 
 interface MarkersGroup<T> {
     obj: T;
@@ -13,47 +13,51 @@ interface MarkersGroup<T> {
 }
 
 interface GoogleMapProps<T> {
-    center: Location;
-    zoom?: number;
+    center: Location | undefined;
     markers?: MarkersGroup<T>[];
 }
 
 const emptyMarkersArray: MarkersGroup<unknown>[] = [];
 
-function GoogleMap<T>({ center, zoom = 13, markers = emptyMarkersArray as MarkersGroup<T>[] }: GoogleMapProps<T>) {
+function GoogleMap<T>({ center, markers = emptyMarkersArray as MarkersGroup<T>[] }: GoogleMapProps<T>) {
+    const minimalZoom = 13;
     const locationToStr = (location: Location) => `location-${location.lat}/${location.lng}`;
-    let mapRef: google.maps.Map | null = null;
+    const mapRef = useRef<google.maps.Map | null>(null);
 
     const handleMapLoad = (map: google.maps.Map) => {
-        mapRef = map;
+        mapRef.current = map;
     };
 
     const fitBounds = () => {
-        if (mapRef !== null) {
+        if (mapRef.current !== null) {
             const bounds = new window.google.maps.LatLngBounds();
             markers.map((markersGroup) => markersGroup.locations.map((location) => bounds.extend(location)));
-            mapRef.fitBounds(bounds);
-            mapRef.setZoom(Math.max(zoom, mapRef.getZoom()! - 1));
+            if (center !== undefined) {
+                bounds.extend(center);
+            }
+            mapRef.current.fitBounds(bounds);
+
+            const newZoom = Math.min(minimalZoom, mapRef.current.getZoom()!);
+            mapRef.current.setZoom(newZoom);
         }
     };
 
     useEffect(() => {
         fitBounds();
-    }, [markers, mapRef]);
+    }, [markers, center, mapRef]);
 
     return (
         <div id="map">
             <Map
-                key={locationToStr(center)}
+                key={center && locationToStr(center)}
                 mapContainerClassName="map"
                 center={center}
-                zoom={zoom}
                 onLoad={handleMapLoad}
             >
                 {markers.map((markersGroup) =>
                     markersGroup.locations.map((location) => (
                         <Fragment key={`location-${locationToStr(location)}`}>
-                            <Marker
+                            <MarkerF
                                 key={`marker-${locationToStr(location)}`}
                                 title={markersGroup.title}
                                 position={location}
