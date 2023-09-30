@@ -126,7 +126,12 @@ function Modal<T>({
                 break;
             case "combobox":
                 return reacteNodeWrapperTwoColumns(
-                    <ComboboxFormField<O> field={field} object={object} onChange={onChange} />,
+                    <ComboboxFormField<O>
+                        field={field}
+                        object={object}
+                        onChange={onChange}
+                        allowEmptySelection={!field.required}
+                    />,
                     field.label,
                     wrapAsFormRow
                 );
@@ -187,7 +192,11 @@ function Modal<T>({
                                                 {records.map((record, index) => (
                                                     <tr key={`${field.label}-${index}`}>
                                                         {field.fields.map((subfield) => (
-                                                            <td key={`${subfield.label}-${index}`}>
+                                                            <td
+                                                                key={`${subfield.label}-${index}-${subfield.getter(
+                                                                    record
+                                                                )}`}
+                                                            >
                                                                 {fieldToComponent(
                                                                     subfield,
                                                                     record,

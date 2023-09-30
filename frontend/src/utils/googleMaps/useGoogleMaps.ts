@@ -1,3 +1,5 @@
+import logError from "../log";
+
 export type Location = {
     lat: number;
     lng: number;
@@ -16,9 +18,7 @@ function setCurrentLocation(setLocation: (location: Location) => void): void {
 }
 
 function handleError(error: Error, title: string) {
-    if (process.env.NODE_ENV === "development") {
-        console.log(`${title}: ${error}`);
-    }
+    logError(new Error(`${title}: ${error}`));
 }
 
 function getLocation(address: string): Promise<Location | undefined> {

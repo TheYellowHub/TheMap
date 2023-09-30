@@ -25,7 +25,7 @@ class DoctorFilter(filters.FilterSet):
         model = Doctor
         fields = (
             "status",
-            "categories",
+            "category",
             "specialities",
         )
 
@@ -35,7 +35,7 @@ class DoctorListView(generics.ListAPIView):
     Get list of doctors with thies basic info, matching the search criteria.
     Usage:
         /api/doctors/doctor/list
-        /api/doctors/doctor/list?categories=1&categories=2&specialities=1&status=1
+        /api/doctors/doctor/list?category=1&category=2&specialities=1&status=1
         /api/doctors/doctor/list?full_name=jesi
         /api/doctors/doctor/list?&status_name=pending_approval
     """

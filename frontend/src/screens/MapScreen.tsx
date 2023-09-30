@@ -16,9 +16,10 @@ import { ResponseError } from "../utils/request";
 import GoogleMap from "../components/map/GoogleMap";
 import useGoogleMaps, { Location } from "../utils/googleMaps/useGoogleMaps";
 import AddressInputFormField from "../components/utils/form/addressField";
+import ComboboxFormField from "../components/utils/form/comboboxField";
 
 function MapScreen() {
-    const { setCurrentLocation, getAddress, getLocation, isLoaded: isGoogleMapsLoaded } = useGoogleMaps();
+    const { setCurrentLocation, getAddress, getLocation, getDistance, isLoaded: isGoogleMapsLoaded } = useGoogleMaps();
 
     const { data: doctors, isListLoading, isListError, listError } = useDoctors();
     const { data: categories } = useDoctorCategories();
@@ -36,7 +37,7 @@ function MapScreen() {
     const distanceUnit = distanceUnitsAsKm ? "KM" : "Mile";
 
     const [nameIncludes, setNameIncluds] = useState("");
-    const [categoriesFilter, setCategoriesFilter] = useState<string[]>([]);
+    const [categoryFilter, setCategoryFilter] = useState<string | undefined>();
     const [specialitiesFilter, setSpecialitiesFilter] = useState<string[]>([]);
 
     const [sortKey, setSortKey] = useState<string>("Name");
@@ -91,7 +92,7 @@ function MapScreen() {
                             : doctorDistanceFromLocation(doctor, location, distanceUnit);
                     return (
                         doctor.fullName?.toLowerCase().includes(nameIncludes.toLowerCase()) &&
-                        categoriesFilter.every((category) => doctor.categories.includes(category)) &&
+                        (categoryFilter === undefined || categoryFilter === doctor.category) &&
                         specialitiesFilter.every((speciality) => doctor.specialities.includes(speciality)) &&
                         (distance === undefined ||
                             location === undefined ||
@@ -100,7 +101,7 @@ function MapScreen() {
                 })
                 .sort(sortOptions.get(sortKey))
         );
-    }, [doctors, location, distance, nameIncludes, categoriesFilter, specialitiesFilter, sortKey]);
+    }, [doctors, location, distance, nameIncludes, categoryFilter, specialitiesFilter, sortKey]);
 
     useEffect(() => {
         setDoctorsInPage(() => matchedDoctors.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize));
@@ -113,7 +114,6 @@ function MapScreen() {
                     <Col>
                         <Row className="border p-2 m-2">
                             <Form>
-                                {/* TODO: form fields refactoring */}
                                 <Form.Group as={Row}>
                                     <Form.Label column htmlFor="address">
                                         Address
@@ -184,20 +184,21 @@ function MapScreen() {
                                     </Col>
                                 </Form.Group>
                                 <Form.Group as={Row}>
-                                    <Form.Label column>Categories</Form.Label>
+                                    <Form.Label column>Category</Form.Label>
                                     <Col sm={9}>
-                                        <CheckboxesGroupFormField
+                                        <ComboboxFormField
                                             field={{
-                                                type: "checkboxesGroup",
-                                                label: "Categories",
-                                                getter: () => categoriesFilter,
-                                                setter: (_, newCategories: string[]) =>
-                                                    setCategoriesFilter(newCategories) as undefined,
+                                                type: "combobox",
+                                                label: "Category",
+                                                getter: () => categoryFilter,
+                                                setter: (_, newCategory: string | undefined) =>
+                                                    setCategoryFilter(newCategory) as undefined,
                                                 options: categories.map((category: DoctorCategory) => {
                                                     return { key: category.name, value: category.name };
                                                 }),
                                             }}
                                             object={undefined}
+                                            allowEmptySelection={true}
                                         />
                                     </Col>
                                 </Form.Group>
@@ -288,7 +289,13 @@ function MapScreen() {
                                                             lat: Number(doctorLocation.lat!),
                                                             lng: Number(doctorLocation.lng!),
                                                         };
-                                                    }),
+                                                    })
+                                                    .filter(
+                                                        (doctorLocation) =>
+                                                            distance === undefined ||
+                                                            location === undefined ||
+                                                            getDistance(location, doctorLocation) <= distance
+                                                    ),
                                                 showInfoWindow: (doctor: Doctor) =>
                                                     currentDoctor === doctor ||
                                                     (currentDoctor === null && previousDoctor === doctor),

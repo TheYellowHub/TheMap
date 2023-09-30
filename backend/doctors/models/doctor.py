@@ -24,7 +24,7 @@ class Doctor(models.Model):
     gender = models.CharField(
         max_length=1, choices=GENDER_CHOICES, default=GENDER_CHOICES[0][0]
     )
-    categories = models.ManyToManyField(DoctorCategory, blank=True)
+    category = models.ForeignKey(DoctorCategory, blank=True, null=True, on_delete=models.SET_NULL)
     specialities = models.ManyToManyField(DoctorSpeciality, blank=True)
     websites = ArrayField(models.URLField(), default=list, null=True, blank=True)
     i_care_better = models.URLField(blank=True)
@@ -57,9 +57,6 @@ class DoctorLocation(models.Model):
     phone = PhoneNumberField(null=True, blank=True)
     email = models.EmailField(null=True, blank=True)
     private_only = models.BooleanField(default=False)
-
-    class Meta:
-        unique_together = ["doctor", "hospital_name"]
 
     def __str__(self) -> str:
         return f"{self.address} / {self.hospital_name}"

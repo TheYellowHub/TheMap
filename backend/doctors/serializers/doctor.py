@@ -30,8 +30,8 @@ class DoctorBasicSerializer(WritableNestedModelSerializer):
         many=True,
     )
 
-    categories = serializers.SlugRelatedField(
-        many=True, queryset=DoctorCategory.objects.all(), slug_field="name"
+    category = serializers.SlugRelatedField(
+        many=False, queryset=DoctorCategory.objects.all(), slug_field="name", allow_null=True
     )
 
     specialities = serializers.SlugRelatedField(

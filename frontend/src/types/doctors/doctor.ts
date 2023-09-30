@@ -37,7 +37,7 @@ export type Doctor = {
     fullName: string;
     gender: DoctorGender;
     locations: DoctorLocation[];
-    categories: string[];
+    category?: string;
     specialities: string[];
     websites: Url[];
     iCareBetter?: Url;
@@ -58,7 +58,6 @@ export const newDoctor = (): Doctor => {
         fullName: "",
         gender: "M",
         locations: [],
-        categories: [],
         specialities: [],
         websites: [],
     };

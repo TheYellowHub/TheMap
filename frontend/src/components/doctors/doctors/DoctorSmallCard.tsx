@@ -23,7 +23,9 @@ function DoctorSmallCard({
         <div className="doctorSmallCard" onClick={onClick}>
             {doctor.fullName}
             <br />
-            {doctor.categories}
+            {doctor.category}
+            <br />
+            {doctor.specialities}
             <br />
             {distance && distance !== Infinity && (
                 <p>
