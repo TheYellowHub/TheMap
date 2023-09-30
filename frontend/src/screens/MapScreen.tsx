@@ -91,6 +91,7 @@ function MapScreen() {
                             ? undefined
                             : doctorDistanceFromLocation(doctor, location, distanceUnit);
                     return (
+                        doctor.status === "APPROVED" &&
                         doctor.fullName?.toLowerCase().includes(nameIncludes.toLowerCase()) &&
                         (categoryFilter === undefined || categoryFilter === doctor.category) &&
                         specialitiesFilter.every((speciality) => doctor.specialities.includes(speciality)) &&
@@ -128,11 +129,7 @@ function MapScreen() {
                                                 },
                                                 setter: (_: undefined, newAddress: string) => {
                                                     setAddress(newAddress);
-                                                    getLocation(newAddress).then((location) => {
-                                                        if (location !== undefined) {
-                                                            setLocation(location);
-                                                        }
-                                                    });
+                                                    getLocation(newAddress).then((location) => setLocation(location));
                                                     return undefined;
                                                 },
                                             }}
@@ -268,7 +265,7 @@ function MapScreen() {
                     </Col>
                     <Col className="border p-2 m-2">
                         <Container className="map">
-                            {location && (
+                            {
                                 <GoogleMap<Doctor>
                                     center={location}
                                     markers={matchedDoctors
@@ -310,7 +307,7 @@ function MapScreen() {
                                         })
                                         .filter((markersGroup) => markersGroup.locations.length > 0)}
                                 />
-                            )}
+                            }
                         </Container>
                     </Col>
                 </Row>
