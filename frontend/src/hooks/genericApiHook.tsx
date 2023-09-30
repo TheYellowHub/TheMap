@@ -30,13 +30,16 @@ export default function genericApiHook<T extends RequestDataItem>(
         const updateItem = async (t: T) => {
             const newItem = t.id === undefined;
             let fileProperties = {};
-            const withoutfileProperties = { ...t };
+            let withoutfileProperties = { ...t };
             for (const property in t) {
                 if (t[property] instanceof File) {
                     fileProperties = { ...fileProperties, [property]: t[property] };
                     delete withoutfileProperties[property];
+                } else if (t[property] === undefined) {
+                    withoutfileProperties = { ...withoutfileProperties, [property]: null };
                 }
             }
+
             let response;
             let id = t.id;
             if (1 < Object.keys(withoutfileProperties).length) {

@@ -1,5 +1,6 @@
 import { ReactElement, useEffect, useMemo, useState } from "react";
 import { Libraries, LoadScriptNext } from "@react-google-maps/api";
+import logError from "../log";
 
 interface GoogleMapsLoaderProps {
     setGoogleMapsIsLoaded: (setGoogleMapsIsLoaded: boolean) => void;
@@ -19,9 +20,7 @@ function GoogleMapsLoader({ setGoogleMapsIsLoaded, children }: GoogleMapsLoaderP
     const [wasLoaded, setWasLoaded] = useState(false);
 
     const handleLoadingError = (error: Error) => {
-        if (process.env.NODE_ENV === "development") {
-            console.log(`Google maps failed to load: ${error}`);
-        }
+        logError(new Error(`Google maps failed to load: ${error}`));
         setGoogleMapsIsLoaded(false);
     };
 

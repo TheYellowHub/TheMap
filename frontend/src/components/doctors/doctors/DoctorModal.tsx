@@ -67,6 +67,7 @@ function DoctorModal({ doctor, showModal, onCancel, onSave, isSaving, isSavingEr
                     value: doctorGenderToString(gender),
                 };
             }),
+            required: true,
         },
         {
             type: "list",
@@ -131,15 +132,16 @@ function DoctorModal({ doctor, showModal, onCancel, onSave, isSaving, isSavingEr
             ],
         } as ListField<Doctor, DoctorLocation>,
         {
-            type: "checkboxesGroup",
-            label: "Categories",
-            getter: (doctor) => doctor.categories,
-            setter: (doctor, newCategories) => {
-                return { ...doctor, categories: newCategories };
+            type: "combobox",
+            label: "Category",
+            getter: (doctor) => doctor.category,
+            setter: (doctor, newCategory) => {
+                return { ...doctor, category: newCategory };
             },
             options: categories.map((category: DoctorCategory) => {
                 return { key: category.name, value: category.name };
             }),
+            required: false,
         },
         {
             type: "checkboxesGroup",
@@ -209,6 +211,7 @@ function DoctorModal({ doctor, showModal, onCancel, onSave, isSaving, isSavingEr
                     value: doctorStatusToString(status),
                 };
             }),
+            required: true,
         },
         {
             type: "datetime",
