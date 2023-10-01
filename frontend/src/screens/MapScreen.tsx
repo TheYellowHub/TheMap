@@ -47,7 +47,7 @@ function MapScreen() {
 
     // TODO: change the URL
     const addAdoctorLink = (reactNode: ReactNode) => (
-        <a href="#/doctors/add" target="_blank" rel="noreferrer">
+        <a href="https://urlzs.com/bVdAh" target="_blank" rel="noreferrer">
             {reactNode}
         </a>
     );
