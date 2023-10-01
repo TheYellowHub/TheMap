@@ -3,6 +3,7 @@ import logError from "../log";
 export type Location = {
     lat: number;
     lng: number;
+    country?: string;
 };
 
 const locationPerAddressCache = new Map<string, Location>();
@@ -36,6 +37,7 @@ function getLocation(address: string): Promise<Location | undefined> {
                         const location = {
                             lat: geocoderResponse.results[0].geometry.location.lat(),
                             lng: geocoderResponse.results[0].geometry.location.lng(),
+                            country: geocoderResponse.results[0].address_components.slice(-1)[0].short_name,
                         };
                         locationPerAddressCache.set(address, location);
                         return location;

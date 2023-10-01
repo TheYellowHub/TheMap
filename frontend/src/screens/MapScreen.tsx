@@ -33,8 +33,7 @@ function MapScreen() {
     const [location, setLocation] = useState<Location | undefined>();
     const [address, setAddress] = useState("");
     const [distance, setDistance] = useState<number | undefined>(50);
-    const [distanceUnitsAsKm, setDistanceUnitsAsKm] = useState(false);
-    const distanceUnit = distanceUnitsAsKm ? "KM" : "Mile";
+    const distanceUnit = location?.country === "US" ? "Mile" : "KM";
 
     const [nameIncludes, setNameIncluds] = useState("");
     const [categoryFilter, setCategoryFilter] = useState<string | undefined>();
@@ -151,21 +150,6 @@ function MapScreen() {
                                             }
                                         />
                                     </Col>
-                                    <Col sm={4}>
-                                        <Form.Label column className="d-inline-block" htmlFor="distance-units">
-                                            Mile
-                                        </Form.Label>
-                                        <Form.Check
-                                            className="d-inline-block"
-                                            type="switch"
-                                            id="distance-units"
-                                            checked={distanceUnitsAsKm}
-                                            onChange={(e) => setDistanceUnitsAsKm(e.target.checked)}
-                                        />
-                                        <Form.Label column className="d-inline-block" htmlFor="distance-units">
-                                            KM
-                                        </Form.Label>
-                                    </Col>
                                 </Form.Group>
                                 <Form.Group as={Row}>
                                     <Form.Label column htmlFor="name">
@@ -177,6 +161,7 @@ function MapScreen() {
                                             id="name"
                                             value={nameIncludes}
                                             onChange={(e) => setNameIncluds(e.target.value)}
+                                            autoComplete="off"
                                         />
                                     </Col>
                                 </Form.Group>
@@ -265,49 +250,47 @@ function MapScreen() {
                     </Col>
                     <Col className="border p-2 m-2">
                         <Container className="map">
-                            {
-                                <GoogleMap<Doctor>
-                                    center={location}
-                                    markers={matchedDoctors
-                                        .map((doctor) => {
-                                            return {
-                                                obj: doctor,
-                                                title: doctor.fullName,
-                                                locations: doctor.locations
-                                                    .filter(
-                                                        (doctorLocation) =>
-                                                            doctorLocation.lat !== undefined &&
-                                                            doctorLocation.lat !== null &&
-                                                            doctorLocation.lng !== undefined &&
-                                                            doctorLocation.lng !== null
-                                                    )
-                                                    .map((doctorLocation) => {
-                                                        return {
-                                                            lat: Number(doctorLocation.lat!),
-                                                            lng: Number(doctorLocation.lng!),
-                                                        };
-                                                    })
-                                                    .filter(
-                                                        (doctorLocation) =>
-                                                            distance === undefined ||
-                                                            location === undefined ||
-                                                            getDistance(location, doctorLocation) <= distance
-                                                    ),
-                                                showInfoWindow: (doctor: Doctor) =>
-                                                    currentDoctor === doctor ||
-                                                    (currentDoctor === null && previousDoctor === doctor),
-                                                onClosingInfoWindow: () => {
-                                                    setPreviousDoctor(currentDoctor);
-                                                    setCurrentDoctor(null);
-                                                },
-                                                onClick: () => {
-                                                    setCurrentDoctor(doctor);
-                                                },
-                                            };
-                                        })
-                                        .filter((markersGroup) => markersGroup.locations.length > 0)}
-                                />
-                            }
+                            <GoogleMap<Doctor>
+                                center={location}
+                                markers={matchedDoctors
+                                    .map((doctor) => {
+                                        return {
+                                            obj: doctor,
+                                            title: doctor.fullName,
+                                            locations: doctor.locations
+                                                .filter(
+                                                    (doctorLocation) =>
+                                                        doctorLocation.lat !== undefined &&
+                                                        doctorLocation.lat !== null &&
+                                                        doctorLocation.lng !== undefined &&
+                                                        doctorLocation.lng !== null
+                                                )
+                                                .map((doctorLocation) => {
+                                                    return {
+                                                        lat: Number(doctorLocation.lat!),
+                                                        lng: Number(doctorLocation.lng!),
+                                                    };
+                                                })
+                                                .filter(
+                                                    (doctorLocation) =>
+                                                        distance === undefined ||
+                                                        location === undefined ||
+                                                        getDistance(location, doctorLocation) <= distance
+                                                ),
+                                            showInfoWindow: (doctor: Doctor) =>
+                                                currentDoctor === doctor ||
+                                                (currentDoctor === null && previousDoctor === doctor),
+                                            onClosingInfoWindow: () => {
+                                                setPreviousDoctor(currentDoctor);
+                                                setCurrentDoctor(null);
+                                            },
+                                            onClick: () => {
+                                                setCurrentDoctor(doctor);
+                                            },
+                                        };
+                                    })
+                                    .filter((markersGroup) => markersGroup.locations.length > 0)}
+                            />
                         </Container>
                     </Col>
                 </Row>
