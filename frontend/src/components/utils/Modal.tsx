@@ -10,7 +10,7 @@ import BooleanFormField from "./form/booleanField";
 import CheckboxesGroupFormField from "./form/checkboxesGroupField";
 import ComboboxFormField from "./form/comboboxField";
 import Icon from "./Icon";
-import FileFormField from "./form/fileField";
+import ImageFormField from "./form/imageField";
 import { ResponseError } from "../../utils/request";
 import AddressInputFormField from "./form/addressField";
 
@@ -143,9 +143,9 @@ function Modal<T>({
                     wrapAsFormRow
                 );
                 break;
-            case "file":
+            case "image":
                 return reacteNodeWrapperTwoColumns(
-                    <FileFormField<O> field={field} object={object} onChange={onChange} />,
+                    <ImageFormField<O> field={field} object={object} onChange={onChange} />,
                     field.label,
                     wrapAsFormRow
                 );

@@ -1,12 +1,13 @@
 import { GoogleMap as Map, MarkerF, InfoWindowF } from "@react-google-maps/api";
 
 import { Location } from "../../utils/googleMaps/useGoogleMaps";
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef } from "react";
 
 interface MarkersGroup<T> {
     obj: T;
     title: string;
     locations: Location[];
+    icon?: string;
     showInfoWindow: (t: T) => boolean;
     onClosingInfoWindow?: () => void;
     onClick?: () => void;
@@ -21,6 +22,11 @@ const emptyMarkersArray: MarkersGroup<unknown>[] = [];
 
 function GoogleMap<T>({ center, markers = emptyMarkersArray as MarkersGroup<T>[] }: GoogleMapProps<T>) {
     const minimalZoom = 13;
+
+    // TODO?
+    // const iconWidth = 70 / 3;
+    // const iconHeight = 85 / 3;
+
     const locationToStr = (location: Location) => `location-${location.lat}/${location.lng}`;
     const mapRef = useRef<google.maps.Map | null>(null);
 
@@ -60,6 +66,13 @@ function GoogleMap<T>({ center, markers = emptyMarkersArray as MarkersGroup<T>[]
                             <MarkerF
                                 key={`marker-${locationToStr(location)}`}
                                 title={markersGroup.title}
+                                icon={
+                                    markersGroup.icon && {
+                                        url: markersGroup.icon,
+                                        // scaledSize: new window.google.maps.Size(iconWidth, iconHeight),
+                                        // size: new window.google.maps.Size(iconWidth, iconHeight),
+                                    }
+                                }
                                 position={location}
                                 onClick={() => {
                                     if (markersGroup.onClick !== undefined) {

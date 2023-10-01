@@ -39,6 +39,14 @@ function DoctorCategoriesModal({
             },
         },
         {
+            type: "image",
+            label: "Icon",
+            getter: (doctorCategory) => doctorCategory.icon,
+            setter: (doctorCategory, newValue) => {
+                return { ...doctorCategory, icon: newValue };
+            },
+        },
+        {
             type: "boolean",
             label: "Active",
             getter: (doctorCategory) => doctorCategory.active,

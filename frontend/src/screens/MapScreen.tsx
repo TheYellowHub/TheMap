@@ -257,6 +257,9 @@ function MapScreen() {
                                         return {
                                             obj: doctor,
                                             title: doctor.fullName,
+                                            icon: categories.filter(
+                                                (category: DoctorCategory) => category.name === doctor.category
+                                            )[0]?.icon,
                                             locations: doctor.locations
                                                 .filter(
                                                     (doctorLocation) =>

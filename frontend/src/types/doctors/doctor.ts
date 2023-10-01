@@ -1,5 +1,6 @@
 import { DistanceUnit, kmToMile } from "../../components/utils/DistanceUnit";
 import useGoogleMaps, { Location } from "../../utils/googleMaps/useGoogleMaps";
+import { ImageFileOrUrl } from "../Image";
 import { DateTime } from "../utils/dateTime";
 import { Email } from "../utils/email";
 import { ID } from "../utils/id";
@@ -42,7 +43,7 @@ export type Doctor = {
     websites: Url[];
     iCareBetter?: Url;
     nancysNook?: boolean;
-    image?: File | string;
+    image?: ImageFileOrUrl;
     status?: DoctorStatus;
     // TODO: addedBy?: User;
     addedAt?: DateTime;
