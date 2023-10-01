@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { Col, Container, Form, Row } from "react-bootstrap";
 
 import { Doctor, doctorDistanceFromLocation } from "../types/doctors/doctor";
@@ -17,6 +17,8 @@ import GoogleMap from "../components/map/GoogleMap";
 import useGoogleMaps, { Location } from "../utils/googleMaps/useGoogleMaps";
 import AddressInputFormField from "../components/utils/form/addressField";
 import ComboboxFormField from "../components/utils/form/comboboxField";
+import Message from "../components/utils/Message";
+import Button from "../components/utils/Button";
 
 function MapScreen() {
     const { setCurrentLocation, getAddress, getLocation, getDistance, isLoaded: isGoogleMapsLoaded } = useGoogleMaps();
@@ -42,6 +44,13 @@ function MapScreen() {
     const [sortKey, setSortKey] = useState<string>("Name");
     const [pageIndex, setPageIndex] = useState(0);
     const [pageSize, setPageSize] = useState(10); // TODO: initial value according to the view, i.e. how many doctors fit in?
+
+    // TODO: change the URL
+    const addAdoctorLink = (reactNode: ReactNode) => (
+        <a href="#/doctors/add" target="_blank" rel="noreferrer">
+            {reactNode}
+        </a>
+    );
 
     const sortOptions: Map<string, (a: Doctor, b: Doctor) => number> = new Map([
         [
@@ -223,30 +232,41 @@ function MapScreen() {
                                 </Form.Group>
                             </Form>
                         </Row>
-                        <Row className="border p-2 m-2">
-                            <Container className="doctorSearchResult">
-                                {doctorsInPage.map((doctor: Doctor) => (
-                                    <DoctorSmallCard
-                                        key={doctor.id}
-                                        doctor={doctor}
-                                        locationForDistanceCalculation={location}
-                                        distanceUnit={distanceUnit}
-                                        onClick={() => {
-                                            setCurrentDoctor(doctor);
-                                        }}
+                        {matchedDoctors.length > 0 ? (
+                            <>
+                                <Row className="border p-2 m-2">
+                                    <Container className="doctorSearchResult">
+                                        {doctorsInPage.map((doctor: Doctor) => (
+                                            <DoctorSmallCard
+                                                key={doctor.id}
+                                                doctor={doctor}
+                                                locationForDistanceCalculation={location}
+                                                distanceUnit={distanceUnit}
+                                                onClick={() => {
+                                                    setCurrentDoctor(doctor);
+                                                }}
+                                            />
+                                        ))}
+                                    </Container>
+                                </Row>
+                                <Row className="border p-2 m-2">
+                                    <Pagination
+                                        rowsCount={matchedDoctors.length}
+                                        pageIndex={pageIndex}
+                                        pageSize={pageSize}
+                                        setPageIndex={setPageIndex}
+                                        setPageSize={setPageSize}
                                     />
-                                ))}
-                            </Container>
-                        </Row>
-                        <Row className="border p-2 m-2">
-                            <Pagination
-                                rowsCount={matchedDoctors.length}
-                                pageIndex={pageIndex}
-                                pageSize={pageSize}
-                                setPageIndex={setPageIndex}
-                                setPageSize={setPageSize}
-                            />
-                        </Row>
+                                </Row>
+                            </>
+                        ) : (
+                            <>
+                                <Message variant="warning">
+                                    No doctors were found. If you know such doctor, please
+                                    {addAdoctorLink(<>let us know</>)}
+                                </Message>
+                            </>
+                        )}
                     </Col>
                     <Col className="border p-2 m-2">
                         <Container className="map">
@@ -294,6 +314,9 @@ function MapScreen() {
                                     })
                                     .filter((markersGroup) => markersGroup.locations.length > 0)}
                             />
+                            <div className="aboveMap">
+                                {addAdoctorLink(<Button variant="success" label="Recommend a doctor"></Button>)}
+                            </div>
                         </Container>
                     </Col>
                 </Row>

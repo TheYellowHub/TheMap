@@ -101,7 +101,17 @@ input[type="checkbox"] {
 }
 
 .map {
+    position: relative;
     height: 80vh;   /* TODO: fix */
+    z-index: 1;
+}
+
+.aboveMap {
+    position: relative;
+    bottom: 70px;
+    right: 20px;
+    z-index: 2;
+    text-align: end;
 }
 
 .pac-container {
