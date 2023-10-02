@@ -116,6 +116,7 @@ input[type="checkbox"] {
 }
 
 .doctorBigCard div {
+    position:fixed;
     background-color: plum; /* TODO: delete */
     max-width: 60%;
 }

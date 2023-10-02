@@ -3,29 +3,23 @@ import { GoogleMap as Map, MarkerF, InfoWindowF } from "@react-google-maps/api";
 import { Location } from "../../utils/googleMaps/useGoogleMaps";
 import { Fragment, useEffect, useRef } from "react";
 
-interface MarkersGroup<T> {
-    obj: T;
+export interface Marker {
     title: string;
-    locations: Location[];
+    location: Location;
+    inBounds: boolean;
     icon?: string;
-    showInfoWindow: (t: T) => boolean;
-    onClosingInfoWindow?: () => void;
     onClick?: () => void;
 }
 
-interface GoogleMapProps<T> {
+interface GoogleMapProps {
     center: Location | undefined;
-    markers?: MarkersGroup<T>[];
+    markers?: Marker[];
 }
 
-const emptyMarkersArray: MarkersGroup<unknown>[] = [];
+const emptyMarkersArray: Marker[] = [];
 
-function GoogleMap<T>({ center, markers = emptyMarkersArray as MarkersGroup<T>[] }: GoogleMapProps<T>) {
+function GoogleMap({ center, markers = emptyMarkersArray as Marker[] }: GoogleMapProps) {
     const minimalZoom = 13;
-
-    // TODO?
-    // const iconWidth = 70 / 3;
-    // const iconHeight = 85 / 3;
 
     const locationToStr = (location: Location) => `location-${location.lat}/${location.lng}`;
     const mapRef = useRef<google.maps.Map | null>(null);
@@ -37,7 +31,7 @@ function GoogleMap<T>({ center, markers = emptyMarkersArray as MarkersGroup<T>[]
     const fitBounds = () => {
         if (mapRef.current !== null) {
             const bounds = new window.google.maps.LatLngBounds();
-            markers.map((markersGroup) => markersGroup.locations.map((location) => bounds.extend(location)));
+            markers.filter((marker) => marker.inBounds).map((marker) => bounds.extend(marker.location));
             if (center !== undefined) {
                 bounds.extend(center);
             }
@@ -60,38 +54,25 @@ function GoogleMap<T>({ center, markers = emptyMarkersArray as MarkersGroup<T>[]
                 center={center}
                 onLoad={handleMapLoad}
             >
-                {markers.map((markersGroup) =>
-                    markersGroup.locations.map((location) => (
-                        <Fragment key={`location-${locationToStr(location)}`}>
-                            <MarkerF
-                                key={`marker-${locationToStr(location)}`}
-                                title={markersGroup.title}
-                                icon={
-                                    markersGroup.icon && {
-                                        url: markersGroup.icon,
-                                        // scaledSize: new window.google.maps.Size(iconWidth, iconHeight),
-                                        // size: new window.google.maps.Size(iconWidth, iconHeight),
-                                    }
+                {markers.map((marker) => (
+                    <Fragment key={`location-${locationToStr(marker.location)}-${marker.icon}`}>
+                        <MarkerF
+                            key={`marker-${locationToStr(marker.location)}`}
+                            title={marker.title}
+                            icon={
+                                marker.icon && {
+                                    url: marker.icon,
                                 }
-                                position={location}
-                                onClick={() => {
-                                    if (markersGroup.onClick !== undefined) {
-                                        markersGroup.onClick();
-                                    }
-                                }}
-                            />
-                            {markersGroup.showInfoWindow(markersGroup.obj) && (
-                                <InfoWindowF
-                                    key={`info-window-${locationToStr(location)}`}
-                                    position={location}
-                                    onCloseClick={markersGroup.onClosingInfoWindow}
-                                >
-                                    <p>{markersGroup.title}</p>
-                                </InfoWindowF>
-                            )}
-                        </Fragment>
-                    ))
-                )}
+                            }
+                            position={marker.location}
+                            onClick={() => {
+                                if (marker.onClick !== undefined) {
+                                    marker.onClick();
+                                }
+                            }}
+                        />
+                    </Fragment>
+                ))}
             </Map>
         </div>
     );

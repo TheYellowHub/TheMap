@@ -3,7 +3,6 @@ import { Image, Nav, NavDropdown, Navbar } from "react-bootstrap";
 import { EventKey, SelectCallback } from "@restart/ui/esm/types";
 
 import config from "../../config.json";
-import logo from "../../ribbon.svg";
 import Icon from "./Icon";
 import { Link } from "react-router-dom";
 
@@ -13,7 +12,7 @@ function Header() {
     const [selectedPage, setSelectedPage] = useState<EventKey | null>(null);
 
     const appName = "The Yellow Hub Map";
-    const logoUrl = config.app.logoUrl ? config.app.logoUrl : logo;
+    const logoUrl = config.app.logoUrl ? config.app.logoUrl : "/images/ribbon.svg";
 
     type Link = {
         to: string;
