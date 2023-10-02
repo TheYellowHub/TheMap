@@ -96,66 +96,67 @@ function Header() {
     ];
 
     return (
-        <header>
-            <Navbar expand="lg" className="bg-light bg-body-tertiary" collapseOnSelect>
-                <Navbar.Toggle aria-controls="navbarCollapse" />
-                <Nav.Link as={Link} to="/" className="no-padding" eventKey="home" onClick={() => setSelectedPage(null)}>
-                    <Navbar.Brand>
-                        <Image src={logoUrl} className="logo" />
-                        {appName}
-                    </Navbar.Brand>
-                </Nav.Link>
-                <Navbar.Text>
-                    <Icon icon="fa-user" />
-                    Hello user{/* TODO: Login / Hello user / Logout */}
-                </Navbar.Text>
-                <Navbar.Collapse id="navbarCollapse">
-                    <Nav activeKey={selectedPage as EventKey} onSelect={setSelectedPage as SelectCallback}>
-                        {links.map((link: LinksGroup | Link) => {
-                            if (isGroup(link)) {
-                                return (
-                                    <NavDropdown
-                                        key={link.title}
-                                        title={
-                                            <>
-                                                {link.icon && <Icon icon={link.icon} />}
-                                                {link.title}
-                                            </>
-                                        }
-                                    >
-                                        {link.links.map((link) => (
-                                            <NavDropdown.Item
-                                                key={link.to}
-                                                as={Link}
-                                                to={`/${link.to}`}
-                                                onClick={link.onClick}
-                                                eventKey={link.to}
-                                            >
-                                                {link.icon && <Icon icon={link.icon} />}
-                                                {link.title}
-                                            </NavDropdown.Item>
-                                        ))}
-                                    </NavDropdown>
-                                );
-                            } else {
-                                return (
-                                    <Nav.Link
-                                        key={link.to}
-                                        as={Link}
-                                        to={`/${link.to}`}
-                                        onClick={link.onClick}
-                                        eventKey={link.to}
-                                    >
-                                        {link.icon && <Icon icon={link.icon} />}
-                                        {link.title}
-                                    </Nav.Link>
-                                );
-                            }
-                        })}
-                    </Nav>
-                </Navbar.Collapse>
-            </Navbar>
-        </header>
+        <Navbar expand="lg" className="bg-light bg-body-tertiary aboveAll header" collapseOnSelect>
+            <Navbar.Toggle aria-controls="navbarCollapse" />
+            <Nav.Link as={Link} to="/" className="no-padding" eventKey="home" onClick={() => setSelectedPage(null)}>
+                <Navbar.Brand>
+                    <Image src={logoUrl} className="logo" />
+                    {appName}
+                </Navbar.Brand>
+            </Nav.Link>
+
+            {/* TODO: Login / Hello user / Logout */}
+            {/* <Navbar.Text>
+                <Icon icon="fa-user" />
+                Hello user
+            </Navbar.Text> */}
+
+            <Navbar.Collapse id="navbarCollapse">
+                <Nav activeKey={selectedPage as EventKey} onSelect={setSelectedPage as SelectCallback}>
+                    {links.map((link: LinksGroup | Link) => {
+                        if (isGroup(link)) {
+                            return (
+                                <NavDropdown
+                                    key={link.title}
+                                    title={
+                                        <>
+                                            {link.icon && <Icon icon={link.icon} />}
+                                            {link.title}
+                                        </>
+                                    }
+                                >
+                                    {link.links.map((link) => (
+                                        <NavDropdown.Item
+                                            key={link.to}
+                                            as={Link}
+                                            to={`/${link.to}`}
+                                            onClick={link.onClick}
+                                            eventKey={link.to}
+                                        >
+                                            {link.icon && <Icon icon={link.icon} />}
+                                            {link.title}
+                                        </NavDropdown.Item>
+                                    ))}
+                                </NavDropdown>
+                            );
+                        } else {
+                            return (
+                                <Nav.Link
+                                    key={link.to}
+                                    as={Link}
+                                    to={`/${link.to}`}
+                                    onClick={link.onClick}
+                                    eventKey={link.to}
+                                >
+                                    {link.icon && <Icon icon={link.icon} />}
+                                    {link.title}
+                                </Nav.Link>
+                            );
+                        }
+                    })}
+                </Nav>
+            </Navbar.Collapse>
+        </Navbar>
     );
 }
 

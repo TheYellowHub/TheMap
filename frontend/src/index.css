@@ -1,20 +1,36 @@
-.app {
-    padding: 0rem;
-    margin: 0rem;
+:root {
+    --header-height: 4rem;
+    --footer-height: 2rem;
+    --layout-padding: 0.5rem;
+    --main-height: calc(100vh - var(--footer-height))
 }
 
 header {
-    position: sticky;
+    position: fixed;
     width: 100vw;
+    height: var(--header-height);
+    min-height: var(--header-height);
+    z-index: 99;
 }
 
 main {
-    padding: 0.5rem;
+    position: relative;
+    width: 100vw;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    padding-top: calc(var(--header-height) + var(--layout-padding));
+    padding-bottom: var(--layout-padding);
+    min-height: var(--main-height);
+}
+
+.footer {
+    align-items: center;
+    height: var(--footer-height);
+    min-height: var(--footer-height);
 }
 
 footer {
-    position: fixed;
-    bottom: 0;
+    position:absolute;
     width: 100vw;
 }
 
@@ -23,8 +39,8 @@ footer {
 }
 
 .logo {
-    padding: 0rem 1rem;
-    height: 3rem;
+    padding: 0rem 0rem;
+    height: 2.5rem;
 }
 
 .navbar {
@@ -38,6 +54,10 @@ footer {
 
 .nav-item {
     margin-right: 0rem;
+}
+
+.navbar-brand {
+    margin: 0px;
 }
 
 th {
@@ -102,7 +122,8 @@ input[type="checkbox"] {
 
 .map {
     position: relative;
-    height: 80vh;   /* TODO: fix */
+    min-height: calc(100vh - 10rem);
+    height: calc(100vh - 10rem);
     z-index: 1;
 }
 
@@ -112,6 +133,11 @@ input[type="checkbox"] {
     right: 20px;
     z-index: 2;
     text-align: end;
+}
+
+.gm-style .gm-style-iw-c, 
+.gm-style .gm-style-iw-tc {
+    top: -25px;
 }
 
 .pac-container {

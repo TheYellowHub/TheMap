@@ -262,7 +262,7 @@ function MapScreen() {
                         ) : (
                             <>
                                 <Message variant="warning">
-                                    No doctors were found. If you know such doctor, please
+                                    No doctors were found. If you know such doctor, please&nbsp;
                                     {addAdoctorLink(<>let us know</>)}
                                 </Message>
                             </>
