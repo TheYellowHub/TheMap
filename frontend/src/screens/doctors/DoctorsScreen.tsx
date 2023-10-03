@@ -42,6 +42,9 @@ function DoctorsScreen() {
                         resetMutation();
                         setCurrentDoctor(doctorDoctor);
                     }}
+                    actionButton={
+                        <Button label="Add doctor" variant="success" onClick={() => setCurrentDoctor(newDoctor())} />
+                    }
                 />
                 {currentDoctor && (
                     <DoctorModal
@@ -57,7 +60,6 @@ function DoctorsScreen() {
                         savingError={mutateError as ResponseError}
                     />
                 )}
-                <Button label="Add doctor" variant="success" onClick={() => setCurrentDoctor(newDoctor())} />
             </LoadingWrapper>
         </>
     );

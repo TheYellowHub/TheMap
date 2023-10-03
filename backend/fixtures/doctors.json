@@ -4,9 +4,7 @@
         "fields": {
             "full_name": "Helen Smith",
             "gender": "F",
-            "categories": [
-                1
-            ],
+            "category": 1,
             "specialities": [
                 5,
                 6
@@ -25,9 +23,7 @@
         "fields": {
             "full_name": "Brandon",
             "gender": "M",
-            "categories": [
-                2
-            ],
+            "category": 2,
             "specialities": [
                 2,
                 5,

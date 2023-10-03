@@ -11,10 +11,11 @@ interface FileFormFieldProps<T> {
 }
 
 export default function FileFormField<T>({ field, object, onChange = undefined }: FileFormFieldProps<T>) {
-    const currentFileLink = field.getter(object) as any as string;
+    const currentFileLink = field.getter(object);
     return (
         <>
             <Form.Control
+                id={field.label}
                 type="file"
                 readOnly={field.setter === undefined}
                 onChange={(e: FocusEvent<HTMLInputElement>) => {
@@ -27,7 +28,14 @@ export default function FileFormField<T>({ field, object, onChange = undefined }
                 }}
                 required={field.required}
             />
-            {currentFileLink && <Button label="Download current" href={currentFileLink} target="_blank" />}
+            {typeof currentFileLink === "string" && (
+                <Button
+                    label={currentFileLink.substring(currentFileLink.lastIndexOf("/") + 1)}
+                    variant="info"
+                    href={currentFileLink}
+                    target="_blank"
+                />
+            )}
         </>
     );
 }

@@ -1,16 +1,18 @@
 import { createColumnHelper } from "@tanstack/react-table";
+import { ReactNode } from "react";
 
-import { Doctor } from "../../../types/doctors/doctor";
+import { Doctor, doctorStatusToString, doctorStatuses } from "../../../types/doctors/doctor";
 import Button from "../../utils/Button";
-import Table from "../../utils/Table";
+import Table, { ColumnFilter } from "../../utils/Table";
 import Message from "../../utils/Message";
 
 interface DoctorsTableProps {
     doctors: Doctor[];
     setCurrentDoctor: (doctor: Doctor | null) => void;
+    actionButton?: ReactNode;
 }
 
-function DoctorsTable({ doctors, setCurrentDoctor }: DoctorsTableProps) {
+function DoctorsTable({ doctors, setCurrentDoctor, actionButton }: DoctorsTableProps) {
     const columnHelper = createColumnHelper<Doctor>();
 
     const columns = [
@@ -22,7 +24,9 @@ function DoctorsTable({ doctors, setCurrentDoctor }: DoctorsTableProps) {
         }),
         columnHelper.accessor("addedAt", {
             header: "Added at",
-            // TODO: hideable & hidden by default
+            cell: (props) => {
+                return new Date(props!.getValue() as string).toLocaleDateString("en-US");
+            },
         }),
         columnHelper.accessor("status", {
             header: "Status",
@@ -34,13 +38,16 @@ function DoctorsTable({ doctors, setCurrentDoctor }: DoctorsTableProps) {
                             status == "PENDING_APPROVAL" ? "warning" : status === "APPROVED" ? "success" : "danger"
                         }
                     >
-                        {status}
+                        {status && doctorStatusToString(status)}
                     </Message>
                 );
             },
-            // TODO: filter (default: only PENDING_APPROVAL & APPROVED)
+            filterFn: (row, _columnId, value) => {
+                return (
+                    row.original.status !== undefined && row.original.status.toLowerCase().includes(value.toLowerCase())
+                );
+            },
         }),
-        // TODO: additional fields ?
         columnHelper.display({
             id: "edit",
             cell: (props: { row: { original: Doctor } }) => (
@@ -49,7 +56,30 @@ function DoctorsTable({ doctors, setCurrentDoctor }: DoctorsTableProps) {
         }),
     ];
 
-    return <Table<Doctor> data={doctors} columns={columns} />;
+    const columnsFilters: ColumnFilter<Doctor>[] = [
+        {
+            id: "status",
+            componentProvider: (value, onChange) => (
+                <select id="filterStatus" key="filterStatus" value={value as string} onChange={onChange}>
+                    <option value="">Select status</option>
+                    {doctorStatuses.map((status) => (
+                        <option value={status} key={status}>
+                            {doctorStatusToString(status)}
+                        </option>
+                    ))}
+                </select>
+            ),
+            initialValue: "PENDING_APPROVAL",
+        },
+        {
+            id: "addedAt",
+            componentProvider: (value, onChange) => <input type="date" value={value as string} onChange={onChange} />,
+        },
+    ];
+
+    return (
+        <Table<Doctor> data={doctors} columns={columns} columnsFilters={columnsFilters} actionButton={actionButton} />
+    );
 }
 
 export default DoctorsTable;

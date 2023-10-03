@@ -12,11 +12,20 @@ interface ButtonProps extends React.PropsWithChildren {
     onClick?: React.MouseEventHandler;
     href?: string;
     target?: string;
+    className?: string;
 }
 
-function Button({ label, disabled, variant, type, icon, onClick, href, target, children }: ButtonProps) {
+function Button({ label, disabled, variant, type, icon, onClick, href, target, className, children }: ButtonProps) {
     return (
-        <ReactButton onClick={onClick} href={href} target={target} variant={variant} type={type} disabled={disabled}>
+        <ReactButton
+            className={className}
+            onClick={onClick}
+            href={href}
+            target={target}
+            variant={variant}
+            type={type}
+            disabled={disabled}
+        >
             {label}
             {children}
             {icon && <Icon icon={icon} />}

@@ -19,6 +19,7 @@ export default function BooleanFormField<T>({
     return (
         <Form.Check
             type="switch"
+            id={field.label}
             label={withLabel ? field.label : ""}
             defaultChecked={field.getter(object)}
             readOnly={field.setter === undefined}

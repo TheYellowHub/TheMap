@@ -17,6 +17,11 @@ export interface TextField<T> extends Field<T, string | undefined> {
     setter?: (t: T, newValue: string) => T;
 }
 
+export interface AddressField<T> extends Field<T, string | undefined> {
+    type: "address";
+    setter?: (t: T, newValue: string) => T;
+}
+
 export interface UrlField<T> extends Field<T, Url | undefined> {
     type: "url";
     setter?: (t: T, newValue: Url) => T;
@@ -55,7 +60,7 @@ export interface SelectOption {
 export interface ComboboxField<T> extends Field<T, string | undefined> {
     type: "combobox";
     options: SelectOption[];
-    setter?: (t: T, newValue: string) => T;
+    setter?: (t: T, newValue: string | undefined) => T;
 }
 
 export interface CheckboxesGroupField<T> extends Field<T, string[]> {
@@ -64,13 +69,14 @@ export interface CheckboxesGroupField<T> extends Field<T, string[]> {
     setter?: (t: T, newValue: string[]) => T;
 }
 
-export interface FileField<T> extends Field<T, File | undefined> {
+export interface FileField<T> extends Field<T, File | string | undefined> {
     type: "file";
-    setter?: (t: T, newValue: File) => T;
+    setter?: (t: T, newValue: File | string) => T;
 }
 
 export type ModalField<T> =
     | TextField<T>
+    | AddressField<T>
     | UrlField<T>
     | EmailField<T>
     | PhoneField<T>
@@ -85,5 +91,5 @@ export interface ListField<T, L> extends Field<T, L[]> {
     type: "list";
     setter?: (t: T, newValue: L[]) => T;
     newRecordProvider?: () => L;
-    fields: (TextField<L> | UrlField<L> | DateTimeField<L> | NumberField<L> | BooleanField<L>)[];
+    fields: (TextField<L> | AddressField<L> | UrlField<L> | DateTimeField<L> | NumberField<L> | BooleanField<L>)[];
 }

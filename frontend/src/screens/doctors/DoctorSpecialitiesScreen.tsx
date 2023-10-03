@@ -41,6 +41,13 @@ function DoctorSpecialitiesScreen() {
                         resetMutation();
                         setCurrentSpeciality(doctorSpeciality);
                     }}
+                    actionButton={
+                        <Button
+                            label="Add speciality"
+                            variant="success"
+                            onClick={() => setCurrentSpeciality(newDoctorSpeciality())}
+                        />
+                    }
                 />
                 {currentSpeciality && (
                     <DoctorSpecialitiesModal
@@ -53,11 +60,6 @@ function DoctorSpecialitiesScreen() {
                         savingError={mutateError as ResponseError}
                     />
                 )}
-                <Button
-                    label="Add speciality"
-                    variant="success"
-                    onClick={() => setCurrentSpeciality(newDoctorSpeciality())}
-                />
             </LoadingWrapper>
         </>
     );

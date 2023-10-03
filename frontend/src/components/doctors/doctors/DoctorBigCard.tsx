@@ -1,6 +1,7 @@
 import { Modal as ReactModal } from "react-bootstrap";
 
 import { Doctor } from "../../../types/doctors/doctor";
+import { Fragment } from "react";
 
 interface DoctorBigCardProps {
     doctor: Doctor;
@@ -28,8 +29,24 @@ function DoctorBigCard({ doctor, show, onClose }: DoctorBigCardProps) {
     ];
 
     return (
-        <ReactModal className="doctorBigCard" show={show} onHide={onClose} centered>
+        <ReactModal key={`DoctorBigCard-${doctor.id}`} className="doctorBigCard" show={show} onHide={onClose} centered>
             {JSON.stringify(doctor)}
+            <br />
+            {doctor.locations.map((location, index) => (
+                <Fragment key={`Location-${index}`}>
+                    <br />
+                    {location.address}
+                    <a
+                        href={`http://maps.google.com/maps/dir/?api=1&dir_action=navigate&destination=${location.address}`}
+                        key={`navigation-${index}`}
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        Navigate
+                    </a>
+                </Fragment>
+            ))}
+            {/* TODO: Present as part of the specific shown location */}
         </ReactModal>
     );
 }

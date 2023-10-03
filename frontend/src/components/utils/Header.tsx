@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Container, Image, Nav, NavDropdown, Navbar } from "react-bootstrap";
+import { Image, Nav, NavDropdown, Navbar } from "react-bootstrap";
 import { EventKey, SelectCallback } from "@restart/ui/esm/types";
 
 import config from "../../config.json";

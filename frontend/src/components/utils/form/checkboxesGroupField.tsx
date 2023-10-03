@@ -15,7 +15,7 @@ export default function CheckboxesGroupFormField<T>({
     onChange = undefined,
 }: CheckboxesGroupFormFieldProps<T>) {
     return (
-        <Container className="formControl">
+        <Container className="form-control checkboxesGroup">
             <CheckboxGroup
                 name={field.label}
                 key={field.label}

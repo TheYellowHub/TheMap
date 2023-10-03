@@ -1,3 +1,5 @@
+import { DistanceUnit, kmToMile } from "../../components/utils/DistanceUnit";
+import useGoogleMaps, { Location } from "../../utils/googleMaps/useGoogleMaps";
 import { DateTime } from "../utils/dateTime";
 import { Email } from "../utils/email";
 import { ID } from "../utils/id";
@@ -7,6 +9,8 @@ import { Url } from "../utils/url";
 export type DoctorLocation = {
     hospitalName?: string;
     address?: string;
+    lat?: number;
+    lng?: number;
     phone?: Phone;
     email?: Email;
     privateOnly: boolean;
@@ -33,12 +37,12 @@ export type Doctor = {
     fullName: string;
     gender: DoctorGender;
     locations: DoctorLocation[];
-    categories: string[]; // TODO: leave as string[]?
-    specialities: string[]; // Same
+    category?: string;
+    specialities: string[];
     websites: Url[];
     iCareBetter?: Url;
     nancysNook?: boolean;
-    image?: File;
+    image?: File | string;
     status?: DoctorStatus;
     // TODO: addedBy?: User;
     addedAt?: DateTime;
@@ -54,8 +58,26 @@ export const newDoctor = (): Doctor => {
         fullName: "",
         gender: "M",
         locations: [],
-        categories: [],
         specialities: [],
         websites: [],
     };
 };
+
+export function doctorDistanceFromLocation(doctor: Doctor, location: Location, distanceUnit: DistanceUnit): number {
+    const { getDistance } = useGoogleMaps();
+
+    let distance = Math.min(
+        ...doctor.locations
+            .filter((doctorLocation) => doctorLocation.lat && doctorLocation.lng)
+            .map((doctorLocation) =>
+                getDistance(location, { lat: Number(doctorLocation.lat!), lng: Number(doctorLocation.lng!) })
+            )
+            .filter((distance) => distance !== undefined)
+    );
+
+    if (distanceUnit === "Mile" && distance !== Infinity) {
+        distance = kmToMile(distance);
+    }
+
+    return distance;
+}

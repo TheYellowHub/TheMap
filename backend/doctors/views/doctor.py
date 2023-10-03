@@ -4,9 +4,13 @@ Doctor model related APIs
 
 from rest_framework import generics
 from django_filters import rest_framework as filters
+import logging
 
 from ..models.doctor import Doctor
 from ..serializers.doctor import DoctorBasicSerializer, DoctorExtendedSerializer
+
+
+logger = logging.getLogger(__name__)
 
 
 class DoctorFilter(filters.FilterSet):
@@ -21,7 +25,7 @@ class DoctorFilter(filters.FilterSet):
         model = Doctor
         fields = (
             "status",
-            "categories",
+            "category",
             "specialities",
         )
 
@@ -31,7 +35,7 @@ class DoctorListView(generics.ListAPIView):
     Get list of doctors with thies basic info, matching the search criteria.
     Usage:
         /api/doctors/doctor/list
-        /api/doctors/doctor/list?categories=1&categories=2&specialities=1&status=1
+        /api/doctors/doctor/list?category=1&category=2&specialities=1&status=1
         /api/doctors/doctor/list?full_name=jesi
         /api/doctors/doctor/list?&status_name=pending_approval
     """
@@ -59,6 +63,10 @@ class DoctorUpdateView(generics.UpdateAPIView):
 
     queryset = Doctor.objects.all()
     serializer_class = DoctorBasicSerializer
+
+    def patch(self, request, *args, **kwargs):
+        logger.debug(f"Doctor update - patch request data: {request.data}")
+        return super().patch(request, *args, **kwargs)
 
 
 class DoctorCreateView(generics.CreateAPIView):

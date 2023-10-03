@@ -12,6 +12,7 @@ import ComboboxFormField from "./form/comboboxField";
 import Icon from "./Icon";
 import FileFormField from "./form/fileField";
 import { ResponseError } from "../../utils/request";
+import AddressInputFormField from "./form/addressField";
 
 interface ModalProps<T> {
     t: T;
@@ -46,16 +47,17 @@ function Modal<T>({
         field: ModalField<O>,
         object: O,
         wrapAsFormRow: boolean = true,
-        onChange: (newObject: O) => void
+        onChange: (newObject: O) => void,
+        index?: number
     ): ReactNode {
-        if (field.setter === undefined && field.getter(object) === undefined) {
-            return <></>;
+        if (field.setter === undefined && (field.getter(object) === undefined || field.type === "number")) {
+            return <p className="form-label">{field.getter(object) as string}</p>;
         }
 
-        const reacteNodeWrapperSingleColumn = (reacteNode: ReactNode, wrap: boolean = true) => {
+        const reacteNodeWrapperSingleColumn = (reacteNode: ReactNode, key: string, wrap: boolean = true) => {
             if (wrap) {
                 return (
-                    <Form.Group as={Row}>
+                    <Form.Group as={Row} key={key}>
                         <Col className="col-form-label">{reacteNode}</Col>
                     </Form.Group>
                 );
@@ -64,11 +66,13 @@ function Modal<T>({
             }
         };
 
-        const reacteNodeWrapperTwoColumns = (reacteNode: ReactNode, wrap: boolean = true) => {
+        const reacteNodeWrapperTwoColumns = (reacteNode: ReactNode, key: string, wrap: boolean = true) => {
             if (wrap) {
                 return (
-                    <Form.Group as={Row}>
-                        <Form.Label column>{field.label}</Form.Label>
+                    <Form.Group as={Row} key={key}>
+                        <Form.Label column htmlFor={field.label}>
+                            {field.label}
+                        </Form.Label>
                         <Col sm={9}>{reacteNode}</Col>
                     </Form.Group>
                 );
@@ -77,44 +81,72 @@ function Modal<T>({
             }
         };
 
+        if (index !== undefined) {
+            field = { ...field, label: `${field.label}-${index}` };
+        }
+
         switch (field.type) {
             case "text":
             case "url":
             case "email":
             case "tel":
+                return reacteNodeWrapperTwoColumns(
+                    <InputFormField<O> field={field} object={object} onChange={onChange} />,
+                    field.label,
+                    wrapAsFormRow
+                );
+                break;
             case "number":
                 return reacteNodeWrapperTwoColumns(
                     <InputFormField<O> field={field} object={object} onChange={onChange} />,
+                    field.label,
+                    wrapAsFormRow
+                );
+                break;
+            case "address":
+                return reacteNodeWrapperTwoColumns(
+                    <AddressInputFormField<O> field={field} object={object} onChange={onChange} />,
+                    field.label,
                     wrapAsFormRow
                 );
                 break;
             case "datetime":
                 return reacteNodeWrapperTwoColumns(
                     <DateTimeFormField<O> field={field} object={object} onChange={onChange} />,
+                    field.label,
                     wrapAsFormRow
                 );
                 break;
             case "boolean":
                 return reacteNodeWrapperSingleColumn(
                     <BooleanFormField<O> field={field} object={object} onChange={onChange} withLabel={wrapAsFormRow} />,
+                    field.label,
                     wrapAsFormRow
                 );
                 break;
             case "combobox":
                 return reacteNodeWrapperTwoColumns(
-                    <ComboboxFormField<O> field={field} object={object} onChange={onChange} />,
+                    <ComboboxFormField<O>
+                        field={field}
+                        object={object}
+                        onChange={onChange}
+                        allowEmptySelection={!field.required}
+                    />,
+                    field.label,
                     wrapAsFormRow
                 );
                 break;
             case "checkboxesGroup":
                 return reacteNodeWrapperTwoColumns(
                     <CheckboxesGroupFormField<O> field={field} object={object} onChange={onChange} />,
+                    field.label,
                     wrapAsFormRow
                 );
                 break;
             case "file":
                 return reacteNodeWrapperTwoColumns(
                     <FileFormField<O> field={field} object={object} onChange={onChange} />,
+                    field.label,
                     wrapAsFormRow
                 );
                 break;
@@ -122,7 +154,7 @@ function Modal<T>({
     }
 
     return (
-        <ReactModal show={showModal} backdrop="static" onHide={onCancel} centered>
+        <ReactModal key={getTitle(t)} show={showModal} backdrop="static" onHide={onCancel} centered>
             <Form
                 onSubmit={(e) => {
                     e.preventDefault();
@@ -160,7 +192,11 @@ function Modal<T>({
                                                 {records.map((record, index) => (
                                                     <tr key={`${field.label}-${index}`}>
                                                         {field.fields.map((subfield) => (
-                                                            <td key={`${subfield.label}-${index}`}>
+                                                            <td
+                                                                key={`${subfield.label}-${index}-${subfield.getter(
+                                                                    record
+                                                                )}`}
+                                                            >
                                                                 {fieldToComponent(
                                                                     subfield,
                                                                     record,
@@ -188,7 +224,8 @@ function Modal<T>({
                                                                                 )
                                                                             );
                                                                         }
-                                                                    }
+                                                                    },
+                                                                    index
                                                                 )}
                                                             </td>
                                                         ))}
@@ -229,7 +266,7 @@ function Modal<T>({
                     })}
                 </ReactModal.Body>
                 <ReactModal.Footer>
-                    <Button label="Cancel" variant="dark" onClick={onCancel} />
+                    <Button type="button" label="Cancel" variant="dark" onClick={onCancel} />
                     <Button type="submit" label="Save" variant="success" disabled={!dataChanged} />
                     <LoadingWrapper isLoading={isSaving} isError={isSavingError} error={savingError} />
                 </ReactModal.Footer>
