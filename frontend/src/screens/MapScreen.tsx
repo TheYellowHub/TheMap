@@ -37,7 +37,7 @@ function MapScreen() {
 
     const [location, setLocation] = useState<Location | undefined>();
     const [address, setAddress] = useState("");
-    const [distance, setDistance] = useState<number | undefined>(50);
+    const [distance, setDistance] = useState<number | undefined>(100);
     const distanceUnit = location?.country === "US" ? "Mile" : "KM";
 
     const [nameIncludes, setNameIncluds] = useState("");
@@ -81,7 +81,7 @@ function MapScreen() {
         ],
     ]);
 
-    useEffect(() => {
+    const useCurrenetLocation = () => {
         setCurrentLocation((location: Location) => {
             setLocation(location);
             getAddress(location).then((address) => {
@@ -90,7 +90,7 @@ function MapScreen() {
                 }
             });
         });
-    }, [isGoogleMapsLoaded]);
+    };
 
     useEffect(() => {
         const newMatchedDoctorsIgnoringDistance: Doctor[] = doctors.filter((doctor: Doctor) => {
@@ -116,6 +116,11 @@ function MapScreen() {
             .sort(sortOptions.get(sortKey));
 
         setMatchedDoctorsIncludingDistance(newMatchedDoctorsIncludingDistance);
+        setMatchedDoctorsIncludingDistance([
+            ...newMatchedDoctorsIncludingDistance,
+            ...newMatchedDoctorsIncludingDistance,
+            ...newMatchedDoctorsIncludingDistance,
+        ]);
     }, [doctors, location, distance, nameIncludes, categoryFilter, specialitiesFilter, sortKey]);
 
     useEffect(() => {
@@ -181,13 +186,13 @@ function MapScreen() {
                                 }}
                             />
                         )}
-                        <Row className="border p-2 m-2">
+                        <Row className="p-2 m-2">
                             <Form>
                                 <Form.Group as={Row}>
                                     <Form.Label column htmlFor="address">
                                         Address
                                     </Form.Label>
-                                    <Col sm={9}>
+                                    <Col sm={7}>
                                         <AddressInputFormField<undefined>
                                             field={{
                                                 type: "address",
@@ -204,22 +209,30 @@ function MapScreen() {
                                             object={undefined}
                                         />
                                     </Col>
-                                </Form.Group>
-                                <Form.Group as={Row}>
-                                    <Form.Label column sm={3} htmlFor="distance">
-                                        Distance
-                                    </Form.Label>
-                                    <Col sm={5}>
-                                        <Form.Control
-                                            type="number"
-                                            id="distance"
-                                            value={distance}
-                                            onChange={(e) =>
-                                                setDistance(e.target.value ? Number(e.target.value) : undefined)
-                                            }
-                                        />
+                                    <Col sm={2}>
+                                        <a href="#" onClick={useCurrenetLocation}>
+                                            use current location
+                                        </a>
                                     </Col>
                                 </Form.Group>
+                                {location && (
+                                    <Form.Group as={Row}>
+                                        <Form.Label column htmlFor="distance">
+                                            Distance
+                                        </Form.Label>
+                                        <Col sm={7}>
+                                            <Form.Control
+                                                type="number"
+                                                id="distance"
+                                                value={distance}
+                                                onChange={(e) =>
+                                                    setDistance(e.target.value ? Number(e.target.value) : undefined)
+                                                }
+                                            />
+                                        </Col>
+                                        <Col sm={2}>{distanceUnit}</Col>
+                                    </Form.Group>
+                                )}
                                 <Form.Group as={Row}>
                                     <Form.Label column htmlFor="name">
                                         Name
@@ -294,7 +307,7 @@ function MapScreen() {
                         </Row>
                         {matchedDoctorsIncludingDistance.length > 0 ? (
                             <>
-                                <Row className="border p-2 m-2">
+                                <Row className="p-2 m-2">
                                     <Container className="doctorSearchResult">
                                         {doctorsInPage.map((doctor: Doctor) => (
                                             <DoctorSmallCard
@@ -309,13 +322,13 @@ function MapScreen() {
                                         ))}
                                     </Container>
                                 </Row>
-                                <Row className="border p-2 m-2">
+                                <Row className="p-2 m-2">
                                     <Pagination
                                         rowsCount={matchedDoctorsIncludingDistance.length}
                                         pageIndex={pageIndex}
                                         pageSize={pageSize}
                                         setPageIndex={setPageIndex}
-                                        setPageSize={setPageSize}
+                                        // setPageSize={setPageSize}
                                     />
                                 </Row>
                             </>
@@ -328,7 +341,7 @@ function MapScreen() {
                             </>
                         )}
                     </Col>
-                    <Col className="border p-2 m-2">
+                    <Col className="p-2 m-2">
                         <Container className="map">
                             <GoogleMap center={location} markers={markers} />
                             <div className="aboveMap">

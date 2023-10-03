@@ -20,7 +20,6 @@ export default function getMarkerIcon(doctor: Doctor, isDoctorSelected: boolean,
             : "default";
 
     const url = `${window.location.origin}/images/markers/${dir}/${file}.svg`;
-    console.log(url);
 
     return url;
 }

@@ -1,8 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Encode+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Encode+Sans&family=Poppins:wght@800&display=swap');
+
 :root {
     --header-height: 4rem;
     --footer-height: 2rem;
     --layout-padding: 0.5rem;
-    --main-height: calc(100vh - var(--footer-height))
+    --main-height: calc(100vh - var(--footer-height));
+    --dark-grey: #333;
+}
+
+* {
+    padding: 0px;
+    margin: 0px;
+    font-family: 'Encode Sans', sans-serif;
+    color: var(--dark-grey);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.25rem;
+}
+
+a {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    text-decoration-line: underline;
+}
+
+title {
+    font-size: 1.75rem;
+    font-weight: 700;
 }
 
 header {
@@ -156,4 +182,46 @@ input[type="checkbox"] {
 
 .modal-backdrop {
     z-index: 10;        
+}
+
+.col-sm-2 {
+    display: flex;
+    align-items: center;
+}
+
+.paginationContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.paginationButton,
+.paginationText {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 1rem;
+    height: 1rem;
+    font-size: 0.6875rem;
+    border: 0px;
+    border-radius: 0.125rem;
+    background: transparent;
+}
+
+.paginationText {
+    width: max-content;
+}
+
+.paginationButton:hover {
+    border: 1px solid var(--grey-grey-300, #989898);
+}
+
+.paginationButton:disabled {
+    border: 0px;
+}
+
+.paginationButton.selected {
+    border: 0.75px solid var(--grey-grey-300, #989898);
+    background: var(--yellow-y-300, #F6DB87);
 }
