@@ -116,11 +116,6 @@ function MapScreen() {
             .sort(sortOptions.get(sortKey));
 
         setMatchedDoctorsIncludingDistance(newMatchedDoctorsIncludingDistance);
-        setMatchedDoctorsIncludingDistance([
-            ...newMatchedDoctorsIncludingDistance,
-            ...newMatchedDoctorsIncludingDistance,
-            ...newMatchedDoctorsIncludingDistance,
-        ]);
     }, [doctors, location, distance, nameIncludes, categoryFilter, specialitiesFilter, sortKey]);
 
     useEffect(() => {

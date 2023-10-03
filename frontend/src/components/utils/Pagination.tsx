@@ -24,7 +24,6 @@ function Pagination({ rowsCount, pageIndex, pageSize, setPageIndex, setPageSize 
     const pagesToSelectList = Array.from(pagesToSelectSet)
         .filter((newPageIndex: number) => 0 <= newPageIndex && newPageIndex < pagesCount)
         .sort();
-    console.log(pagesToSelectList);
 
     return (
         <Container fluid>
