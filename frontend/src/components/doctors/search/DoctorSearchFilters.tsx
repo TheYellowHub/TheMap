@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
 
 import useGoogleMaps, { Location } from "../../../utils/googleMaps/useGoogleMaps";
@@ -11,9 +11,11 @@ import { Doctor, getDoctorMinimalDistance } from "../../../types/doctors/doctor"
 import AddressInputFormField from "../../utils/form/addressField";
 import ComboboxFormField from "../../utils/form/comboboxField";
 import CheckboxesGroupFormField from "../../utils/form/checkboxesGroupField";
+import InputFormField from "../../utils/form/inputField";
+import Icon from "../../utils/Icon";
 
 interface DoctorSearchFiltersProps {
-    address: string;
+    address: string | undefined;
     setAddress: (address: string) => void;
     addressLocation: Location | undefined;
     setAddressLocation: (addressLocation: Location | undefined) => void;
@@ -23,6 +25,8 @@ interface DoctorSearchFiltersProps {
     doctors: Doctor[];
     setMatchedDoctorsIgnoringDistance: (doctors: Doctor[]) => void;
     setMatchedDoctorsIncludingDistance: (doctors: Doctor[]) => void;
+    shouldClearFilters: boolean;
+    setShouldClearFilters: (shouldClearFilters: boolean) => void;
 }
 
 export default function DoctorSearchFilters({
@@ -36,10 +40,14 @@ export default function DoctorSearchFilters({
     doctors,
     setMatchedDoctorsIgnoringDistance,
     setMatchedDoctorsIncludingDistance,
+    shouldClearFilters,
+    setShouldClearFilters,
 }: DoctorSearchFiltersProps) {
     const { data: categories } = useDoctorCategories();
     const { data: specialities } = useDoctorSpecialities();
     const { setCurrentLocation, getAddress, getLocation, getDistance, isLoaded: isGoogleMapsLoaded } = useGoogleMaps();
+
+    const formRef = useRef<HTMLFormElement>(null);
 
     const [nameIncludes, setNameIncluds] = useState("");
     const [categoryFilter, setCategoryFilter] = useState<string | undefined>();
@@ -86,6 +94,16 @@ export default function DoctorSearchFilters({
     };
 
     useEffect(() => {
+        if (shouldClearFilters) {
+            formRef?.current?.reset();
+            setNameIncluds("");
+            setCategoryFilter("");
+            setSpecialitiesFilter([]);
+            setShouldClearFilters(false);
+        }
+    }, [shouldClearFilters]);
+
+    useEffect(() => {
         const newMatchedDoctorsIgnoringDistance: Doctor[] = doctors.filter((doctor: Doctor) => {
             return (
                 doctor.status === "APPROVED" &&
@@ -114,19 +132,14 @@ export default function DoctorSearchFilters({
     }, [doctors, addressLocation, distance, nameIncludes, categoryFilter, specialitiesFilter, sortKey]);
 
     return (
-        <Form>
+        <Form ref={formRef}>
             <Form.Group as={Row}>
-                <Form.Label column htmlFor="address">
-                    Address
-                </Form.Label>
-                <Col sm={7}>
+                <Col sm={9}>
                     <AddressInputFormField<undefined>
                         field={{
                             type: "address",
                             label: "address",
-                            getter: () => {
-                                return address;
-                            },
+                            getter: () => address,
                             setter: (_: undefined, newAddress: string) => {
                                 setAddress(newAddress);
                                 getLocation(newAddress).then((location) => setAddressLocation(location));
@@ -136,9 +149,9 @@ export default function DoctorSearchFilters({
                         object={undefined}
                     />
                 </Col>
-                <Col sm={2}>
+                <Col sm={3}>
                     <a href="#" onClick={useCurrenetLocation}>
-                        use current location
+                        Use my location
                     </a>
                 </Col>
             </Form.Group>
@@ -161,16 +174,19 @@ export default function DoctorSearchFilters({
             )} */}
 
             <Form.Group as={Row}>
-                <Form.Label column htmlFor="name">
-                    Name
-                </Form.Label>
                 <Col sm={9}>
-                    <Form.Control
-                        type="text"
-                        id="name"
-                        value={nameIncludes}
-                        onChange={(e) => setNameIncluds(e.target.value)}
-                        autoComplete="off"
+                    <InputFormField<undefined>
+                        field={{
+                            type: "text",
+                            label: "name",
+                            getter: () => nameIncludes,
+                            setter: (_: undefined, newNameIncluds: string) => {
+                                setNameIncluds(newNameIncluds);
+                                return undefined;
+                            },
+                        }}
+                        object={undefined}
+                        placeHolder="Doctor's name"
                     />
                 </Col>
             </Form.Group>
@@ -221,7 +237,7 @@ export default function DoctorSearchFilters({
                     <select
                         id="sort-by-select"
                         className="form-select"
-                        value={sortKey}
+                        defaultValue={sortKey}
                         onChange={(e) => setSortKey(e.target.value)}
                     >
                         {Array.from(sortOptions.keys()).map((sortKey) => (
@@ -233,7 +249,15 @@ export default function DoctorSearchFilters({
                 </Col>
             </Form.Group>
 
-            {/* TODO: clear all */}
+            <Row>
+                <Col></Col>
+                <Col sm={3}>
+                    <a href="#" onClick={() => setShouldClearFilters(true)}>
+                        <Icon icon="fa-close" />
+                        Clear all
+                    </a>
+                </Col>
+            </Row>
         </Form>
     );
 }

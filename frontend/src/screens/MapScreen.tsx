@@ -19,10 +19,21 @@ function MapScreen() {
     const [currentDoctor, setCurrentDoctor] = useState<Doctor | null>(null);
     const [currentDoctorLocation, setCurrentDoctorLocation] = useState<DoctorLocation | null>(null);
 
-    const [address, setAddress] = useState("");
+    const [address, setAddress] = useState<string | undefined>(undefined);
     const [addressLocation, setAddressLocation] = useState<Location | undefined>();
-    const [distance, setDistance] = useState<number | undefined>(100);
+    const distanceDefault = 100;
+    const [distance, setDistance] = useState<number | undefined>(distanceDefault);
     const distanceUnit = addressLocation?.country === "US" ? "mi" : "km";
+
+    const [shouldClearFilters, setShouldClearFilters] = useState(false);
+
+    useEffect(() => {
+        if (shouldClearFilters) {
+            setAddress(undefined);
+            setDistance(distanceDefault);
+            setShouldClearFilters(false);
+        }
+    }, [shouldClearFilters]);
 
     useEffect(() => {
         if (currentDoctor === null) {
@@ -63,6 +74,8 @@ function MapScreen() {
                                 doctors={doctors}
                                 setMatchedDoctorsIgnoringDistance={setMatchedDoctorsIgnoringDistance}
                                 setMatchedDoctorsIncludingDistance={setMatchedDoctorsIncludingDistance}
+                                shouldClearFilters={shouldClearFilters}
+                                setShouldClearFilters={setShouldClearFilters}
                             />
                         </Row>
 
@@ -103,7 +116,14 @@ function MapScreen() {
                                         No Results found
                                         <br />
                                         <br />
-                                        <a className="inheritTextStyle">Clear filters</a> {/* TODO: clear filters */}
+                                        <a
+                                            href="#"
+                                            onClick={() => setShouldClearFilters(true)}
+                                            className="inheritTextStyle"
+                                        >
+                                            Clear filters
+                                        </a>{" "}
+                                        {/* TODO: clear filters */}
                                         {address && distance && (
                                             <>
                                                 <br />
