@@ -149,5 +149,22 @@ input[type="checkbox"] {
 }
 
 .map {
-    background: url(https://i.stack.imgur.com/dApg7.png); /* TODO: delete */
+    height: 80vh; /* TODO: fix */
+}
+
+.pac-container {
+    position: fixed;
+    z-index: 30;
+}
+
+.modal {
+    z-index: 20;
+}
+
+.modal-dialog {
+    max-width: 80%;
+}
+
+.modal-backdrop {
+    z-index: 10;
 }
