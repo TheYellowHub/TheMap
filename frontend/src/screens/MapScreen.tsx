@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 
 import LoadingWrapper from "../components/utils/LoadingWrapper";
@@ -11,6 +11,8 @@ import DoctorSearchResults from "../components/doctors/search/DoctorSearchResult
 import DoctorSearchMap from "../components/doctors/search/DoctorSearchMap";
 import DoctorBigCard from "../components/doctors/doctors/DoctorBigCard";
 import Icon from "../components/utils/Icon";
+import { GoogleMapsLoaderContext } from "../utils/googleMaps/GoogleMapsLoader";
+import Message from "../components/utils/Message";
 
 function MapScreen() {
     const { data: doctors, isListLoading, isListError, listError } = useDoctors();
@@ -26,6 +28,8 @@ function MapScreen() {
     const distanceUnit = addressLocation?.country === "US" ? "mi" : "km";
 
     const [shouldClearFilters, setShouldClearFilters] = useState(false);
+
+    const googleMapsIsLoaded = useContext(GoogleMapsLoaderContext);
 
     useEffect(() => {
         if (shouldClearFilters) {
@@ -51,7 +55,7 @@ function MapScreen() {
     return (
         <LoadingWrapper isLoading={isListLoading} isError={isListError} error={listError as ResponseError}>
             <Container fluid>
-                <Row>
+                <Row className="d-flex">
                     <Col>
                         {currentDoctor !== null && (
                             <DoctorBigCard
@@ -100,6 +104,24 @@ function MapScreen() {
                                 </div>
                             </Container>
                         </Row>
+
+                        {!googleMapsIsLoaded && (
+                            <Row className="py-2 my-2 d-flex justify-content-center">
+                                <Message variant="danger">
+                                    <div className="bold">
+                                        The map couldn’t load
+                                        <br />
+                                        <a
+                                            href="#"
+                                            onClick={() => window.location.reload()}
+                                            className="inheritTextStyle"
+                                        >
+                                            Reload to try again
+                                        </a>
+                                    </div>
+                                </Message>
+                            </Row>
+                        )}
 
                         <Row className="py-2 my-2">
                             {matchedDoctorsIncludingDistance.length > 0 ? (

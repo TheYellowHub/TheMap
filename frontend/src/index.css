@@ -1,6 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@700&family=Encode+Sans&family=Poppins:wght@800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@700&family=Encode+Sans&family=Poppins:wght@800&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@700&family=Roboto:ital@0;1&display=swap');
 
 :root {
     --header-height: 4rem;
@@ -276,6 +274,7 @@ input[type="checkbox"] {
 
 .inheritTextStyle {
     color: inherit;
+    font-family: inherit;
     font-size: inherit;
     font-weight: inherit;
 }
@@ -288,4 +287,8 @@ input[type="checkbox"] {
     font-style: normal;
     font-weight: 700;
     line-height: 1.25rem;
+}
+
+.alert {
+    width: fit-content;
 }
