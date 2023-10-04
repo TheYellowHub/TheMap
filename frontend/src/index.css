@@ -55,6 +55,7 @@ header {
     height: var(--header-height);
     min-height: var(--header-height);
     z-index: 99;
+    filter: none;
 }
 
 main {
@@ -165,7 +166,7 @@ input[type="checkbox"] {
     position: relative;
     min-height: calc(100vh - 10rem);
     height: calc(100vh - 10rem);
-    z-index: 1;
+    z-index: 1; 
 }
 
 .aboveMap {
@@ -195,7 +196,11 @@ input[type="checkbox"] {
 }
 
 .modal-backdrop {
-    z-index: 10;        
+    z-index: 10;    
+}
+
+*:has(.modal.show) main {
+    filter: blur(3px);
 }
 
 .col-sm-2,
@@ -324,4 +329,13 @@ input[type="checkbox"] {
 .transparent .modal-content {
     background-color: transparent;
     border-color: transparent;
+}
+
+.big-filter input {
+    border: 4px solid;
+    border-color: var(--blue);
+    border-radius: 3.125rem;
+    line-height: 1.25rem;
+    padding: 1rem;
+    width: 70vw;
 }

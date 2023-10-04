@@ -1,24 +1,25 @@
 import { useEffect, useRef, useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
 
-import useGoogleMaps, { Location } from "../../../utils/googleMaps/useGoogleMaps";
+import { Location } from "../../../utils/googleMaps/useGoogleMaps";
 import useDoctorCategories from "../../../hooks/doctors/useDoctorCategories";
 import useDoctorSpecialities from "../../../hooks/doctors/useDoctorSpecialities";
 import { DistanceUnit } from "../../utils/DistanceUnit";
 import { DoctorCategory } from "../../../types/doctors/doctorCategory";
 import { DoctorSpeciality } from "../../../types/doctors/DoctorSpeciality";
 import { Doctor, getDoctorMinimalDistance } from "../../../types/doctors/doctor";
-import AddressInputFormField from "../../utils/form/addressField";
 import ComboboxFormField from "../../utils/form/comboboxField";
 import CheckboxesGroupFormField from "../../utils/form/checkboxesGroupField";
 import InputFormField from "../../utils/form/inputField";
 import Icon from "../../utils/Icon";
+import DoctorSearchAddressFilter from "./DoctorSearchAddressFilter";
 
 interface DoctorSearchFiltersProps {
     address: string | undefined;
     setAddress: (address: string) => void;
     addressLocation: Location | undefined;
     setAddressLocation: (addressLocation: Location | undefined) => void;
+    useCurrenetLocation: () => void;
     distance: number | undefined;
     setDistance: (distance: number | undefined) => void;
     distanceUnit: DistanceUnit;
@@ -34,6 +35,7 @@ export default function DoctorSearchFilters({
     setAddress,
     addressLocation,
     setAddressLocation,
+    useCurrenetLocation,
     distance,
     setDistance,
     distanceUnit,
@@ -45,7 +47,6 @@ export default function DoctorSearchFilters({
 }: DoctorSearchFiltersProps) {
     const { data: categories } = useDoctorCategories();
     const { data: specialities } = useDoctorSpecialities();
-    const { setCurrentLocation, getAddress, getLocation, getDistance, isLoaded: isGoogleMapsLoaded } = useGoogleMaps();
 
     const formRef = useRef<HTMLFormElement>(null);
 
@@ -81,17 +82,6 @@ export default function DoctorSearchFilters({
             },
         ],
     ]);
-
-    const useCurrenetLocation = () => {
-        setCurrentLocation((location: Location) => {
-            setAddressLocation(location);
-            getAddress(location).then((address) => {
-                if (address !== undefined) {
-                    setAddress(address);
-                }
-            });
-        });
-    };
 
     useEffect(() => {
         if (shouldClearFilters) {
@@ -133,28 +123,13 @@ export default function DoctorSearchFilters({
 
     return (
         <Form ref={formRef}>
-            <Form.Group as={Row}>
-                <Col sm={9}>
-                    <AddressInputFormField<undefined>
-                        field={{
-                            type: "address",
-                            label: "address",
-                            getter: () => address,
-                            setter: (_: undefined, newAddress: string) => {
-                                setAddress(newAddress);
-                                getLocation(newAddress).then((location) => setAddressLocation(location));
-                                return undefined;
-                            },
-                        }}
-                        object={undefined}
-                    />
-                </Col>
-                <Col sm={3}>
-                    <a href="#" onClick={useCurrenetLocation}>
-                        Use my location
-                    </a>
-                </Col>
-            </Form.Group>
+            <DoctorSearchAddressFilter
+                address={address}
+                setAddress={setAddress}
+                addressLocation={addressLocation}
+                setAddressLocation={setAddressLocation}
+                useCurrenetLocation={useCurrenetLocation}
+            />
 
             {/* {location && (
                 <Form.Group as={Row}>
