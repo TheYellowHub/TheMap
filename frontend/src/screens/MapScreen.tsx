@@ -97,7 +97,15 @@ function MapScreen() {
                                     distanceUnit={distanceUnit}
                                 />
                             ) : (
-                                <>{/* TODO */}</>
+                                <Container fluid>
+                                    <div className="bold">
+                                        No Results found
+                                        <br />
+                                        <a className="inheritTextStyle">Clear filters</a>
+                                        <br />
+                                        or <a className="inheritTextStyle">try a larger area</a>
+                                    </div>
+                                </Container>
                             )}
                         </Row>
                     </Col>

@@ -272,3 +272,19 @@ input[type="checkbox"] {
     color: var(--light-grey);
     font-style: italic;
 }
+
+.inheritTextStyle {
+    color: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+}
+
+.bold {
+    color: black;
+    text-align: center;
+    font-family: 'Assistant', sans-serif;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.25rem;
+}
