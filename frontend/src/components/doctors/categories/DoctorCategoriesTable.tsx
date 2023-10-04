@@ -32,7 +32,7 @@ function DoctorCategoriesTable({ categories, setCurrentCategory, actionButton }:
         columnHelper.display({
             id: "edit",
             cell: (props: { row: { original: DoctorCategory } }) => (
-                <Button label="Edit" variant="success" onClick={() => setCurrentCategory(props.row.original)} />
+                <Button label="Edit" variant="primary" onClick={() => setCurrentCategory(props.row.original)} />
             ),
         }),
     ];

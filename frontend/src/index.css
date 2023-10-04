@@ -1,5 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Encode+Sans&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Encode+Sans&family=Poppins:wght@800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@700&family=Encode+Sans&family=Poppins:wght@800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@700&family=Encode+Sans&family=Poppins:wght@800&display=swap');
+
 
 :root {
     --header-height: 4rem;
@@ -7,28 +8,33 @@
     --layout-padding: 0.5rem;
     --main-height: calc(100vh - var(--footer-height));
     --dark-grey: #333;
+    --dark-yellow: #97750B;
+    --med-yellow: #F2C94C;
+    --light-yellow: #FCEFCA;
 }
 
 * {
     padding: 0px;
     margin: 0px;
-    font-family: 'Encode Sans', sans-serif;
     color: var(--dark-grey);
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
     font-style: normal;
     font-weight: 400;
-    font-size: 1rem;
-    line-height: 1.25rem;
+    line-height: 1.25rem; /* 125% */
+    
 }
 
 a {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
     text-decoration-line: underline;
 }
 
 title {
-    font-size: 1.75rem;
+    font-family: 'Assistant', sans-serif;
+    font-size: 1.5rem;
+    font-style: normal;
     font-weight: 700;
+    line-height: 1.25rem; 
 }
 
 header {
@@ -224,4 +230,32 @@ input[type="checkbox"] {
 .paginationButton.selected {
     border: 0.75px solid var(--grey-grey-300, #989898);
     background: var(--yellow-y-300, #F6DB87);
+}
+
+.btn {
+    display: inline-flex;
+    padding: 0.375rem 1rem;
+    justify-content: center;
+    align-items: center;
+    gap: 0.625rem;
+    color: var(--dark-grey);
+    border: 1.25px solid;
+    border-radius: 0.25rem;
+}
+
+.btn-primary {
+    background: var(--med-yellow);
+    border-color: var(--med-yellow);
+}
+
+.btn-secondary {
+    background: white;
+    border-color: var(--med-yellow);
+}
+
+.btn-primary:hover,
+.btn-secondary:hover {
+    color: var(--dark-grey);
+    background: var(--light-yellow);
+    border-color: var(--dark-yellow);
 }

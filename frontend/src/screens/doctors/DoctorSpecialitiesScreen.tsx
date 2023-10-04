@@ -44,7 +44,7 @@ function DoctorSpecialitiesScreen() {
                     actionButton={
                         <Button
                             label="Add speciality"
-                            variant="success"
+                            variant="primary"
                             onClick={() => setCurrentSpeciality(newDoctorSpeciality())}
                         />
                     }

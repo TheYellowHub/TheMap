@@ -48,12 +48,6 @@ function MapScreen() {
     const [pageIndex, setPageIndex] = useState(0);
     const [pageSize, setPageSize] = useState(10); // TODO: initial value according to the view, i.e. how many doctors fit in?
 
-    const addAdoctorLink = (reactNode: ReactNode) => (
-        <a href="https://urlzs.com/bVdAh" target="_blank" rel="noreferrer">
-            {reactNode}
-        </a>
-    );
-
     const sortOptions: Map<string, (a: Doctor, b: Doctor) => number> = new Map([
         [
             "Name",
@@ -329,10 +323,7 @@ function MapScreen() {
                             </>
                         ) : (
                             <>
-                                <Message variant="warning">
-                                    No doctors were found. If you know such doctor, please&nbsp;
-                                    {addAdoctorLink(<>let us know</>)}
-                                </Message>
+                                <Message variant="warning">No doctors were found.</Message>
                             </>
                         )}
                     </Col>
@@ -340,7 +331,9 @@ function MapScreen() {
                         <Container className="map">
                             <GoogleMap center={location} markers={markers} />
                             <div className="aboveMap">
-                                {addAdoctorLink(<Button variant="success" label="Recommend a doctor"></Button>)}
+                                <a href="https://urlzs.com/bVdAh" target="_blank" rel="noreferrer">
+                                    <Button variant="primary" label="Recommend a doctor"></Button>
+                                </a>
                             </div>
                         </Container>
                     </Col>
