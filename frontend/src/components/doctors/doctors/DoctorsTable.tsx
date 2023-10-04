@@ -51,7 +51,7 @@ function DoctorsTable({ doctors, setCurrentDoctor, actionButton }: DoctorsTableP
         columnHelper.display({
             id: "edit",
             cell: (props: { row: { original: Doctor } }) => (
-                <Button label="Edit" variant="success" onClick={() => setCurrentDoctor(props.row.original)} />
+                <Button label="Edit" variant="primary" onClick={() => setCurrentDoctor(props.row.original)} />
             ),
         }),
     ];

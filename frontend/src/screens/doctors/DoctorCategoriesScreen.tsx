@@ -44,7 +44,7 @@ function DoctorCategoriesScreen() {
                     actionButton={
                         <Button
                             label="Add category"
-                            variant="success"
+                            variant="primary"
                             onClick={() => setCurrentCategory(newDoctorCategory())}
                         />
                     }

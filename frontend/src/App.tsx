@@ -19,8 +19,10 @@ function App() {
         <Router>
             <QueryClientProvider client={queryClient}>
                 <GoogleMapsLoader setGoogleMapsIsLoaded={setGoogleMapsIsLoaded}>
-                    <Container className="app" fluid>
-                        <Header />
+                    <>
+                        <header>
+                            <Header />
+                        </header>
                         <main>
                             {/* TODO: change the error message?  */}
                             {!googleMapsIsLoaded && (
@@ -32,8 +34,10 @@ function App() {
 
                             <AppRouter />
                         </main>
-                        <Footer />
-                    </Container>
+                        <footer>
+                            <Footer />
+                        </footer>
+                    </>
                 </GoogleMapsLoader>
             </QueryClientProvider>
         </Router>

@@ -59,7 +59,7 @@ export default function InputFormField<T>({
             required={field.required}
             pattern={pattern}
             isInvalid={isInvalid}
-            autoComplete="off" // TODO: get as another field property, if needed
+            autoComplete="off"
         />
     );
 }

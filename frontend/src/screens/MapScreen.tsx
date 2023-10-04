@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { Col, Container, Form, Row } from "react-bootstrap";
 
-import { Doctor, doctorDistanceFromLocation } from "../types/doctors/doctor";
+import { Doctor, DoctorLocation, doctorDistanceFromLocation } from "../types/doctors/doctor";
 import { DoctorCategory } from "../types/doctors/doctorCategory";
 import { DoctorSpeciality } from "../types/doctors/DoctorSpeciality";
 import useDoctors from "../hooks/doctors/useDoctors";
@@ -13,10 +13,13 @@ import CheckboxesGroupFormField from "../components/utils/form/checkboxesGroupFi
 import Pagination from "../components/utils/Pagination";
 import LoadingWrapper from "../components/utils/LoadingWrapper";
 import { ResponseError } from "../utils/request";
-import GoogleMap from "../components/map/GoogleMap";
+import GoogleMap, { Marker } from "../components/map/GoogleMap";
 import useGoogleMaps, { Location } from "../utils/googleMaps/useGoogleMaps";
 import AddressInputFormField from "../components/utils/form/addressField";
 import ComboboxFormField from "../components/utils/form/comboboxField";
+import Message from "../components/utils/Message";
+import Button from "../components/utils/Button";
+import getMarkerIcon from "../components/map/markerIcon";
 
 function MapScreen() {
     const { setCurrentLocation, getAddress, getLocation, getDistance, isLoaded: isGoogleMapsLoaded } = useGoogleMaps();
@@ -25,16 +28,17 @@ function MapScreen() {
     const { data: categories } = useDoctorCategories();
     const { data: specialities } = useDoctorSpecialities();
 
-    const [matchedDoctors, setMatchedDoctors] = useState<Doctor[]>([]);
+    const [matchedDoctorsIgnoringDistance, setMatchedDoctorsIgnoringDistance] = useState<Doctor[]>([]);
+    const [matchedDoctorsIncludingDistance, setMatchedDoctorsIncludingDistance] = useState<Doctor[]>([]);
     const [doctorsInPage, setDoctorsInPage] = useState<Doctor[]>([]);
     const [currentDoctor, setCurrentDoctor] = useState<Doctor | null>(null);
-    const [previousDoctor, setPreviousDoctor] = useState<Doctor | null>(null);
+    const [currentDoctorLocation, setCurrentDoctorLocation] = useState<DoctorLocation | null>(null);
+    const [markers, setMarkers] = useState<Marker[]>([]);
 
     const [location, setLocation] = useState<Location | undefined>();
     const [address, setAddress] = useState("");
-    const [distance, setDistance] = useState<number | undefined>(50);
-    const [distanceUnitsAsKm, setDistanceUnitsAsKm] = useState(false);
-    const distanceUnit = distanceUnitsAsKm ? "KM" : "Mile";
+    const [distance, setDistance] = useState<number | undefined>(100);
+    const distanceUnit = location?.country === "US" ? "Mile" : "KM";
 
     const [nameIncludes, setNameIncluds] = useState("");
     const [categoryFilter, setCategoryFilter] = useState<string | undefined>();
@@ -71,7 +75,7 @@ function MapScreen() {
         ],
     ]);
 
-    useEffect(() => {
+    const useCurrenetLocation = () => {
         setCurrentLocation((location: Location) => {
             setLocation(location);
             getAddress(location).then((address) => {
@@ -80,46 +84,104 @@ function MapScreen() {
                 }
             });
         });
-    }, [isGoogleMapsLoaded]);
+    };
 
     useEffect(() => {
-        setMatchedDoctors(() =>
-            doctors
-                .filter((doctor: Doctor) => {
-                    const doctorDistance =
-                        distance === undefined || location === undefined
-                            ? undefined
-                            : doctorDistanceFromLocation(doctor, location, distanceUnit);
-                    return (
-                        doctor.status === "APPROVED" &&
-                        doctor.fullName?.toLowerCase().includes(nameIncludes.toLowerCase()) &&
-                        (categoryFilter === undefined || categoryFilter === doctor.category) &&
-                        specialitiesFilter.every((speciality) => doctor.specialities.includes(speciality)) &&
-                        (distance === undefined ||
-                            location === undefined ||
-                            (doctorDistance && doctorDistance <= distance))
-                    );
-                })
-                .sort(sortOptions.get(sortKey))
-        );
+        const newMatchedDoctorsIgnoringDistance: Doctor[] = doctors.filter((doctor: Doctor) => {
+            return (
+                doctor.status === "APPROVED" &&
+                doctor.fullName?.toLowerCase().includes(nameIncludes.toLowerCase()) &&
+                (categoryFilter === undefined || categoryFilter === doctor.category) &&
+                specialitiesFilter.every((speciality) => doctor.specialities.includes(speciality))
+            );
+        });
+        setMatchedDoctorsIgnoringDistance(newMatchedDoctorsIgnoringDistance);
+
+        const newMatchedDoctorsIncludingDistance: Doctor[] = newMatchedDoctorsIgnoringDistance
+            .filter((doctor: Doctor) => {
+                const doctorDistance =
+                    distance === undefined || location === undefined
+                        ? undefined
+                        : doctorDistanceFromLocation(doctor, location, distanceUnit);
+                return (
+                    distance === undefined || location === undefined || (doctorDistance && doctorDistance <= distance)
+                );
+            })
+            .sort(sortOptions.get(sortKey));
+
+        setMatchedDoctorsIncludingDistance(newMatchedDoctorsIncludingDistance);
     }, [doctors, location, distance, nameIncludes, categoryFilter, specialitiesFilter, sortKey]);
 
     useEffect(() => {
-        setDoctorsInPage(() => matchedDoctors.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize));
-    }, [matchedDoctors, pageIndex, pageSize]);
+        const matchedDoctorsMarkers: Marker[] = [];
+        for (const doctor of matchedDoctorsIgnoringDistance) {
+            for (const doctorLocationObj of doctor.locations) {
+                if (
+                    doctorLocationObj.lat !== undefined &&
+                    doctorLocationObj.lat !== null &&
+                    doctorLocationObj.lng !== undefined &&
+                    doctorLocationObj.lng !== null
+                ) {
+                    const doctorLocation: Location = {
+                        lat: Number(doctorLocationObj.lat!),
+                        lng: Number(doctorLocationObj.lng!),
+                    };
+
+                    matchedDoctorsMarkers.push({
+                        title: doctor.fullName,
+                        location: doctorLocation,
+                        inBounds:
+                            distance === undefined ||
+                            location === undefined ||
+                            getDistance(location, doctorLocation) <= distance,
+                        icon: getMarkerIcon(
+                            doctor,
+                            doctor === currentDoctor,
+                            doctorLocationObj === currentDoctorLocation
+                        ),
+                        onClick: () => {
+                            setCurrentDoctor(doctor);
+                        },
+                    });
+                }
+            }
+            setMarkers(matchedDoctorsMarkers);
+        }
+    }, [matchedDoctorsIgnoringDistance, currentDoctor, currentDoctorLocation]);
+
+    useEffect(() => {
+        setDoctorsInPage(() => matchedDoctorsIncludingDistance.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize));
+    }, [matchedDoctorsIncludingDistance, pageIndex, pageSize]);
+
+    useEffect(() => {
+        setCurrentDoctorLocation(
+            currentDoctor?.locations !== undefined && currentDoctor.locations.length > 0
+                ? currentDoctor?.locations[0]
+                : null
+        );
+    }, [currentDoctor]);
 
     return (
         <LoadingWrapper isLoading={isListLoading} isError={isListError} error={listError as ResponseError}>
             <Container fluid>
                 <Row>
                     <Col>
-                        <Row className="border p-2 m-2">
+                        {currentDoctor !== null && (
+                            <DoctorBigCard
+                                doctor={currentDoctor}
+                                show={currentDoctor !== null}
+                                onClose={() => {
+                                    setCurrentDoctor(null);
+                                }}
+                            />
+                        )}
+                        <Row className="p-2 m-2">
                             <Form>
                                 <Form.Group as={Row}>
                                     <Form.Label column htmlFor="address">
                                         Address
                                     </Form.Label>
-                                    <Col sm={9}>
+                                    <Col sm={7}>
                                         <AddressInputFormField<undefined>
                                             field={{
                                                 type: "address",
@@ -136,37 +198,30 @@ function MapScreen() {
                                             object={undefined}
                                         />
                                     </Col>
-                                </Form.Group>
-                                <Form.Group as={Row}>
-                                    <Form.Label column sm={3} htmlFor="distance">
-                                        Distance
-                                    </Form.Label>
-                                    <Col sm={5}>
-                                        <Form.Control
-                                            type="number"
-                                            id="distance"
-                                            value={distance}
-                                            onChange={(e) =>
-                                                setDistance(e.target.value ? Number(e.target.value) : undefined)
-                                            }
-                                        />
-                                    </Col>
-                                    <Col sm={4}>
-                                        <Form.Label column className="d-inline-block" htmlFor="distance-units">
-                                            Mile
-                                        </Form.Label>
-                                        <Form.Check
-                                            className="d-inline-block"
-                                            type="switch"
-                                            id="distance-units"
-                                            checked={distanceUnitsAsKm}
-                                            onChange={(e) => setDistanceUnitsAsKm(e.target.checked)}
-                                        />
-                                        <Form.Label column className="d-inline-block" htmlFor="distance-units">
-                                            KM
-                                        </Form.Label>
+                                    <Col sm={2}>
+                                        <a href="#" onClick={useCurrenetLocation}>
+                                            use current location
+                                        </a>
                                     </Col>
                                 </Form.Group>
+                                {location && (
+                                    <Form.Group as={Row}>
+                                        <Form.Label column htmlFor="distance">
+                                            Distance
+                                        </Form.Label>
+                                        <Col sm={7}>
+                                            <Form.Control
+                                                type="number"
+                                                id="distance"
+                                                value={distance}
+                                                onChange={(e) =>
+                                                    setDistance(e.target.value ? Number(e.target.value) : undefined)
+                                                }
+                                            />
+                                        </Col>
+                                        <Col sm={2}>{distanceUnit}</Col>
+                                    </Form.Group>
+                                )}
                                 <Form.Group as={Row}>
                                     <Form.Label column htmlFor="name">
                                         Name
@@ -177,6 +232,7 @@ function MapScreen() {
                                             id="name"
                                             value={nameIncludes}
                                             onChange={(e) => setNameIncluds(e.target.value)}
+                                            autoComplete="off"
                                         />
                                     </Col>
                                 </Form.Group>
@@ -238,91 +294,51 @@ function MapScreen() {
                                 </Form.Group>
                             </Form>
                         </Row>
-                        <Row className="border p-2 m-2">
-                            <Container className="doctorSearchResult">
-                                {doctorsInPage.map((doctor: Doctor) => (
-                                    <DoctorSmallCard
-                                        key={doctor.id}
-                                        doctor={doctor}
-                                        locationForDistanceCalculation={location}
-                                        distanceUnit={distanceUnit}
-                                        onClick={() => {
-                                            setCurrentDoctor(doctor);
-                                        }}
-                                    />
-                                ))}
-                            </Container>
-                        </Row>
-                        <Row className="border p-2 m-2">
-                            <Pagination
-                                rowsCount={matchedDoctors.length}
-                                pageIndex={pageIndex}
-                                pageSize={pageSize}
-                                setPageIndex={setPageIndex}
-                                setPageSize={setPageSize}
-                            />
-                        </Row>
-                    </Col>
-                    <Col className="border p-2 m-2">
-                        <Container className="map">
-                            {
-                                <GoogleMap<Doctor>
-                                    center={location}
-                                    markers={matchedDoctors
-                                        .map((doctor) => {
-                                            return {
-                                                obj: doctor,
-                                                title: doctor.fullName,
-                                                locations: doctor.locations
-                                                    .filter(
-                                                        (doctorLocation) =>
-                                                            doctorLocation.lat !== undefined &&
-                                                            doctorLocation.lat !== null &&
-                                                            doctorLocation.lng !== undefined &&
-                                                            doctorLocation.lng !== null
-                                                    )
-                                                    .map((doctorLocation) => {
-                                                        return {
-                                                            lat: Number(doctorLocation.lat!),
-                                                            lng: Number(doctorLocation.lng!),
-                                                        };
-                                                    })
-                                                    .filter(
-                                                        (doctorLocation) =>
-                                                            distance === undefined ||
-                                                            location === undefined ||
-                                                            getDistance(location, doctorLocation) <= distance
-                                                    ),
-                                                showInfoWindow: (doctor: Doctor) =>
-                                                    currentDoctor === doctor ||
-                                                    (currentDoctor === null && previousDoctor === doctor),
-                                                onClosingInfoWindow: () => {
-                                                    setPreviousDoctor(currentDoctor);
-                                                    setCurrentDoctor(null);
-                                                },
-                                                onClick: () => {
+                        {matchedDoctorsIncludingDistance.length > 0 ? (
+                            <>
+                                <Row className="p-2 m-2">
+                                    <Container className="doctorSearchResult">
+                                        {doctorsInPage.map((doctor: Doctor) => (
+                                            <DoctorSmallCard
+                                                key={doctor.id}
+                                                doctor={doctor}
+                                                locationForDistanceCalculation={location}
+                                                distanceUnit={distanceUnit}
+                                                onClick={() => {
                                                     setCurrentDoctor(doctor);
-                                                },
-                                            };
-                                        })
-                                        .filter((markersGroup) => markersGroup.locations.length > 0)}
-                                />
-                            }
+                                                }}
+                                            />
+                                        ))}
+                                    </Container>
+                                </Row>
+                                <Row className="p-2 m-2">
+                                    <Pagination
+                                        rowsCount={matchedDoctorsIncludingDistance.length}
+                                        pageIndex={pageIndex}
+                                        pageSize={pageSize}
+                                        setPageIndex={setPageIndex}
+                                        // setPageSize={setPageSize}
+                                    />
+                                </Row>
+                            </>
+                        ) : (
+                            <>
+                                <Message variant="warning">No doctors were found.</Message>
+                            </>
+                        )}
+                    </Col>
+                    <Col className="p-2 m-2">
+                        <Container className="map">
+                            <GoogleMap center={location} markers={markers} />
+                            <div className="aboveMap">
+                                <a href="https://urlzs.com/bVdAh" target="_blank" rel="noreferrer">
+                                    <Button variant="primary" label="Recommend a doctor"></Button>
+                                </a>
+                            </div>
                         </Container>
                     </Col>
                 </Row>
             </Container>
-
-            {currentDoctor !== null && (
-                <DoctorBigCard
-                    doctor={currentDoctor}
-                    show={currentDoctor !== null}
-                    onClose={() => {
-                        setPreviousDoctor(currentDoctor);
-                        setCurrentDoctor(null);
-                    }}
-                />
-            )}
         </LoadingWrapper>
     );
 }

@@ -43,7 +43,7 @@ function DoctorsScreen() {
                         setCurrentDoctor(doctorDoctor);
                     }}
                     actionButton={
-                        <Button label="Add doctor" variant="success" onClick={() => setCurrentDoctor(newDoctor())} />
+                        <Button label="Add doctor" variant="primary" onClick={() => setCurrentDoctor(newDoctor())} />
                     }
                 />
                 {currentDoctor && (

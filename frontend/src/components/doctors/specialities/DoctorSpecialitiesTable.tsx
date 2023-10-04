@@ -32,7 +32,7 @@ function DoctorSpecialitiesTable({ specialities, setCurrentSpeciality, actionBut
         columnHelper.display({
             id: "edit",
             cell: (props: { row: { original: DoctorSpeciality } }) => (
-                <Button label="Edit" variant="success" onClick={() => setCurrentSpeciality(props.row.original)} />
+                <Button label="Edit" variant="primary" onClick={() => setCurrentSpeciality(props.row.original)} />
             ),
         }),
     ];

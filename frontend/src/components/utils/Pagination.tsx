@@ -1,80 +1,84 @@
 import { Col, Container, Row } from "react-bootstrap";
 
 import Button from "./Button";
+import Icon from "./Icon";
 
 interface PaginationProps {
     rowsCount: number;
     pageIndex: number;
     pageSize: number;
     setPageIndex: (index: number) => void;
-    setPageSize: (size: number) => void;
+    setPageSize?: (size: number) => void;
 }
 
 function Pagination({ rowsCount, pageIndex, pageSize, setPageIndex, setPageSize }: PaginationProps) {
     const pagesCount = Math.ceil(rowsCount / pageSize);
 
+    const pagesToSelectSet = new Set<number>();
+    pagesToSelectSet.add(0);
+    pagesToSelectSet.add(pageIndex - 1);
+    pagesToSelectSet.add(pageIndex);
+    pagesToSelectSet.add(pageIndex + 1);
+    pagesToSelectSet.add(pagesCount - 1);
+
+    const pagesToSelectList = Array.from(pagesToSelectSet)
+        .filter((newPageIndex: number) => 0 <= newPageIndex && newPageIndex < pagesCount)
+        .sort();
+
     return (
-        <Container>
+        <Container fluid>
             <Row>
-                <Col className="align-items-center text-center col-6">
-                    <Button
-                        className="border rounded p-1 m-1"
-                        onClick={() => setPageIndex(0)}
-                        disabled={pageIndex === 0}
-                        label="<<"
-                    />
-                    <Button
-                        className="border rounded p-1  m-1"
+                <Col className="paginationContainer">
+                    <button
+                        key={`page-previous`}
+                        className="paginationButton"
                         onClick={() => setPageIndex(pageIndex - 1)}
-                        disabled={pageIndex === 0}
-                        label="<"
-                    />
-                    <span className="m-1">
-                        Page {pageIndex + 1} of {pagesCount}
-                    </span>
-                    <Button
-                        className="border rounded p-1  m-1"
+                        disabled={pageIndex - 1 < 0}
+                    >
+                        <Icon icon="fa-caret-left" />
+                    </button>
+                    {pagesToSelectList.map((newPageIndex: number, index: number) => (
+                        <>
+                            {0 < index && pagesToSelectList[index - 1] + 1 < newPageIndex && (
+                                <div className="paginationText">...</div>
+                            )}
+                            <button
+                                key={`page-${newPageIndex}`}
+                                className={`paginationButton ${pageIndex === newPageIndex ? "selected" : ""}`}
+                                onClick={() => setPageIndex(newPageIndex)}
+                                disabled={pageIndex === newPageIndex}
+                            >
+                                {newPageIndex + 1}
+                            </button>
+                        </>
+                    ))}
+                    <button
+                        key={`page-next`}
+                        className="paginationButton"
                         onClick={() => setPageIndex(pageIndex + 1)}
-                        disabled={pageIndex === pagesCount}
-                        label=">"
-                    />
-                    <Button
-                        className="border rounded p-1  m-1"
-                        onClick={() => setPageIndex(pagesCount - 1)}
-                        disabled={pageIndex === pagesCount - 1}
-                        label=">>"
-                    />
+                        disabled={pageIndex + 1 === pagesCount}
+                    >
+                        <Icon icon="fa-caret-right" />
+                    </button>
                 </Col>
-                <Col className="align-items-center text-center">
-                    Go to
-                    <input
-                        id="page-index-input"
-                        type="number"
-                        className="p-1  m-1"
-                        min={1}
-                        max={pagesCount}
-                        value={pageIndex + 1}
-                        onChange={(e) => {
-                            const newPageIndex = e.target.value ? Number(e.target.value) - 1 : 0;
-                            setPageIndex(newPageIndex);
-                        }}
-                    />
-                </Col>
-                <Col className="align-items-center text-center">
-                    Show
-                    <input
-                        id="page-size-input"
-                        type="number"
-                        className="p-1  m-1"
-                        min={1}
-                        max={pagesCount * pageSize}
-                        value={pageSize}
-                        onChange={(e) => {
-                            setPageSize(Number(e.target.value));
-                        }}
-                    />
-                </Col>
-                <Col className="row justify-content-end">Total: {rowsCount} Rows</Col>
+                {setPageSize && (
+                    <Col className="paginationContainer" sm={4}>
+                        <div className="paginationText">
+                            In each page
+                            <input
+                                id="page-size-input"
+                                type="number"
+                                className="p-0 m-1"
+                                min={1}
+                                max={pagesCount * pageSize}
+                                value={pageSize}
+                                onChange={(e) => {
+                                    setPageSize(Number(e.target.value));
+                                }}
+                            />
+                        </div>
+                    </Col>
+                )}
             </Row>
         </Container>
     );
