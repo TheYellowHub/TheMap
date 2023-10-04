@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row, Modal as ReactModal } from "react-bootstrap";
 
 import LoadingWrapper from "../components/utils/LoadingWrapper";
 import { ResponseError } from "../utils/request";
@@ -105,24 +105,6 @@ function MapScreen() {
                             </Container>
                         </Row>
 
-                        {!googleMapsIsLoaded && (
-                            <Row className="py-2 my-2 d-flex justify-content-center">
-                                <Message variant="danger">
-                                    <div className="bold">
-                                        The map couldn’t load
-                                        <br />
-                                        <a
-                                            href="#"
-                                            onClick={() => window.location.reload()}
-                                            className="inheritTextStyle"
-                                        >
-                                            Reload to try again
-                                        </a>
-                                    </div>
-                                </Message>
-                            </Row>
-                        )}
-
                         <Row className="py-2 my-2">
                             {matchedDoctorsIncludingDistance.length > 0 ? (
                                 <DoctorSearchResults
@@ -179,6 +161,37 @@ function MapScreen() {
                     </Col>
                 </Row>
             </Container>
+
+            {!googleMapsIsLoaded && (
+                <ReactModal
+                    className="transparent d-flex justify-content-center"
+                    show={true}
+                    backdrop="static"
+                    centered
+                >
+                    <Message variant="danger">
+                        <div className="bold">
+                            The map couldn’t load
+                            <br />
+                            <a href="#" onClick={() => window.location.reload()} className="inheritTextStyle">
+                                Reload to try again
+                            </a>
+                        </div>
+                    </Message>
+                </ReactModal>
+            )}
+
+            {/* TODO - address input */}
+            {/* {address === undefined && (
+                <ReactModal
+                    className="transparent d-flex justify-content-center"
+                    show={true}
+                    backdrop="static"
+                    centered
+                >
+                    
+                </ReactModal>
+            )} */}
         </LoadingWrapper>
     );
 }

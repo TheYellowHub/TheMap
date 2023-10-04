@@ -310,4 +310,18 @@ input[type="checkbox"] {
 
 .alert {
     width: fit-content;
+    border-radius: 0.625rem;
+    border: 2px solid;
+}
+
+.alert-danger {
+    border-color: #CF4E31;
+    background-color: #FDE6E1;
+    padding: 6rem;
+}
+
+.transparent,
+.transparent .modal-content {
+    background-color: transparent;
+    border-color: transparent;
 }
