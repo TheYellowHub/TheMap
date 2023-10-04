@@ -1,6 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@700&family=Encode+Sans&family=Poppins:wght@800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@700&family=Encode+Sans&family=Poppins:wght@800&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@700&family=Roboto:ital@0;1&display=swap');
 
 :root {
     --header-height: 4rem;
@@ -8,9 +6,14 @@
     --layout-padding: 0.5rem;
     --main-height: calc(100vh - var(--footer-height));
     --dark-grey: #333;
+    --med-dark-grey: #6A6A6A;
+    --med-grey: #989898;
+    --light-grey: #D6D6D6;
     --dark-yellow: #97750B;
     --med-yellow: #F2C94C;
     --light-yellow: #FCEFCA;
+    --blue: #035763;
+    
 }
 
 * {
@@ -26,7 +29,16 @@
 }
 
 a {
+    color: var(--blue);
+    font-size: 0.875rem;
     text-decoration-line: underline;
+}
+
+i {
+    color: inherit;
+    font-size: 1rem;
+    font-style: normal;
+    padding: 0rem 0.5rem;
 }
 
 title {
@@ -64,10 +76,6 @@ main {
 footer {
     position:absolute;
     width: 100vw;
-}
-
-.icon {
-    padding: 0rem 1rem;
 }
 
 .logo {
@@ -190,7 +198,8 @@ input[type="checkbox"] {
     z-index: 10;        
 }
 
-.col-sm-2 {
+.col-sm-2,
+.col-sm-3 {
     display: flex;
     align-items: center;
 }
@@ -241,6 +250,11 @@ input[type="checkbox"] {
     color: var(--dark-grey);
     border: 1.25px solid;
     border-radius: 0.25rem;
+    text-transform: none;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.25rem; 
 }
 
 .btn-primary {
@@ -258,4 +272,56 @@ input[type="checkbox"] {
     color: var(--dark-grey);
     background: var(--light-yellow);
     border-color: var(--dark-yellow);
+}
+
+.btn-primary:disabled {
+    color: var(--med-grey);
+    background: var(--light-grey);
+    border-color: var(--light-grey);
+}
+
+.btn-secondary:disabled {
+    color: var(--med-grey);
+    background: white;
+    border-color: var(--med-grey);
+}
+
+.notes {
+    color: var(--med-dark-grey);
+    font-style: italic;
+}
+
+.inheritTextStyle {
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+}
+
+.bold {
+    color: black;
+    text-align: center;
+    font-family: 'Assistant', sans-serif;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.25rem;
+}
+
+.alert {
+    width: fit-content;
+    border-radius: 0.625rem;
+    border: 2px solid;
+}
+
+.alert-danger {
+    border-color: #CF4E31;
+    background-color: #FDE6E1;
+    padding: 6rem;
+}
+
+.transparent,
+.transparent .modal-content {
+    background-color: transparent;
+    border-color: transparent;
 }

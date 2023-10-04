@@ -35,7 +35,13 @@ export default function AddressInputFormField<T>({
                 fields: ["formatted_address"],
             }}
         >
-            <InputFormField field={field} object={object} onChange={onChange} isInvalid={!valid} />
+            <InputFormField
+                field={field}
+                object={object}
+                onChange={onChange}
+                isInvalid={!valid}
+                placeHolder="Serach by city, ZIP code or country"
+            />
         </Autocomplete>
     );
 }

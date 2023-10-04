@@ -1,11 +1,8 @@
-import { ReactElement, useEffect, useMemo, useState } from "react";
+import { ReactElement, createContext, useEffect, useMemo, useState } from "react";
 import { Libraries, LoadScriptNext } from "@react-google-maps/api";
 import logError from "../log";
 
-interface GoogleMapsLoaderProps {
-    setGoogleMapsIsLoaded: (setGoogleMapsIsLoaded: boolean) => void;
-    children: ReactElement;
-}
+export const GoogleMapsLoaderContext = createContext(false);
 
 declare global {
     interface Window {
@@ -13,7 +10,13 @@ declare global {
     }
 }
 
-function GoogleMapsLoader({ setGoogleMapsIsLoaded, children }: GoogleMapsLoaderProps) {
+interface GoogleMapsLoaderProps {
+    children: ReactElement;
+}
+
+function GoogleMapsLoader({ children }: GoogleMapsLoaderProps) {
+    const [googleMapsIsLoaded, setGoogleMapsIsLoaded] = useState(false);
+
     const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
     const libraries = useMemo<Libraries>(() => ["places", "geometry"], []);
 
@@ -41,7 +44,9 @@ function GoogleMapsLoader({ setGoogleMapsIsLoaded, children }: GoogleMapsLoaderP
             onError={(error: Error) => handleLoadingError(error)}
             onLoad={() => setWasLoaded(true)}
         >
-            <>{children}</>
+            <GoogleMapsLoaderContext.Provider value={googleMapsIsLoaded}>
+                <>{children}</>
+            </GoogleMapsLoaderContext.Provider>
         </LoadScriptNext>
     );
 }

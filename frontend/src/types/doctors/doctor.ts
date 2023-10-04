@@ -1,4 +1,4 @@
-import { DistanceUnit, kmToMile } from "../../components/utils/DistanceUnit";
+import { DistanceUnit } from "../../components/utils/DistanceUnit";
 import useGoogleMaps, { Location } from "../../utils/googleMaps/useGoogleMaps";
 import { ImageFileOrUrl } from "../Image";
 import { DateTime } from "../utils/dateTime";
@@ -64,21 +64,27 @@ export const newDoctor = (): Doctor => {
     };
 };
 
-export function doctorDistanceFromLocation(doctor: Doctor, location: Location, distanceUnit: DistanceUnit): number {
+export function getDoctorLocationDistance(
+    doctorLocation: DoctorLocation,
+    location: Location,
+    distanceUnit?: DistanceUnit
+) {
     const { getDistance } = useGoogleMaps();
 
-    let distance = Math.min(
-        ...doctor.locations
-            .filter((doctorLocation) => doctorLocation.lat && doctorLocation.lng)
-            .map((doctorLocation) =>
-                getDistance(location, { lat: Number(doctorLocation.lat!), lng: Number(doctorLocation.lng!) })
-            )
-            .filter((distance) => distance !== undefined)
-    );
+    return getDistance(location, { lat: Number(doctorLocation.lat!), lng: Number(doctorLocation.lng!) }, distanceUnit);
+}
 
-    if (distanceUnit === "Mile" && distance !== Infinity) {
-        distance = kmToMile(distance);
-    }
+export function getDoctorNearestLocation(doctor: Doctor, location: Location): DoctorLocation | null {
+    const doctorLocations = doctor.locations
+        .filter((doctorLocation) => doctorLocation.lat && doctorLocation.lng)
+        .filter((doctorLocation) => getDoctorLocationDistance(doctorLocation, location) !== undefined)
+        .sort((a, b) => getDoctorLocationDistance(a, location) - getDoctorLocationDistance(b, location));
 
-    return distance;
+    return doctorLocations.length === 0 ? null : doctorLocations[0];
+}
+
+export function getDoctorMinimalDistance(doctor: Doctor, location: Location, distanceUnit: DistanceUnit): number {
+    const doctorLocation = getDoctorNearestLocation(doctor, location);
+
+    return doctorLocation === null ? Infinity : getDoctorLocationDistance(doctorLocation, location, distanceUnit);
 }
