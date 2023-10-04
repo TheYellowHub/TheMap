@@ -99,11 +99,24 @@ function MapScreen() {
                             ) : (
                                 <Container fluid>
                                     <div className="bold">
+                                        <br />
                                         No Results found
                                         <br />
-                                        <a className="inheritTextStyle">Clear filters</a>
                                         <br />
-                                        or <a className="inheritTextStyle">try a larger area</a>
+                                        <a className="inheritTextStyle">Clear filters</a> {/* TODO: clear filters */}
+                                        {address && distance && (
+                                            <>
+                                                <br />
+                                                or{" "}
+                                                <a
+                                                    href="#"
+                                                    onClick={() => setDistance(distance + 10)}
+                                                    className="inheritTextStyle"
+                                                >
+                                                    try a larger area
+                                                </a>
+                                            </>
+                                        )}
                                     </div>
                                 </Container>
                             )}
