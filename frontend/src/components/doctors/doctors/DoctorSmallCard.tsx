@@ -1,10 +1,11 @@
 import {
     Doctor,
-    doctorDistanceFromLocation,
+    getDoctorMinimalDistance,
+    getDoctorNearestLocation,
 } from "../../../types/doctors/doctor";
-import StarRating from "./StarRating";
-import { DistanceUnit } from "../../utils/DistanceUnit";
 import { Location } from "../../../utils/googleMaps/useGoogleMaps";
+import { DistanceUnit } from "../../utils/DistanceUnit";
+import StarRating from "./StarRating";
 
 import { Tooltip, OverlayTrigger } from "react-bootstrap";
 
@@ -18,16 +19,19 @@ interface DoctorSmallCardProps {
 function DoctorSmallCard({
     doctor,
     locationForDistanceCalculation,
-    distanceUnit = "Mile",
+    distanceUnit = "mi",
     onClick,
 }: DoctorSmallCardProps) {
-    const closestLocation =
+    const distance =
         locationForDistanceCalculation &&
-        doctorDistanceFromLocation(
+        getDoctorMinimalDistance(
             doctor,
             locationForDistanceCalculation,
             distanceUnit
         );
+    const closestLocation =
+        locationForDistanceCalculation &&
+        getDoctorNearestLocation(doctor, locationForDistanceCalculation);
 
     const image = doctor.image
         ? doctor.image.toString()
@@ -89,20 +93,22 @@ function DoctorSmallCard({
                 </div>
                 <div className="row w-100 m-0">
                     <div className="col ps-0">
-                        <p>{closestLocation?.location?.address || ""}</p>
+                        <p>{closestLocation?.address || ""}</p>
                     </div>
                     <div className="col-auto pe-0 grey-300">
-                        {closestLocation?.distance && closestLocation.location &&
-                            closestLocation.distance !== Infinity && (
+                        {closestLocation &&
+                            distance &&
+                            distance !== Infinity && (
                                 <a
-                                    href={`http://maps.google.com/maps/dir/?api=1&dir_action=navigate&destination=${closestLocation.location.address || ""}`}
+                                    href={`http://maps.google.com/maps/dir/?api=1&dir_action=navigate&destination=${
+                                        closestLocation.address || ""
+                                    }`}
                                     target="_blank"
                                     rel="noreferrer"
                                     onClick={(e) => e.stopPropagation()}
                                 >
                                     <p>
-                                        {closestLocation.distance.toFixed(1)}{" "}
-                                        {distanceUnit}{" "}
+                                        {distance.toFixed(1)} {distanceUnit}{" "}
                                         <i className="fas fa-location-arrow"></i>
                                     </p>
                                 </a>

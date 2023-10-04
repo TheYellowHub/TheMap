@@ -1,3 +1,4 @@
+import { ImageFileOrUrl } from "../types/Image";
 import { DateTime } from "../types/utils/dateTime";
 import { Email } from "../types/utils/email";
 import { Phone } from "../types/utils/phone";
@@ -69,9 +70,9 @@ export interface CheckboxesGroupField<T> extends Field<T, string[]> {
     setter?: (t: T, newValue: string[]) => T;
 }
 
-export interface FileField<T> extends Field<T, File | string | undefined> {
-    type: "file";
-    setter?: (t: T, newValue: File | string) => T;
+export interface ImageField<T> extends Field<T, ImageFileOrUrl | undefined> {
+    type: "image";
+    setter?: (t: T, newValue: ImageFileOrUrl) => T;
 }
 
 export type ModalField<T> =
@@ -85,7 +86,7 @@ export type ModalField<T> =
     | BooleanField<T>
     | ComboboxField<T>
     | CheckboxesGroupField<T>
-    | FileField<T>;
+    | ImageField<T>;
 
 export interface ListField<T, L> extends Field<T, L[]> {
     type: "list";

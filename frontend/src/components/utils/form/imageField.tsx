@@ -1,16 +1,16 @@
 import { Form } from "react-bootstrap";
 import { FocusEvent } from "react";
 
-import { FileField } from "../../../utils/fields";
+import { ImageField } from "../../../utils/fields";
 import Button from "../Button";
 
-interface FileFormFieldProps<T> {
-    field: FileField<T>;
+interface ImageFormFieldProps<T> {
+    field: ImageField<T>;
     object: T;
     onChange?: (newObject: T) => void;
 }
 
-export default function FileFormField<T>({ field, object, onChange = undefined }: FileFormFieldProps<T>) {
+export default function ImageFormField<T>({ field, object, onChange = undefined }: ImageFormFieldProps<T>) {
     const currentFileLink = field.getter(object);
     return (
         <>

@@ -190,7 +190,7 @@ function DoctorModal({ doctor, showModal, onCancel, onSave, isSaving, isSavingEr
             },
         },
         {
-            type: "file",
+            type: "image",
             label: "Image",
             getter: (doctor) => doctor.image,
             setter: (doctor, newValue) => {
