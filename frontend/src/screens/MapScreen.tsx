@@ -94,7 +94,7 @@ function MapScreen() {
                                         </>
                                     )}
                                 </div>
-                                <div>
+                                <div className="col-md-auto">
                                     {address && distance && (
                                         <a href="#" onClick={() => setDistance(distance + 10)}>
                                             <Icon icon="fa-location-crosshairs" />

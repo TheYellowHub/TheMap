@@ -250,13 +250,12 @@ export default function DoctorSearchFilters({
             </Form.Group>
 
             <Row>
-                <Col></Col>
-                <Col sm={3}>
+                <div className="d-flex justify-content-end">
                     <a href="#" onClick={() => setShouldClearFilters(true)}>
                         <Icon icon="fa-close" />
                         Clear all
                     </a>
-                </Col>
+                </div>
             </Row>
         </Form>
     );
