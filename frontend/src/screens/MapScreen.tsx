@@ -1,21 +1,24 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Col, Container, Row, Modal as ReactModal } from "react-bootstrap";
 
 import LoadingWrapper from "../components/utils/LoadingWrapper";
 import { ResponseError } from "../utils/request";
 import { Doctor, DoctorLocation, getDoctorNearestLocation } from "../types/doctors/doctor";
-import { Location } from "../utils/googleMaps/useGoogleMaps";
 import useDoctors from "../hooks/doctors/useDoctors";
 import DoctorSearchFilters from "../components/doctors/search/DoctorSearchFilters";
 import DoctorSearchResults from "../components/doctors/search/DoctorSearchResults";
 import DoctorSearchMap from "../components/doctors/search/DoctorSearchMap";
 import DoctorBigCard from "../components/doctors/doctors/DoctorBigCard";
 import Icon from "../components/utils/Icon";
-import { GoogleMapsLoaderContext } from "../utils/googleMaps/GoogleMapsLoader";
-import Message from "../components/utils/Message";
+import DoctorSearchNoResuls from "../components/doctors/search/DoctorSearchNoResults";
+import MapLoadingError from "../components/map/MapLoadingError";
+import useGoogleMaps, { Location } from "../utils/googleMaps/useGoogleMaps";
+import DoctorSearchAddressFilter from "../components/doctors/search/DoctorSearchAddressFilter";
 
 function MapScreen() {
     const { data: doctors, isListLoading, isListError, listError } = useDoctors();
+    const { setCurrentLocation, getAddress } = useGoogleMaps();
+
     const [matchedDoctorsIgnoringDistance, setMatchedDoctorsIgnoringDistance] = useState<Doctor[]>([]);
     const [matchedDoctorsIncludingDistance, setMatchedDoctorsIncludingDistance] = useState<Doctor[]>([]);
     const [currentDoctor, setCurrentDoctor] = useState<Doctor | null>(null);
@@ -29,7 +32,16 @@ function MapScreen() {
 
     const [shouldClearFilters, setShouldClearFilters] = useState(false);
 
-    const googleMapsIsLoaded = useContext(GoogleMapsLoaderContext);
+    const useCurrenetLocation = () => {
+        setCurrentLocation((location) => {
+            setAddressLocation(location);
+            getAddress(location).then((address) => {
+                if (address !== undefined) {
+                    setAddress(address);
+                }
+            });
+        });
+    };
 
     useEffect(() => {
         if (shouldClearFilters) {
@@ -73,6 +85,7 @@ function MapScreen() {
                                 setAddress={setAddress}
                                 addressLocation={addressLocation}
                                 setAddressLocation={setAddressLocation}
+                                useCurrenetLocation={useCurrenetLocation}
                                 distance={distance}
                                 setDistance={setDistance}
                                 distanceUnit={distanceUnit}
@@ -82,6 +95,23 @@ function MapScreen() {
                                 shouldClearFilters={shouldClearFilters}
                                 setShouldClearFilters={setShouldClearFilters}
                             />
+
+                            {address === undefined && (
+                                <ReactModal
+                                    className="transparent d-flex justify-content-center big-filter"
+                                    show={true}
+                                    backdrop="static"
+                                    centered
+                                >
+                                    <DoctorSearchAddressFilter
+                                        address={address}
+                                        setAddress={setAddress}
+                                        addressLocation={addressLocation}
+                                        setAddressLocation={setAddressLocation}
+                                        useCurrenetLocation={useCurrenetLocation}
+                                    />
+                                </ReactModal>
+                            )}
                         </Row>
 
                         <Row className="py-2 my-2">
@@ -115,35 +145,12 @@ function MapScreen() {
                                     distanceUnit={distanceUnit}
                                 />
                             ) : (
-                                <Container fluid>
-                                    <div className="bold">
-                                        <br />
-                                        No Results found
-                                        <br />
-                                        <br />
-                                        <a
-                                            href="#"
-                                            onClick={() => setShouldClearFilters(true)}
-                                            className="inheritTextStyle"
-                                        >
-                                            Clear filters
-                                        </a>{" "}
-                                        {/* TODO: clear filters */}
-                                        {address && distance && (
-                                            <>
-                                                <br />
-                                                or{" "}
-                                                <a
-                                                    href="#"
-                                                    onClick={() => setDistance(distance + 10)}
-                                                    className="inheritTextStyle"
-                                                >
-                                                    try a larger area
-                                                </a>
-                                            </>
-                                        )}
-                                    </div>
-                                </Container>
+                                <DoctorSearchNoResuls
+                                    address={address}
+                                    distance={distance}
+                                    setDistance={setDistance}
+                                    setShouldClearFilters={setShouldClearFilters}
+                                />
                             )}
                         </Row>
                     </Col>
@@ -162,36 +169,7 @@ function MapScreen() {
                 </Row>
             </Container>
 
-            {!googleMapsIsLoaded && (
-                <ReactModal
-                    className="transparent d-flex justify-content-center"
-                    show={true}
-                    backdrop="static"
-                    centered
-                >
-                    <Message variant="danger">
-                        <div className="bold">
-                            The map couldn’t load
-                            <br />
-                            <a href="#" onClick={() => window.location.reload()} className="inheritTextStyle">
-                                Reload to try again
-                            </a>
-                        </div>
-                    </Message>
-                </ReactModal>
-            )}
-
-            {/* TODO - address input */}
-            {/* {address === undefined && (
-                <ReactModal
-                    className="transparent d-flex justify-content-center"
-                    show={true}
-                    backdrop="static"
-                    centered
-                >
-                    
-                </ReactModal>
-            )} */}
+            <MapLoadingError />
         </LoadingWrapper>
     );
 }
