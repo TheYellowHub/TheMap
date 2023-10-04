@@ -4,7 +4,7 @@ type IconProps = {
 };
 
 function Icon({ icon, onClick }: IconProps) {
-    return icon === null ? <></> : <i className={`fa-solid ${icon} icon`} onClick={onClick} />;
+    return icon === null ? <></> : <i className={`fa-solid ${icon}`} onClick={onClick} />;
 }
 
 export default Icon;

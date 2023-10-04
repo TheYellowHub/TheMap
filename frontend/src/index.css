@@ -8,9 +8,12 @@
     --layout-padding: 0.5rem;
     --main-height: calc(100vh - var(--footer-height));
     --dark-grey: #333;
+    --light-grey: #6A6A6A;
     --dark-yellow: #97750B;
     --med-yellow: #F2C94C;
     --light-yellow: #FCEFCA;
+    --blue: #035763;
+    
 }
 
 * {
@@ -26,7 +29,16 @@
 }
 
 a {
+    color: var(--blue);
+    font-size: 0.875rem;
     text-decoration-line: underline;
+}
+
+i {
+    color: inherit;
+    font-size: 1rem;
+    font-style: normal;
+    padding: 0rem 0.5rem;
 }
 
 title {
@@ -64,10 +76,6 @@ main {
 footer {
     position:absolute;
     width: 100vw;
-}
-
-.icon {
-    padding: 0rem 1rem;
 }
 
 .logo {
@@ -258,4 +266,9 @@ input[type="checkbox"] {
     color: var(--dark-grey);
     background: var(--light-yellow);
     border-color: var(--dark-yellow);
+}
+
+.notes {
+    color: var(--light-grey);
+    font-style: italic;
 }

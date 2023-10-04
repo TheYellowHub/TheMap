@@ -1,4 +1,4 @@
-import { Doctor, doctorDistanceFromLocation } from "../../../types/doctors/doctor";
+import { Doctor, getDoctorMinimalDistance } from "../../../types/doctors/doctor";
 import { Location } from "../../../utils/googleMaps/useGoogleMaps";
 import { DistanceUnit } from "../../utils/DistanceUnit";
 
@@ -12,12 +12,12 @@ interface DoctorSmallCardProps {
 function DoctorSmallCard({
     doctor,
     locationForDistanceCalculation,
-    distanceUnit = "Mile",
+    distanceUnit = "mi",
     onClick,
 }: DoctorSmallCardProps) {
     const distance =
         locationForDistanceCalculation &&
-        doctorDistanceFromLocation(doctor, locationForDistanceCalculation, distanceUnit);
+        getDoctorMinimalDistance(doctor, locationForDistanceCalculation, distanceUnit);
 
     return (
         <div className="doctorSmallCard" onClick={onClick}>
