@@ -30,6 +30,7 @@ function MapScreen() {
     useEffect(() => {
         if (shouldClearFilters) {
             setAddress(undefined);
+            setAddressLocation(undefined);
             setDistance(distanceDefault);
             setShouldClearFilters(false);
         }

@@ -97,7 +97,7 @@ export default function DoctorSearchFilters({
         if (shouldClearFilters) {
             formRef?.current?.reset();
             setNameIncluds("");
-            setCategoryFilter("");
+            setCategoryFilter(undefined);
             setSpecialitiesFilter([]);
             setShouldClearFilters(false);
         }
