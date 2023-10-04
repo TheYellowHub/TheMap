@@ -21,7 +21,7 @@ function DoctorSmallCard({
     distanceUnit = "Mile",
     onClick,
 }: DoctorSmallCardProps) {
-    const distance =
+    const closestLocation =
         locationForDistanceCalculation &&
         doctorDistanceFromLocation(
             doctor,
@@ -35,9 +35,6 @@ function DoctorSmallCard({
         ? "images/default-doctor-f.png"
         : "images/default-doctor-m.png";
 
-    const address = doctor.locations[0]
-        ? doctor.locations[0].address || "no address"
-        : "no location";
     // TODO: replace with the real fields
     const averageRating = 4.5;
     const totalReviews = 10;
@@ -45,11 +42,7 @@ function DoctorSmallCard({
     return (
         <div className="doctorSmallCard" onClick={onClick}>
             <img
-                style={{
-                    width: "7.125rem",
-                    height: "8.875rem",
-                    borderRadius: "0.25rem 0 0 0.25rem",
-                }}
+                className="doctorSmallCardImg"
                 src={image}
                 alt={doctor.fullName}
             />
@@ -77,7 +70,12 @@ function DoctorSmallCard({
                                     placement="bottom"
                                     overlay={<Tooltip>View Profile</Tooltip>}
                                 >
-                                    <a href={doctor.iCareBetter}>
+                                    <a
+                                        href={doctor.iCareBetter}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        onClick={(e) => e.stopPropagation()}
+                                    >
                                         <img
                                             className="px-1"
                                             src="images/icarebetter.png"
@@ -91,20 +89,29 @@ function DoctorSmallCard({
                 </div>
                 <div className="row w-100 m-0">
                     <div className="col ps-0">
-                        <p>{address}</p>
+                        <p>{closestLocation?.location?.address || ""}</p>
                     </div>
-                    <div className="col-auto pe-0" style={{ color: "#989898" }}>
-                        {distance && distance !== Infinity && (
-                            <p>
-                                {distance.toFixed(1)} {distanceUnit}{" "}
-                                <i className="fas fa-location-arrow"></i>
-                            </p>
-                        )}
+                    <div className="col-auto pe-0 grey-300">
+                        {closestLocation?.distance && closestLocation.location &&
+                            closestLocation.distance !== Infinity && (
+                                <a
+                                    href={`http://maps.google.com/maps/dir/?api=1&dir_action=navigate&destination=${closestLocation.location.address || ""}`}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    onClick={(e) => e.stopPropagation()}
+                                >
+                                    <p>
+                                        {closestLocation.distance.toFixed(1)}{" "}
+                                        {distanceUnit}{" "}
+                                        <i className="fas fa-location-arrow"></i>
+                                    </p>
+                                </a>
+                            )}
                     </div>
                 </div>
                 <div className="text-black row w-100 m-0 mt-auto">
-                    <div className="col ps-0 text-nowrap">
-                        <p style={{ color: "#333" }}>
+                    <div className="col ps-0 text-nowrap grey-600">
+                        <p>
                             {StarRating({ rating: averageRating })}{" "}
                             {averageRating}
                         </p>

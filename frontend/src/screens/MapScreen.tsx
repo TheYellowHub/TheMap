@@ -97,7 +97,7 @@ function MapScreen() {
                         specialitiesFilter.every((speciality) => doctor.specialities.includes(speciality)) &&
                         (distance === undefined ||
                             location === undefined ||
-                            (doctorDistance && doctorDistance <= distance))
+                            (doctorDistance && doctorDistance.distance <= distance))
                     );
                 })
                 .sort(sortOptions.get(sortKey))

@@ -63,21 +63,25 @@ export const newDoctor = (): Doctor => {
     };
 };
 
-export function doctorDistanceFromLocation(doctor: Doctor, location: Location, distanceUnit: DistanceUnit): number {
+export function doctorDistanceFromLocation(doctor: Doctor, location: Location, distanceUnit: DistanceUnit): { distance: number, location: DoctorLocation | undefined } {
     const { getDistance } = useGoogleMaps();
+    let minDistance = Infinity;
+    let minDistanceLocation: DoctorLocation | undefined;
 
-    let distance = Math.min(
-        ...doctor.locations
-            .filter((doctorLocation) => doctorLocation.lat && doctorLocation.lng)
-            .map((doctorLocation) =>
-                getDistance(location, { lat: Number(doctorLocation.lat!), lng: Number(doctorLocation.lng!) })
-            )
-            .filter((distance) => distance !== undefined)
-    );
+    doctor.locations.forEach((doctorLocation) => {
+        if (doctorLocation.lat && doctorLocation.lng) {
+            const distance = getDistance(location, { lat: Number(doctorLocation.lat!), lng: Number(doctorLocation.lng!) });
+            if (distance !== undefined && distance < minDistance) {
+                minDistance = distance;
+                minDistanceLocation = doctorLocation;
+            }
+        }
+    });
 
+    let distance = minDistance;
     if (distanceUnit === "Mile" && distance !== Infinity) {
         distance = kmToMile(distance);
     }
 
-    return distance;
+    return { distance, location: minDistanceLocation };
 }
