@@ -99,13 +99,12 @@ input[type="checkbox"] {
     height: 8.875rem;
     width: 26rem; /* TODO: change? */
     cursor: pointer;
-    padding: 2px;
 }
 .doctorSmallCard:hover {
-    box-shadow: #035763 0px 0px 0px 1.5px;
+    box-shadow: #035763 0 0 0 1px;
 }
 .doctorSmallCard:active {
-    box-shadow: #035763 0 0 0 2px inset;
+    box-shadow: #035763 0 0 0 2px;
 }
 .doctorSmallCardData {
     position: relative;

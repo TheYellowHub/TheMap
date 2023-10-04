@@ -1,4 +1,3 @@
 docker/**/*envkey*
 frontend/.env
 venv/**
-.vscode/

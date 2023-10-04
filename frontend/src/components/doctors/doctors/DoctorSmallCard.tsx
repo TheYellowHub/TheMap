@@ -45,7 +45,11 @@ function DoctorSmallCard({
     return (
         <div className="doctorSmallCard" onClick={onClick}>
             <img
-                style={{ width: "7.125rem", height: "8.875rem" }}
+                style={{
+                    width: "7.125rem",
+                    height: "8.875rem",
+                    borderRadius: "0.25rem 0 0 0.25rem",
+                }}
                 src={image}
                 alt={doctor.fullName}
             />
