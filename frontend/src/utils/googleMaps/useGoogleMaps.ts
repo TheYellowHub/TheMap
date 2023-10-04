@@ -1,3 +1,4 @@
+import { DistanceUnit, kmToMile } from "../../components/utils/DistanceUnit";
 import logError from "../log";
 
 export type Location = {
@@ -86,8 +87,12 @@ function getAddress(location: Location): Promise<string | undefined> {
     }
 }
 
-function getDistance(from: Location, to: Location): number {
-    return window.google.maps.geometry.spherical.computeDistanceBetween(from, to) / 1000;
+function getDistance(from: Location, to: Location, distanceUnit?: DistanceUnit): number {
+    let distance = window.google.maps.geometry.spherical.computeDistanceBetween(from, to) / 1000;
+    if (distanceUnit === "mi" && distance !== Infinity) {
+        distance = kmToMile(distance);
+    }
+    return distance;
 }
 
 function isLoaded() {

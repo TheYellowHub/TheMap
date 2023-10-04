@@ -1,6 +1,6 @@
+import { Fragment } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 
-import Button from "./Button";
 import Icon from "./Icon";
 
 interface PaginationProps {
@@ -38,9 +38,14 @@ function Pagination({ rowsCount, pageIndex, pageSize, setPageIndex, setPageSize 
                         <Icon icon="fa-caret-left" />
                     </button>
                     {pagesToSelectList.map((newPageIndex: number, index: number) => (
-                        <>
+                        <Fragment key={`page-${newPageIndex}`}>
                             {0 < index && pagesToSelectList[index - 1] + 1 < newPageIndex && (
-                                <div className="paginationText">...</div>
+                                <div
+                                    key={`missing-pages-${pagesToSelectList[index - 1] + 1}-${newPageIndex - 1}`}
+                                    className="paginationText"
+                                >
+                                    ...
+                                </div>
                             )}
                             <button
                                 key={`page-${newPageIndex}`}
@@ -50,7 +55,7 @@ function Pagination({ rowsCount, pageIndex, pageSize, setPageIndex, setPageSize 
                             >
                                 {newPageIndex + 1}
                             </button>
-                        </>
+                        </Fragment>
                     ))}
                     <button
                         key={`page-next`}
