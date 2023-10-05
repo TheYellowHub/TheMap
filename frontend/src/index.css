@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@700&family=Roboto:ital@0;1&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Assistant:wght@700&family=Roboto:ital@0;1&display=swap");
 
 :root {
     --header-height: 4rem;
@@ -6,25 +6,56 @@
     --layout-padding: 0.5rem;
     --main-height: calc(100vh - var(--footer-height));
     --dark-grey: #333;
-    --med-dark-grey: #6A6A6A;
+    --med-dark-grey: #6a6a6a;
     --med-grey: #989898;
-    --light-grey: #D6D6D6;
-    --dark-yellow: #97750B;
-    --med-yellow: #F2C94C;
-    --light-yellow: #FCEFCA;
+    --light-grey: #d6d6d6;
+    --dark-yellow: #97750b;
+    --med-yellow: #f2c94c;
+    --light-yellow: #fcefca;
     --blue: #035763;
+}
+
+.dark-grey {
+    color: var(--dark-grey) !important;
+}
+
+.med-dark-grey {
+    color: var(--med-dark-grey);
+}
+
+.med-grey {
+    color: var(--med-grey) !important;
+}
+
+.light-grey {
+    color: var(--light-grey) !important;
+}
+
+.dark-yellow {
+    color: var(--dark-yellow);
+}
+
+.med-yellow {
+    color: var(--med-yellow);
+}
+
+.light-yellow {
+    color: var(--light-yellow);
+}
+
+.blue {
+    color: var(--blue);
 }
 
 * {
     padding: 0px;
     margin: 0px;
     color: var(--dark-grey);
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
     font-size: 1rem;
     font-style: normal;
     font-weight: 400;
     line-height: 1.25rem; /* 125% */
-    
 }
 
 a {
@@ -41,11 +72,11 @@ i {
 }
 
 title {
-    font-family: 'Assistant', sans-serif;
+    font-family: "Assistant", sans-serif;
     font-size: 1.5rem;
     font-style: normal;
     font-weight: 700;
-    line-height: 1.25rem; 
+    line-height: 1.25rem;
 }
 
 header {
@@ -74,7 +105,7 @@ main {
 }
 
 footer {
-    position:absolute;
+    position: absolute;
     width: 100vw;
 }
 
@@ -195,6 +226,14 @@ input[type="checkbox"] {
 .doctorSmallCardData a:hover {
     text-decoration: underline;
 }
+.doctorSmallCardDataAddress {
+    /* is there a better way to limit height of the text?*/
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
 .bookmarkRibbon {
     padding-left: 0.25rem;
     padding-right: 2rem;
@@ -217,7 +256,7 @@ input[type="checkbox"] {
 }
 
 .doctorBigCard div {
-    position:fixed;
+    position: fixed;
     background-color: plum; /* TODO: delete */
     max-width: 60%;
 }
@@ -226,7 +265,7 @@ input[type="checkbox"] {
     position: relative;
     min-height: calc(100vh - 10rem);
     height: calc(100vh - 10rem);
-    z-index: 1; 
+    z-index: 1;
 }
 
 .aboveMap {
@@ -237,7 +276,7 @@ input[type="checkbox"] {
     text-align: end;
 }
 
-.gm-style .gm-style-iw-c, 
+.gm-style .gm-style-iw-c,
 .gm-style .gm-style-iw-tc {
     top: -25px;
 }
@@ -256,7 +295,7 @@ input[type="checkbox"] {
 }
 
 .modal-backdrop {
-    z-index: 10;    
+    z-index: 10;
 }
 
 *:has(.modal.show) main {
@@ -303,7 +342,7 @@ input[type="checkbox"] {
 
 .paginationButton.selected {
     border: 0.75px solid var(--grey-grey-300, #989898);
-    background: var(--yellow-y-300, #F6DB87);
+    background: var(--yellow-y-300, #f6db87);
 }
 
 .btn {
@@ -319,7 +358,7 @@ input[type="checkbox"] {
     font-size: 1rem;
     font-style: normal;
     font-weight: 400;
-    line-height: 1.25rem; 
+    line-height: 1.25rem;
 }
 
 .btn-primary {
@@ -366,7 +405,7 @@ input[type="checkbox"] {
 .bold {
     color: black;
     text-align: center;
-    font-family: 'Assistant', sans-serif;
+    font-family: "Assistant", sans-serif;
     font-size: 1rem;
     font-style: normal;
     font-weight: 700;
@@ -380,8 +419,8 @@ input[type="checkbox"] {
 }
 
 .alert-danger {
-    border-color: #CF4E31;
-    background-color: #FDE6E1;
+    border-color: #cf4e31;
+    background-color: #fde6e1;
     padding: 6rem;
 }
 

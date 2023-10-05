@@ -91,11 +91,13 @@ function DoctorSmallCard({
                         </span>
                     </div>
                 </div>
-                <div className="row w-100 m-0">
+                <div className="row w-100 m-0 flex-nowrap">
                     <div className="col ps-0">
-                        <p>{closestLocation?.address || ""}</p>
+                        <p className="med-dark-grey doctorSmallCardDataAddress">
+                            {closestLocation?.address || ""}
+                        </p>
                     </div>
-                    <div className="col-auto pe-0 grey-300">
+                    <div className="col-auto pe-0">
                         {closestLocation &&
                             distance &&
                             distance !== Infinity && (
@@ -107,23 +109,23 @@ function DoctorSmallCard({
                                     rel="noreferrer"
                                     onClick={(e) => e.stopPropagation()}
                                 >
-                                    <p>
+                                    <p className="med-grey">
                                         {distance.toFixed(1)} {distanceUnit}{" "}
-                                        <i className="fas fa-location-arrow"></i>
+                                        <i className="fas fa-location-arrow p-0"></i>
                                     </p>
                                 </a>
                             )}
                     </div>
                 </div>
                 <div className="text-black row w-100 m-0 mt-auto">
-                    <div className="col ps-0 text-nowrap grey-600">
-                        <p>
+                    <div className="col ps-0 text-nowrap">
+                        <p className="dark-grey">
                             {StarRating({ rating: averageRating })}{" "}
                             {averageRating}
                         </p>
                     </div>
                     <div className="col-auto pe-0">
-                        <p>{totalReviews} Reviews</p>
+                        <p className="dark-grey">{totalReviews} Reviews</p>
                     </div>
                 </div>
             </div>
