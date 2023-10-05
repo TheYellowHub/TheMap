@@ -360,5 +360,6 @@ input[type="checkbox"] {
     border-radius: 3.125rem;
     line-height: 1.25rem;
     padding: 1rem;
-    width: 70vw;
+    width: 75vw; 
+    /* TODO: fix "use my location" positioning */
 }
