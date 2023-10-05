@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@700&family=Roboto:ital@0;1&display=swap');
 
 :root {
-    --header-height: 4rem;
+    --logo-height: 4rem;
+    --header-height: calc(var(--logo-height) + var(--layout-padding));
     --footer-height: 2rem;
     --layout-padding: 0.5rem;
     --main-height: calc(100vh - var(--footer-height));
@@ -41,12 +42,12 @@ i {
     padding: 0rem 0.5rem;
 }
 
-title {
+.title {
     font-family: 'Assistant', sans-serif;
     font-size: 1.5rem;
     font-style: normal;
     font-weight: 700;
-    line-height: 1.25rem; 
+    line-height: 2rem; 
 }
 
 header {
@@ -81,12 +82,18 @@ footer {
 
 .logo {
     padding: 0rem 0rem;
-    height: 2.5rem;
+    height: var(--logo-height);
 }
 
 .navbar {
+    background-color: white;
     padding: 0.5rem;
     width: 100vw;
+    text-transform: none;
+}
+
+.navbar-nav {
+    gap: 3.625rem
 }
 
 .navbar-collapse {
@@ -96,6 +103,22 @@ footer {
 .nav-item {
     margin-right: 0rem;
 }
+
+.nav-link  {
+    color: var(--blue) !important;
+}
+
+.nav-link.active {
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+.dropdown-toggle::after {
+    border: none !important;
+    font: normal normal normal 14px/1 FontAwesome;
+    content: "\f107" !important;
+    vertical-align: 0;
+  }
 
 .navbar-brand {
     margin: 0px;

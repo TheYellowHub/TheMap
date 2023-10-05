@@ -11,14 +11,12 @@ function Header() {
 
     const [selectedPage, setSelectedPage] = useState<EventKey | null>(null);
 
-    const appName = "The Yellow Hub Map";
-    const logoUrl = config.app.logoUrl ? config.app.logoUrl : "/images/ribbon.svg";
-
     type Link = {
         to: string;
         title: string;
         icon?: string;
         onClick?: React.MouseEventHandler;
+        newWindow?: boolean;
         // requiredPermission?: Permission; // TODO
     };
 
@@ -36,71 +34,73 @@ function Header() {
     const links: (Link | LinksGroup)[] = [
         {
             to: "",
-            title: "The Map",
-            icon: "fa-map-location-dot",
+            title: "Specialists Map",
         },
         {
-            title: "Personal zone",
-            icon: "fa-user",
-            links: [
-                {
-                    to: "user/notifications",
-                    title: "Notifications",
-                },
-                {
-                    to: "user/profile",
-                    title: "My profile",
-                },
-                {
-                    to: "user/addeddoctors",
-                    title: "Doctors I added",
-                },
-                {
-                    to: "user/faviorite",
-                    title: "Faviorite doctors",
-                },
-                {
-                    to: "user/reviews",
-                    title: "My reviews",
-                },
-            ],
+            to: "https://www.theyellowhub.org/blog",
+            title: "Blog",
+            newWindow: true,
         },
         {
-            title: "admin",
-            icon: "fa-gear",
+            // TODO: only if admin
+            title: "Admin",
             links: [
                 {
-                    to: "doctors/doctors",
+                    to: "/doctors/doctors",
                     title: "Doctors",
                 },
                 {
-                    to: "doctors/categories",
+                    to: "/doctors/categories",
                     title: "Doctor categories",
                 },
                 {
-                    to: "doctors/specialities",
+                    to: "/doctors/specialities",
                     title: "Doctor specialities",
                 },
                 {
-                    to: "usage",
+                    to: "/usage",
                     title: "Usage statictics",
                 },
             ],
         },
         {
-            to: "logout",
-            title: "Logout",
-            icon: "fa-door-open",
+            // TODO: only if logged in
+            title: "My account",
+            links: [
+                {
+                    to: "/user/notifications",
+                    title: "Notifications",
+                },
+                {
+                    to: "/user/profile",
+                    title: "My profile",
+                },
+                {
+                    to: "/user/addeddoctors",
+                    title: "Doctors I added",
+                },
+                {
+                    to: "/user/faviorite",
+                    title: "Faviorite doctors",
+                },
+                {
+                    to: "/user/reviews",
+                    title: "My reviews",
+                },
+            ],
         },
+        // {
+        //     to: "logout",
+        //     title: "Logout",
+        // },
     ];
 
     return (
-        <Navbar expand="lg" className="bg-light bg-body-tertiary aboveAll header" collapseOnSelect>
+        <Navbar expand="lg" className="aboveAll header" collapseOnSelect>
             <Navbar.Toggle aria-controls="navbarCollapse" />
-            <Nav.Link as={Link} to="/" className="no-padding" eventKey="home" onClick={() => setSelectedPage(null)}>
+            <Nav.Link as={Link} to="http://theyellowhub.org/" target="_blank" className="no-padding">
                 <Navbar.Brand>
-                    <Image src={logoUrl} className="logo" />
-                    {appName}
+                    <Image src={"/images/logo.svg"} className="logo" />
                 </Navbar.Brand>
             </Nav.Link>
 
@@ -128,9 +128,10 @@ function Header() {
                                         <NavDropdown.Item
                                             key={link.to}
                                             as={Link}
-                                            to={`/${link.to}`}
+                                            to={link.to}
+                                            target={link.to.includes("http") ? "_blank" : "_self"}
                                             onClick={link.onClick}
-                                            eventKey={link.to}
+                                            eventKey={link.to.includes("http") ? undefined : link.to}
                                         >
                                             {link.icon && <Icon icon={link.icon} />}
                                             {link.title}
@@ -143,9 +144,10 @@ function Header() {
                                 <Nav.Link
                                     key={link.to}
                                     as={Link}
-                                    to={`/${link.to}`}
+                                    to={link.to}
+                                    target={link.to.includes("http") ? "_blank" : "_self"}
                                     onClick={link.onClick}
-                                    eventKey={link.to}
+                                    eventKey={link.to.includes("http") ? undefined : link.to}
                                 >
                                     {link.icon && <Icon icon={link.icon} />}
                                     {link.title}

@@ -43,6 +43,8 @@ function MapScreen() {
         });
     };
 
+    useEffect(() => setDistance(distanceDefault), [address]);
+
     useEffect(() => {
         if (shouldClearFilters) {
             setAddress(undefined);
