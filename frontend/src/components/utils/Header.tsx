@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Image, Nav, NavDropdown, Navbar } from "react-bootstrap";
 import { EventKey, SelectCallback } from "@restart/ui/esm/types";
 
-import config from "../../config.json";
 import Icon from "./Icon";
 import { Link } from "react-router-dom";
 
@@ -10,6 +9,7 @@ function Header() {
     // TODO: useAuth
 
     const [selectedPage, setSelectedPage] = useState<EventKey | null>(null);
+    const [selectedSubMenu, setSelectedSubMenu] = useState<EventKey | null>(null);
 
     type Link = {
         to: string;
@@ -114,24 +114,29 @@ function Header() {
                 <Nav activeKey={selectedPage as EventKey} onSelect={setSelectedPage as SelectCallback}>
                     {links.map((link: LinksGroup | Link) => {
                         if (isGroup(link)) {
+                            const dropdown = link;
                             return (
                                 <NavDropdown
-                                    key={link.title}
+                                    key={dropdown.title}
+                                    active={selectedSubMenu === dropdown.title}
                                     title={
                                         <>
-                                            {link.icon && <Icon icon={link.icon} />}
-                                            {link.title}
+                                            {dropdown.icon && <Icon icon={dropdown.icon} />}
+                                            {dropdown.title}
                                         </>
                                     }
                                 >
-                                    {link.links.map((link) => (
+                                    {dropdown.links.map((link) => (
                                         <NavDropdown.Item
                                             key={link.to}
                                             as={Link}
                                             to={link.to}
                                             target={link.to.includes("http") ? "_blank" : "_self"}
-                                            onClick={link.onClick}
-                                            eventKey={link.to.includes("http") ? undefined : link.to}
+                                            onClick={(e) => {
+                                                setSelectedSubMenu(dropdown.title);
+                                                link.onClick && link.onClick(e);
+                                            }}
+                                            eventKey={link.to}
                                         >
                                             {link.icon && <Icon icon={link.icon} />}
                                             {link.title}
@@ -146,7 +151,10 @@ function Header() {
                                     as={Link}
                                     to={link.to}
                                     target={link.to.includes("http") ? "_blank" : "_self"}
-                                    onClick={link.onClick}
+                                    onClick={(e) => {
+                                        !link.to.includes("http") && setSelectedSubMenu(null);
+                                        link.onClick && link.onClick(e);
+                                    }}
                                     eventKey={link.to.includes("http") ? undefined : link.to}
                                 >
                                     {link.icon && <Icon icon={link.icon} />}

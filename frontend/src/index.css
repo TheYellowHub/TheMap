@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@700&family=Roboto:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@700&family=Poppins:wght@400;500;700&family=Roboto:ital@0;1&display=swap');
 
 :root {
     --logo-height: 4rem;
@@ -106,13 +106,32 @@ footer {
 }
 
 .nav-link  {
-    font-family: "Poppins";
     color: var(--blue) !important;
+    font-family: "Poppins";
+    font-weight: 500;
+    font-size: 1.125rem;
+    line-height: 1.25rem;
+}
+
+.dropdown-item {
+    color: var(--blue) !important;
+    font-family: "Poppins";
+}
+
+.nav-link:hover,
+.dropdown-item:hover {
+    text-decoration: underline;
 }
 
 .nav-link.active {
     font-weight: 700;
     text-decoration: underline;
+}
+
+.dropdown-item.active,
+.dropdown-item:focus {
+    color: white !important;
+    background-color: var(--blue) !important;
 }
 
 .dropdown-toggle::after {
