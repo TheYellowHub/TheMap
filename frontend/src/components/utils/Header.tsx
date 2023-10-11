@@ -26,11 +26,23 @@ function Header() {
         links: Link[];
     };
 
+    function getMenuItemContent(link: Link) {
+        return (
+            <>
+                {link.icon && (
+                    <div className="navbar-icon-border">
+                        <Icon icon={link.icon} />
+                    </div>
+                )}
+                {link.title}
+            </>
+        );
+    }
+
     function isGroup(link: Link | LinksGroup): link is LinksGroup {
         return (link as LinksGroup).links !== undefined;
     }
 
-    // TODO: pre/post login links
     const links: (Link | LinksGroup)[] = [
         {
             to: "",
@@ -64,24 +76,31 @@ function Header() {
             ],
         },
         {
-            // TODO: only if logged in
+            // TODO: only if logged in. If not - login link.
             title: "My account",
             links: [
+                {
+                    to: "/user/profile",
+                    title: "My profile", // TODO: replace with user name
+                    icon: "fa-user",
+                },
+                {
+                    to: "/user/saved",
+                    title: "Saved",
+                    icon: "fa-bookmark",
+                },
+                {
+                    to: "logout",
+                    title: "Log out",
+                    icon: "fa-power-off",
+                },
                 {
                     to: "/user/notifications",
                     title: "Notifications",
                 },
                 {
-                    to: "/user/profile",
-                    title: "My profile",
-                },
-                {
                     to: "/user/addeddoctors",
                     title: "Doctors I added",
-                },
-                {
-                    to: "/user/faviorite",
-                    title: "Faviorite doctors",
                 },
                 {
                     to: "/user/reviews",
@@ -89,10 +108,6 @@ function Header() {
                 },
             ],
         },
-        // {
-        //     to: "logout",
-        //     title: "Logout",
-        // },
     ];
 
     return (
@@ -103,12 +118,6 @@ function Header() {
                     <Image src={"/images/logo.svg"} className="logo" />
                 </Navbar.Brand>
             </Nav.Link>
-
-            {/* TODO: Login / Hello user / Logout */}
-            {/* <Navbar.Text>
-                <Icon icon="fa-user" />
-                Hello user
-            </Navbar.Text> */}
 
             <Navbar.Collapse id="navbarCollapse">
                 <Nav activeKey={selectedPage as EventKey} onSelect={setSelectedPage as SelectCallback}>
@@ -128,6 +137,7 @@ function Header() {
                                 >
                                     {dropdown.links.map((link) => (
                                         <NavDropdown.Item
+                                            className="d-flex"
                                             key={link.to}
                                             as={Link}
                                             to={link.to}
@@ -138,8 +148,7 @@ function Header() {
                                             }}
                                             eventKey={link.to}
                                         >
-                                            {link.icon && <Icon icon={link.icon} />}
-                                            {link.title}
+                                            {getMenuItemContent(link)}
                                         </NavDropdown.Item>
                                     ))}
                                 </NavDropdown>
@@ -157,8 +166,7 @@ function Header() {
                                     }}
                                     eventKey={link.to.includes("http") ? undefined : link.to}
                                 >
-                                    {link.icon && <Icon icon={link.icon} />}
-                                    {link.title}
+                                    {getMenuItemContent(link)}
                                 </Nav.Link>
                             );
                         }
