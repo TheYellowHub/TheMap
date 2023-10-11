@@ -1,4 +1,4 @@
-import { GoogleMap as Map, MarkerF, InfoWindowF } from "@react-google-maps/api";
+import { GoogleMap as Map, MarkerF } from "@react-google-maps/api";
 
 import { Location } from "../../utils/googleMaps/useGoogleMaps";
 import { Fragment, useEffect, useRef } from "react";

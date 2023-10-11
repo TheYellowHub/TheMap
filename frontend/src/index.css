@@ -203,6 +203,11 @@ input[type="checkbox"] {
     filter: blur(3px);
 }
 
+
+*:has(.doctorBigCard) main {
+    filter: none !important;
+}
+
 .col-sm-2,
 .col-sm-3 {
     display: flex;
