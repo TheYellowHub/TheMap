@@ -12,6 +12,7 @@
     --light-grey: #D6D6D6;
     --dark-yellow: #97750B;
     --med-yellow: #F2C94C;
+    --med-light-yellow: #F6DB87;
     --light-yellow: #FCEFCA;
     --blue: #035763;
     
@@ -105,6 +106,7 @@ footer {
 }
 
 .nav-link  {
+    font-family: "Poppins";
     color: var(--blue) !important;
 }
 
@@ -226,6 +228,10 @@ input[type="checkbox"] {
     filter: blur(3px);
 }
 
+*:has(.doctorBigCard) main {
+    filter: none;
+}
+
 .col-sm-2,
 .col-sm-3 {
     display: flex;
@@ -257,7 +263,7 @@ input[type="checkbox"] {
 }
 
 .paginationButton:hover {
-    border: 1px solid var(--grey-grey-300, #989898);
+    border: 1px solid var(--med-grey);
 }
 
 .paginationButton:disabled {
@@ -265,8 +271,8 @@ input[type="checkbox"] {
 }
 
 .paginationButton.selected {
-    border: 0.75px solid var(--grey-grey-300, #989898);
-    background: var(--yellow-y-300, #F6DB87);
+    border: 0.75px solid var(--med-grey);
+    background: var(--med-light-yellow);
 }
 
 .btn {
