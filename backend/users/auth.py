@@ -7,18 +7,21 @@ from functools import wraps
 from django.http import JsonResponse
 
 from django.conf import settings
+from rest_framework.request import Request
 
 
 ADMIN_SCOPE = "adminPermission"
 
 
-def jwt_get_username_from_payload_handler(payload):
+def jwt_get_username_from_payload_handler(payload: dict):
+    """Gets a request's payload and returns the username of the user who sent it"""
     username = payload.get("sub").replace("|", ".")
     authenticate(remote_user=username)
     return username
 
 
-def jwt_decode_token(token):
+def jwt_decode_token(token: str):
+    """Decodes a token"""
     header = jwt.get_unverified_header(token)
     jwks = requests.get(
         "https://{}/.well-known/jwks.json".format(settings.JWT_AUTH["JWT_DOMAIN"])
@@ -41,8 +44,8 @@ def jwt_decode_token(token):
     )
 
 
-def get_token_auth_header(request):
-    """Obtains the Access Token from the Authorization Header"""
+def get_token_auth_header(request: Request):
+    """Obtains the access token from the authorization header"""
     auth = request.META.get("HTTP_AUTHORIZATION", None)
     parts = auth.split()
     token = parts[1]
@@ -50,17 +53,18 @@ def get_token_auth_header(request):
     return token
 
 
-def has_scope(request, required_scope):
-    """Checks if the request's header contains the required scope"""
+def has_scope(request: Request, required_scope: str):
+    """Determines if the required scope is present in the access token of the request"""
     token = get_token_auth_header(request)
     decoded = jwt.decode(token, verify=False, options={"verify_signature": False})
     return decoded.get("scope") and required_scope in decoded["scope"].split()
 
 
-def requires_scope(required_scope):
-    """Determines if the required scope is present in the Access Token
-    Args:
-        required_scope (str): The scope required to access the resource
+def requires_scope(required_scope: str):
+    """
+    API decorator.
+    Determines if the required scope is present in the access token of the request.
+    If not, returns an error."
     """
 
     ERROR_MESSAGE = "You don't have access to this resource"
