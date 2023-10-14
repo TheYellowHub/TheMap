@@ -1,30 +1,33 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Image, Nav, NavDropdown, Navbar } from "react-bootstrap";
 import { EventKey, SelectCallback } from "@restart/ui/esm/types";
 
 import Icon from "./Icon";
 import { Link } from "react-router-dom";
+import useAuth from "../../auth/useAuth";
+import { capitalizeFirstLetter } from "../../utils/utils";
 
 function Header() {
-    // TODO: useAuth
+    const { user, isAuthenticated, isAdmin, login, logout } = useAuth();
 
-    const [selectedPage, setSelectedPage] = useState<EventKey | null>(null);
+    const [selectedPage, setSelectedPage] = useState<EventKey>("");
     const [selectedSubMenu, setSelectedSubMenu] = useState<EventKey | null>(null);
 
     type Link = {
-        to: string;
         title: string;
-        icon?: string;
+        to: string;
         onClick?: React.MouseEventHandler;
         newWindow?: boolean;
-        // requiredPermission?: Permission; // TODO
+        icon?: string;
     };
 
     type LinksGroup = {
         title: string;
-        icon?: string;
         links: Link[];
+        icon?: string;
     };
+
+    const [links, setLinks] = useState<(Link | LinksGroup)[]>([]);
 
     function getMenuItemContent(link: Link) {
         return (
@@ -43,7 +46,11 @@ function Header() {
         return (link as LinksGroup).links !== undefined;
     }
 
-    const links: (Link | LinksGroup)[] = [
+    function isExternalLink(link: Link): boolean {
+        return link.to.includes("http");
+    }
+
+    const publicLinks = [
         {
             to: "",
             title: "Specialists Map",
@@ -53,62 +60,83 @@ function Header() {
             title: "Blog",
             newWindow: true,
         },
-        {
-            // TODO: only if admin
-            title: "Admin",
-            links: [
-                {
-                    to: "/doctors/doctors",
-                    title: "Doctors",
-                },
-                {
-                    to: "/doctors/categories",
-                    title: "Doctor categories",
-                },
-                {
-                    to: "/doctors/specialities",
-                    title: "Doctor specialities",
-                },
-                {
-                    to: "/usage",
-                    title: "Usage statictics",
-                },
-            ],
-        },
-        {
-            // TODO: only if logged in. If not - login link.
-            title: "My account",
-            links: [
-                {
-                    to: "/user/profile",
-                    title: "My profile", // TODO: replace with user name
-                    icon: "fa-user",
-                },
-                {
-                    to: "/user/saved",
-                    title: "Saved",
-                    icon: "fa-bookmark",
-                },
-                {
-                    to: "logout",
-                    title: "Log out",
-                    icon: "fa-power-off",
-                },
-                {
-                    to: "/user/notifications",
-                    title: "Notifications",
-                },
-                {
-                    to: "/user/addeddoctors",
-                    title: "Doctors I added",
-                },
-                {
-                    to: "/user/reviews",
-                    title: "My reviews",
-                },
-            ],
-        },
     ];
+
+    const userMenu = {
+        title: "My account",
+        links: [
+            {
+                to: "/user/profile",
+                title: capitalizeFirstLetter(user!.nickname!), // TODO: replace with user name
+                icon: "fa-user",
+            },
+            {
+                to: "/user/saved",
+                title: "Saved",
+                icon: "fa-bookmark",
+            },
+            {
+                to: "",
+                onClick: logout,
+                title: "Log out",
+                icon: "fa-power-off",
+            },
+            // TODO
+            // {
+            //     to: "/user/notifications",
+            //     title: "Notifications",
+            // },
+            // {
+            //     to: "/user/addeddoctors",
+            //     title: "Doctors I added",
+            // },
+            // {
+            //     to: "/user/reviews",
+            //     title: "My reviews",
+            // },
+        ],
+    };
+
+    const adminMenu = {
+        // TODO: only if admin
+        title: "Admin",
+        links: [
+            {
+                to: "/doctors/doctors",
+                title: "Doctors",
+            },
+            {
+                to: "/doctors/categories",
+                title: "Categories",
+            },
+            {
+                to: "/doctors/specialities",
+                title: "Specialities",
+            },
+            {
+                to: "/usage",
+                title: "Usage statictics",
+            },
+        ],
+    };
+
+    useEffect(() => {
+        console.log(user, isAuthenticated, isAdmin);
+        const newLinks: (Link | LinksGroup)[] = [...publicLinks];
+        if (user && isAuthenticated) {
+            newLinks.push(userMenu);
+            if (isAdmin) {
+                newLinks.push(adminMenu);
+            }
+        } else {
+            newLinks.push({
+                to: "/user/login",
+                onClick: login,
+                title: "Login",
+            });
+        }
+        setLinks(newLinks);
+    }, [user, isAuthenticated, isAdmin]);
 
     return (
         <Navbar expand="lg" className="aboveAll header" collapseOnSelect>
@@ -141,7 +169,7 @@ function Header() {
                                             key={link.to}
                                             as={Link}
                                             to={link.to}
-                                            target={link.to.includes("http") ? "_blank" : "_self"}
+                                            target={isExternalLink(link) ? "_blank" : "_self"}
                                             onClick={(e) => {
                                                 setSelectedSubMenu(dropdown.title);
                                                 link.onClick && link.onClick(e);
@@ -159,12 +187,12 @@ function Header() {
                                     key={link.to}
                                     as={Link}
                                     to={link.to}
-                                    target={link.to.includes("http") ? "_blank" : "_self"}
+                                    target={isExternalLink(link) ? "_blank" : "_self"}
                                     onClick={(e) => {
-                                        !link.to.includes("http") && setSelectedSubMenu(null);
+                                        !isExternalLink(link) && setSelectedSubMenu(null);
                                         link.onClick && link.onClick(e);
                                     }}
-                                    eventKey={link.to.includes("http") ? undefined : link.to}
+                                    eventKey={isExternalLink(link) ? undefined : link.to}
                                 >
                                     {getMenuItemContent(link)}
                                 </Nav.Link>

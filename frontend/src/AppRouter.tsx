@@ -5,6 +5,7 @@ import DoctorCategoriesScreen from "./screens/doctors/DoctorCategoriesScreen";
 import DoctorSpecialitiesScreen from "./screens/doctors/DoctorSpecialitiesScreen";
 import DoctorsScreen from "./screens/doctors/DoctorsScreen";
 import DevScreen from "./screens/DevScreen";
+import Login from "./auth/Login";
 
 function AppRouter() {
     return (
@@ -14,6 +15,7 @@ function AppRouter() {
             <Route path="/doctors/categories" element={<DoctorCategoriesScreen />} />
             <Route path="/doctors/specialities" element={<DoctorSpecialitiesScreen />} />
             <Route path="/dev" element={<DevScreen />} /> {/* TODO: DELETE */}
+            <Route path="/user/login" element={<Login redirectTo={<MapScreen />} />} />
         </Routes>
     );
 }

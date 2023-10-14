@@ -7,12 +7,15 @@ import "react-calendar/dist/Calendar.css";
 import "react-clock/dist/Clock.css";
 
 import App from "./App";
+import AuthProvider from "./auth/AuthProvider";
 import "./index.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
     <React.StrictMode>
-        <App />
+        <AuthProvider>
+            <App />
+        </AuthProvider>
     </React.StrictMode>
 );
 

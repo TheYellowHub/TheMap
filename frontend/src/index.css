@@ -120,7 +120,8 @@ footer {
 }
 
 .navbar-nav {
-    column-gap: 3.625rem
+    column-gap: 3.625rem;
+    margin-right: 3.625rem;
 }
 
 .navbar-collapse {
