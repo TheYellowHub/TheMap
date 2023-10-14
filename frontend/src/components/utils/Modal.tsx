@@ -50,9 +50,9 @@ function Modal<T>({
         onChange: (newObject: O) => void,
         index?: number
     ): ReactNode {
-        if (field.setter === undefined && (field.getter(object) === undefined || field.type === "number")) {
-            return <p className="form-label">{field.getter(object) as string}</p>;
-        }
+        // if (field.setter === undefined && (field.getter(object) === undefined || field.type === "number")) {
+        //     return <p className="form-label">{field.getter(object) as string}</p>;
+        // }
 
         const reacteNodeWrapperSingleColumn = (reacteNode: ReactNode, key: string, wrap: boolean = true) => {
             if (wrap) {

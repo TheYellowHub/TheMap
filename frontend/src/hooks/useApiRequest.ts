@@ -17,16 +17,14 @@ export default function useApiRequests() {
     const { isAuthenticated, getAccessToken } = useAuth();
 
     async function getConfig(multipartFormData = false) {
-        const headers = new Map();
+        const accessToken = isAuthenticated && (await getAccessToken());
 
-        headers.set("Content-type", multipartFormData ? "multipart/form-data" : "application/json");
+        const headers = {
+            "Content-type": multipartFormData ? "multipart/form-data" : "application/json",
+            Authorization: accessToken && `Bearer ${accessToken}`,
+        };
 
-        if (isAuthenticated) {
-            const accessToken = await getAccessToken();
-            headers.set("Authorization", `Bearer ${accessToken}`);
-        }
-
-        return { headers } as unknown as AxiosRequestConfig;
+        return { headers };
     }
 
     function prepareData(data: RequestData, shouldExcludeId = true, multipartFormData = false) {

@@ -444,6 +444,9 @@ input[type="checkbox"] {
 .alert-danger {
     border-color: #CF4E31;
     background-color: #FDE6E1;
+}
+
+.alert-padding {
     padding: 6rem;
 }
 

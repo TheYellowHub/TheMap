@@ -13,7 +13,7 @@ export default function MapLoadingError() {
             backdrop="static"
             centered
         >
-            <Message variant="danger">
+            <Message variant="danger" className="alert-padding">
                 <div className="bold">
                     The map couldn’t load
                     <br />
