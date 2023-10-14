@@ -11,7 +11,7 @@ import CheckboxesGroupFormField from "./form/checkboxesGroupField";
 import ComboboxFormField from "./form/comboboxField";
 import Icon from "./Icon";
 import ImageFormField from "./form/imageField";
-import { ResponseError } from "../../utils/request";
+import { ResponseError } from "../../hooks/useApiRequest";
 import AddressInputFormField from "./form/addressField";
 
 interface ModalProps<T> {

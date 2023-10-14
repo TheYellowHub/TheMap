@@ -1,4 +1,4 @@
-import { ResponseError } from "../../utils/request";
+import { ResponseError } from "../../hooks/useApiRequest";
 import Loader from "./Loader";
 import Message from "./Message";
 

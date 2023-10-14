@@ -8,7 +8,7 @@ import DoctorModal from "../../components/doctors/doctors/DoctorModal";
 import Button from "../../components/utils/Button";
 import Title from "../../components/utils/Title";
 import { objectsDiff } from "../../utils/utils";
-import { ResponseError } from "../../utils/request";
+import { ResponseError } from "../../hooks/useApiRequest";
 
 function DoctorsScreen() {
     const {

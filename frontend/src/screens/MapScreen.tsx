@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Col, Container, Row, Modal as ReactModal } from "react-bootstrap";
 
 import LoadingWrapper from "../components/utils/LoadingWrapper";
-import { ResponseError } from "../utils/request";
+import { ResponseError } from "../hooks/useApiRequest";
 import { Doctor, DoctorLocation, getDoctorNearestLocation } from "../types/doctors/doctor";
 import useDoctors from "../hooks/doctors/useDoctors";
 import DoctorSearchFilters from "../components/doctors/search/DoctorSearchFilters";

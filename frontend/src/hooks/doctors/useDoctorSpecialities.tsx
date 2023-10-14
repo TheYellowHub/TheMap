@@ -1,5 +1,5 @@
-import genericApiHook from "../genericApiHook";
+import useApi from "../useApi";
 
-const useDoctorSpecialities = genericApiHook("doctors/speciality");
+const useDoctorSpecialities = useApi("doctors/speciality");
 
 export default useDoctorSpecialities;

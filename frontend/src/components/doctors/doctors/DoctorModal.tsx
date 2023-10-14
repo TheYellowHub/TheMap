@@ -18,7 +18,7 @@ import Modal from "../../utils/Modal";
 import { ListField, ModalField } from "../../../utils/fields";
 import { Phone } from "../../../types/utils/phone";
 import { Email } from "../../../types/utils/email";
-import { ResponseError } from "../../../utils/request";
+import { ResponseError } from "../../../hooks/useApiRequest";
 import useGoogleMaps from "../../../utils/googleMaps/useGoogleMaps";
 
 interface DoctorModalProps {

@@ -7,7 +7,7 @@ import DoctorSpecialitiesTable from "../../components/doctors/specialities/Docto
 import DoctorSpecialitiesModal from "../../components/doctors/specialities/DoctorSpecialityModal";
 import Button from "../../components/utils/Button";
 import Title from "../../components/utils/Title";
-import { ResponseError } from "../../utils/request";
+import { ResponseError } from "../../hooks/useApiRequest";
 
 function DoctorSpecialitiesScreen() {
     const {

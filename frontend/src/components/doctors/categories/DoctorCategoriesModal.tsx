@@ -1,7 +1,7 @@
 import { DoctorCategory } from "../../../types/doctors/doctorCategory";
 import Modal from "../../utils/Modal";
 import { ModalField } from "../../../utils/fields";
-import { ResponseError } from "../../../utils/request";
+import { ResponseError } from "../../../hooks/useApiRequest";
 
 interface DoctorCategoriesModalProps {
     doctorCategory: DoctorCategory;
