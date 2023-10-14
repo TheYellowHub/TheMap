@@ -14,16 +14,19 @@ import DoctorSearchNoResuls from "../components/doctors/search/DoctorSearchNoRes
 import MapLoadingError from "../components/map/MapLoadingError";
 import useGoogleMaps, { Location } from "../utils/googleMaps/useGoogleMaps";
 import DoctorSearchAddressFilter from "../components/doctors/search/DoctorSearchAddressFilter";
+import { useParams } from "react-router-dom";
 
 function MapScreen() {
     const { data: doctors, isListLoading, isListError, listError } = useDoctors();
-    const { setCurrentLocation, getAddress } = useGoogleMaps();
+    const { id: currentDoctorId } = useParams();
+    const [idParamWasUsed, setIdParamWasUsed] = useState(false);
 
     const [matchedDoctorsIgnoringDistance, setMatchedDoctorsIgnoringDistance] = useState<Doctor[]>([]);
     const [matchedDoctorsIncludingDistance, setMatchedDoctorsIncludingDistance] = useState<Doctor[]>([]);
     const [currentDoctor, setCurrentDoctor] = useState<Doctor | null>(null);
     const [currentDoctorLocation, setCurrentDoctorLocation] = useState<DoctorLocation | null>(null);
 
+    const { setCurrentLocation, getAddress } = useGoogleMaps();
     const [address, setAddress] = useState<string | undefined>(undefined);
     const [addressLocation, setAddressLocation] = useState<Location | undefined>();
     const distanceDefault = 100;
@@ -64,7 +67,18 @@ function MapScreen() {
                 setCurrentDoctorLocation(currentDoctor.locations[0]);
             }
         }
+        currentDoctor && window.history.replaceState(null, "", `#/${currentDoctor?.id}`);
     }, [currentDoctor]);
+
+    useEffect(() => {
+        if (doctors && currentDoctorId && !idParamWasUsed) {
+            const doctor = doctors.find((doctor: Doctor) => doctor.id === Number(currentDoctorId));
+            if (doctor !== undefined) {
+                setCurrentDoctor(doctor);
+            }
+            setIdParamWasUsed(true);
+        }
+    }, [doctors, currentDoctorId]);
 
     return (
         <LoadingWrapper isLoading={isListLoading} isError={isListError} error={listError as ResponseError}>
@@ -98,7 +112,7 @@ function MapScreen() {
                                 setShouldClearFilters={setShouldClearFilters}
                             />
 
-                            {address === undefined && (
+                            {address === undefined && currentDoctor === null && (
                                 <ReactModal
                                     className="transparent d-flex justify-content-center big-filter"
                                     show={true}
