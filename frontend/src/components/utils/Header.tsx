@@ -65,23 +65,23 @@ function Header() {
     const userMenu = {
         title: "My account",
         links: [
-            {
-                to: "/user/profile",
-                title: (user?.nickname && capitalizeFirstLetter(user.nickname)) || "My account",
-                icon: "fa-user",
-            },
-            {
-                to: "/user/saved",
-                title: "Saved",
-                icon: "fa-bookmark",
-            },
+            // TODO
+            // {
+            //     to: "/user/profile",
+            //     title: (user?.nickname && capitalizeFirstLetter(user.nickname)) || "My account",
+            //     icon: "fa-user",
+            // },
+            // {
+            //     to: "/user/saved",
+            //     title: "Saved",
+            //     icon: "fa-bookmark",
+            // },
             {
                 to: "",
                 onClick: logout,
                 title: "Log out",
                 icon: "fa-power-off",
             },
-            // TODO
             // {
             //     to: "/user/notifications",
             //     title: "Notifications",
@@ -113,10 +113,11 @@ function Header() {
                 to: "/doctors/specialities",
                 title: "Specialities",
             },
-            {
-                to: "/usage",
-                title: "Usage statictics",
-            },
+            // TODO
+            // {
+            //     to: "/usage",
+            //     title: "Usage statictics",
+            // },
         ],
     };
 
@@ -128,11 +129,12 @@ function Header() {
                 newLinks.push(adminMenu);
             }
         } else {
-            newLinks.push({
-                to: "/user/login",
-                onClick: login,
-                title: "Login",
-            });
+            // TODO once we would like user to login
+            // newLinks.push({
+            //     to: "/user/login",
+            //     onClick: login,
+            //     title: "Login",
+            // });
         }
         setLinks(newLinks);
     }, [user, isAuthenticated, isAdmin]);
