@@ -67,7 +67,7 @@ function Header() {
         links: [
             {
                 to: "/user/profile",
-                title: capitalizeFirstLetter(user!.nickname!), // TODO: replace with user name
+                title: (user?.nickname && capitalizeFirstLetter(user.nickname)) || "My account",
                 icon: "fa-user",
             },
             {
@@ -121,7 +121,6 @@ function Header() {
     };
 
     useEffect(() => {
-        console.log(user, isAuthenticated, isAdmin);
         const newLinks: (Link | LinksGroup)[] = [...publicLinks];
         if (user && isAuthenticated) {
             newLinks.push(userMenu);

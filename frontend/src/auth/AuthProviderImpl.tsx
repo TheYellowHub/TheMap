@@ -1,4 +1,5 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import jwt from "jwt-decode";
 import { useAuth0 } from "@auth0/auth0-react";
 
 import AuthContext from "./AuthContext";
@@ -15,7 +16,7 @@ export default function AuthProvider({ children }: React.PropsWithChildren) {
         logout: auth0logout,
     } = useAuth0();
 
-    const isAdmin = true; // TODO
+    const [isAdmin, setIsAdmin] = useState(false);
 
     const login = useCallback(async () => {
         await auth0login();
@@ -27,6 +28,21 @@ export default function AuthProvider({ children }: React.PropsWithChildren) {
             logoutParams: { returnTo: window.location.origin },
         });
     }, [auth0logout]);
+
+    const checkIfAdmin = useCallback(async () => {
+        const accessToken = await getAccessToken();
+        const decodedToken: { permissions: string[] } = jwt(accessToken);
+        const permissions = decodedToken["permissions"];
+        setIsAdmin(permissions.includes("adminPermission"));
+    }, [getAccessToken]);
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            checkIfAdmin();
+        } else {
+            setIsAdmin(false);
+        }
+    }, [isAuthenticated]);
 
     const map = {
         // State

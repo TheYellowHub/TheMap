@@ -11,7 +11,7 @@ export default function AuthProvider({ children }: React.PropsWithChildren) {
             clientId={config.auth0.clientId}
             authorizationParams={{
                 redirect_uri: window.location.origin,
-                scope: `profile email admin`,
+                scope: `profile email adminPermission`,
                 audience: config.auth0.audience,
             }}
             cacheLocation="localstorage"
