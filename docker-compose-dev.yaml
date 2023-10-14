@@ -23,6 +23,7 @@ services:
       dockerfile: ./docker/backend/Dockerfile
     env_file:
       - ./docker/env/db_variables.env
+      - ./docker/env/auth_variables.env
       - ./docker/env/django_variables.env
       - ./docker/env/envkey.env
     entrypoint: ./server-entrypoint.sh

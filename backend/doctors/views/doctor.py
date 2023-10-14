@@ -3,9 +3,12 @@ Doctor model related APIs
 """
 
 from rest_framework import generics
+from rest_framework.decorators import permission_classes
+from rest_framework.permissions import AllowAny
 from django_filters import rest_framework as filters
 import logging
 
+from users.auth import ADMIN_SCOPE, requires_scope
 from ..models.doctor import Doctor
 from ..serializers.doctor import DoctorBasicSerializer, DoctorExtendedSerializer
 
@@ -30,6 +33,7 @@ class DoctorFilter(filters.FilterSet):
         )
 
 
+@permission_classes([AllowAny])
 class DoctorListView(generics.ListAPIView):
     """
     Get list of doctors with thies basic info, matching the search criteria.
@@ -45,6 +49,7 @@ class DoctorListView(generics.ListAPIView):
     filterset_class = DoctorFilter
 
 
+@permission_classes([AllowAny])
 class DoctorInfoView(generics.RetrieveAPIView):
     """
     Get full information about a doctor.
@@ -55,6 +60,7 @@ class DoctorInfoView(generics.RetrieveAPIView):
     serializer_class = DoctorExtendedSerializer
 
 
+@requires_scope(ADMIN_SCOPE)
 class DoctorUpdateView(generics.UpdateAPIView):
     """
     Update a doctor basic info.
@@ -69,6 +75,8 @@ class DoctorUpdateView(generics.UpdateAPIView):
         return super().patch(request, *args, **kwargs)
 
 
+# TODO: change once we would like to allow users to add doctors, but also handle status permissions
+@requires_scope(ADMIN_SCOPE)
 class DoctorCreateView(generics.CreateAPIView):
     """
     Add a doctor.
