@@ -466,6 +466,10 @@ input[type="checkbox"] {
     padding: 6rem;
 }
 
+.alert-margin {
+    margin: 6rem;
+}
+
 .transparent,
 .transparent .modal-content {
     background-color: transparent;

@@ -14,7 +14,7 @@ function LoadingWrapper({ isLoading, isError, error, children }: LoadingWrapperP
             {isLoading ? (
                 <Loader />
             ) : isError && error ? (
-                <Message variant="danger">
+                <Message variant="danger" className="alert-padding alert-margin">
                     {error.message}
                     <br />
                     {JSON.stringify(error.response.data)}
