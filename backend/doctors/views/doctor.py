@@ -3,8 +3,6 @@ Doctor model related APIs
 """
 
 from rest_framework import generics
-from rest_framework.decorators import permission_classes
-from rest_framework.permissions import AllowAny
 from django_filters import rest_framework as filters
 import logging
 
@@ -33,7 +31,6 @@ class DoctorFilter(filters.FilterSet):
         )
 
 
-@permission_classes([AllowAny])
 class DoctorListView(generics.ListAPIView):
     """
     Get list of doctors with thies basic info, matching the search criteria.
@@ -49,7 +46,6 @@ class DoctorListView(generics.ListAPIView):
     filterset_class = DoctorFilter
 
 
-@permission_classes([AllowAny])
 class DoctorInfoView(generics.RetrieveAPIView):
     """
     Get full information about a doctor.

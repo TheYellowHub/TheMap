@@ -268,7 +268,12 @@ function Modal<T>({
                 <ReactModal.Footer>
                     <Button type="button" label="Cancel" variant="secondary" onClick={onCancel} />
                     <Button type="submit" label="Save" variant="primary" disabled={!dataChanged} />
-                    <LoadingWrapper isLoading={isSaving} isError={isSavingError} error={savingError} />
+                    <LoadingWrapper
+                        isLoading={isSaving}
+                        isError={isSavingError}
+                        error={savingError}
+                        errorClassName=""
+                    />
                 </ReactModal.Footer>
             </Form>
         </ReactModal>

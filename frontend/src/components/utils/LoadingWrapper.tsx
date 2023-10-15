@@ -6,15 +6,22 @@ interface LoadingWrapperProps extends React.PropsWithChildren {
     isLoading: boolean;
     isError: boolean;
     error: ResponseError;
+    errorClassName?: string;
 }
 
-function LoadingWrapper({ isLoading, isError, error, children }: LoadingWrapperProps) {
+function LoadingWrapper({
+    isLoading,
+    isError,
+    error,
+    errorClassName = "alert-padding alert-margin",
+    children,
+}: LoadingWrapperProps) {
     return (
         <>
             {isLoading ? (
                 <Loader />
             ) : isError && error ? (
-                <Message variant="danger" className="alert-padding alert-margin">
+                <Message variant="danger" className={errorClassName}>
                     {error.message}
                     <br />
                     {JSON.stringify(error.response.data)}
