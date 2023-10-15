@@ -3,15 +3,12 @@ Doctor speciality model related APIs
 """
 
 from rest_framework import generics
-from rest_framework.decorators import permission_classes
-from rest_framework.permissions import AllowAny
 
 from users.auth import ADMIN_SCOPE, requires_scope
 from ..models.doctorSpeciality import DoctorSpeciality
 from ..serializers.doctorSpeciality import DoctorSpecialitySerializer
 
 
-@permission_classes([AllowAny])
 class DoctorSpecialityListView(generics.ListAPIView):
     """
     Get list of available specialities
