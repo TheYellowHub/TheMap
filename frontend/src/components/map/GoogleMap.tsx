@@ -38,7 +38,9 @@ function GoogleMap({ center, markers = emptyMarkersArray as Marker[] }: GoogleMa
             mapRef.current.fitBounds(bounds);
 
             const newZoom = Math.min(minimalZoom, mapRef.current.getZoom()!);
-            mapRef.current.setZoom(newZoom);
+            if (newZoom) {
+                mapRef.current.setZoom(newZoom);
+            }
         }
     };
 

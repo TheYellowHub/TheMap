@@ -302,7 +302,7 @@ input[type="checkbox"] {
 .aboveMap {
     position: relative;
     bottom: 70px;
-    right: 20px;
+    right: 70px;
     z-index: 2;
     text-align: end;
 }

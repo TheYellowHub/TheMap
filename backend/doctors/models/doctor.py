@@ -52,7 +52,7 @@ class DoctorLocation(models.Model):
     """
 
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
-    hospital_name = models.CharField(max_length=200, blank=True)
+    hospital_name = models.CharField(max_length=200, blank=True, null=True)
     address = models.CharField(max_length=200, blank=True)
     lat = models.DecimalField(max_digits=22, decimal_places=16, blank=True, null=True)
     lng = models.DecimalField(max_digits=22, decimal_places=16, blank=True, null=True)
@@ -60,8 +60,9 @@ class DoctorLocation(models.Model):
     email = models.EmailField(null=True, blank=True)
     private_only = models.BooleanField(default=False)
 
-    class Meta:
-        unique_together = [["doctor", "address"]]
+    # TODO?
+    # class Meta:
+    #     unique_together = [["doctor", "address"]]
 
     def __str__(self) -> str:
         return f"{self.address} / {self.hospital_name}"

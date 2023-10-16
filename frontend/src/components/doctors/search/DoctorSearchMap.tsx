@@ -51,7 +51,8 @@ export default function DoctorSearchMap({
                         inBounds:
                             boundsDistanceFromCenter === undefined ||
                             centerLocation === undefined ||
-                            getDistance(centerLocation, doctorLocation) <= boundsDistanceFromCenter,
+                            getDistance(centerLocation, doctorLocation) <= boundsDistanceFromCenter ||
+                            doctorLocationObj === currentDoctorLocation,
                         icon: getMarkerIcon(
                             doctor,
                             doctor === currentDoctor,

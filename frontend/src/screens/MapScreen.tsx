@@ -142,7 +142,7 @@ function MapScreen() {
                                 </div>
                                 <div className="col-md-auto">
                                     {address && distance && (
-                                        <a href="#" onClick={() => setDistance(distance + 10)}>
+                                        <a href="#" onClick={() => setDistance(distance + 20)}>
                                             <Icon icon="fa-location-crosshairs" />
                                             Search larger area
                                         </a>
