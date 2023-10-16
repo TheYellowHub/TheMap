@@ -40,7 +40,7 @@ export default function AddressInputFormField<T>({
                 object={object}
                 onChange={onChange}
                 isInvalid={!valid}
-                placeHolder="Serach by city, ZIP code or country"
+                placeHolder="Search by city, country or ZIP code"
             />
         </Autocomplete>
     );
