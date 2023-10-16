@@ -1,36 +1,42 @@
 [
     {
         "model": "doctors.doctorspeciality",
+        "pk": 1,
         "fields": {
             "name": "Colon"
         }
     },
     {
         "model": "doctors.doctorspeciality",
+        "pk": 2,
         "fields": {
             "name": "Bowel"
         }
     },
     {
         "model": "doctors.doctorspeciality",
+        "pk": 3,
         "fields": {
             "name": "Urology"
         }
     },
     {
         "model": "doctors.doctorspeciality",
+        "pk": 4,
         "fields": {
             "name": "Thoracic"
         }
     },
     {
         "model": "doctors.doctorspeciality",
+        "pk": 5,
         "fields": {
             "name": "Nerves"
         }
     },
     {
         "model": "doctors.doctorspeciality",
+        "pk": 6,
         "fields": {
             "name": "Fertility"
         }

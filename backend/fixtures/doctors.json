@@ -1,37 +1,2370 @@
 [
     {
         "model": "doctors.doctor",
+        "pk": "1",
         "fields": {
-            "full_name": "Helen Smith",
-            "gender": "F",
+            "full_name": "Dr. Arthur Smith at",
+            "gender": "M",
             "category": 1,
-            "specialities": [
-                5,
-                6
-            ],
+            "specialities": [],
             "websites": [
-                "www.google.com"
+                "http://domusmedica.is/staff/audur-smith/"
             ],
-            "i_care_better": "https://icarebetter.com/doctor/dr-andrea-vidali/",
-            "nancys_nook": true,
+            "i_care_better": "",
+            "nancys_nook": false,
             "status": "APPROVED",
-            "added_at": "2023-09-18 11:11:11"
+            "added_at": "2023-10-16 18:15:05"
         }
     },
     {
         "model": "doctors.doctor",
+        "pk": "2",
         "fields": {
-            "full_name": "Brandon",
+            "full_name": "Mr Andrew Baxter",
             "gender": "M",
-            "category": 2,
-            "specialities": [
-                2,
-                5,
-                6
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "http://tedbaxter.co.uk/profile/"
             ],
+            "i_care_better": "",
             "nancys_nook": false,
             "status": "APPROVED",
-            "added_at": "2023-09-18 11:11:11"
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "3",
+        "fields": {
+            "full_name": "Dr. Caroline Overton",
+            "gender": "F",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "http://www.caroline-overton.co.uk/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "4",
+        "fields": {
+            "full_name": "Dr. Jan Drahonovsky",
+            "gender": "M",
+            "category": 1,
+            "specialities": [
+                3
+            ],
+            "websites": [
+                "http://www.gynekologie-drahonovsky.cz/en/index.shtml"
+            ],
+            "i_care_better": "",
+            "nancys_nook": true,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "5",
+        "fields": {
+            "full_name": "Prof. Dr. Philippe Koninckx",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "http://www.gynsurgery.org/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "6",
+        "fields": {
+            "full_name": "Dr. Stuart Jack",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "http://www.nhsgrampian.org/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "7",
+        "fields": {
+            "full_name": "Dr. Jonathan Frappell",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "http://www.plymouthhospitals.nhs.uk/ourservices/a-zConsultants/F/Pages/FrappellJ.aspx)*"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "8",
+        "fields": {
+            "full_name": "Dr. Hany N. Lotfallah",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "http://www.therotherhamft.nhs.uk/contact.aspx?id=309"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "9",
+        "fields": {
+            "full_name": "Dr. Tyrone Carpenter",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "http://www.tyronecarpenter.co.uk/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "10",
+        "fields": {
+            "full_name": "Dr. Valentine Akande",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "http://www.valentineakande.com/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "11",
+        "fields": {
+            "full_name": "Dr. Gabriel Mitroi",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://bucharestendometriosiscenter.com/about-dr-gabriel-mitroi/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "12",
+        "fields": {
+            "full_name": "Dr. Matt Hewitt",
+            "gender": "M",
+            "category": 2,
+            "specialities": [],
+            "websites": [
+                "https://corkwomensclinic.com/staff/consultants/dr-matt-hewitt/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "13",
+        "fields": {
+            "full_name": "Dr. Ertan Saridogan",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://crgh.co.uk/doctor/mr-ertan-saridogan/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "14",
+        "fields": {
+            "full_name": "Dr. Gerard Dunselman",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://cris.maastrichtuniversity.nl/en/persons/gerard-dunselman"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "15",
+        "fields": {
+            "full_name": "Mr. Dr.med. Markus Eberhard",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://en.comparis.ch/gesundheit/arzt/kanton-schaffhausen/schaffhausen/eberhard-markus-7601000233554"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "16",
+        "fields": {
+            "full_name": "Dr. Michel Canis",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://endometriosis.ca/about/ambassador/michel-canis/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "17",
+        "fields": {
+            "full_name": "Dr. Shaheen Khazali",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://endometriosisconsultant.co.uk/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "18",
+        "fields": {
+            "full_name": "Dr. Elizabeth Ball",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://finder.bupa.co.uk/Consultant/view/160542/miss_elizabeth_ball"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "19",
+        "fields": {
+            "full_name": "Dr Shaheen Khazali",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://finder.bupa.co.uk/Consultant/view/176569/mr_shaheen_khazali"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "20",
+        "fields": {
+            "full_name": "Dr. Kamal Shehata-Iskander",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://finder.bupa.co.uk/consultant/view/77828/mr_kamal_iskander"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "21",
+        "fields": {
+            "full_name": "Saikat Banerjee",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://finder.bupa.co.uk/consultant/view/78268/mr_saikat_banerjee"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "22",
+        "fields": {
+            "full_name": "Prof Sylvia Mechsner",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://frauenklinik.charite.de/metas/person/person/address_detail/mechsner-1/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": true,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "23",
+        "fields": {
+            "full_name": "Frauenklinik Dr. Geisenhofer",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://geisenhoferklinik.de/en/centres/centre-for-minimally-invasive-surgery-and-endometriosis-centre/endometriosis-centre"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "24",
+        "fields": {
+            "full_name": "Dr. Anastasia Ussia",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://invivox.com/profile/6330"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "25",
+        "fields": {
+            "full_name": "Prof. Dr. Pierre Collinet",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://invivox.com/training/detail/OLYM20744"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "26",
+        "fields": {
+            "full_name": "Dr Kingshuk Majumder",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://mft.nhs.uk/saint-marys/consultants/dr-kingshuk-majumder/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "27",
+        "fields": {
+            "full_name": "Dr. Antonio Lagana",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.facebook.com/ginecologolagana/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": true,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "28",
+        "fields": {
+            "full_name": "Dr. Robert Richardson",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://robertrichardson.online/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "29",
+        "fields": {
+            "full_name": "DR. ANDRES SACRISTAN JUAREZ",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://sacristan-centroendoscopico.es/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "30",
+        "fields": {
+            "full_name": "Dr. Tariq Miskry",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://tariqmiskry.co.uk/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "31",
+        "fields": {
+            "full_name": "Dr. Sharon Moss",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.beaconhospital.ie/consultants/dr-sharon-moss/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "32",
+        "fields": {
+            "full_name": "Dr. Wassim Kamran",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.beaconhospital.ie/consultants/mr-waseem-kamran/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "33",
+        "fields": {
+            "full_name": "Dr. Keith Louden",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.bmihealthcare.co.uk/consultants/keith-anthony-louden"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "34",
+        "fields": {
+            "full_name": "Dr. Suku Mathew George",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.bmihealthcare.co.uk/consultants/suku-mathew-george"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "35",
+        "fields": {
+            "full_name": "Dr. Suku George",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.bmihealthcare.co.uk/consultants/suku-mathew-george"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "36",
+        "fields": {
+            "full_name": "Dr. Alex Swanton",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.doctify.com/uk/specialist/mr_alex_swanton"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "37",
+        "fields": {
+            "full_name": "Dr. Magdy Nawar",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.doctify.com/uk/specialist/mr_magdy_nawar"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "38",
+        "fields": {
+            "full_name": "Dr Afchine Fazel",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.doctolib.fr/gynecologue-obstetricien/paris/afchine-fazel"
+            ],
+            "i_care_better": "",
+            "nancys_nook": true,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "39",
+        "fields": {
+            "full_name": "Dr. Arnaud Wattiez",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.doctolib.fr/gynecologue/strasbourg/arnaud-wattiez"
+            ],
+            "i_care_better": "",
+            "nancys_nook": true,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "40",
+        "fields": {
+            "full_name": "Dr. Maurizio Rosati",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.dottori.it/maurizio-rosati-348574"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "41",
+        "fields": {
+            "full_name": "Dr Olivier Donnez",
+            "gender": "M",
+            "category": 1,
+            "specialities": [
+                1,
+                2,
+                3
+            ],
+            "websites": [
+                "https://www.elsan.care/fr/praticien/gynecologie-obstetrique/donnez-olivier"
+            ],
+            "i_care_better": "",
+            "nancys_nook": true,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "42",
+        "fields": {
+            "full_name": "Dr. Andreas Stavroulis",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.emedevents.com/speaker-profile/andreas-stavroulis"
+            ],
+            "i_care_better": "",
+            "nancys_nook": true,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "43",
+        "fields": {
+            "full_name": "Dr. Errico Zupi",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.endofound.org/-/errico-zupi"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "44",
+        "fields": {
+            "full_name": "DR. MARIO MALZONI",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.endofound.org/-/mario-malzoni"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "45",
+        "fields": {
+            "full_name": "DR. PETER BARTON-SMITH",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.endometriosisclinic.co.uk/mr-peter-barton-smith"
+            ],
+            "i_care_better": "",
+            "nancys_nook": true,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "46",
+        "fields": {
+            "full_name": "Prof Philippe Koninckx",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.gynsurgery.org/gruppo-italo-belga/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "47",
+        "fields": {
+            "full_name": "Dr. James English",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.iwantgreatcare.org/doctors/dr-james-english-1"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "48",
+        "fields": {
+            "full_name": "Dr. Jeremy (Jed) Hawe",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.jedhawe.co.uk/about/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "49",
+        "fields": {
+            "full_name": "Dr. Haitham Hamoda",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.kch.nhs.uk/profiles/46237/haitham-hamoda"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "50",
+        "fields": {
+            "full_name": "Dr. John Bidmead",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.kch.nhs.uk/profiles/4655/john-bidmead"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "51",
+        "fields": {
+            "full_name": "Dr. Farthing Alan",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.kingedwardvii.co.uk/consultants/mr-alan-farthing"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "52",
+        "fields": {
+            "full_name": "Dr. Alfred Cutner",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.kingedwardvii.co.uk/consultants/mr-alfred-cutner"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "53",
+        "fields": {
+            "full_name": "Dr. Nitish Navekar",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.kingsfertility.co.uk/dr-nitish-narvekar-consultant-gynaecologist/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "54",
+        "fields": {
+            "full_name": "Dr. Emeka Okaro",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.londonwellwomanclinic.co.uk/consultants/mr-emeka-okaro/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "55",
+        "fields": {
+            "full_name": "Dr Dilip Visvanathan",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.medpages.info/sf/index.php?page=person&personcode=290940"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "56",
+        "fields": {
+            "full_name": "Dr. Andrew Prentice",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.medpages.info/sf/index.php?page=person&personcode=291637"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "57",
+        "fields": {
+            "full_name": "Dr. Christopher Reising",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.mic-zentrum-muenchen.de/index.php/mic-zentrum-neu/christoph-reising"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "58",
+        "fields": {
+            "full_name": "DR VASILEIOS MINAS",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.minasgynaecology.com/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "59",
+        "fields": {
+            "full_name": "Dr. VASILEIOS MINAS",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.minasgynaecology.com/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "60",
+        "fields": {
+            "full_name": "Dr. Charlotte Cassis",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.nhs.uk/profiles/consultant/7044411"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "61",
+        "fields": {
+            "full_name": "Dr. Edward Morris",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.nnuh.nhs.uk/people/edward-morris/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "62",
+        "fields": {
+            "full_name": "Consultant Mr Wesley McCullough",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.northamptongeneral.nhs.uk/Services/Our-Clinical-Services-and-Departments/Obstetrics-and-Gynaecology/Consultants/Mr-Wesley-McCullough.aspx"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "63",
+        "fields": {
+            "full_name": "Dr aad Amer",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.nuffieldhealth.com/consultants/mr-saad-amer"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "64",
+        "fields": {
+            "full_name": "Dr. Charles Baker",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.poole.nhs.uk/our-services/consultant-directory/consultant-directory---a-e/mr-charles-r-s-baker.aspx"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "65",
+        "fields": {
+            "full_name": "Dr. Emmanuel Ofuasia",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.ramsayhealth.co.uk/specialists/north-downs-hospital/gynaecology/mr-emmanuel-ofuasia"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "66",
+        "fields": {
+            "full_name": "Prof. HASSAN MORSI",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.facebook.com/TheEndometriosisSpecialist/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "68",
+        "fields": {
+            "full_name": "Dr. George Pandis",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.ratemds.com/doctor-ratings/3900390/Dr-George-Pandis-London-ENG.html"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "69",
+        "fields": {
+            "full_name": "Dr Bokor Attila",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.researchgate.net/profile/Attila-Bokor"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "70",
+        "fields": {
+            "full_name": "H\u00e9lder Ferreira Santos",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.researchgate.net/profile/Helder_Ferreira7"
+            ],
+            "i_care_better": "",
+            "nancys_nook": true,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "71",
+        "fields": {
+            "full_name": "Dr. Jorg Keckstein",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.researchgate.net/profile/Joerg_Keckstein"
+            ],
+            "i_care_better": "",
+            "nancys_nook": true,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "72",
+        "fields": {
+            "full_name": "Dr. Dominic Byrne",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.royalcornwall.nhs.uk/consultants/dominic-byrne/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "73",
+        "fields": {
+            "full_name": "DR. MARCELLO CECCARONI",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.sacrocuore.it/medici/dr-marcello-ceccaroni"
+            ],
+            "i_care_better": "",
+            "nancys_nook": true,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "74",
+        "fields": {
+            "full_name": "Dr. Anthony Griffiths",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.spirehealthcare.com/consultant-profiles/mr-anthony-griffiths-c4325064/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "75",
+        "fields": {
+            "full_name": "Dr. Chris Guyer",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.spirehealthcare.com/consultant-profiles/mr-christopher-guyer-c3476299/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "76",
+        "fields": {
+            "full_name": "Dr. David Rowlands",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.spirehealthcare.com/consultant-profiles/mr-david-rowlands-c3065718/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": true,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "78",
+        "fields": {
+            "full_name": "Dr. Jimi Funlayo Odejinmi",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.spirehealthcare.com/consultant-profiles/mr-jimi-funlayo-odejinmi-c4253266/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "79",
+        "fields": {
+            "full_name": "Dr. MOHAMED MABROUK",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.spirehealthcare.com/consultant-profiles/mr-mohamed-mabrouk-c7020987/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "81",
+        "fields": {
+            "full_name": "Dr. Richard Penketh",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.spirehealthcare.com/consultant-profiles/mr-richard-penketh-c2652124/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "82",
+        "fields": {
+            "full_name": "Dr. Sanjay Vyas",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.spirehealthcare.com/consultant-profiles/mr-sanjay-vyas-c3002775/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "83",
+        "fields": {
+            "full_name": "Dr. Thomas Aust",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.spirehealthcare.com/consultant-profiles/mr-thomas-aust-c4524722/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "84",
+        "fields": {
+            "full_name": "Dr. Hugh Byrne",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.stgeorges.nhs.uk/people/mr-hugh-byrne/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "85",
+        "fields": {
+            "full_name": "Dr. Thomas Ind",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.stgeorges.nhs.uk/people/mr-thomas-ind/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "86",
+        "fields": {
+            "full_name": "Dr. Chris Mann",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.theendometriosisclinic.com/christopher-mann/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "90",
+        "fields": {
+            "full_name": "Dr. Colin Davis",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.thelondonclinic.co.uk/consultants/mr-colin-davis"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "91",
+        "fields": {
+            "full_name": "Dr. Tom Setchell",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.thelondonclinic.co.uk/consultants/mr-tom-setchell"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "92",
+        "fields": {
+            "full_name": "Dr. James Armatage",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.topdoctors.co.uk/doctor/james-armatage"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "93",
+        "fields": {
+            "full_name": "Dr. Stewart Disu",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.topdoctors.co.uk/doctor/stewart-disu"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "94",
+        "fields": {
+            "full_name": "Dr. Aoife O Neill",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.tuh.ie/Consultants/Dr-Aoife-O-Neill.html"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "95",
+        "fields": {
+            "full_name": "Dr. Adam Moors",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.uhs.nhs.uk/ContactUs/Directoryofconsultants/Consultants-by-service/Womens-health-consultants/Obstetrics-and-gynaecology/MoorsMrAdam.aspx"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "96",
+        "fields": {
+            "full_name": "Dr. Angus Thomson",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.worcsacute.nhs.uk/our-trust/our-consultants/gynaecology-team/item/dr-angus-thomson"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "97",
+        "fields": {
+            "full_name": "Dr. Jon Hughes",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.worcsacute.nhs.uk/our-trust/our-consultants/gynaecology-team/item/mr-jon-hughes"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "98",
+        "fields": {
+            "full_name": "Dr Enda McVeigh",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.wrh.ox.ac.uk/team/enda-mcveigh"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "100",
+        "fields": {
+            "full_name": "MUDr. Jan Jir\u00e1sek",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.gynkrup.cz/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "101",
+        "fields": {
+            "full_name": "Mudr. Radek Chv\u00e1tal",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://endotalks.cz/mapa/nemocnice-znojmo-prim-mudr-radek-chvatal/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": true,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "102",
+        "fields": {
+            "full_name": "Dr. Charles Koh",
+            "gender": "M",
+            "category": 1,
+            "specialities": [
+                2,
+                3
+            ],
+            "websites": [
+                "http://www.endometriosis-surgery.com/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": true,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "103",
+        "fields": {
+            "full_name": "Edmond Edi-Osagie",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.aurorahealthcare.co.uk/meet-the-team/edmond-edi-osagie/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "104",
+        "fields": {
+            "full_name": "Prof. Marc Possover",
+            "gender": "M",
+            "category": 1,
+            "specialities": [
+                5
+            ],
+            "websites": [
+                "https://www.possover.com/en/marc-possover"
+            ],
+            "i_care_better": "",
+            "nancys_nook": true,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "105",
+        "fields": {
+            "full_name": "Dr Andrew Pickersgill",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.gynaecology-doctor.com/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "106",
+        "fields": {
+            "full_name": "Dr. Ant\u00f3nio Set\u00fabal",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://ceiclinic.pt/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "107",
+        "fields": {
+            "full_name": "Dr. Alberto Relvas",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://ceiclinic.pt/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "108",
+        "fields": {
+            "full_name": "Dr Pascal Bucher",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                null
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "109",
+        "fields": {
+            "full_name": "University College London Hospital",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                null
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "110",
+        "fields": {
+            "full_name": "Dr Gabriel Mitroi",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                null
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "111",
+        "fields": {
+            "full_name": "Kirana Arambage",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                null
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "112",
+        "fields": {
+            "full_name": "Dr. Luca Minelli",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                null
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "115",
+        "fields": {
+            "full_name": "Dr. Jean-Marie Wenger",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                null
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "116",
+        "fields": {
+            "full_name": "Dr. Paolo Vercellini",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                null
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "117",
+        "fields": {
+            "full_name": "Dr. Daniel Kruschinski",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                null
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "119",
+        "fields": {
+            "full_name": "Aarhus Universitetshospital",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                null
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "120",
+        "fields": {
+            "full_name": "Rigshospitalet",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                null
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "121",
+        "fields": {
+            "full_name": "Anton Langebrekke AS",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                null
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "122",
+        "fields": {
+            "full_name": "**RETIRED** Dr. A.H.M. Simons at",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                null
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "123",
+        "fields": {
+            "full_name": "Prof. Michelle Nisolle",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                null
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "124",
+        "fields": {
+            "full_name": "Dr. Christel Meuleman",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                null
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "125",
+        "fields": {
+            "full_name": "Dr. Andrew Horne",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                null
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "126",
+        "fields": {
+            "full_name": "Dr. Kevin Phillips",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                null
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "127",
+        "fields": {
+            "full_name": "Dr. Jane Allen",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                null
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "128",
+        "fields": {
+            "full_name": "Dr. Mark Willett",
+            "gender": "M",
+            "category": null,
+            "specialities": [],
+            "websites": [
+                null
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "129",
+        "fields": {
+            "full_name": "Dr. Mohamed Soliman Abdel-Aty",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                null
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "130",
+        "fields": {
+            "full_name": "Dr. Ashwini Kumar Trehan",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                null
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "131",
+        "fields": {
+            "full_name": "Dr. Gaity Ahmad",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                null
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "132",
+        "fields": {
+            "full_name": "Dr. Olubusola Amu",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                null
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "134",
+        "fields": {
+            "full_name": "Dr. Oliver Chappatte",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                null
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "135",
+        "fields": {
+            "full_name": "Du Cane Road",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                null
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "136",
+        "fields": {
+            "full_name": "Dr Hugh D O'Connor",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                null
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "137",
+        "fields": {
+            "full_name": "Dr. Denis Tsepov",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://finder.hcahealthcare.co.uk/hca/specialist/mr_denis_tsepov"
+            ],
+            "i_care_better": "",
+            "nancys_nook": true,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "138",
+        "fields": {
+            "full_name": "Dr. Ahmed El Gohari",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.nuffieldhealth.com/consultants/mr-ahmed-el-gohari"
+            ],
+            "i_care_better": "",
+            "nancys_nook": true,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "142",
+        "fields": {
+            "full_name": "Dr. Haider Jan",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.parkside-hospital.co.uk/consultant/mr-haider-jan/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": true,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "144",
+        "fields": {
+            "full_name": "Dr. Matthew Erritty",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.topdoctors.co.uk/doctor/matthew-erritty"
+            ],
+            "i_care_better": "",
+            "nancys_nook": true,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "145",
+        "fields": {
+            "full_name": "Dr. Mikey (Michael) Adamczyk",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                null
+            ],
+            "i_care_better": "",
+            "nancys_nook": true,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "146",
+        "fields": {
+            "full_name": "Dr. Nadine Di Donato",
+            "gender": "M",
+            "category": 1,
+            "specialities": [
+                1,
+                3
+            ],
+            "websites": [
+                "https://www.womanfirst.co.uk/about"
+            ],
+            "i_care_better": "",
+            "nancys_nook": true,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "147",
+        "fields": {
+            "full_name": "Dr. Rebecca Mallick",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.uhsussex.nhs.uk/consultants/dr-rebecca-mallick/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": true,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "148",
+        "fields": {
+            "full_name": "Prof. Horace Roman",
+            "gender": "M",
+            "category": 1,
+            "specialities": [
+                1,
+                2,
+                3,
+                4,
+                5
+            ],
+            "websites": [
+                "https://www.doctolib.fr/chirurgien/bordeaux/horace-roman"
+            ],
+            "i_care_better": "",
+            "nancys_nook": true,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "149",
+        "fields": {
+            "full_name": "Dr. Jean Phillipe Estrade",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://www.gynecomarseille.com/endomarseille/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": true,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "150",
+        "fields": {
+            "full_name": "Dr. Konstantinos Kyriakopoulos",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "https://endometriosis-surgery.gr/en/doctor/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": true,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "151",
+        "fields": {
+            "full_name": "Dr. Guri Majak",
+            "gender": "M",
+            "category": 1,
+            "specialities": [
+                6
+            ],
+            "websites": [
+                null
+            ],
+            "i_care_better": "",
+            "nancys_nook": true,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "152",
+        "fields": {
+            "full_name": "Dr. Jenny Alvirovic",
+            "gender": "M",
+            "category": null,
+            "specialities": [],
+            "websites": [
+                "https://www.aleris.no/leger/jenny-alvirovic/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
+        }
+    },
+    {
+        "model": "doctors.doctor",
+        "pk": "153",
+        "fields": {
+            "full_name": "Dr. Kevin Cooper",
+            "gender": "M",
+            "category": 1,
+            "specialities": [],
+            "websites": [
+                "http://www.nhsgrampian.org/"
+            ],
+            "i_care_better": "",
+            "nancys_nook": false,
+            "status": "APPROVED",
+            "added_at": "2023-10-16 18:15:05"
         }
     }
 ]
