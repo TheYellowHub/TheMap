@@ -144,7 +144,7 @@ function DoctorModal({ doctor, showModal, onCancel, onSave, isSaving, isSavingEr
             required: false,
         },
         {
-            type: "checkboxesGroup",
+            type: "multiSelect",
             label: "Specialities",
             getter: (doctor) => doctor.specialities,
             setter: (doctor, newSpecialities) => {
