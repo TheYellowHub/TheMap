@@ -1,13 +1,16 @@
+import Icon from "../../utils/Icon";
+
 function StarRating({ rating }: { rating: number }) {
     function renderStars() {
         const stars = [];
         for (let i = 1; i <= 5; i++) {
             if (i <= rating) {
-                stars.push(<i className="fas fa-star p-0"></i>);
+                stars.push(<Icon icon="fa-star" solid={true} padding={false} />);
+                // stars.push(<i className="fas fa-star p-0"></i>);
             } else if (i === Math.ceil(rating) && !Number.isInteger(rating)) {
-                stars.push(<i className="fas fa-star-half-alt p-0"></i>);
+                stars.push(<Icon icon="fa-star-half-alt" solid={true} padding={false} />);
             } else {
-                stars.push(<i className="far fa-star p-0"></i>);
+                stars.push(<Icon icon="fa-star" solid={false} padding={false} />);
             }
         }
         return stars;
