@@ -7,7 +7,7 @@ import { DistanceUnit } from "../../utils/DistanceUnit";
 import DoctorImage from "./DoctorImage";
 import DoctorVerification from "./DoctorVerification";
 import DoctorDistance from "./DoctorDistance";
-import StarRating from "./StarRating";
+import Rating from "./Rating";
 
 interface DoctorSmallCardProps {
     doctor: Doctor;
@@ -61,17 +61,10 @@ function DoctorSmallCard({
                         />
                     </div>
                 </div>
-                <div className="text-black row w-100 m-0 mt-auto flex-nowrap">
-                    <div className="col ps-0 text-nowrap">
-                        <p className="dark-grey">
-                            {StarRating({ rating: averageRating })}{" "}
-                            {averageRating}
-                        </p>
-                    </div>
-                    <div className="col-auto pe-0">
-                        <p className="dark-grey">{totalReviews} Reviews</p>
-                    </div>
-                </div>
+                <Rating
+                    averageRating={averageRating}
+                    totalReviews={totalReviews}
+                />
             </div>
         </div>
     );

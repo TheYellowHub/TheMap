@@ -4,6 +4,7 @@ import {
 } from "../../../types/doctors/doctor";
 import { Location } from "../../../utils/googleMaps/useGoogleMaps";
 import { DistanceUnit } from "../../utils/DistanceUnit";
+import Icon from "../../utils/Icon";
 
 interface DoctorDistanceProps {
     location: DoctorLocation | null | undefined;
@@ -38,7 +39,11 @@ function DoctorDistance({
                 >
                     <p className="med-grey">
                         {distance.toFixed(1)} {distanceUnit}{" "}
-                        <i className="fas fa-location-arrow p-0"></i>
+                        <Icon
+                            icon="fas fa-location-arrow"
+                            solid={false}
+                            padding={false}
+                        />
                     </p>
                 </a>
             )}

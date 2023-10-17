@@ -1,7 +1,10 @@
 import { Doctor } from "../../../types/doctors/doctor";
 
-// add fields or something to make this work with big card too
-function DoctorImage({ doctor }: { doctor: Doctor }) {
+interface DoctorImageProps {
+    doctor: Doctor;
+}
+
+function DoctorImage({ doctor }: DoctorImageProps) {
     const image = doctor.image
         ? doctor.image.toString()
         : doctor.gender === "F"
