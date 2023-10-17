@@ -1,13 +1,16 @@
+import { Tooltip, OverlayTrigger } from "react-bootstrap";
 import {
     Doctor,
+    getDoctorLocationDistance,
     getDoctorMinimalDistance,
     getDoctorNearestLocation,
 } from "../../../types/doctors/doctor";
 import { Location } from "../../../utils/googleMaps/useGoogleMaps";
 import { DistanceUnit } from "../../utils/DistanceUnit";
 import StarRating from "./StarRating";
-
-import { Tooltip, OverlayTrigger } from "react-bootstrap";
+import DoctorImage from "./DoctorImage";
+import DoctorDistance from "./DoctorDistance";
+import DoctorVerification from "./DoctorVerification";
 
 interface DoctorSmallCardProps {
     doctor: Doctor;
@@ -22,22 +25,9 @@ function DoctorSmallCard({
     distanceUnit = "mi",
     onClick,
 }: DoctorSmallCardProps) {
-    const distance =
-        locationForDistanceCalculation &&
-        getDoctorMinimalDistance(
-            doctor,
-            locationForDistanceCalculation,
-            distanceUnit
-        );
     const closestLocation =
         locationForDistanceCalculation &&
         getDoctorNearestLocation(doctor, locationForDistanceCalculation);
-
-    const image = doctor.image
-        ? doctor.image.toString()
-        : doctor.gender === "F"
-        ? "images/default-doctor-f.png"
-        : "images/default-doctor-m.png";
 
     // TODO: replace with the real fields
     const averageRating = 4.5;
@@ -45,50 +35,17 @@ function DoctorSmallCard({
 
     return (
         <div className="doctorSmallCard" onClick={onClick}>
-            <img
-                className="doctorSmallCardImg"
-                src={image}
-                alt={doctor.fullName}
-            />
+            <DoctorImage doctor={doctor} />
             <div className="doctorSmallCardData">
                 <div>
-                    <h5>{doctor.fullName}</h5>
+                    <h5 className="text-nowrap">{doctor.fullName}</h5>
                 </div>
-                <div className="row w-100 m-0">
-                    <div className="bookmarkRibbon col-auto">
-                        <p className="text-black">
-                            {doctor.category || "No Category"}
-                        </p>
+                <div className="row w-100 m-0 flex-nowrap">
+                    <div className="doctorCategoryRibbon col-auto">
+                        <p className="text-black">{doctor.category || ""}</p>
                     </div>
                     <div className="col">
-                        <span className="verification">
-                            {doctor.nancysNook && (
-                                <img
-                                    className="px-1"
-                                    src="images/nancynook.png"
-                                    alt="nancy nook"
-                                />
-                            )}
-                            {doctor.iCareBetter && (
-                                <OverlayTrigger
-                                    placement="bottom"
-                                    overlay={<Tooltip>View Profile</Tooltip>}
-                                >
-                                    <a
-                                        href={doctor.iCareBetter}
-                                        target="_blank"
-                                        rel="noreferrer"
-                                        onClick={(e) => e.stopPropagation()}
-                                    >
-                                        <img
-                                            className="px-1"
-                                            src="images/icarebetter.png"
-                                            alt="iCareBetter"
-                                        />
-                                    </a>
-                                </OverlayTrigger>
-                            )}
-                        </span>
+                        <DoctorVerification doctor={doctor} />
                     </div>
                 </div>
                 <div className="row w-100 m-0 flex-nowrap">
@@ -98,26 +55,16 @@ function DoctorSmallCard({
                         </p>
                     </div>
                     <div className="col-auto pe-0">
-                        {closestLocation &&
-                            distance &&
-                            distance !== Infinity && (
-                                <a
-                                    href={`http://maps.google.com/maps/dir/?api=1&dir_action=navigate&destination=${
-                                        closestLocation.address || ""
-                                    }`}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    onClick={(e) => e.stopPropagation()}
-                                >
-                                    <p className="med-grey">
-                                        {distance.toFixed(1)} {distanceUnit}{" "}
-                                        <i className="fas fa-location-arrow p-0"></i>
-                                    </p>
-                                </a>
-                            )}
+                        <DoctorDistance
+                            location={closestLocation}
+                            locationForDistanceCalculation={
+                                locationForDistanceCalculation
+                            }
+                            distanceUnit={distanceUnit}
+                        />
                     </div>
                 </div>
-                <div className="text-black row w-100 m-0 mt-auto">
+                <div className="text-black row w-100 m-0 mt-auto flex-nowrap">
                     <div className="col ps-0 text-nowrap">
                         <p className="dark-grey">
                             {StarRating({ rating: averageRating })}{" "}
