@@ -11,7 +11,7 @@ import CheckboxesGroupFormField from "./form/checkboxesGroupField";
 import ComboboxFormField from "./form/comboboxField";
 import Icon from "./Icon";
 import ImageFormField from "./form/imageField";
-import { ResponseError } from "../../utils/request";
+import { ResponseError } from "../../hooks/useApiRequest";
 import AddressInputFormField from "./form/addressField";
 
 interface ModalProps<T> {
@@ -50,9 +50,9 @@ function Modal<T>({
         onChange: (newObject: O) => void,
         index?: number
     ): ReactNode {
-        if (field.setter === undefined && (field.getter(object) === undefined || field.type === "number")) {
-            return <p className="form-label">{field.getter(object) as string}</p>;
-        }
+        // if (field.setter === undefined && (field.getter(object) === undefined || field.type === "number")) {
+        //     return <p className="form-label">{field.getter(object) as string}</p>;
+        // }
 
         const reacteNodeWrapperSingleColumn = (reacteNode: ReactNode, key: string, wrap: boolean = true) => {
             if (wrap) {
@@ -268,7 +268,12 @@ function Modal<T>({
                 <ReactModal.Footer>
                     <Button type="button" label="Cancel" variant="secondary" onClick={onCancel} />
                     <Button type="submit" label="Save" variant="primary" disabled={!dataChanged} />
-                    <LoadingWrapper isLoading={isSaving} isError={isSavingError} error={savingError} />
+                    <LoadingWrapper
+                        isLoading={isSaving}
+                        isError={isSavingError}
+                        error={savingError}
+                        errorClassName=""
+                    />
                 </ReactModal.Footer>
             </Form>
         </ReactModal>

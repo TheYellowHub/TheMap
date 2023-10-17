@@ -1,17 +1,21 @@
-@import url("https://fonts.googleapis.com/css2?family=Assistant:wght@700&family=Roboto:ital@0;1&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@700&family=Poppins:wght@400;500;700&family=Roboto:ital@0;1&display=swap');
 
 :root {
-    --header-height: 4rem;
-    --footer-height: 2rem;
+    --logo-height: 4rem;
+    --header-height: calc(var(--logo-height) + var(--layout-padding));
+    --footer-height: 4rem;
     --layout-padding: 0.5rem;
     --main-height: calc(100vh - var(--footer-height));
     --dark-grey: #333;
     --med-dark-grey: #6a6a6a;
     --med-grey: #989898;
-    --light-grey: #d6d6d6;
-    --dark-yellow: #97750b;
-    --med-yellow: #f2c94c;
-    --light-yellow: #fcefca;
+    --light-grey: #D6D6D6;
+    --very-light-grey: #f8f9fa;
+    --dark-yellow: #97750B;
+    --med-dark-yellow: #fabc05;
+    --med-yellow: #F2C94C;
+    --med-light-yellow: #F6DB87;
+    --light-yellow: #FCEFCA;
     --blue: #035763;
 }
 
@@ -71,12 +75,12 @@ i {
     padding: 0rem 0.5rem;
 }
 
-title {
-    font-family: "Assistant", sans-serif;
+.title {
+    font-family: 'Assistant', sans-serif;
     font-size: 1.5rem;
     font-style: normal;
     font-weight: 700;
-    line-height: 1.25rem;
+    line-height: 2rem; 
 }
 
 header {
@@ -102,6 +106,30 @@ main {
     align-items: center;
     height: var(--footer-height);
     min-height: var(--footer-height);
+    background-color: var(--med-yellow);
+}
+
+.footer-content,
+.footer-content a,
+.footer-content-smaller,
+.footer-content-smaller a {
+    color: var(--blue) !important;
+    font-family: "Poppins";
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: 1.25rem;
+}
+
+.footer-content-smaller,
+.footer-content-smaller a {
+    font-size: 0.8rem;
+}
+
+.footer i {
+    color: inherit;
+    font-size: inherit;
+    padding: 8px;
+    padding-left: 0px;
 }
 
 footer {
@@ -111,12 +139,19 @@ footer {
 
 .logo {
     padding: 0rem 0rem;
-    height: 2.5rem;
+    height: var(--logo-height);
 }
 
 .navbar {
+    background-color: white;
     padding: 0.5rem;
     width: 100vw;
+    text-transform: none;
+}
+
+.navbar-nav {
+    column-gap: 3.625rem;
+    margin-right: 3.625rem;
 }
 
 .navbar-collapse {
@@ -127,8 +162,91 @@ footer {
     margin-right: 0rem;
 }
 
+.nav-link {
+    color: var(--blue) !important;
+    font-family: "Poppins";
+    font-weight: 500;
+    font-size: 1.125rem;
+    line-height: 1.25rem;
+}
+
+.dropdown-menu {
+    padding: 0px;
+    border-color: white;
+    border-radius: 0.25rem;
+    box-shadow: 4px 8px 12px 6px rgba(120, 120, 120, 0.15);
+}
+
+.dropdown-item {
+    color: var(--blue) !important;
+    font-family: "Poppins";
+    font-weight: 500;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    padding: 6px 12px;
+    align-items: center;
+}
+
+.dropdown-item:hover {
+    background-color: var(--very-light-grey);
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a:hover i {
+    text-decoration: underline var(--very-light-grey) !important;
+}
+
+.nav-link.active {
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+.dropdown-item.active,
+.dropdown-item:focus {
+    color: white !important;
+    background-color: var(--blue) !important;
+}
+
+.dropdown-toggle::after {
+    border: none !important;
+    font: normal normal normal 14px/1 FontAwesome;
+    content: "\f107" !important;
+    vertical-align: 0;
+  }
+
 .navbar-brand {
     margin: 0px;
+}
+
+.navbar-icon-border {
+    color: inherit;
+    display: flex;
+    width: 1.5rem;
+    height: 1.5rem;
+    padding: 0.125rem 0.5rem;
+    padding-left: 0;
+    margin-right: 0.75rem;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0.625rem;
+    border-radius: 3.125rem;
+}
+
+.navbar-icon-border:has(.fa-user) {
+    background: var(--light-grey);
+}
+
+.navbar i {
+    font-family: "Font Awesome 6 Free";
+    font-size: 0.625rem;
 }
 
 th {
@@ -160,12 +278,24 @@ input[type="checkbox"] {
 .react-datetime-picker__wrapper {
     border: 0px;
     background-color: transparent;
+    padding: 0;
+    margin: 0;
+}
+
+.react-datetime-picker__inputGroup__input {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.react-datetime-picker__button {
+    display: none;
 }
 
 .formTable {
     border: 3px solid #f7f7f9 !important;
     border-radius: 5%;
-    width: fit-content;
+    width: fit-content;    
+    margin: 0.3rem;
 }
 
 .doctorSearchResult {
@@ -282,7 +412,7 @@ input[type="checkbox"] {
 .aboveMap {
     position: relative;
     bottom: 70px;
-    right: 20px;
+    right: 70px;
     z-index: 2;
     text-align: end;
 }
@@ -313,10 +443,18 @@ input[type="checkbox"] {
     filter: blur(3px);
 }
 
+*:has(.doctorBigCard) main {
+    filter: none !important;
+}
+
 .col-sm-2,
 .col-sm-3 {
     display: flex;
     align-items: center;
+}
+.col-sm-9 {
+    display: flex;
+    vertical-align: middle;
 }
 
 .paginationContainer {
@@ -344,7 +482,7 @@ input[type="checkbox"] {
 }
 
 .paginationButton:hover {
-    border: 1px solid var(--grey-grey-300, #989898);
+    border: 1px solid var(--med-grey);
 }
 
 .paginationButton:disabled {
@@ -352,8 +490,8 @@ input[type="checkbox"] {
 }
 
 .paginationButton.selected {
-    border: 0.75px solid var(--grey-grey-300, #989898);
-    background: var(--yellow-y-300, #f6db87);
+    border: 0.75px solid var(--med-grey);
+    background: var(--med-light-yellow);
 }
 
 .btn {
@@ -430,9 +568,16 @@ input[type="checkbox"] {
 }
 
 .alert-danger {
-    border-color: #cf4e31;
-    background-color: #fde6e1;
+    border-color: #CF4E31;
+    background-color: #FDE6E1;
+}
+
+.alert-padding {
     padding: 6rem;
+}
+
+.alert-margin {
+    margin: 6rem;
 }
 
 .transparent,
@@ -447,5 +592,6 @@ input[type="checkbox"] {
     border-radius: 3.125rem;
     line-height: 1.25rem;
     padding: 1rem;
-    width: 70vw;
+    width: 75vw; 
+    /* TODO: fix "use my location" positioning */
 }

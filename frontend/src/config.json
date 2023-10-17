@@ -1,8 +1,8 @@
 {
     "auth0": {
-        "domain": "",
-        "clientId": "",
-        "audience": ""
+        "domain": "dev-n1xcjabxc8i8oa6x.us.auth0.com",
+        "clientId": "FJpk8ZL4dW0JrDIlCkNanO9e0JGTF1O3",
+        "audience": "TheYellowHubAPI"
     },
     "app": {
         "name": "",

@@ -1,16 +1,13 @@
-import { Tooltip, OverlayTrigger } from "react-bootstrap";
 import {
     Doctor,
-    getDoctorLocationDistance,
-    getDoctorMinimalDistance,
     getDoctorNearestLocation,
 } from "../../../types/doctors/doctor";
 import { Location } from "../../../utils/googleMaps/useGoogleMaps";
 import { DistanceUnit } from "../../utils/DistanceUnit";
-import StarRating from "./StarRating";
 import DoctorImage from "./DoctorImage";
-import DoctorDistance from "./DoctorDistance";
 import DoctorVerification from "./DoctorVerification";
+import DoctorDistance from "./DoctorDistance";
+import StarRating from "./StarRating";
 
 interface DoctorSmallCardProps {
     doctor: Doctor;

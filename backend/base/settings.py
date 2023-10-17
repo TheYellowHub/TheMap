@@ -56,12 +56,18 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "djangorestframework_camel_case.middleware.CamelCaseMiddleWare",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.auth.middleware.RemoteUserMiddleware",
 ]
 
 REST_FRAMEWORK = {
     "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
-    "DEFAULT_AUTHENTICATION_CLASSES": [],  # TODO: change! At the moment there is no auth
-    "DEFAULT_PERMISSION_CLASSES": [],  # TODO: the same
+    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.AllowAny",),
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_jwt.authentication.JSONWebTokenAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.BasicAuthentication",
+    ),
     "DEFAULT_RENDERER_CLASSES": (
         "djangorestframework_camel_case.render.CamelCaseJSONRenderer",
         "djangorestframework_camel_case.render.CamelCaseBrowsableAPIRenderer",
@@ -124,6 +130,22 @@ FIXTURE_DIRS = [BASE_DIR / "fixtures"]
 AUTH_DEFAULT_ADMIN_USERNAME = os.environ.get("DJANGO_AUTH_DEFAULT_ADMIN_USERNAME")
 
 AUTH_DEFAULT_ADMIN_PASSWORD = os.environ.get("DJANGO_AUTH_DEFAULT_ADMIN_PASSWORD")
+
+
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+    "django.contrib.auth.backends.RemoteUserBackend",
+]
+
+JWT_AUTH = {
+    "JWT_PAYLOAD_GET_USERNAME_HANDLER": "users.auth.jwt_get_username_from_payload_handler",
+    "JWT_DECODE_HANDLER": "users.auth.jwt_decode_token",
+    "JWT_ALGORITHM": "RS256",
+    "JWT_AUDIENCE": os.environ.get("JWT_AUDIENCE"),
+    "JWT_DOMAIN": os.environ.get("JWT_DOMAIN"),
+    "JWT_ISSUER": f"https://{os.environ.get('JWT_DOMAIN')}/",
+    "JWT_AUTH_HEADER_PREFIX": "Bearer",
+}
 
 
 # Password validation

@@ -4,10 +4,15 @@ import type { Variant } from "react-bootstrap/esm/types";
 
 interface MessageProps extends React.PropsWithChildren {
     variant: Variant;
+    className?: string;
 }
 
-function Message({ variant, children }: MessageProps) {
-    return <Alert variant={variant}>{children}</Alert>;
+function Message({ variant, className, children }: MessageProps) {
+    return (
+        <Alert variant={variant} className={className}>
+            {children}
+        </Alert>
+    );
 }
 
 export default Message;

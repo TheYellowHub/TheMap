@@ -174,7 +174,7 @@ export default function Table<T>({ columns, columnsFilters, actionButton, data }
                 <Col>{actionButton}</Col>
                 <Col className="col-10">
                     <Pagination
-                        rowsCount={table.getRowModel().rows.length}
+                        rowsCount={data.length}
                         pageIndex={table.getState().pagination.pageIndex}
                         pageSize={table.getState().pagination.pageSize}
                         setPageIndex={table.setPageIndex}

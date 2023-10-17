@@ -7,8 +7,8 @@ import DoctorsTable from "../../components/doctors/doctors/DoctorsTable";
 import DoctorModal from "../../components/doctors/doctors/DoctorModal";
 import Button from "../../components/utils/Button";
 import Title from "../../components/utils/Title";
-import objectsDiff from "../../utils/utils";
-import { ResponseError } from "../../utils/request";
+import { objectsDiff } from "../../utils/utils";
+import { ResponseError } from "../../hooks/useApiRequest";
 
 function DoctorsScreen() {
     const {

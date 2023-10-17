@@ -1,139 +1,183 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Image, Nav, NavDropdown, Navbar } from "react-bootstrap";
 import { EventKey, SelectCallback } from "@restart/ui/esm/types";
 
-import config from "../../config.json";
 import Icon from "./Icon";
 import { Link } from "react-router-dom";
+import useAuth from "../../auth/useAuth";
+import { capitalizeFirstLetter } from "../../utils/utils";
 
 function Header() {
-    // TODO: useAuth
+    const { user, isAuthenticated, isAdmin, login, logout } = useAuth();
 
-    const [selectedPage, setSelectedPage] = useState<EventKey | null>(null);
-
-    const appName = "The Yellow Hub Map";
-    const logoUrl = config.app.logoUrl ? config.app.logoUrl : "/images/ribbon.svg";
+    const [selectedPage, setSelectedPage] = useState<EventKey>("");
+    const [selectedSubMenu, setSelectedSubMenu] = useState<EventKey | null>(null);
 
     type Link = {
-        to: string;
         title: string;
-        icon?: string;
+        to: string;
         onClick?: React.MouseEventHandler;
-        // requiredPermission?: Permission; // TODO
+        newWindow?: boolean;
+        icon?: string;
     };
 
     type LinksGroup = {
         title: string;
-        icon?: string;
         links: Link[];
+        icon?: string;
     };
+
+    const [links, setLinks] = useState<(Link | LinksGroup)[]>([]);
+
+    function getMenuItemContent(link: Link) {
+        return (
+            <>
+                {link.icon && (
+                    <div className="navbar-icon-border">
+                        <Icon icon={link.icon} />
+                    </div>
+                )}
+                {link.title}
+            </>
+        );
+    }
 
     function isGroup(link: Link | LinksGroup): link is LinksGroup {
         return (link as LinksGroup).links !== undefined;
     }
 
-    // TODO: pre/post login links
-    const links: (Link | LinksGroup)[] = [
+    function isExternalLink(link: Link): boolean {
+        return link.to.includes("http");
+    }
+
+    const publicLinks = [
         {
             to: "",
-            title: "The Map",
-            icon: "fa-map-location-dot",
+            title: "Specialists Map",
         },
         {
-            title: "Personal zone",
-            icon: "fa-user",
-            links: [
-                {
-                    to: "user/notifications",
-                    title: "Notifications",
-                },
-                {
-                    to: "user/profile",
-                    title: "My profile",
-                },
-                {
-                    to: "user/addeddoctors",
-                    title: "Doctors I added",
-                },
-                {
-                    to: "user/faviorite",
-                    title: "Faviorite doctors",
-                },
-                {
-                    to: "user/reviews",
-                    title: "My reviews",
-                },
-            ],
-        },
-        {
-            title: "admin",
-            icon: "fa-gear",
-            links: [
-                {
-                    to: "doctors/doctors",
-                    title: "Doctors",
-                },
-                {
-                    to: "doctors/categories",
-                    title: "Doctor categories",
-                },
-                {
-                    to: "doctors/specialities",
-                    title: "Doctor specialities",
-                },
-                {
-                    to: "usage",
-                    title: "Usage statictics",
-                },
-            ],
-        },
-        {
-            to: "logout",
-            title: "Logout",
-            icon: "fa-door-open",
+            to: "https://www.theyellowhub.org/blog",
+            title: "Blog",
+            newWindow: true,
         },
     ];
 
+    const userMenu = {
+        title: "My account",
+        links: [
+            // TODO
+            // {
+            //     to: "/user/profile",
+            //     title: (user?.nickname && capitalizeFirstLetter(user.nickname)) || "My account",
+            //     icon: "fa-user",
+            // },
+            // {
+            //     to: "/user/saved",
+            //     title: "Saved",
+            //     icon: "fa-bookmark",
+            // },
+            {
+                to: "",
+                onClick: logout,
+                title: "Log out",
+                icon: "fa-power-off",
+            },
+            // {
+            //     to: "/user/notifications",
+            //     title: "Notifications",
+            // },
+            // {
+            //     to: "/user/addeddoctors",
+            //     title: "Doctors I added",
+            // },
+            // {
+            //     to: "/user/reviews",
+            //     title: "My reviews",
+            // },
+        ],
+    };
+
+    const adminMenu = {
+        // TODO: only if admin
+        title: "Admin",
+        links: [
+            {
+                to: "/doctors/doctors",
+                title: "Doctors",
+            },
+            {
+                to: "/doctors/categories",
+                title: "Categories",
+            },
+            {
+                to: "/doctors/specialities",
+                title: "Specialities",
+            },
+            // TODO
+            // {
+            //     to: "/usage",
+            //     title: "Usage statictics",
+            // },
+        ],
+    };
+
+    useEffect(() => {
+        const newLinks: (Link | LinksGroup)[] = [...publicLinks];
+        if (user && isAuthenticated) {
+            newLinks.push(userMenu);
+            if (isAdmin) {
+                newLinks.push(adminMenu);
+            }
+        } else {
+            // TODO once we would like user to login
+            // newLinks.push({
+            //     to: "/user/login",
+            //     onClick: login,
+            //     title: "Login",
+            // });
+        }
+        setLinks(newLinks);
+    }, [user, isAuthenticated, isAdmin]);
+
     return (
-        <Navbar expand="lg" className="bg-light bg-body-tertiary aboveAll header" collapseOnSelect>
+        <Navbar expand="lg" className="aboveAll header" collapseOnSelect>
             <Navbar.Toggle aria-controls="navbarCollapse" />
-            <Nav.Link as={Link} to="/" className="no-padding" eventKey="home" onClick={() => setSelectedPage(null)}>
+            <Nav.Link as={Link} to="http://theyellowhub.org/" target="_blank" className="no-padding">
                 <Navbar.Brand>
-                    <Image src={logoUrl} className="logo" />
-                    {appName}
+                    <Image src={"/images/logo.svg"} className="logo" />
                 </Navbar.Brand>
             </Nav.Link>
-
-            {/* TODO: Login / Hello user / Logout */}
-            {/* <Navbar.Text>
-                <Icon icon="fa-user" />
-                Hello user
-            </Navbar.Text> */}
 
             <Navbar.Collapse id="navbarCollapse">
                 <Nav activeKey={selectedPage as EventKey} onSelect={setSelectedPage as SelectCallback}>
                     {links.map((link: LinksGroup | Link) => {
                         if (isGroup(link)) {
+                            const dropdown = link;
                             return (
                                 <NavDropdown
-                                    key={link.title}
+                                    key={dropdown.title}
+                                    active={selectedSubMenu === dropdown.title}
                                     title={
                                         <>
-                                            {link.icon && <Icon icon={link.icon} />}
-                                            {link.title}
+                                            {dropdown.icon && <Icon icon={dropdown.icon} />}
+                                            {dropdown.title}
                                         </>
                                     }
                                 >
-                                    {link.links.map((link) => (
+                                    {dropdown.links.map((link) => (
                                         <NavDropdown.Item
+                                            className="d-flex"
                                             key={link.to}
                                             as={Link}
-                                            to={`/${link.to}`}
-                                            onClick={link.onClick}
+                                            to={link.to}
+                                            target={isExternalLink(link) ? "_blank" : "_self"}
+                                            onClick={(e) => {
+                                                setSelectedSubMenu(dropdown.title);
+                                                link.onClick && link.onClick(e);
+                                            }}
                                             eventKey={link.to}
                                         >
-                                            {link.icon && <Icon icon={link.icon} />}
-                                            {link.title}
+                                            {getMenuItemContent(link)}
                                         </NavDropdown.Item>
                                     ))}
                                 </NavDropdown>
@@ -143,12 +187,15 @@ function Header() {
                                 <Nav.Link
                                     key={link.to}
                                     as={Link}
-                                    to={`/${link.to}`}
-                                    onClick={link.onClick}
-                                    eventKey={link.to}
+                                    to={link.to}
+                                    target={isExternalLink(link) ? "_blank" : "_self"}
+                                    onClick={(e) => {
+                                        !isExternalLink(link) && setSelectedSubMenu(null);
+                                        link.onClick && link.onClick(e);
+                                    }}
+                                    eventKey={isExternalLink(link) ? undefined : link.to}
                                 >
-                                    {link.icon && <Icon icon={link.icon} />}
-                                    {link.title}
+                                    {getMenuItemContent(link)}
                                 </Nav.Link>
                             );
                         }

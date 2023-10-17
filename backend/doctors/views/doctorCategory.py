@@ -4,6 +4,7 @@ Doctor category model related APIs
 
 from rest_framework import generics
 
+from users.auth import ADMIN_SCOPE, requires_scope
 from ..models.doctorCategory import DoctorCategory
 from ..serializers.doctorCategory import DoctorCategorySerializer
 
@@ -17,6 +18,7 @@ class DoctorCategoryListView(generics.ListAPIView):
     serializer_class = DoctorCategorySerializer
 
 
+@requires_scope(ADMIN_SCOPE)
 class DoctorCategoryCreateView(generics.CreateAPIView):
     """
     Create a category
@@ -26,6 +28,7 @@ class DoctorCategoryCreateView(generics.CreateAPIView):
     serializer_class = DoctorCategorySerializer
 
 
+@requires_scope(ADMIN_SCOPE)
 class DoctorCategoryUpdateView(generics.UpdateAPIView):
     """
     Update a category

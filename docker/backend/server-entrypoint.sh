@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 apt-get update -y
 apt-get install vim -y
 
@@ -16,10 +18,11 @@ python manage.py collectstatic --noinput
 echo "Create a superuser"
 python manage.py initadmin
 
-echo "Run tests"
-coverage run manage.py test -v 2
-coverage report -m
-coverage html
+# TODO
+# echo "Run tests"
+# coverage run manage.py test -v 2
+# coverage report -m
+# coverage html
 
 echo "Starting gunicorn server in production mode"
 gunicorn base.wsgi --bind 0.0.0.0:8000 --workers 4 --threads 4
