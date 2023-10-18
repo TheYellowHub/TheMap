@@ -28,8 +28,7 @@
     font-size: 1rem;
     font-style: normal;
     font-weight: 400;
-    line-height: 1.25rem; /* 125% */
-    
+    line-height: 1.25rem;
 }
 
 a {
@@ -230,7 +229,8 @@ td {
 }
 
 .form-control,
-.form-select {
+.form-select,
+.multiSelectContainer input {
     padding: 0.5rem 0.75rem !important;
     background-color: white;
     border-radius: 0.625rem ;
@@ -241,11 +241,12 @@ td {
     font-style: inherit;
     font-weight: inherit;
     line-height: inherit;
+    width: 100%;
 }
 
-.multiSelectContainer {
-    display: inline-block;
-    width:fit-content;
+div:has(>.multiSelectContainer) {
+    padding: 0.3rem;
+    width: 100%;
 }
 
 .multiSelectContainer .searchWrapper {
@@ -258,7 +259,6 @@ td {
 .multiSelectContainer .searchWrapper .searchBox {
     padding: 0;
     margin: 0;
-    width: 100%;
 }
 
 .form-control:focus {
@@ -274,9 +274,17 @@ input,
     padding: 0.3rem;
 }
 
+.small-address-filter,
+div:has(>.small-address-filter) {
+    margin-right: 0;
+    padding-right: 0;
+    width: 100%;
+}
+
 .small-address-filter input {
     line-height: 1.25rem;
     padding-bottom: 3rem !important;
+    width: 100% !important;
 }
 
 .small-address-filter .overlapPrevRow {
