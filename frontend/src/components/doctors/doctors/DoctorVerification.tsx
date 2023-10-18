@@ -1,5 +1,4 @@
-import { OverlayTrigger } from "react-bootstrap";
-import { Tooltip } from "react-bootstrap";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 import { Doctor } from "../../../types/doctors/doctor";
 

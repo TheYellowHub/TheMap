@@ -8,6 +8,7 @@ import DoctorImage from "./DoctorImage";
 import DoctorVerification from "./DoctorVerification";
 import DoctorDistance from "./DoctorDistance";
 import Rating from "./Rating";
+import DoctorCategory from "./DoctorCategory";
 
 interface DoctorSmallCardProps {
     doctor: Doctor;
@@ -27,44 +28,47 @@ function DoctorSmallCard({
         getDoctorNearestLocation(doctor, locationForDistanceCalculation);
 
     // TODO: replace with the real fields
-    const averageRating = 4.5;
+    const averageRating = 3.6;
     const totalReviews = 10;
 
     return (
         <div className="doctorSmallCard" onClick={onClick}>
-            <DoctorImage doctor={doctor} />
-            <div className="doctorSmallCardData">
-                <div>
-                    <h5 className="text-nowrap">{doctor.fullName}</h5>
+            <div className="row flex-nowrap">
+                <div className="col-auto">
+                    <DoctorImage doctor={doctor} />
                 </div>
-                <div className="row w-100 m-0 flex-nowrap">
-                    <div className="doctorCategoryRibbon col-auto">
-                        <p className="text-black">{doctor.category || ""}</p>
+                <div className="doctorSmallCardData col pe-3">
+                    <div className="doctorSmallCardName mb-3">
+                        {doctor.fullName}
                     </div>
-                    <div className="col">
+                    <div className="row w-100 m-0 flex-nowrap">
+                        <DoctorCategory category={doctor.category} />
                         <DoctorVerification doctor={doctor} />
                     </div>
-                </div>
-                <div className="row w-100 m-0 flex-nowrap">
-                    <div className="col ps-0">
-                        <p className="med-dark-grey doctorSmallCardDataAddress">
-                            {closestLocation?.address || ""}
-                        </p>
+                    <div
+                        className="row w-100 m-0 flex-nowrap"
+                        style={{ height: "50px" }}
+                    >
+                        <div className="col ps-0">
+                            <p className="med-dark-grey doctorSmallCardDataAddress">
+                                {closestLocation?.address || ""}
+                            </p>
+                        </div>
+                        <div className="col-auto pe-0">
+                            <DoctorDistance
+                                doctorLocation={closestLocation}
+                                locationForDistanceCalculation={
+                                    locationForDistanceCalculation
+                                }
+                                distanceUnit={distanceUnit}
+                            />
+                        </div>
                     </div>
-                    <div className="col-auto pe-0">
-                        <DoctorDistance
-                            location={closestLocation}
-                            locationForDistanceCalculation={
-                                locationForDistanceCalculation
-                            }
-                            distanceUnit={distanceUnit}
-                        />
-                    </div>
+                    <Rating
+                        averageRating={averageRating}
+                        totalReviews={totalReviews}
+                    />
                 </div>
-                <Rating
-                    averageRating={averageRating}
-                    totalReviews={totalReviews}
-                />
             </div>
         </div>
     );

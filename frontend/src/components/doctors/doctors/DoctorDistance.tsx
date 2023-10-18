@@ -1,3 +1,5 @@
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
+
 import {
     DoctorLocation,
     getDoctorLocationDistance,
@@ -7,45 +9,56 @@ import { DistanceUnit } from "../../utils/DistanceUnit";
 import Icon from "../../utils/Icon";
 
 interface DoctorDistanceProps {
-    location: DoctorLocation | null | undefined;
+    doctorLocation: DoctorLocation | null | undefined;
     locationForDistanceCalculation?: Location;
     distanceUnit?: DistanceUnit;
 }
 
 function DoctorDistance({
-    location,
+    doctorLocation: doctorLocation,
     locationForDistanceCalculation,
     distanceUnit,
 }: DoctorDistanceProps) {
     const distance =
         locationForDistanceCalculation &&
-        location &&
+        doctorLocation &&
         getDoctorLocationDistance(
-            location,
+            doctorLocation,
             locationForDistanceCalculation,
             distanceUnit
         );
 
+    const tooltip_message = doctorLocation?.address ? (
+        <></>
+    ) : (
+        <Tooltip>No link to address</Tooltip>
+    );
+
     return (
         <>
             {distance && distance !== Infinity && (
-                <a
-                    href={`http://maps.google.com/maps/dir/?api=1&dir_action=navigate&destination=${
-                        location.address || ""
-                    }`}
-                    target="_blank"
-                    rel="noreferrer"
-                    onClick={(e) => e.stopPropagation()}
-                >
-                    <p className="med-grey">
-                        {distance.toFixed(1)} {distanceUnit}{" "}
-                        <Icon
-                            icon="fas fa-location-arrow"
-                            solid={false}
-                            padding={false}
-                        />
-                    </p>
-                </a>
+                <OverlayTrigger placement="bottom" overlay={tooltip_message}>
+                    <a
+                        href={`${
+                            doctorLocation?.address
+                                ? "http://maps.google.com/maps/dir/?api=1&dir_action=navigate&destination=" +
+                                  doctorLocation.address
+                                : "#"
+                        }`}
+                        target="_blank"
+                        rel="noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <p className="med-grey">
+                            {distance.toFixed(1)} {distanceUnit}{" "}
+                            <Icon
+                                icon="fas fa-location-arrow"
+                                solid={false}
+                                padding={false}
+                            />
+                        </p>
+                    </a>
+                </OverlayTrigger>
             )}
         </>
     );
