@@ -54,7 +54,7 @@ export default function DoctorSearchResuls({
                     pageIndex={pageIndex}
                     pageSize={pageSize}
                     setPageIndex={setPageIndex}
-                    setPageSize={setPageSize}
+                    setPageSize={undefined} // setPageSize
                 />
             </Row>
         </>

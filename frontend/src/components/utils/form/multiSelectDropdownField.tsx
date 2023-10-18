@@ -27,7 +27,6 @@ export default function MultiSelectDropdownField<T>({
 
     return (
         <Multiselect
-            className="form-control"
             options={field.options.map((option: SelectOption) => {
                 return {
                     id: option.key,
