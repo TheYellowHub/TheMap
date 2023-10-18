@@ -79,7 +79,7 @@ export default function Table<T>({ columns, columnsFilters, actionButton, data }
                         {table.getHeaderGroups().map((headerGroup) => (
                             <tr key={headerGroup.id}>
                                 {headerGroup.headers.map((header) => (
-                                    <th key={header.id}>
+                                    <th key={header.id} className="align-top">
                                         {header.isPlaceholder ? null : (
                                             <>
                                                 <div
@@ -130,7 +130,7 @@ export default function Table<T>({ columns, columnsFilters, actionButton, data }
                         {table.getRowModel().rows.map((row) => (
                             <tr key={row.id}>
                                 {row.getVisibleCells().map((cell) => (
-                                    <td key={cell.id} className="jus">
+                                    <td key={cell.id} className="align-middle">
                                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                     </td>
                                 ))}
