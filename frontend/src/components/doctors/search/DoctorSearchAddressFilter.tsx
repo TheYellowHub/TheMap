@@ -1,4 +1,4 @@
-import { Col, Form, Row } from "react-bootstrap";
+import { Col, Container, Form, Row } from "react-bootstrap";
 
 import useGoogleMaps, { Location } from "../../../utils/googleMaps/useGoogleMaps";
 import AddressInputFormField from "../../utils/form/addressField";
@@ -20,27 +20,31 @@ export default function DoctorSearchAddressFilter({
 }: DoctorSearchAddressFilterProps) {
     const { getLocation } = useGoogleMaps();
     return (
-        <Form.Group as={Row}>
-            <Col sm={9}>
-                <AddressInputFormField<undefined>
-                    field={{
-                        type: "address",
-                        label: "address",
-                        getter: () => address,
-                        setter: (_: undefined, newAddress: string) => {
-                            setAddress(newAddress);
-                            getLocation(newAddress).then((location) => setAddressLocation(location));
-                            return undefined;
-                        },
-                    }}
-                    object={undefined}
-                />
-            </Col>
-            <Col sm={3} className="p-1">
-                <a href="#" onClick={useCurrenetLocation}>
-                    Use my location
-                </a>
-            </Col>
-        </Form.Group>
+        <Container fluid className="p-0">
+            <Form.Group as={Row}>
+                <Col sm={12} className="p-0">
+                    <AddressInputFormField<undefined>
+                        field={{
+                            type: "address",
+                            label: "address",
+                            getter: () => address,
+                            setter: (_: undefined, newAddress: string) => {
+                                setAddress(newAddress);
+                                getLocation(newAddress).then((location) => setAddressLocation(location));
+                                return undefined;
+                            },
+                        }}
+                        object={undefined}
+                    />
+                </Col>
+            </Form.Group>
+            <Row>
+                <Col sm={12} className="d-flex overlapPrevRow justify-content-end p-1">
+                    <a href="#" onClick={useCurrenetLocation}>
+                        Use my location
+                    </a>
+                </Col>
+            </Row>
+        </Container>
     );
 }
