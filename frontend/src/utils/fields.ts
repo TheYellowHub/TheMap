@@ -64,8 +64,8 @@ export interface ComboboxField<T> extends Field<T, string | undefined> {
     setter?: (t: T, newValue: string | undefined) => T;
 }
 
-export interface CheckboxesGroupField<T> extends Field<T, string[]> {
-    type: "checkboxesGroup";
+export interface MultiSelectField<T> extends Field<T, string[]> {
+    type: "multiSelect";
     options: ReadonlyArray<SelectOption>;
     setter?: (t: T, newValue: string[]) => T;
 }
@@ -85,7 +85,7 @@ export type ModalField<T> =
     | DateTimeField<T>
     | BooleanField<T>
     | ComboboxField<T>
-    | CheckboxesGroupField<T>
+    | MultiSelectField<T>
     | ImageField<T>;
 
 export interface ListField<T, L> extends Field<T, L[]> {
