@@ -77,7 +77,7 @@ function Header() {
             //     icon: "fa-bookmark",
             // },
             {
-                to: "",
+                to: "/",
                 onClick: logout,
                 title: "Log out",
                 icon: "fa-power-off",
