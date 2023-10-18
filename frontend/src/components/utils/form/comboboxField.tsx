@@ -5,6 +5,7 @@ import { ComboboxField, SelectOption } from "../../../utils/fields";
 interface ComboboxFormFieldProps<T> {
     field: ComboboxField<T>;
     object: T;
+    placeHolder?: string;
     onChange?: (newObject: T) => void;
     allowEmptySelection?: boolean;
 }
@@ -12,6 +13,7 @@ interface ComboboxFormFieldProps<T> {
 export default function ComboboxFormField<T>({
     field,
     object,
+    placeHolder,
     onChange = undefined,
     allowEmptySelection = false,
 }: ComboboxFormFieldProps<T>) {
@@ -29,7 +31,11 @@ export default function ComboboxFormField<T>({
                 }
             }}
         >
-            {allowEmptySelection && <option value={undefined} key={undefined}></option>}
+            {allowEmptySelection && (
+                <option value={undefined} key={undefined}>
+                    {placeHolder}
+                </option>
+            )}
             {field.options.map((option: SelectOption) => (
                 <option value={option.key} key={option.key}>
                     {option.value}

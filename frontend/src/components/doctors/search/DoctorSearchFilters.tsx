@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Col, Form, Row } from "react-bootstrap";
+import { Col, Container, Form, Row } from "react-bootstrap";
 
 import { Location } from "../../../utils/googleMaps/useGoogleMaps";
 import useDoctorCategories from "../../../hooks/doctors/useDoctorCategories";
@@ -121,69 +121,74 @@ export default function DoctorSearchFilters({
 
     return (
         <Form ref={formRef}>
-            <DoctorSearchAddressFilter
-                address={address}
-                setAddress={setAddress}
-                addressLocation={addressLocation}
-                setAddressLocation={setAddressLocation}
-                useCurrenetLocation={useCurrenetLocation}
-            />
-
-            <Col sm={9}>
-                <ComboboxFormField
-                    field={{
-                        type: "combobox",
-                        label: "Category",
-                        getter: () => categoryFilter,
-                        setter: (_, newCategory: string | undefined) => setCategoryFilter(newCategory) as undefined,
-                        options: categories.map((category: DoctorCategory) => {
-                            return { key: category.name, value: category.name };
-                        }),
-                    }}
-                    object={undefined}
-                    allowEmptySelection={true}
-                />
-            </Col>
-
-            <Col sm={9}>
-                <MultiSelectDropdownField
-                    field={{
-                        type: "multiSelect",
-                        label: "Specialities",
-                        getter: () => specialitiesFilter,
-                        setter: (_, newSpecialities: string[]) => setSpecialitiesFilter(newSpecialities) as undefined,
-                        options: specialities.map((speciality: DoctorSpeciality) => {
-                            return { key: speciality.name, value: speciality.name };
-                        }),
-                    }}
-                    object={undefined}
-                    placeHolder="All Specialities"
-                />
-            </Col>
-
-            <Col sm={9}>
-                <select
-                    id="sort-by-select"
-                    className="form-select"
-                    defaultValue={sortKey}
-                    onChange={(e) => setSortKey(e.target.value)}
-                >
-                    {Array.from(sortOptions.keys()).map((sortKey) => (
-                        <option value={sortKey} key={sortKey}>
-                            {sortKey}
-                        </option>
-                    ))}
-                </select>
-            </Col>
-
-            <Row>
-                <div className="d-flex justify-content-end">
-                    <a href="#" onClick={() => setShouldClearFilters(true)}>
-                        <Icon icon="fa-close" />
-                        Clear all
-                    </a>
-                </div>
-            </Row>
+            <Container fluid>
+                <Row>
+                    <Col className="small-address-filter">
+                        <DoctorSearchAddressFilter
+                            address={address}
+                            setAddress={setAddress}
+                            addressLocation={addressLocation}
+                            setAddressLocation={setAddressLocation}
+                            useCurrenetLocation={useCurrenetLocation}
+                        />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col sm={3}>
+                        <ComboboxFormField
+                            field={{
+                                type: "combobox",
+                                label: "Category",
+                                getter: () => categoryFilter,
+                                setter: (_, newCategory: string | undefined) =>
+                                    setCategoryFilter(newCategory) as undefined,
+                                options: categories.map((category: DoctorCategory) => {
+                                    return { key: category.name, value: category.name };
+                                }),
+                            }}
+                            object={undefined}
+                            allowEmptySelection={true}
+                            placeHolder="All Categories"
+                        />
+                    </Col>
+                    <Col sm={3}>
+                        <MultiSelectDropdownField
+                            field={{
+                                type: "multiSelect",
+                                label: "Specialities",
+                                getter: () => specialitiesFilter,
+                                setter: (_, newSpecialities: string[]) =>
+                                    setSpecialitiesFilter(newSpecialities) as undefined,
+                                options: specialities.map((speciality: DoctorSpeciality) => {
+                                    return { key: speciality.name, value: speciality.name };
+                                }),
+                            }}
+                            object={undefined}
+                            placeHolder="All specialities"
+                        />
+                    </Col>
+                    <Col sm={3}>
+                        <select
+                            id="sort-by-select"
+                            className="form-select"
+                            defaultValue={sortKey}
+                            onChange={(e) => setSortKey(e.target.value)}
+                        >
+                            {Array.from(sortOptions.keys()).map((sortKey) => (
+                                <option value={sortKey} key={sortKey}>
+                                    {sortKey}
+                                </option>
+                            ))}
+                        </select>
+                    </Col>
+                    <Col sm={3} className="justify-content-end">
+                        <a href="#" onClick={() => setShouldClearFilters(true)}>
+                            <Icon icon="fa-close" />
+                            Clear all
+                        </a>
+                    </Col>
+                </Row>
+            </Container>
         </Form>
     );
 }

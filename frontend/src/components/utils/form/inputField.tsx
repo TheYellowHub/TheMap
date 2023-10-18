@@ -11,6 +11,7 @@ export interface TextInputFormFieldProps<T> {
     onChange?: (newObject: T) => void;
     isInvalid?: boolean;
     placeHolder?: string;
+    className?: string;
 }
 
 export interface NumberInputFormFieldProps<T> {
@@ -19,6 +20,7 @@ export interface NumberInputFormFieldProps<T> {
     onChange?: (newObject: T) => void;
     isInvalid?: boolean;
     placeHolder?: string;
+    className?: string;
 }
 
 export default function InputFormField<T>({
@@ -27,6 +29,7 @@ export default function InputFormField<T>({
     onChange = undefined,
     isInvalid = false,
     placeHolder,
+    className,
 }: TextInputFormFieldProps<T> | NumberInputFormFieldProps<T>) {
     const pattern = new Map([
         ["text", undefined],
@@ -64,6 +67,7 @@ export default function InputFormField<T>({
             isInvalid={isInvalid}
             autoComplete="off"
             placeholder={placeHolder}
+            className={className}
         />
     );
 }
