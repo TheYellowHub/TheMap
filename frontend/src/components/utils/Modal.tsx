@@ -13,6 +13,7 @@ import Icon from "./Icon";
 import ImageFormField from "./form/imageField";
 import { ResponseError } from "../../hooks/useApiRequest";
 import AddressInputFormField from "./form/addressField";
+import MultiSelectDropdownField from "./form/multiSelectDropdownField";
 
 interface ModalProps<T> {
     t: T;
@@ -136,9 +137,9 @@ function Modal<T>({
                     wrapAsFormRow
                 );
                 break;
-            case "checkboxesGroup":
+            case "multiSelect":
                 return reacteNodeWrapperTwoColumns(
-                    <CheckboxesGroupFormField<O> field={field} object={object} onChange={onChange} />,
+                    <MultiSelectDropdownField<O> field={field} object={object} onChange={onChange} />,
                     field.label,
                     wrapAsFormRow
                 );
