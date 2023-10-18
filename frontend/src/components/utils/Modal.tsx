@@ -7,7 +7,6 @@ import { ListField, ModalField } from "../../utils/fields";
 import InputFormField from "./form/inputField";
 import DateTimeFormField from "./form/datetimeField";
 import BooleanFormField from "./form/booleanField";
-import CheckboxesGroupFormField from "./form/checkboxesGroupField";
 import ComboboxFormField from "./form/comboboxField";
 import Icon from "./Icon";
 import ImageFormField from "./form/imageField";

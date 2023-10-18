@@ -5,7 +5,6 @@ import { EventKey, SelectCallback } from "@restart/ui/esm/types";
 import Icon from "./Icon";
 import { Link } from "react-router-dom";
 import useAuth from "../../auth/useAuth";
-import { capitalizeFirstLetter } from "../../utils/utils";
 
 function Header() {
     const { user, isAuthenticated, isAdmin, login, logout } = useAuth();

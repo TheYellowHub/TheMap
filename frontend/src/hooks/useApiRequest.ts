@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from "axios";
+import axios from "axios";
 
 import { ID } from "../types/utils/id";
 import useAuth from "../auth/useAuth";
