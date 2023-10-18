@@ -95,7 +95,7 @@ function MapScreen() {
                             />
                         )}
 
-                        <Row className="py-2 my-2">
+                        <Row className="pb-2 mb-2">
                             <DoctorSearchFilters
                                 address={address}
                                 setAddress={setAddress}
