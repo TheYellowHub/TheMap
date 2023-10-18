@@ -259,6 +259,42 @@ td {
     padding: 0.5rem !important;
 }
 
+.form-control,
+.form-select {
+    padding: 0.5rem 0.75rem !important;
+    background-color: white;
+    border-radius: 0.625rem ;
+    border: 1px solid var(--med-dark-grey);
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    font-style: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+}
+
+.multiSelectContainer {
+    display: inline-block;
+    width:fit-content;
+}
+
+.multiSelectContainer .searchWrapper {
+    padding: 0;
+    margin: 0;
+    border-color: white;
+    color: inherit;
+}
+
+.multiSelectContainer .searchWrapper .searchBox {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.form-control:focus {
+    background-color: white;
+}
+
 input,
 .form-select,
 .react-datetime-picker__wrapper,
@@ -266,6 +302,53 @@ input,
 .form-label {
     margin: 0.3rem;
     padding: 0.3rem;
+}
+
+.small-address-filter input {
+    line-height: 1.25rem;
+    padding-bottom: 3rem !important;
+}
+
+.small-address-filter .overlapPrevRow {
+    margin-top: -2.4rem;
+    margin-left: -2rem;
+}
+
+.big-address-filter input {
+    line-height: 3rem;
+    border: 4px solid;
+    border-color: var(--blue);
+    border-radius: 3.125rem;
+    padding: 1rem;
+    width: 75vw; 
+    line-height: 5rem;
+}
+
+.big-address-filter .overlapPrevRow {
+    margin-top: -2.4rem;
+    margin-left: -2rem;
+}
+
+@media (min-width: 769px) {
+    .small-address-filter .overlapPrevRow {
+        margin-top: -3rem;
+    }
+
+    .small-address-filter input {
+        line-height: 3rem;
+        padding-bottom: 0.3rem !important;
+    }
+}
+
+@media (min-width: 576px) {
+    .big-address-filter .overlapPrevRow {
+        margin-top: -3.4rem;
+        margin-left: -1rem;
+    }
+
+    .big-address-filter input {
+        line-height: 3rem;
+    }
 }
 
 input[type="checkbox"] {
@@ -451,6 +534,7 @@ input[type="checkbox"] {
 .col-sm-3 {
     display: flex;
     align-items: center;
+    padding: 0;
 }
 .col-sm-9 {
     display: flex;
@@ -584,14 +668,4 @@ input[type="checkbox"] {
 .transparent .modal-content {
     background-color: transparent;
     border-color: transparent;
-}
-
-.big-filter input {
-    border: 4px solid;
-    border-color: var(--blue);
-    border-radius: 3.125rem;
-    line-height: 1.25rem;
-    padding: 1rem;
-    width: 75vw; 
-    /* TODO: fix "use my location" positioning */
 }

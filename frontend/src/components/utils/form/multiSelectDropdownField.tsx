@@ -26,20 +26,19 @@ export default function MultiSelectDropdownField<T>({
     }
 
     return (
-        <Container className="form-control checkboxesGroup">
-            <Multiselect
-                options={field.options.map((option: SelectOption) => {
-                    return {
-                        id: option.key,
-                        value: option.value,
-                    };
-                })}
-                selectedValues={field.getter(object)}
-                onSelect={(selectedList: [], _) => onSelectOrRemove(selectedList)}
-                onRemove={(selectedList: [], _) => onSelectOrRemove(selectedList)}
-                displayValue="value"
-                placeholder={field.getter(object).length == 0 ? placeHolder : ""}
-            />
-        </Container>
+        <Multiselect
+            className="form-control"
+            options={field.options.map((option: SelectOption) => {
+                return {
+                    id: option.key,
+                    value: option.value,
+                };
+            })}
+            selectedValues={field.getter(object)}
+            onSelect={(selectedList: [], _) => onSelectOrRemove(selectedList)}
+            onRemove={(selectedList: [], _) => onSelectOrRemove(selectedList)}
+            displayValue="value"
+            placeholder={field.getter(object).length == 0 ? placeHolder : ""}
+        />
     );
 }

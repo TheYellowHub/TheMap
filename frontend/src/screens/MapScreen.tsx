@@ -114,7 +114,7 @@ function MapScreen() {
 
                             {address === undefined && currentDoctor === null && (
                                 <ReactModal
-                                    className="transparent d-flex justify-content-center big-filter"
+                                    className="transparent d-flex justify-content-center big-address-filter"
                                     show={true}
                                     backdrop="static"
                                     centered
