@@ -73,7 +73,7 @@ function Pagination({ rowsCount, pageIndex, pageSize, setPageIndex, setPageSize 
                             <input
                                 id="page-size-input"
                                 type="number"
-                                className="p-0 m-1"
+                                // className="p-1 m-1"
                                 min={1}
                                 max={pagesCount * pageSize}
                                 value={pageSize}
