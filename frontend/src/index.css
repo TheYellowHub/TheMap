@@ -461,6 +461,10 @@ input[type="checkbox"] {
 }
 
 .doctorSmallCardDataAddress {
+    height: 50px;
+}
+
+.doctorSmallCardDataAddressField {
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -471,7 +475,7 @@ input[type="checkbox"] {
 .doctorCategoryRibbon {
     padding-left: 0.25rem;
     padding-right: 2rem;
-    width: 140px;
+    width: 160px;
     height: 21px;
     background: var(--med-yellow);
     clip-path: polygon(
@@ -485,7 +489,7 @@ input[type="checkbox"] {
 .doctorEmptyCategory {
     padding-left: 0.25rem;
     padding-right: 2rem;
-    width: 140px;
+    width: 160px;
     height: 21px;
 }
 
