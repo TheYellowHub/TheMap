@@ -7,7 +7,6 @@ import { ListField, ModalField } from "../../utils/fields";
 import InputFormField from "./form/inputField";
 import DateTimeFormField from "./form/datetimeField";
 import BooleanFormField from "./form/booleanField";
-import CheckboxesGroupFormField from "./form/checkboxesGroupField";
 import ComboboxFormField from "./form/comboboxField";
 import Icon from "./Icon";
 import ImageFormField from "./form/imageField";
@@ -51,19 +50,23 @@ function Modal<T>({
         onChange: (newObject: O) => void,
         index?: number
     ): ReactNode {
-        // if (field.setter === undefined && (field.getter(object) === undefined || field.type === "number")) {
-        //     return <p className="form-label">{field.getter(object) as string}</p>;
-        // }
+        const fieldOrConstLabel = (field: ModalField<O>, reacteNode: ReactNode) => {
+            if (field.setter === undefined && (field.getter(object) === undefined || field.type === "number")) {
+                return <p className="form-label">{field.getter(object) as string}</p>;
+            } else {
+                return reacteNode;
+            }
+        };
 
         const reacteNodeWrapperSingleColumn = (reacteNode: ReactNode, key: string, wrap: boolean = true) => {
             if (wrap) {
                 return (
                     <Form.Group as={Row} key={key}>
-                        <Col className="col-form-label">{reacteNode}</Col>
+                        <Col className="col-form-label">{fieldOrConstLabel(field, reacteNode)}</Col>
                     </Form.Group>
                 );
             } else {
-                return reacteNode;
+                return fieldOrConstLabel(field, reacteNode);
             }
         };
 
@@ -74,11 +77,11 @@ function Modal<T>({
                         <Form.Label column htmlFor={field.label}>
                             {field.label}
                         </Form.Label>
-                        <Col sm={9}>{reacteNode}</Col>
+                        <Col sm={10}>{fieldOrConstLabel(field, reacteNode)}</Col>
                     </Form.Group>
                 );
             } else {
-                return reacteNode;
+                return fieldOrConstLabel(field, reacteNode);
             }
         };
 
@@ -179,24 +182,27 @@ function Modal<T>({
                             return (
                                 <Form.Group as={Row} key={field.label}>
                                     <Form.Label column>{field.label}</Form.Label>
-                                    <Col sm={9}>
-                                        <table className="formTable table">
-                                            <thead>
-                                                <tr>
-                                                    {field.fields.map((field) => (
-                                                        <th key={`${field.label}-th`}>{field.label}</th>
-                                                    ))}
-                                                    <th></th>
-                                                </tr>
-                                            </thead>
+                                    <Col sm={10}>
+                                        <table className="formTable table align-middle">
+                                            {1 < field.fields.length && (
+                                                <thead>
+                                                    <tr>
+                                                        {field.fields.map((field) => (
+                                                            <th key={`${field.label}-th`}>{field.label}</th>
+                                                        ))}
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                            )}
                                             <tbody>
                                                 {records.map((record, index) => (
-                                                    <tr key={`${field.label}-${index}`}>
+                                                    <tr key={`${field.label}-${index}`} className="">
                                                         {field.fields.map((subfield) => (
                                                             <td
                                                                 key={`${subfield.label}-${index}-${subfield.getter(
                                                                     record
                                                                 )}`}
+                                                                className="px-2 py-0"
                                                             >
                                                                 {fieldToComponent(
                                                                     subfield,

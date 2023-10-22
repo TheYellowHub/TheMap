@@ -1,4 +1,3 @@
-import { Col, Container } from "react-bootstrap";
 import Multiselect from "multiselect-react-dropdown";
 
 import { MultiSelectField as MultiSelectField, SelectOption } from "../../../utils/fields";
@@ -27,7 +26,6 @@ export default function MultiSelectDropdownField<T>({
 
     return (
         <Multiselect
-            className="form-control"
             options={field.options.map((option: SelectOption) => {
                 return {
                     id: option.key,

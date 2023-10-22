@@ -9,8 +9,6 @@ import { DoctorCategory } from "../../../types/doctors/doctorCategory";
 import { DoctorSpeciality } from "../../../types/doctors/DoctorSpeciality";
 import { Doctor, getDoctorMinimalDistance } from "../../../types/doctors/doctor";
 import ComboboxFormField from "../../utils/form/comboboxField";
-import CheckboxesGroupFormField from "../../utils/form/checkboxesGroupField";
-import InputFormField from "../../utils/form/inputField";
 import Icon from "../../utils/Icon";
 import DoctorSearchAddressFilter from "./DoctorSearchAddressFilter";
 import MultiSelectDropdownField from "../../utils/form/multiSelectDropdownField";
