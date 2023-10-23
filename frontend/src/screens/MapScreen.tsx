@@ -84,7 +84,7 @@ function MapScreen() {
         <LoadingWrapper isLoading={isListLoading} isError={isListError} error={listError as ResponseError}>
             <Container fluid>
                 <Row className="d-flex mt-2 mb-0">
-                    <Col className="mx-3">
+                    <Col className="mx-3 px-3">
                         {currentDoctor !== null && (
                             <DoctorBigCard
                                 doctor={currentDoctor}

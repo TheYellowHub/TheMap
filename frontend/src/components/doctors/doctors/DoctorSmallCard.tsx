@@ -31,24 +31,17 @@ function DoctorSmallCard({
                     <DoctorImage doctor={doctor} />
                 </div>
                 <div className="doctorSmallCardData col pe-3">
-                    <div className="doctorSmallCardName mb-3">
-                        {doctor.fullName}
-                    </div>
+                    <div className="doctorSmallCardName mb-3">{doctor.fullName}</div>
                     <div className="row w-100 m-0 flex-nowrap">
                         <DoctorCategory category={doctor.category} />
                         <DoctorVerification doctor={doctor} />
                     </div>
                     <DoctorAddress
                         doctor={doctor}
-                        locationForDistanceCalculation={
-                            locationForDistanceCalculation
-                        }
+                        locationForDistanceCalculation={locationForDistanceCalculation}
                         distanceUnit={distanceUnit}
                     />
-                    <Rating
-                        averageRating={averageRating}
-                        totalReviews={totalReviews}
-                    />
+                    <Rating averageRating={averageRating} totalReviews={totalReviews} />
                 </div>
             </div>
         </div>
