@@ -727,19 +727,6 @@ div:has(.small-address-filter) {
     }
 }
 
-/* Specific screens */ 
-
-.doctorSearchResult {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-}
-
-.notes {
-    color: var(--med-dark-grey);
-    font-style: italic;
-}
-
 /* Google map */ 
 
 .map {
@@ -859,6 +846,7 @@ div:has(.small-address-filter) {
         0% 100%
     );
 }
+
 .doctorEmptyCategory {
     padding-left: 0.25rem;
     padding-right: 2rem;

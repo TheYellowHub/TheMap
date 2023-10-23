@@ -131,7 +131,7 @@ function MapScreen() {
                         </Row>
 
                         <Row className="d-flex py-2 my-2 gap-3">
-                            <Col className="notes px-2">
+                            <Col className="med-dark-grey fst-italic px-2">
                                 {matchedDoctorsIncludingDistance.length} results
                                 {address && distance && (
                                     <>

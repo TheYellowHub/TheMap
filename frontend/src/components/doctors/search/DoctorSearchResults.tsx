@@ -33,7 +33,7 @@ export default function DoctorSearchResuls({
     return (
         <>
             <Row className="p-2 m-2">
-                <Container className="doctorSearchResult">
+                <Container className="d-flex gap-3 flex-wrap">
                     {doctorsInPage.map((doctor: Doctor) => (
                         <DoctorSmallCard
                             key={doctor.id}
