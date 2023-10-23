@@ -1,3 +1,4 @@
+import { SelectOption } from "../components/utils/Select";
 import { ImageFileOrUrl } from "../types/Image";
 import { DateTime } from "../types/utils/dateTime";
 import { Email } from "../types/utils/email";
@@ -53,20 +54,15 @@ export interface BooleanField<T> extends Field<T, boolean | undefined> {
     setter?: (t: T, newValue: boolean) => T;
 }
 
-export interface SelectOption {
-    key: string;
-    value: string;
-}
-
-export interface ComboboxField<T> extends Field<T, string | undefined> {
-    type: "combobox";
+export interface SingleSelectField<T> extends Field<T, string | undefined> {
+    type: "singleSelect";
     options: Readonly<SelectOption[]>;
     setter?: (t: T, newValue: string | undefined) => T;
 }
 
 export interface MultiSelectField<T> extends Field<T, string[]> {
     type: "multiSelect";
-    options: ReadonlyArray<SelectOption>;
+    options: Readonly<SelectOption[]>;
     setter?: (t: T, newValue: string[]) => T;
 }
 
@@ -84,7 +80,7 @@ export type ModalField<T> =
     | NumberField<T>
     | DateTimeField<T>
     | BooleanField<T>
-    | ComboboxField<T>
+    | SingleSelectField<T>
     | MultiSelectField<T>
     | ImageField<T>;
 

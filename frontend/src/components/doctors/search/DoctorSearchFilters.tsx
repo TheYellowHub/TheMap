@@ -9,7 +9,7 @@ import { DoctorSpeciality } from "../../../types/doctors/DoctorSpeciality";
 import { Doctor, getDoctorMinimalDistance, getDoctorNameWithoutPrefix } from "../../../types/doctors/doctor";
 import Icon from "../../utils/Icon";
 import DoctorSearchAddressFilter from "./DoctorSearchAddressFilter";
-import MultiSelectDropdownField from "../../utils/form/multiSelectDropdownField";
+import MultiSelectField from "../../utils/form/multiSelectFormField";
 import Select from "../../utils/Select";
 import { DoctorCategory } from "../../../types/doctors/doctorCategory";
 

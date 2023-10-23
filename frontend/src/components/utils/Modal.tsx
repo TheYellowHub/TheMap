@@ -7,12 +7,12 @@ import { ListField, ModalField } from "../../utils/fields";
 import InputFormField from "./form/inputField";
 import DateTimeFormField from "./form/datetimeField";
 import BooleanFormField from "./form/booleanField";
-import ComboboxFormField from "./form/comboboxField";
+import SingleSelectField from "./form/singleSelectField";
 import Icon from "./Icon";
 import ImageFormField from "./form/imageField";
 import { ResponseError } from "../../hooks/useApiRequest";
 import AddressInputFormField from "./form/addressField";
-import MultiSelectDropdownField from "./form/multiSelectDropdownField";
+import MultiSelectField from "./form/multiSelectFormField";
 
 interface ModalProps<T> {
     t: T;
@@ -128,9 +128,9 @@ function Modal<T>({
                     wrapAsFormRow
                 );
                 break;
-            case "combobox":
+            case "singleSelect":
                 return reacteNodeWrapperTwoColumns(
-                    <ComboboxFormField<O>
+                    <SingleSelectField<O>
                         field={field}
                         object={object}
                         onChange={onChange}
@@ -142,7 +142,7 @@ function Modal<T>({
                 break;
             case "multiSelect":
                 return reacteNodeWrapperTwoColumns(
-                    <MultiSelectDropdownField<O> field={field} object={object} onChange={onChange} />,
+                    <MultiSelectField<O> field={field} object={object} onChange={onChange} />,
                     field.label,
                     wrapAsFormRow
                 );
@@ -183,7 +183,7 @@ function Modal<T>({
                                 <Form.Group as={Row} key={field.label}>
                                     <Form.Label column>{field.label}</Form.Label>
                                     <Col sm={10}>
-                                        <table className="formTable table align-middle">
+                                        <table className="formTable table align-middle nowrap">
                                             {1 < field.fields.length && (
                                                 <thead>
                                                     <tr>
@@ -196,13 +196,13 @@ function Modal<T>({
                                             )}
                                             <tbody>
                                                 {records.map((record, index) => (
-                                                    <tr key={`${field.label}-${index}`} className="">
+                                                    <tr key={`${field.label}-${index}`}>
                                                         {field.fields.map((subfield) => (
                                                             <td
                                                                 key={`${subfield.label}-${index}-${subfield.getter(
                                                                     record
                                                                 )}`}
-                                                                className="px-2 py-0"
+                                                                className="px-0 py-0"
                                                             >
                                                                 {fieldToComponent(
                                                                     subfield,

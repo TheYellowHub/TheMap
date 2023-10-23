@@ -4,8 +4,11 @@ import ReactSelect, { components } from "react-select";
 import Icon from "./Icon";
 import { Col } from "react-bootstrap";
 
+export type SelectOption = { value: string; label: string };
+
 interface SingleSelectProps {
-    values: string[];
+    id?: string;
+    values: Readonly<string[]> | Readonly<SelectOption[]>;
     currentValue: string | undefined;
     isMulti?: false;
     allowEmptySelection?: boolean;
@@ -13,10 +16,12 @@ interface SingleSelectProps {
     title?: string;
     onChange?: (newValue: string | undefined) => void;
     icon?: string;
+    disabled?: boolean;
 }
 
 interface MultiSelectProps {
-    values: string[];
+    id?: string;
+    values: Readonly<string[]> | Readonly<SelectOption[]>;
     currentValue: string[];
     isMulti?: true;
     allowEmptySelection?: boolean;
@@ -24,11 +29,11 @@ interface MultiSelectProps {
     title?: string;
     onChange?: (newValue: string[]) => void;
     icon?: string;
+    disabled?: boolean;
 }
 
-type SelectOption = { value: string; label: string };
-
 export default function Select({
+    id,
     values,
     currentValue,
     isMulti = false,
@@ -37,14 +42,19 @@ export default function Select({
     title = "",
     onChange = undefined,
     icon = undefined,
+    disabled = false,
 }: SingleSelectProps | MultiSelectProps) {
     const [dropdownOpen, setDropdownOpen] = icon === undefined ? [undefined, undefined] : useState(false);
     const valueToSelectOption = (value: string) => ({ value: value, label: value }) as SelectOption;
 
-    const options: Readonly<SelectOption[]> = values.map((value: string) => ({
-        value: value,
-        label: value,
-    }));
+    const options: Readonly<SelectOption[]> = (
+        0 < values.length && typeof values[0] === "string"
+            ? values.map((value) => ({
+                  value: value,
+                  label: value,
+              }))
+            : values
+    ) as Readonly<SelectOption[]>;
 
     const value =
         currentValue === undefined
@@ -76,6 +86,7 @@ export default function Select({
 
     const selectComponent = isMulti ? (
         <ReactSelect
+            id={id}
             options={options}
             value={value}
             placeholder={placeHolder}
@@ -84,12 +95,14 @@ export default function Select({
             className="multi-select"
             onChange={(newValues) => onChange && onChange(newValues.map((newValue) => newValue!.value) as any)}
             isClearable={allowEmptySelection}
+            isDisabled={disabled}
             isMulti={true}
             hideSelectedOptions={false}
             components={{ ValueContainer: multiValueContainer }}
         />
     ) : (
         <ReactSelect
+            id={id}
             options={options}
             value={value}
             placeholder={placeHolder}
@@ -98,6 +111,7 @@ export default function Select({
             className="single-select"
             onChange={(newValue) => onChange && onChange(newValue === null ? undefined : (newValue!.value as any))}
             isClearable={allowEmptySelection}
+            isDisabled={disabled}
         />
     );
 

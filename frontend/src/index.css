@@ -232,6 +232,13 @@ td {
 .formTable {    
     border-width: 0;
     border-color: white;
+    border-collapse: separate;
+}
+
+.formTable td,
+.formTable input {    
+    font-size: 0.9rem !important;
+    
 }
 
 .doctorSearchResult {
@@ -288,7 +295,7 @@ td {
 }
 
 .modal-dialog {
-    max-width: 80%;
+    max-width: 90%;
 }
 
 .modal-backdrop {
@@ -471,7 +478,10 @@ input,
 .form-select,
 .multiSelectContainer input 
 .react-datetime-picker__wrapper,
-.form-control,
+.form-control {
+    margin: 0.3rem 0;
+    padding: 0.3rem 0;
+}
 .form-label {
     margin: 0.3rem;
     padding: 0.3rem;

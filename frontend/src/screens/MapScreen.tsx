@@ -189,7 +189,3 @@ function MapScreen() {
 }
 
 export default MapScreen;
-
-// todo:
-// move everything to react-select
-// recheck the figma
