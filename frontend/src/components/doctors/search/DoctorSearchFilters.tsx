@@ -6,7 +6,7 @@ import useDoctorCategories from "../../../hooks/doctors/useDoctorCategories";
 import useDoctorSpecialities from "../../../hooks/doctors/useDoctorSpecialities";
 import { DistanceUnit } from "../../utils/DistanceUnit";
 import { DoctorSpeciality } from "../../../types/doctors/DoctorSpeciality";
-import { Doctor, getDoctorMinimalDistance } from "../../../types/doctors/doctor";
+import { Doctor, getDoctorMinimalDistance, getDoctorNameWithoutPrefix } from "../../../types/doctors/doctor";
 import Icon from "../../utils/Icon";
 import DoctorSearchAddressFilter from "./DoctorSearchAddressFilter";
 import MultiSelectDropdownField from "../../utils/form/multiSelectDropdownField";
@@ -62,6 +62,12 @@ export default function DoctorSearchFilters({
         ["Nancy’s Nook", (doctor: Doctor) => doctor.nancysNook === true],
     ]);
 
+    const sortByName = (a: Doctor, b: Doctor) => {
+        const nameA = getDoctorNameWithoutPrefix(a);
+        const nameB = getDoctorNameWithoutPrefix(b);
+        return nameA < nameB ? -1 : nameA > nameB ? 1 : 0;
+    };
+
     const sortOptions: ReadonlyMap<string, (a: Doctor, b: Doctor) => number> = new Map([
         [
             defaultSortKey, // "Closest first",
@@ -75,18 +81,8 @@ export default function DoctorSearchFilters({
                 }
             },
         ],
-        [
-            "A - Z",
-            (a, b) => {
-                return a.fullName < b.fullName ? 1 : a.fullName > b.fullName ? -1 : 0;
-            },
-        ],
-        [
-            "Z - A",
-            (a, b) => {
-                return a.fullName > b.fullName ? 1 : a.fullName > b.fullName ? -1 : 0;
-            },
-        ],
+        ["A - Z", (a, b) => sortByName(a, b)],
+        ["Z - A", (a, b) => -sortByName(a, b)],
     ]);
 
     useEffect(() => {
@@ -131,9 +127,9 @@ export default function DoctorSearchFilters({
 
     return (
         <Form ref={formRef} className="px-0 mx-0">
-            <Container className="d-grid gap-3 px-0 mx-0" fluid>
-                <Row className="d-flex gap-3 mx-0 px-0">
-                    <Col className="small-address-filter">
+            <Container className="d-grid gap-3" fluid>
+                <Row className="d-flex px-0">
+                    <Col className="small-address-filter px-0">
                         <DoctorSearchAddressFilter
                             address={address}
                             setAddress={setAddress}
@@ -143,8 +139,8 @@ export default function DoctorSearchFilters({
                         />
                     </Col>
                 </Row>
-                <Row className="d-flex gap-3 mx-0 px-0">
-                    <Col sm={6} md={3} className="px-0">
+                <Row className="d-flex gap-3 justify-content-between">
+                    <Col sm={6} lg={3} className="px-0">
                         <Select
                             values={categories.map((category: DoctorCategory) => category.name)}
                             currentValue={categoryFilter}
@@ -153,7 +149,7 @@ export default function DoctorSearchFilters({
                             onChange={setCategoryFilter}
                         />
                     </Col>
-                    <Col sm={5} md={3} className="px-0">
+                    <Col sm={5} lg={3} className="px-0">
                         <Select
                             values={specialities.map((speciality: DoctorSpeciality) => speciality.name)}
                             currentValue={specialitiesFilter}
@@ -164,7 +160,7 @@ export default function DoctorSearchFilters({
                             isMulti={true}
                         />
                     </Col>
-                    <Col sm={6} md={2} className="px-0">
+                    <Col sm={6} lg={2} className="px-0">
                         <Select
                             values={Array.from(listOptions.keys())}
                             currentValue={listFilter}
@@ -173,8 +169,8 @@ export default function DoctorSearchFilters({
                             onChange={(newValue: string | undefined) => setListFilter(newValue)}
                         />
                     </Col>
-                    <Col sm={5} md={3} className="d-flex px-0 mx-0 align-items-center justify-content-end">
-                        <Col className="d-flex justify-content-end icon-select px-0 mx-0">
+                    <Col sm={5} lg={3} className="d-flex align-items-center justify-content-end px-0">
+                        <Col className="d-flex justify-content-end icon-select">
                             <Select
                                 values={Array.from(sortOptions.keys())}
                                 onChange={setSortKey as (newValue: string | undefined) => void}
@@ -182,7 +178,7 @@ export default function DoctorSearchFilters({
                                 icon="fa-arrow-down-wide-short"
                             />
                         </Col>
-                        <Col className="d-flex justify-content-end nowrap px-0 mx-0">
+                        <Col className="d-flex justify-content-end nowrap">
                             <a href="#" onClick={() => setShouldClearFilters(true)}>
                                 <Icon icon="fa-close" />
                                 Clear all

@@ -82,9 +82,9 @@ function MapScreen() {
 
     return (
         <LoadingWrapper isLoading={isListLoading} isError={isListError} error={listError as ResponseError}>
-            <Container className="mx-0 px-0" fluid>
-                <Row className="d-flex mt-2 mb-0 mx-0 px-0">
-                    <Col className="px-4">
+            <Container fluid>
+                <Row className="d-flex mt-2 mb-0">
+                    <Col className="mx-3">
                         {currentDoctor !== null && (
                             <DoctorBigCard
                                 doctor={currentDoctor}
@@ -95,7 +95,7 @@ function MapScreen() {
                             />
                         )}
 
-                        <Row className="pb-2 mb-2">
+                        <Row className="px-2 pb-2 mb-2">
                             <DoctorSearchFilters
                                 address={address}
                                 setAddress={setAddress}
@@ -131,7 +131,7 @@ function MapScreen() {
                         </Row>
 
                         <Row className="d-flex py-2 my-2 gap-3">
-                            <Col className="notes px-0 mx-0">
+                            <Col className="notes px-2">
                                 {matchedDoctorsIncludingDistance.length} results
                                 {address && distance && (
                                     <>
@@ -189,3 +189,7 @@ function MapScreen() {
 }
 
 export default MapScreen;
+
+// todo:
+// move everything to react-select
+// recheck the figma

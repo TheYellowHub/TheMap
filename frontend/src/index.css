@@ -29,6 +29,7 @@
     font-style: normal;
     font-weight: 400;
     line-height: 1.25rem;
+    box-sizing: border-box !important;
 }
 
 a {
@@ -54,7 +55,7 @@ i {
 
 header {
     position: fixed;
-    width: 100vw;
+    /* width: 100%; */
     height: var(--header-height);
     min-height: var(--header-height);
     z-index: 99;
@@ -63,7 +64,7 @@ header {
 
 main {
     position: relative;
-    width: 100vw;
+    width: 100%;
     padding-top: calc(var(--header-height) + var(--layout-padding));
     padding-bottom: var(--layout-padding);
     min-height: var(--main-height);
@@ -101,7 +102,7 @@ main {
 
 footer {
     position:absolute;
-    width: 100vw;
+    width: 100%;
 }
 
 .logo {
@@ -112,8 +113,10 @@ footer {
 .navbar {
     background-color: white;
     padding: 0.5rem;
+    padding-right: 1rem;
     width: 100vw;
     text-transform: none;
+    box-sizing: border-box !important;
 }
 
 .navbar-nav {
@@ -557,6 +560,10 @@ input[type="checkbox"] {
     width: 100% !important;
 }
 
+.react-select__value-container {
+    white-space: nowrap;
+}
+
 .react-select__menu-list {
     display: flex;
     padding: 0.5rem 0.25rem;
@@ -645,9 +652,8 @@ input[type="checkbox"] {
 .small-address-filter,
 div:has(.small-address-filter) {
     position: relative !important;
-    margin-right: 0;
-    padding-right: 0;
-    width: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 .small-address-filter input {

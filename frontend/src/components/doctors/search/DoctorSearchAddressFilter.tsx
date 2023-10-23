@@ -20,7 +20,7 @@ export default function DoctorSearchAddressFilter({
 }: DoctorSearchAddressFilterProps) {
     const { getLocation } = useGoogleMaps();
     return (
-        <Container className="px-0 mx-0" fluid>
+        <Container className="px-0" fluid>
             <Form.Group as={Row}>
                 <Col className="px-0 mx-0">
                     <AddressInputFormField<undefined>
