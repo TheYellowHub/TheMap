@@ -440,10 +440,6 @@ td {
     line-height: 1.25rem;
 }
 
-.nowrap {
-    white-space: nowrap !important;
-}
-
 .transparent,
 .transparent .modal-content {
     background-color: transparent;

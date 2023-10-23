@@ -178,7 +178,7 @@ export default function DoctorSearchFilters({
                                 icon="fa-arrow-down-wide-short"
                             />
                         </Col>
-                        <Col className="d-flex justify-content-end nowrap">
+                        <Col className="d-flex justify-content-end text-nowrap">
                             <a href="#" onClick={() => setShouldClearFilters(true)}>
                                 <Icon icon="fa-close" />
                                 Clear all

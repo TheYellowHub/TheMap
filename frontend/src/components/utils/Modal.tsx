@@ -173,7 +173,7 @@ function Modal<T>({
                                 <Form.Group as={Row} key={field.label}>
                                     <Form.Label column>{field.label}</Form.Label>
                                     <Col sm={10}>
-                                        <table className="formTable nowrap">
+                                        <table className="formTable text-nowrap">
                                             {1 < field.fields.length && (
                                                 <thead>
                                                     <tr>

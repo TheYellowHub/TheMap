@@ -139,7 +139,7 @@ function MapScreen() {
                                     </>
                                 )}
                             </Col>
-                            <Col sm={4} className="d-flex justify-content-end nowrap" style={{ paddingRight: 12 }}>
+                            <Col sm={4} className="d-flex justify-content-end text-nowrap" style={{ paddingRight: 12 }}>
                                 {address && distance && (
                                     <a href="#" onClick={() => setDistance(distance + 20)}>
                                         <Icon icon="fa-location-crosshairs" />
