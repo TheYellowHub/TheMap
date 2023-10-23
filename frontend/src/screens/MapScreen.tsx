@@ -83,8 +83,8 @@ function MapScreen() {
     return (
         <LoadingWrapper isLoading={isListLoading} isError={isListError} error={listError as ResponseError}>
             <Container fluid>
-                <Row className="d-flex">
-                    <Col>
+                <Row className="d-flex mt-2 mb-0">
+                    <Col className="mx-3">
                         {currentDoctor !== null && (
                             <DoctorBigCard
                                 doctor={currentDoctor}
@@ -95,7 +95,7 @@ function MapScreen() {
                             />
                         )}
 
-                        <Row className="pb-2 mb-2">
+                        <Row className="px-2 pb-2 mb-2">
                             <DoctorSearchFilters
                                 address={address}
                                 setAddress={setAddress}
@@ -130,25 +130,23 @@ function MapScreen() {
                             )}
                         </Row>
 
-                        <Row className="py-2 my-2">
-                            <Container className="d-flex gap-3">
-                                <div className="notes">
-                                    {matchedDoctorsIncludingDistance.length} results
-                                    {address && distance && (
-                                        <>
-                                            &nbsp;for &quot;{address}&quot; within {distance} {distanceUnit}
-                                        </>
-                                    )}
-                                </div>
-                                <div className="col-md-auto">
-                                    {address && distance && (
-                                        <a href="#" onClick={() => setDistance(distance + 20)}>
-                                            <Icon icon="fa-location-crosshairs" />
-                                            Search larger area
-                                        </a>
-                                    )}
-                                </div>
-                            </Container>
+                        <Row className="d-flex py-2 my-2 gap-3">
+                            <Col className="notes px-2">
+                                {matchedDoctorsIncludingDistance.length} results
+                                {address && distance && (
+                                    <>
+                                        &nbsp;for &quot;{address}&quot; within {distance} {distanceUnit}
+                                    </>
+                                )}
+                            </Col>
+                            <Col sm={4} className="d-flex justify-content-end text-nowrap" style={{ paddingRight: 12 }}>
+                                {address && distance && (
+                                    <a href="#" onClick={() => setDistance(distance + 20)}>
+                                        <Icon icon="fa-location-crosshairs" />
+                                        Search larger area
+                                    </a>
+                                )}
+                            </Col>
                         </Row>
 
                         <Row className="py-2 my-2">
@@ -171,7 +169,7 @@ function MapScreen() {
                         </Row>
                     </Col>
 
-                    <Col>
+                    <Col className="mx-0 px-0" md={5}>
                         <DoctorSearchMap
                             doctors={matchedDoctorsIgnoringDistance}
                             centerLocation={addressLocation}

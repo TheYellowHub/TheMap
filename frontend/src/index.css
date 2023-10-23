@@ -16,8 +16,8 @@
     --med-yellow: #F2C94C;
     --med-light-yellow: #F6DB87;
     --light-yellow: #FCEFCA;
-    --blue: #035763;
-    
+    --dark-blue: #035763;
+    --med-blue: #137c8a;
 }
 
 * {
@@ -29,10 +29,11 @@
     font-style: normal;
     font-weight: 400;
     line-height: 1.25rem;
+    box-sizing: border-box !important;
 }
 
 a {
-    color: var(--blue);
+    color: var(--dark-blue);
     font-size: 0.875rem;
     text-decoration-line: underline;
 }
@@ -54,7 +55,7 @@ i {
 
 header {
     position: fixed;
-    width: 100vw;
+    /* width: 100%; */
     height: var(--header-height);
     min-height: var(--header-height);
     z-index: 99;
@@ -63,7 +64,7 @@ header {
 
 main {
     position: relative;
-    width: 100vw;
+    width: 100%;
     padding-top: calc(var(--header-height) + var(--layout-padding));
     padding-bottom: var(--layout-padding);
     min-height: var(--main-height);
@@ -80,7 +81,7 @@ main {
 .footer-content a,
 .footer-content-smaller,
 .footer-content-smaller a {
-    color: var(--blue) !important;
+    color: var(--dark-blue) !important;
     font-family: "Poppins";
     font-weight: 500;
     font-size: 1rem;
@@ -101,7 +102,7 @@ main {
 
 footer {
     position:absolute;
-    width: 100vw;
+    width: 100%;
 }
 
 .logo {
@@ -112,8 +113,10 @@ footer {
 .navbar {
     background-color: white;
     padding: 0.5rem;
+    padding-right: 1rem;
     width: 100vw;
     text-transform: none;
+    box-sizing: border-box !important;
 }
 
 .navbar-nav {
@@ -130,7 +133,7 @@ footer {
 }
 
 .nav-link {
-    color: var(--blue) !important;
+    color: var(--dark-blue) !important;
     font-family: "Poppins";
     font-weight: 500;
     font-size: 1.125rem;
@@ -145,7 +148,7 @@ footer {
 }
 
 .dropdown-item {
-    color: var(--blue) !important;
+    color: var(--dark-blue) !important;
     font-family: "Poppins";
     font-weight: 500;
     font-size: 0.875rem;
@@ -178,7 +181,7 @@ a:hover i {
 .dropdown-item.active,
 .dropdown-item:focus {
     color: white !important;
-    background-color: var(--blue) !important;
+    background-color: var(--dark-blue) !important;
 }
 
 .dropdown-toggle::after {
@@ -226,141 +229,15 @@ td {
     padding: 0.5rem !important;
 }
 
-select,
-input,
-.form-control,
-.form-select,
-.multiSelectContainer input {
-    padding: 0.5rem 0.75rem !important;
-    background-color: white;
-    border-radius: 0.625rem ;
-    border: 1px solid var(--med-dark-grey);
-    color: inherit;
-    font-family: inherit;
-    font-size: inherit;
-    font-style: inherit;
-    font-weight: inherit;
-    line-height: inherit;
-    width: 100%;
-}
-
-select,
-input,
-.form-select,
-.form-select,
-.multiSelectContainer input 
-.react-datetime-picker__wrapper,
-.form-control,
-.form-label {
-    margin: 0.3rem;
-    padding: 0.3rem;
-}
-
-div:has(>.multiSelectContainer) {
-    padding: 0.3rem;
-    width: 100%;
-}
-
-.multiSelectContainer .searchWrapper {
-    padding: 0;
-    margin: 0;
-    border-color: white;
-}
-
-.multiSelectContainer .searchWrapper .searchBox {
-    padding: 0;
-    margin: 0;
-}
-
-::placeholder {
-    color: inherit;
-}
-
-.form-control:focus {
-    background-color: white;
-}
-
-.small-address-filter,
-div:has(>.small-address-filter) {
-    margin-right: 0;
-    padding-right: 0;
-    width: 100%;
-}
-
-.small-address-filter input {
-    line-height: 1.25rem;
-    padding-bottom: 3rem !important;
-    width: 100% !important;
-}
-
-.small-address-filter .overlapPrevRow {
-    margin-top: -2.4rem;
-    margin-left: -2rem;
-}
-
-.big-address-filter input {
-    line-height: 3rem;
-    border: 4px solid;
-    border-color: var(--blue);
-    border-radius: 3.125rem;
-    padding: 1rem;
-    width: 75vw; 
-    line-height: 5rem;
-}
-
-.big-address-filter .overlapPrevRow {
-    margin-top: -2.4rem;
-    margin-left: -2rem;
-}
-
-@media (min-width: 769px) {
-    .small-address-filter .overlapPrevRow {
-        margin-top: -3rem;
-    }
-
-    .small-address-filter input {
-        line-height: 3rem;
-        padding-bottom: 0.3rem !important;
-    }
-}
-
-@media (min-width: 576px) {
-    .big-address-filter .overlapPrevRow {
-        margin-top: -3.4rem;
-        margin-left: -1rem;
-    }
-
-    .big-address-filter input {
-        line-height: 3rem;
-    }
-}
-
-input[type="checkbox"] {
-    width: 1rem;
-    height: 1rem;
-    margin-inline-end: 0.3rem;
-}
-
-.react-datetime-picker,
-.react-datetime-picker__wrapper {
-    border: 0px;
-    background-color: transparent;
-    padding: 0;
-    margin: 0;
-}
-
-.react-datetime-picker__inputGroup__input {
-    padding: 0 !important;
-    margin: 0 !important;
-}
-
-.react-datetime-picker__button {
-    display: none;
-}
-
 .formTable {    
     border-width: 0;
     border-color: white;
+    border-collapse: separate;
+}
+
+.formTable td,
+.formTable input {    
+    font-size: 0.9rem !important;
 }
 
 .doctorSearchResult {
@@ -384,10 +261,6 @@ input[type="checkbox"] {
     position:fixed;
     background-color: plum; /* TODO: delete */
     max-width: 60%;
-}
-
-.col:has(.map) {
-    padding: 0;
 }
 
 .map {
@@ -421,7 +294,7 @@ input[type="checkbox"] {
 }
 
 .modal-dialog {
-    max-width: 80%;
+    max-width: 90%;
 }
 
 .modal-backdrop {
@@ -436,12 +309,6 @@ input[type="checkbox"] {
     filter: none !important;
 }
 
-.col-sm-2,
-.col-sm-3 {
-    display: flex;
-    align-items: center;
-    padding: 0;
-}
 .col-sm-9 {
     display: flex;
     vertical-align: middle;
@@ -577,4 +444,286 @@ input[type="checkbox"] {
 .transparent .modal-content {
     background-color: transparent;
     border-color: transparent;
+}
+
+/* Forms */
+
+select,
+input,
+.form-control,
+.form-select,
+.react-select__control,
+.multiSelectContainer input {
+    padding: 0.5rem 0.75rem !important;
+    background-color: white;
+    border-radius: 0.25rem !important;
+    border: 1px solid var(--med-dark-grey) !important;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    font-style: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    width: 100%;
+}
+
+select,
+input,
+.form-select,
+.form-select,
+.multiSelectContainer input 
+.react-datetime-picker__wrapper,
+.form-control {
+    margin: 0.3rem 0;
+    padding: 0.3rem 0;
+}
+.form-label {
+    margin: 0.3rem;
+    padding: 0.3rem;
+}
+
+.col-sm-3:has(>.multiSelectContainer),
+div:has(>.multiSelectContainer) {
+    padding: 0.3rem;
+    width: 100% !important;
+    padding-right: 0 !important
+}
+
+div:has(>.select) {
+    padding: 0.3rem;
+}
+
+.multiSelectContainer .searchWrapper {
+    padding: 0;
+    margin: 0;
+    border-color: white;
+}
+
+.multiSelectContainer .searchWrapper .searchBox {
+    padding: 0;
+    margin: 0;
+}
+
+::placeholder {
+    color: inherit;
+}
+
+.form-control:focus {
+    background-color: white;
+}
+
+.pac-target-input {
+    margin: 0 !important;
+}
+
+input[type="checkbox"] {
+    width: 1rem;
+    height: 1rem;
+    margin-inline-end: 0.3rem;
+}
+
+/* react-datetime */
+
+.react-datetime-picker,
+.react-datetime-picker__wrapper {
+    border: 0px !important;
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+}
+
+.react-datetime-picker__inputGroup__input {
+    border: 0px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.react-datetime-picker__inputGroup__amPm {
+    width: auto !important;
+}
+
+.react-datetime-picker__button {
+    display: none;
+}
+
+/* react-select */
+
+.single-select,
+.multi-select {
+    width: 100%;
+}
+
+.react-select__indicator-separator {
+    display: none;
+}
+
+.react-select__control * {
+    border: 0px white !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    line-height: inherit !important;
+    width: 100% !important;
+}
+
+.react-select__value-container {
+    white-space: nowrap;
+}
+
+.react-select__menu-list {
+    display: flex;
+    padding: 0.5rem 0.25rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    border-radius: 0.125rem;
+    background: white;
+    box-shadow: 5px 5px 12px 2px rgba(120, 120, 120, 0.25), 0px 4px 20px 3px rgba(65, 65, 65, 0.25);
+}
+
+.react-select__option {
+    padding: 0.25rem 0.5rem !important;
+}
+
+.react-select__option--is-focused {
+    background-color: var(--light-yellow) !important;
+}
+
+.react-select__option--is-selected {
+    background-color: inherit !important;
+    color: inherit !important;
+}
+
+.single-select .react-select__option--is-selected {
+    background-color: var(--med-yellow) !important;
+}
+
+.react-select__indicators {
+    width: auto !important;
+}
+
+.react-select__control--is-focused {
+    box-shadow: none !important;
+}
+
+.multi-select .react-select__control {
+    display: flex;
+    justify-content: end;
+}
+
+.multi-select-counter {
+    flex-grow: 0;
+    padding: 0rem 0.25rem !important;
+    margin: 0rem 0.25rem !important;
+    border-radius: 0.875rem;
+    background: var(--med-light-yellow);
+}
+
+.multi-select .react-select__option {
+    display: list-item !important;
+    list-style-position: none;
+}
+
+.multi-select  .react-select__option::before {
+    content: "\f0c8";
+    vertical-align: top;
+    color: var(--dark-grey);
+    font-family: "Font Awesome 6 Free";
+    font-size: 0.625rem;
+    padding-right: 0.625rem;
+}
+
+.multi-select  .react-select__option--is-selected::before {
+    content: "\f0c8";
+    color: var(--med-blue);
+    font-weight: 900;
+}
+
+.icon-select .react-select__menu {
+    position: absolute !important;
+    top: 0.6rem;
+    right: 0;
+}
+
+.icon-select .react-select__control {
+    display: none !important;
+}
+
+.icon-select .react-select__menu {
+    width: max-content !important;
+}
+
+/* Address field */
+
+.small-address-filter,
+div:has(.small-address-filter) {
+    position: relative !important;
+    margin: 0;
+    padding: 0;
+}
+
+.small-address-filter input {
+    height: 5rem;
+    border: 1px solid var(--med-dark-grey) !important;
+    border-radius: 0.625rem !important;
+    padding-bottom: 2rem !important;
+}
+
+.small-address-filter .use-my-location {
+    height: 5rem;
+    position: absolute;
+    right: 0;
+    bottom: -1rem;
+    align-items: center;
+    width: fit-content;
+    justify-content: end;
+    white-space: nowrap !important;
+    z-index: 100;
+}
+
+@media (min-width: 769px) {
+    .small-address-filter .use-my-location {
+        height: 3rem;
+        right: 0;
+        bottom: 0;
+    }
+
+    .small-address-filter input {
+        height: 3rem;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+}
+
+.big-address-filter input {
+    height: 7rem;
+    border: 4px solid !important;
+    border-color: var(--dark-blue) !important;
+    border-radius: 3.125rem !important;
+    padding: 1rem;
+    padding-bottom: 2rem !important;
+    width: 75vw; 
+}
+
+.big-address-filter .use-my-location {
+    height: 7rem;
+    position: absolute;
+    right: 1rem;
+    bottom: -2rem;
+    align-items: center;
+    width: fit-content;
+    justify-content: end;
+    white-space: nowrap !important;
+}
+
+@media (min-width: 576px) {
+    .big-address-filter .use-my-location {
+        height: 5rem;
+        right: 0;
+        bottom: 0;
+    }
+
+    .big-address-filter input {
+        height: 5rem;
+        padding-bottom: 0 !important;
+    }
 }

@@ -64,6 +64,15 @@ export const newDoctor = (): Doctor => {
     };
 };
 
+export function getDoctorNameWithoutPrefix(doctor: Doctor): string {
+    const prefixes = ["prof", "dr"];
+    let name = doctor.fullName.toLowerCase();
+    if (prefixes.some((prefix) => name.startsWith(prefix))) {
+        name = name.slice(name.indexOf(" "));
+    }
+    return name;
+}
+
 export function getDoctorLocationDistance(
     doctorLocation: DoctorLocation,
     location: Location,
