@@ -18,9 +18,7 @@ function App() {
                             <Header />
                         </header>
                         <main>
-                            <div id="main">
-                                <AppRouter />
-                            </div>
+                            <AppRouter />
                         </main>
                         <footer>
                             <Footer />

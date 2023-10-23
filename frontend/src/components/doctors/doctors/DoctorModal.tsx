@@ -55,7 +55,7 @@ function DoctorModal({ doctor, showModal, onCancel, onSave, isSaving, isSavingEr
             },
         },
         {
-            type: "combobox",
+            type: "singleSelect",
             label: "Gender",
             getter: (doctor) => doctor.gender,
             setter: (doctor, newValue) => {
@@ -63,8 +63,8 @@ function DoctorModal({ doctor, showModal, onCancel, onSave, isSaving, isSavingEr
             },
             options: doctorGenders.map((gender) => {
                 return {
-                    key: gender,
-                    value: doctorGenderToString(gender),
+                    value: gender,
+                    label: doctorGenderToString(gender),
                 };
             }),
             required: true,
@@ -95,16 +95,16 @@ function DoctorModal({ doctor, showModal, onCancel, onSave, isSaving, isSavingEr
                         return { ...location, address: newAddress, lat: newLatLng?.lat, lng: newLatLng?.lng };
                     },
                 },
-                {
-                    type: "number",
-                    label: "lat",
-                    getter: (location) => location.lat && Number(location.lat).toFixed(2),
-                },
-                {
-                    type: "number",
-                    label: "lng",
-                    getter: (location) => location.lng && Number(location.lng).toFixed(2),
-                },
+                // {
+                //     type: "number",
+                //     label: "lat",
+                //     getter: (location) => location.lat && Number(location.lat).toFixed(2),
+                // },
+                // {
+                //     type: "number",
+                //     label: "lng",
+                //     getter: (location) => location.lng && Number(location.lng).toFixed(2),
+                // },
                 {
                     type: "tel",
                     label: "Phone",
@@ -132,14 +132,14 @@ function DoctorModal({ doctor, showModal, onCancel, onSave, isSaving, isSavingEr
             ],
         } as ListField<Doctor, DoctorLocation>,
         {
-            type: "combobox",
+            type: "singleSelect",
             label: "Category",
             getter: (doctor) => doctor.category,
             setter: (doctor, newCategory) => {
                 return { ...doctor, category: newCategory };
             },
             options: categories.map((category: DoctorCategory) => {
-                return { key: category.name, value: category.name };
+                return { value: category.name, label: category.name };
             }),
             required: false,
         },
@@ -151,7 +151,7 @@ function DoctorModal({ doctor, showModal, onCancel, onSave, isSaving, isSavingEr
                 return { ...doctor, specialities: newSpecialities };
             },
             options: specialities.map((speciality: DoctorSpeciality) => {
-                return { key: speciality.name, value: speciality.name };
+                return { value: speciality.name, label: speciality.name };
             }),
         },
         {
@@ -183,7 +183,7 @@ function DoctorModal({ doctor, showModal, onCancel, onSave, isSaving, isSavingEr
         },
         {
             type: "boolean",
-            label: "NancyNook XX", // TODO: rephrase
+            label: "NancyNook",
             getter: (doctor) => doctor.nancysNook,
             setter: (doctor, newValue) => {
                 return { ...doctor, nancysNook: newValue };
@@ -199,7 +199,7 @@ function DoctorModal({ doctor, showModal, onCancel, onSave, isSaving, isSavingEr
         },
         // TODO: replace status with action buttons ?
         {
-            type: "combobox",
+            type: "singleSelect",
             label: "Status",
             getter: (doctor) => doctor.status,
             setter: (doctor, newValue) => {
@@ -207,8 +207,8 @@ function DoctorModal({ doctor, showModal, onCancel, onSave, isSaving, isSavingEr
             },
             options: doctorStatuses.map((status) => {
                 return {
-                    key: status,
-                    value: doctorStatusToString(status),
+                    value: status,
+                    label: doctorStatusToString(status),
                 };
             }),
             required: true,

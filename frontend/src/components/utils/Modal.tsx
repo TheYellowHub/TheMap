@@ -7,12 +7,12 @@ import { ListField, ModalField } from "../../utils/fields";
 import InputFormField from "./form/inputField";
 import DateTimeFormField from "./form/datetimeField";
 import BooleanFormField from "./form/booleanField";
-import ComboboxFormField from "./form/comboboxField";
+import SingleSelectField from "./form/singleSelectField";
 import Icon from "./Icon";
 import ImageFormField from "./form/imageField";
 import { ResponseError } from "../../hooks/useApiRequest";
 import AddressInputFormField from "./form/addressField";
-import MultiSelectDropdownField from "./form/multiSelectDropdownField";
+import MultiSelectField from "./form/multiSelectFormField";
 
 interface ModalProps<T> {
     t: T;
@@ -58,26 +58,16 @@ function Modal<T>({
             }
         };
 
-        const reacteNodeWrapperSingleColumn = (reacteNode: ReactNode, key: string, wrap: boolean = true) => {
-            if (wrap) {
-                return (
-                    <Form.Group as={Row} key={key}>
-                        <Col className="col-form-label">{fieldOrConstLabel(field, reacteNode)}</Col>
-                    </Form.Group>
-                );
-            } else {
-                return fieldOrConstLabel(field, reacteNode);
-            }
-        };
-
-        const reacteNodeWrapperTwoColumns = (reacteNode: ReactNode, key: string, wrap: boolean = true) => {
+        const reacteNodeWrapper = (reacteNode: ReactNode, key: string, wrap: boolean = true) => {
             if (wrap) {
                 return (
                     <Form.Group as={Row} key={key}>
                         <Form.Label column htmlFor={field.label}>
                             {field.label}
                         </Form.Label>
-                        <Col sm={10}>{fieldOrConstLabel(field, reacteNode)}</Col>
+                        <Col sm={10} className="d-flex align-items-center">
+                            {fieldOrConstLabel(field, reacteNode)}
+                        </Col>
                     </Form.Group>
                 );
             } else {
@@ -94,43 +84,43 @@ function Modal<T>({
             case "url":
             case "email":
             case "tel":
-                return reacteNodeWrapperTwoColumns(
+                return reacteNodeWrapper(
                     <InputFormField<O> field={field} object={object} onChange={onChange} />,
                     field.label,
                     wrapAsFormRow
                 );
                 break;
             case "number":
-                return reacteNodeWrapperTwoColumns(
+                return reacteNodeWrapper(
                     <InputFormField<O> field={field} object={object} onChange={onChange} />,
                     field.label,
                     wrapAsFormRow
                 );
                 break;
             case "address":
-                return reacteNodeWrapperTwoColumns(
+                return reacteNodeWrapper(
                     <AddressInputFormField<O> field={field} object={object} onChange={onChange} />,
                     field.label,
                     wrapAsFormRow
                 );
                 break;
             case "datetime":
-                return reacteNodeWrapperTwoColumns(
+                return reacteNodeWrapper(
                     <DateTimeFormField<O> field={field} object={object} onChange={onChange} />,
                     field.label,
                     wrapAsFormRow
                 );
                 break;
             case "boolean":
-                return reacteNodeWrapperSingleColumn(
-                    <BooleanFormField<O> field={field} object={object} onChange={onChange} withLabel={wrapAsFormRow} />,
+                return reacteNodeWrapper(
+                    <BooleanFormField<O> field={field} object={object} onChange={onChange} withLabel={false} />,
                     field.label,
                     wrapAsFormRow
                 );
                 break;
-            case "combobox":
-                return reacteNodeWrapperTwoColumns(
-                    <ComboboxFormField<O>
+            case "singleSelect":
+                return reacteNodeWrapper(
+                    <SingleSelectField<O>
                         field={field}
                         object={object}
                         onChange={onChange}
@@ -141,14 +131,14 @@ function Modal<T>({
                 );
                 break;
             case "multiSelect":
-                return reacteNodeWrapperTwoColumns(
-                    <MultiSelectDropdownField<O> field={field} object={object} onChange={onChange} />,
+                return reacteNodeWrapper(
+                    <MultiSelectField<O> field={field} object={object} onChange={onChange} />,
                     field.label,
                     wrapAsFormRow
                 );
                 break;
             case "image":
-                return reacteNodeWrapperTwoColumns(
+                return reacteNodeWrapper(
                     <ImageFormField<O> field={field} object={object} onChange={onChange} />,
                     field.label,
                     wrapAsFormRow
@@ -183,7 +173,7 @@ function Modal<T>({
                                 <Form.Group as={Row} key={field.label}>
                                     <Form.Label column>{field.label}</Form.Label>
                                     <Col sm={10}>
-                                        <table className="formTable table align-middle">
+                                        <table className="formTable text-nowrap">
                                             {1 < field.fields.length && (
                                                 <thead>
                                                     <tr>
@@ -196,13 +186,13 @@ function Modal<T>({
                                             )}
                                             <tbody>
                                                 {records.map((record, index) => (
-                                                    <tr key={`${field.label}-${index}`} className="">
+                                                    <tr key={`${field.label}-${index}`}>
                                                         {field.fields.map((subfield) => (
                                                             <td
                                                                 key={`${subfield.label}-${index}-${subfield.getter(
                                                                     record
                                                                 )}`}
-                                                                className="px-2 py-0"
+                                                                className="px-0 py-0"
                                                             >
                                                                 {fieldToComponent(
                                                                     subfield,
