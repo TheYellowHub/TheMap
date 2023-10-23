@@ -183,7 +183,7 @@ function DoctorModal({ doctor, showModal, onCancel, onSave, isSaving, isSavingEr
         },
         {
             type: "boolean",
-            label: "NancyNook XX", // TODO: rephrase
+            label: "NancyNook",
             getter: (doctor) => doctor.nancysNook,
             setter: (doctor, newValue) => {
                 return { ...doctor, nancysNook: newValue };

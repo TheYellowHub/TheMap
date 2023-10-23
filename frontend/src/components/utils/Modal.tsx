@@ -58,26 +58,16 @@ function Modal<T>({
             }
         };
 
-        const reacteNodeWrapperSingleColumn = (reacteNode: ReactNode, key: string, wrap: boolean = true) => {
-            if (wrap) {
-                return (
-                    <Form.Group as={Row} key={key}>
-                        <Col className="col-form-label">{fieldOrConstLabel(field, reacteNode)}</Col>
-                    </Form.Group>
-                );
-            } else {
-                return fieldOrConstLabel(field, reacteNode);
-            }
-        };
-
-        const reacteNodeWrapperTwoColumns = (reacteNode: ReactNode, key: string, wrap: boolean = true) => {
+        const reacteNodeWrapper = (reacteNode: ReactNode, key: string, wrap: boolean = true) => {
             if (wrap) {
                 return (
                     <Form.Group as={Row} key={key}>
                         <Form.Label column htmlFor={field.label}>
                             {field.label}
                         </Form.Label>
-                        <Col sm={10}>{fieldOrConstLabel(field, reacteNode)}</Col>
+                        <Col sm={10} className="d-flex align-items-center">
+                            {fieldOrConstLabel(field, reacteNode)}
+                        </Col>
                     </Form.Group>
                 );
             } else {
@@ -94,42 +84,42 @@ function Modal<T>({
             case "url":
             case "email":
             case "tel":
-                return reacteNodeWrapperTwoColumns(
+                return reacteNodeWrapper(
                     <InputFormField<O> field={field} object={object} onChange={onChange} />,
                     field.label,
                     wrapAsFormRow
                 );
                 break;
             case "number":
-                return reacteNodeWrapperTwoColumns(
+                return reacteNodeWrapper(
                     <InputFormField<O> field={field} object={object} onChange={onChange} />,
                     field.label,
                     wrapAsFormRow
                 );
                 break;
             case "address":
-                return reacteNodeWrapperTwoColumns(
+                return reacteNodeWrapper(
                     <AddressInputFormField<O> field={field} object={object} onChange={onChange} />,
                     field.label,
                     wrapAsFormRow
                 );
                 break;
             case "datetime":
-                return reacteNodeWrapperTwoColumns(
+                return reacteNodeWrapper(
                     <DateTimeFormField<O> field={field} object={object} onChange={onChange} />,
                     field.label,
                     wrapAsFormRow
                 );
                 break;
             case "boolean":
-                return reacteNodeWrapperSingleColumn(
-                    <BooleanFormField<O> field={field} object={object} onChange={onChange} withLabel={wrapAsFormRow} />,
+                return reacteNodeWrapper(
+                    <BooleanFormField<O> field={field} object={object} onChange={onChange} withLabel={false} />,
                     field.label,
                     wrapAsFormRow
                 );
                 break;
             case "singleSelect":
-                return reacteNodeWrapperTwoColumns(
+                return reacteNodeWrapper(
                     <SingleSelectField<O>
                         field={field}
                         object={object}
@@ -141,14 +131,14 @@ function Modal<T>({
                 );
                 break;
             case "multiSelect":
-                return reacteNodeWrapperTwoColumns(
+                return reacteNodeWrapper(
                     <MultiSelectField<O> field={field} object={object} onChange={onChange} />,
                     field.label,
                     wrapAsFormRow
                 );
                 break;
             case "image":
-                return reacteNodeWrapperTwoColumns(
+                return reacteNodeWrapper(
                     <ImageFormField<O> field={field} object={object} onChange={onChange} />,
                     field.label,
                     wrapAsFormRow
@@ -183,7 +173,7 @@ function Modal<T>({
                                 <Form.Group as={Row} key={field.label}>
                                     <Form.Label column>{field.label}</Form.Label>
                                     <Col sm={10}>
-                                        <table className="formTable table align-middle nowrap">
+                                        <table className="formTable nowrap">
                                             {1 < field.fields.length && (
                                                 <thead>
                                                     <tr>
