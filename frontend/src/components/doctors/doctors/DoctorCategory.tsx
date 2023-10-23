@@ -6,7 +6,7 @@ function DoctorCategory({ category }: DoctorCategoryProps) {
     if (category) {
         return (
             <div className="doctorCategoryRibbon">
-                <p className="text-black">{category}</p>
+                <p className="text-black text-nowrap">{category}</p>
             </div>
         );
     } else {

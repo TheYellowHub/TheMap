@@ -1,14 +1,11 @@
-import {
-    Doctor,
-    getDoctorNearestLocation,
-} from "../../../types/doctors/doctor";
+import { Doctor } from "../../../types/doctors/doctor";
 import { Location } from "../../../utils/googleMaps/useGoogleMaps";
 import { DistanceUnit } from "../../utils/DistanceUnit";
 import DoctorImage from "./DoctorImage";
 import DoctorVerification from "./DoctorVerification";
-import DoctorDistance from "./DoctorDistance";
 import Rating from "./Rating";
 import DoctorCategory from "./DoctorCategory";
+import DoctorAddress from "./DoctorAddress";
 
 interface DoctorSmallCardProps {
     doctor: Doctor;
@@ -23,10 +20,6 @@ function DoctorSmallCard({
     distanceUnit = "mi",
     onClick,
 }: DoctorSmallCardProps) {
-    const closestLocation =
-        locationForDistanceCalculation &&
-        getDoctorNearestLocation(doctor, locationForDistanceCalculation);
-
     // TODO: replace with the real fields
     const averageRating = 3.6;
     const totalReviews = 10;
@@ -45,25 +38,13 @@ function DoctorSmallCard({
                         <DoctorCategory category={doctor.category} />
                         <DoctorVerification doctor={doctor} />
                     </div>
-                    <div
-                        className="row w-100 m-0 flex-nowrap"
-                        style={{ height: "50px" }}
-                    >
-                        <div className="col ps-0">
-                            <p className="med-dark-grey doctorSmallCardDataAddress">
-                                {closestLocation?.address || ""}
-                            </p>
-                        </div>
-                        <div className="col-auto pe-0">
-                            <DoctorDistance
-                                doctorLocation={closestLocation}
-                                locationForDistanceCalculation={
-                                    locationForDistanceCalculation
-                                }
-                                distanceUnit={distanceUnit}
-                            />
-                        </div>
-                    </div>
+                    <DoctorAddress
+                        doctor={doctor}
+                        locationForDistanceCalculation={
+                            locationForDistanceCalculation
+                        }
+                        distanceUnit={distanceUnit}
+                    />
                     <Rating
                         averageRating={averageRating}
                         totalReviews={totalReviews}

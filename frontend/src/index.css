@@ -825,6 +825,10 @@ div:has(.small-address-filter) {
 }
 
 .doctorSmallCardDataAddress {
+    height: 50px;
+}
+
+.doctorSmallCardDataAddressField {
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -850,7 +854,7 @@ div:has(.small-address-filter) {
 .doctorEmptyCategory {
     padding-left: 0.25rem;
     padding-right: 2rem;
-    width: 140px;
+    width: 160px;
     height: 21px;
 }
 
