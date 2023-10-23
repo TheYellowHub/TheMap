@@ -1,9 +1,6 @@
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
-import {
-    DoctorLocation,
-    getDoctorLocationDistance,
-} from "../../../types/doctors/doctor";
+import { DoctorLocation, getDoctorLocationDistance } from "../../../types/doctors/doctor";
 import { Location } from "../../../utils/googleMaps/useGoogleMaps";
 import { DistanceUnit } from "../../utils/DistanceUnit";
 import Icon from "../../utils/Icon";
@@ -22,22 +19,14 @@ function DoctorDistance({
     const distance =
         locationForDistanceCalculation &&
         doctorLocation &&
-        getDoctorLocationDistance(
-            doctorLocation,
-            locationForDistanceCalculation,
-            distanceUnit
-        );
+        getDoctorLocationDistance(doctorLocation, locationForDistanceCalculation, distanceUnit);
 
-    const tooltip_message = doctorLocation?.address ? (
-        <></>
-    ) : (
-        <Tooltip>No link to address</Tooltip>
-    );
+    const tooltipMessage = doctorLocation?.address ? <></> : <Tooltip>No link to address</Tooltip>;
 
     return (
         <>
             {distance && distance !== Infinity && (
-                <OverlayTrigger placement="bottom" overlay={tooltip_message}>
+                <OverlayTrigger placement="bottom" overlay={tooltipMessage}>
                     <a
                         href={`${
                             doctorLocation?.address
@@ -51,11 +40,7 @@ function DoctorDistance({
                     >
                         <p className="med-grey">
                             {distance.toFixed(1)} {distanceUnit}{" "}
-                            <Icon
-                                icon="fas fa-location-arrow"
-                                solid={false}
-                                padding={false}
-                            />
+                            <Icon icon="fas fa-location-arrow" solid={false} padding={false} />
                         </p>
                     </a>
                 </OverlayTrigger>
