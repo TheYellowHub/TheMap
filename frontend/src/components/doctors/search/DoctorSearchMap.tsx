@@ -70,7 +70,7 @@ export default function DoctorSearchMap({
     }, [doctors, currentDoctor, currentDoctorLocation]);
 
     return (
-        <Container className="map">
+        <Container fluid className="map px-0 mx-0">
             <GoogleMap center={centerLocation} markers={markers} />
             <div className="aboveMap">
                 <a href="https://urlzs.com/bVdAh" target="_blank" rel="noreferrer">

@@ -60,7 +60,7 @@ export interface SelectOption {
 
 export interface ComboboxField<T> extends Field<T, string | undefined> {
     type: "combobox";
-    options: SelectOption[];
+    options: Readonly<SelectOption[]>;
     setter?: (t: T, newValue: string | undefined) => T;
 }
 

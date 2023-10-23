@@ -56,10 +56,10 @@ function GoogleMap({ center, markers = emptyMarkersArray as Marker[] }: GoogleMa
                 center={center}
                 onLoad={handleMapLoad}
             >
-                {markers.map((marker) => (
-                    <Fragment key={`location-${locationToStr(marker.location)}-${marker.icon}`}>
+                {markers.map((marker, index) => (
+                    <Fragment key={`location-${index}-${locationToStr(marker.location)}-${marker.icon}`}>
                         <MarkerF
-                            key={`marker-${locationToStr(marker.location)}`}
+                            key={`marker-${index}-${locationToStr(marker.location)}`}
                             title={marker.title}
                             icon={
                                 marker.icon && {

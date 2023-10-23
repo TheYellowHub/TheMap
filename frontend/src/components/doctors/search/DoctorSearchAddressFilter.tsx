@@ -20,9 +20,9 @@ export default function DoctorSearchAddressFilter({
 }: DoctorSearchAddressFilterProps) {
     const { getLocation } = useGoogleMaps();
     return (
-        <Container fluid className="p-0">
+        <Container className="px-0 mx-0" fluid>
             <Form.Group as={Row}>
-                <Col sm={12} className="p-0">
+                <Col className="px-0 mx-0">
                     <AddressInputFormField<undefined>
                         field={{
                             type: "address",
@@ -37,14 +37,12 @@ export default function DoctorSearchAddressFilter({
                         object={undefined}
                     />
                 </Col>
-            </Form.Group>
-            <Row>
-                <Col sm={12} className="d-flex overlapPrevRow justify-content-end p-1">
+                <Col className="d-flex use-my-location">
                     <a href="#" onClick={useCurrenetLocation}>
                         Use my location
                     </a>
                 </Col>
-            </Row>
+            </Form.Group>
         </Container>
     );
 }
