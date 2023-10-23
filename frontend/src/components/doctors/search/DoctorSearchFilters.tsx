@@ -169,7 +169,7 @@ export default function DoctorSearchFilters({
                             onChange={(newValue: string | undefined) => setListFilter(newValue)}
                         />
                     </Col>
-                    <Col sm={5} lg={3} className="d-flex align-items-center justify-content-end px-0">
+                    <Col sm={5} lg={3} className="d-flex align-items-center justify-content-end ps-0 pe-1">
                         <Col className="d-flex justify-content-end icon-select">
                             <Select
                                 values={Array.from(sortOptions.keys())}
