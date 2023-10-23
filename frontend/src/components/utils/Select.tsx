@@ -58,7 +58,7 @@ export default function Select({
 
     const value =
         currentValue === undefined
-            ? undefined
+            ? null
             : Array.isArray(currentValue)
             ? currentValue.map(valueToSelectOption)
             : valueToSelectOption(currentValue as string);
