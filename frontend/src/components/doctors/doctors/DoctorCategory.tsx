@@ -4,13 +4,9 @@ interface DoctorCategoryProps {
 
 function DoctorCategory({ category }: DoctorCategoryProps) {
     if (category) {
-        return (
-            <div className="doctorCategoryRibbon">
-                <p className="text-black text-nowrap">{category}</p>
-            </div>
-        );
+        return <div className="doctorCategoryRibbon text-black text-nowrap">{category}</div>;
     } else {
-        return <div className="doctorEmptyCategory"></div>;
+        return <></>;
     }
 }
 export default DoctorCategory;

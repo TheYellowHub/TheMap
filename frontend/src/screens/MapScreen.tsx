@@ -83,7 +83,7 @@ function MapScreen() {
     return (
         <LoadingWrapper isLoading={isListLoading} isError={isListError} error={listError as ResponseError}>
             <Container fluid>
-                <Row className="d-flex mt-2 mb-0">
+                <Row className="d-flex mt-2 mb-0 flex-md-nowrap">
                     <Col className="mx-3 px-3">
                         {currentDoctor !== null && (
                             <DoctorBigCard

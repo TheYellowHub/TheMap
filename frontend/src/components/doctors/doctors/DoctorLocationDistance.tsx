@@ -5,21 +5,18 @@ import { Location } from "../../../utils/googleMaps/useGoogleMaps";
 import { DistanceUnit } from "../../utils/DistanceUnit";
 import Icon from "../../utils/Icon";
 
-interface DoctorDistanceProps {
-    doctorLocation: DoctorLocation | null | undefined;
-    locationForDistanceCalculation?: Location;
-    distanceUnit?: DistanceUnit;
+interface DoctorLocationDistanceProps {
+    doctorLocation: DoctorLocation;
+    locationForDistanceCalculation: Location;
+    distanceUnit: DistanceUnit;
 }
 
-function DoctorDistance({
+function DoctorLocationDistance({
     doctorLocation: doctorLocation,
     locationForDistanceCalculation,
     distanceUnit,
-}: DoctorDistanceProps) {
-    const distance =
-        locationForDistanceCalculation &&
-        doctorLocation &&
-        getDoctorLocationDistance(doctorLocation, locationForDistanceCalculation, distanceUnit);
+}: DoctorLocationDistanceProps) {
+    const distance = getDoctorLocationDistance(doctorLocation, locationForDistanceCalculation, distanceUnit);
 
     const tooltipMessage = doctorLocation?.address ? <></> : <Tooltip>No link to address</Tooltip>;
 
@@ -38,9 +35,9 @@ function DoctorDistance({
                         rel="noreferrer"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        <p className="med-grey">
-                            {distance.toFixed(1)} {distanceUnit}{" "}
-                            <Icon icon="fas fa-location-arrow" solid={false} padding={false} />
+                        <p className="med-grey p-0 m-0">
+                            {distance.toFixed(1)} {distanceUnit}
+                            <Icon icon="fas fa-location-arrow ps-1" solid={false} padding={false} />
                         </p>
                     </a>
                 </OverlayTrigger>
@@ -49,4 +46,4 @@ function DoctorDistance({
     );
 }
 
-export default DoctorDistance;
+export default DoctorLocationDistance;
