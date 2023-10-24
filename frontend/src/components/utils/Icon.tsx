@@ -6,13 +6,7 @@ type IconProps = {
     padding?: boolean;
 };
 
-function Icon({
-    icon,
-    solid = true,
-    onClick,
-    link,
-    padding = true,
-}: IconProps) {
+function Icon({ icon, solid = true, onClick, link, padding = true }: IconProps) {
     const iconElement =
         icon === null ? (
             <></>

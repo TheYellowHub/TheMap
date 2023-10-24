@@ -1,3 +1,4 @@
+import { Col, Row } from "react-bootstrap";
 import StarRating from "./StarRating";
 
 interface RatingProps {
@@ -7,16 +8,12 @@ interface RatingProps {
 
 function Rating({ averageRating, totalReviews }: RatingProps) {
     return (
-        <div className="dark-grey row w-100 m-0 mt-auto flex-nowrap">
-            <div className="col ps-0 text-nowrap">
-                <p className="">
-                    {StarRating({ rating: averageRating })} {averageRating}
-                </p>
-            </div>
-            <div className="col-auto pe-0">
-                <p className="">{totalReviews} Reviews</p>
-            </div>
-        </div>
+        <Row className="d-flex flex-wrap p-0 m-0 gap-0 dark-grey star-rating">
+            <Col className="d-flex flex-nowrap p-0 pe-3">
+                {StarRating({ rating: averageRating })} {averageRating}
+            </Col>
+            <Col className="d-flex flex-nowrap text-nowrap p-0 flex-grow-0">{totalReviews} Reviews</Col>
+        </Row>
     );
 }
 

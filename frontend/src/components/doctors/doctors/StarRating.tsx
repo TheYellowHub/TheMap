@@ -15,13 +15,12 @@ function StarRating({ rating }: StarRatingProps) {
                 icon.name = "fa-star-half-alt";
                 icon.solid = true;
             }
-            stars.push(
-                <Icon icon={icon.name} solid={icon.solid} padding={false} />
-            );
+            stars.push(<Icon icon={icon.name} solid={icon.solid} padding={false} key={`star-${i}`} />);
         }
         return stars;
     }
-    return renderStars();
+
+    return <div className="d-flex flex-nowrap m-0 p-0 pe-1">{renderStars()}</div>;
 }
 
 export default StarRating;
