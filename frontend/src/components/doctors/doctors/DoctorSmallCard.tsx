@@ -32,10 +32,10 @@ function DoctorSmallCard({
     return (
         <Container className={`${doctorSmallCardClassName} mx-0 ps-0 pe-3`} onClick={onClick} fluid>
             <Row className="flex-nowrap">
-                <Col className="flex-grow-0">
+                <Col className="flex-grow-0 pe-1">
                     <DoctorImage doctor={doctor} />
                 </Col>
-                <Col className="d-grid px-1 py-0 gap-2 align-content-between">
+                <Col className="d-grid px-2 py-2 gap-2 align-content-between">
                     <Row className="w-100 m-0">
                         <Col className="px-0 doctorSmallCardName font-assistant lg-font">{doctor.fullName}</Col>
                     </Row>
