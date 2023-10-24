@@ -74,7 +74,10 @@ export default function DoctorSearchResuls({
     return (
         <>
             <Row className="px-0 mx-0 py-2 my-2">
-                <Container id="doctorSmallCards" className="d-flex flex-wrap gap-4 justify-content-between px-0 mx-0">
+                <Container
+                    id={doctorCardsContainerId}
+                    className="d-flex flex-wrap gap-4 justify-content-between px-0 mx-0"
+                >
                     {doctorsInPage.map((doctor: Doctor) => (
                         <DoctorSmallCard
                             key={doctor.id}
