@@ -15,6 +15,8 @@ interface DoctorSmallCardProps {
     onClick: () => void;
 }
 
+export const doctorSmallCardClassName = "doctorSmallCard";
+
 function DoctorSmallCard({
     doctor,
     locationForDistanceCalculation,
@@ -28,7 +30,7 @@ function DoctorSmallCard({
     const totalReviews = 10;
 
     return (
-        <Container className="doctorSmallCard mx-0 ps-0 pe-3" onClick={onClick} fluid>
+        <Container className={`${doctorSmallCardClassName} mx-0 ps-0 pe-3`} onClick={onClick} fluid>
             <Row className="flex-nowrap">
                 <Col className="flex-grow-0">
                     <DoctorImage doctor={doctor} />
