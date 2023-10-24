@@ -37,7 +37,7 @@ function DoctorSmallCard({
                     <Row className="w-100 m-0">
                         <Col className="px-0 doctorSmallCardName font-assistant lg-font">{doctor.fullName}</Col>
                     </Row>
-                    <Row className="w-100 m-0">
+                    <Row className="w-100 m-0 gap-1">
                         <Col className="px-0">
                             <DoctorCategory category={doctor.category} />
                         </Col>
