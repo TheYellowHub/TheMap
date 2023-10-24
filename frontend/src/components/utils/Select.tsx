@@ -2,7 +2,7 @@ import { useState } from "react";
 import OutsideClickHandler from "react-outside-click-handler";
 import ReactSelect, { components } from "react-select";
 import Icon from "./Icon";
-import { Col } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 
 export type SelectOption = { value: string; label: string };
 
@@ -58,7 +58,7 @@ export default function Select({
 
     const value =
         currentValue === undefined
-            ? undefined
+            ? null
             : Array.isArray(currentValue)
             ? currentValue.map(valueToSelectOption)
             : valueToSelectOption(currentValue as string);
@@ -69,10 +69,10 @@ export default function Select({
         return (
             <components.ValueContainer {...props}>
                 {length > 0 ? (
-                    <>
+                    <Row className="flex-nowrap">
                         <Col>{title}</Col>
                         <Col className="multi-select-counter">{length}</Col>
-                    </>
+                    </Row>
                 ) : (
                     <>{props.children}</>
                 )}

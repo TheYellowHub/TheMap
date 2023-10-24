@@ -1,6 +1,11 @@
-import { Doctor, getDoctorMinimalDistance } from "../../../types/doctors/doctor";
+import { Doctor } from "../../../types/doctors/doctor";
 import { Location } from "../../../utils/googleMaps/useGoogleMaps";
 import { DistanceUnit } from "../../utils/DistanceUnit";
+import DoctorImage from "./DoctorImage";
+import DoctorVerification from "./DoctorVerification";
+import Rating from "./Rating";
+import DoctorCategory from "./DoctorCategory";
+import DoctorAddress from "./DoctorAddress";
 
 interface DoctorSmallCardProps {
     doctor: Doctor;
@@ -15,23 +20,30 @@ function DoctorSmallCard({
     distanceUnit = "mi",
     onClick,
 }: DoctorSmallCardProps) {
-    const distance =
-        locationForDistanceCalculation &&
-        getDoctorMinimalDistance(doctor, locationForDistanceCalculation, distanceUnit);
+    // TODO: replace with the real fields
+    const averageRating = 3.6;
+    const totalReviews = 10;
 
     return (
         <div className="doctorSmallCard" onClick={onClick}>
-            {doctor.fullName}
-            <br />
-            {doctor.category}
-            <br />
-            {doctor.specialities}
-            <br />
-            {distance && distance !== Infinity && (
-                <p>
-                    Distance: {distance.toFixed(2)} {distanceUnit}
-                </p>
-            )}
+            <div className="row flex-nowrap">
+                <div className="col-auto">
+                    <DoctorImage doctor={doctor} />
+                </div>
+                <div className="doctorSmallCardData col pe-3">
+                    <div className="doctorSmallCardName mb-3">{doctor.fullName}</div>
+                    <div className="row w-100 m-0 flex-nowrap">
+                        <DoctorCategory category={doctor.category} />
+                        <DoctorVerification doctor={doctor} />
+                    </div>
+                    <DoctorAddress
+                        doctor={doctor}
+                        locationForDistanceCalculation={locationForDistanceCalculation}
+                        distanceUnit={distanceUnit}
+                    />
+                    <Rating averageRating={averageRating} totalReviews={totalReviews} />
+                </div>
+            </div>
         </div>
     );
 }

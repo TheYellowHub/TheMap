@@ -32,8 +32,8 @@ export default function DoctorSearchResuls({
 
     return (
         <>
-            <Row className="p-2 m-2">
-                <Container className="doctorSearchResult">
+            <Row className="px-0 mx-0 py-2 my-2">
+                <Container className="d-flex gap-3 flex-wrap justify-content-between">
                     {doctorsInPage.map((doctor: Doctor) => (
                         <DoctorSmallCard
                             key={doctor.id}
@@ -48,7 +48,7 @@ export default function DoctorSearchResuls({
                 </Container>
             </Row>
 
-            <Row className="p-2 m-2">
+            <Row className="px-0 mx-0 py-2 my-2">
                 <Pagination
                     rowsCount={doctors.length}
                     pageIndex={pageIndex}

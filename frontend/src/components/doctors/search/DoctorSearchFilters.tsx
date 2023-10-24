@@ -139,7 +139,7 @@ export default function DoctorSearchFilters({
                         />
                     </Col>
                 </Row>
-                <Row className="d-flex gap-3 justify-content-between">
+                <Row className="d-flex gap-3 justify-content-between flex-lg-nowrap">
                     <Col sm={6} lg={3} className="px-0">
                         <Select
                             values={categories.map((category: DoctorCategory) => category.name)}
