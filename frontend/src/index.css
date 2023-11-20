@@ -100,7 +100,6 @@
     box-sizing: border-box !important;
 }
 
-
 .inheritTextStyle {
     color: inherit;
     font-family: inherit;
@@ -156,6 +155,12 @@ a:hover i {
     font-style: normal;
     font-weight: 700;
     line-height: 2rem;
+}
+
+.tooltip {
+    z-index: 99999 !important;
+    background-color: #035763;
+    position: absolute;
 }
 
 /* Header & footer */
@@ -786,28 +791,44 @@ div:has(.small-address-filter) {
 
 /* Doctor's cards */
 
-.doctorSmallCard {
+.doctorSmallCard,
+.doctorBigCard {
     border-radius: 0.25rem;
     gap: 1rem;
     min-height: 8.875rem;
-    max-width: 26rem;
     cursor: pointer;
 }
 
-.doctorSmallCard:hover {
+.doctorSmallCard {
+    max-width: 26rem;
+}
+
+.doctorBigCard {
+    width: 100%;
+    padding: 1.8rem 1.5rem !important;
+}
+
+.doctorSmallCard:hover,
+.doctorBigCard:hover {
     box-shadow: 5px 5px 12px 2px rgba(120, 120, 120, 0.25), 0px 4px 20px 3px rgba(65, 65, 65, 0.25);
 }
 
-.doctorSmallCardImg {
+.doctorSmallCardImg,
+.doctorBigCardImg {
     width: 7.125rem;
-    /* height: 8.875rem; */
     height: 100%;
     border-radius: 0.25rem 0 0 0.25rem;
     object-fit: cover;
     padding: 0;
 }
 
-.doctorSmallCardName {
+.doctorBigCardImg {
+    width: 8.875rem;
+    height: 11.0625rem;
+}
+
+.doctorSmallCardName,
+.doctorBigCardName {
     font-family: "Assistant", sans-serif;
     font-size: 1rem;
     font-style: normal;
@@ -820,21 +841,20 @@ div:has(.small-address-filter) {
     -webkit-box-orient: vertical;
 }
 
-.doctorSmallCardData p {
-    font-size: 0.875rem;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 1.25rem;
-    margin-bottom: 0;
+.doctorBigCard .btn {
+    line-height: 2rem;
+    padding: 0 1rem;
+    word-break: break-all;
+    overflow: hidden;
+    display: -webkit-box;
+    /* display: -webkit-inline-box; */
+    line-clamp: 1;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
 }
 
-.doctorSmallCardData a {
-    color: inherit;
-    text-decoration: none;
-}
-
-.doctorSmallCardData a:hover {
-    text-decoration: underline;
+.doctorBigCardName {
+    font-size: 1.5rem;
 }
 
 .doctorCategoryRibbon {
@@ -843,9 +863,7 @@ div:has(.small-address-filter) {
     width: fit-content;
     overflow: hidden;
     max-width: 100%;
-    height: 21px;
     background: var(--med-yellow);
-    font-size: 0.875rem;
     clip-path: polygon(
         0% 0%,
         100% 0%,
@@ -853,6 +871,22 @@ div:has(.small-address-filter) {
         100% 100%,
         0% 100%
     );
+}
+
+.doctorSmallCard .doctorCategoryRibbon {
+    font-size: 0.875rem;
+    height: 1.3125rem;
+    line-height: 1.3125rem;
+}
+
+.doctorBigCard .doctorCategoryRibbon {
+    font-size: 1rem;
+    height: 1.5rem;
+    line-height: 1.5rem;
+}
+
+.doctorSpecialityRibbon {
+    font-size: 1rem;
 }
 
 .doctorEmptyCategory {
@@ -870,12 +904,24 @@ div:has(.small-address-filter) {
     filter: grayscale(0%);
 }
 
+.doctorSmallCard .verification img {
+    height: 0.84156rem;
+}
+
+.doctorBigCard .verification img {
+    height: 1.5rem;
+}
+
 .doctor-address p {
     overflow: hidden;
     display: -webkit-box;
     line-clamp: 2;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
+}
+
+.doctorBigCard .doctor-address p {
+    font-size: 1rem;
 }
 
 .doctor-address *,
@@ -888,8 +934,45 @@ div:has(.small-address-filter) {
     vertical-align: top;
 }
 
-.doctorBigCard div {
-    position: fixed;
-    background-color: plum; /* TODO: delete */
-    max-width: 60%;
+/* Doctor's location */
+
+.doctorLocationBtn,
+.doctorLocationBtnSelected {
+    display: flex !important;
+    flex-wrap: nowrap;
+    gap: 0.75rem;
+    padding: 0.25rem 0.5rem 0.125rem 0.5rem !important;
+    width: fit-content;
+    background-color: white;
+    color: var(--dark-blue);
+    border-radius: 0.25rem 0.25rem 0rem 0rem;
+    border: 0.75px solid #95E0E5;
+    border-bottom: 1px solid #2BC2CC;
+}
+
+.doctorLocationBtn *,
+.doctorLocationBtnSelected * {
+    padding: 0;
+    margin: 0;
+}
+
+.doctorLocationBtnSelected {
+    border: 1px solid #2BC2CC;
+    background-color: #F2FEFF;
+    box-shadow: 4px 8px 12px 6px rgba(120, 120, 120, 0.15);
+}
+
+.doctorLocationBtn:hover,
+.doctorLocationBtnSelected:hover,
+.doctorLocationBtn:active,
+.doctorLocationBtnSelected:active  {
+    color: var(--dark-blue) !important;
+    border: 1px solid #2BC2CC !important;
+    background-color: #F2FEFF !important;
+}
+
+.doctorLocationPrivateLabel {
+    color: #AB3319;
+    font-weight: 700;
+    text-transform: uppercase;
 }

@@ -25,15 +25,16 @@ function DoctorSmallCard({
 }: DoctorSmallCardProps) {
     const closestLocation =
         locationForDistanceCalculation && getDoctorNearestLocation(doctor, locationForDistanceCalculation);
+
     // TODO: replace with the real fields
-    const averageRating = 3.6;
-    const totalReviews = 10;
+    const averageRating = undefined;
+    const totalReviews = undefined;
 
     return (
         <Container className={`${doctorSmallCardClassName} mx-0 ps-0 pe-3`} onClick={onClick} fluid>
             <Row className="flex-nowrap">
                 <Col className="flex-grow-0 pe-1">
-                    <DoctorImage doctor={doctor} />
+                    <DoctorImage doctor={doctor} big={false} />
                 </Col>
                 <Col className="d-grid px-2 py-2 gap-2 align-content-between">
                     <Row className="w-100 m-0">
@@ -57,7 +58,9 @@ function DoctorSmallCard({
                         )}
                     </Row>
                     <Row className="w-100 m-0">
-                        <Rating averageRating={averageRating} totalReviews={totalReviews} />
+                        {averageRating && totalReviews && (
+                            <Rating averageRating={averageRating} totalReviews={totalReviews} />
+                        )}
                     </Row>
                 </Col>
             </Row>
