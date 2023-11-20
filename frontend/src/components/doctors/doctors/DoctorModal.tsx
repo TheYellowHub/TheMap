@@ -122,6 +122,14 @@ function DoctorModal({ doctor, showModal, onCancel, onSave, isSaving, isSavingEr
                     },
                 },
                 {
+                    type: "url",
+                    label: "url",
+                    getter: (location) => location.website,
+                    setter: (location: DoctorLocation, newWebsite: Url) => {
+                        return { ...location, website: newWebsite };
+                    },
+                },
+                {
                     type: "boolean",
                     label: "Private only",
                     getter: (location) => location.privateOnly,
@@ -154,25 +162,6 @@ function DoctorModal({ doctor, showModal, onCancel, onSave, isSaving, isSavingEr
                 return { value: speciality.name, label: speciality.name };
             }),
         },
-        {
-            type: "list",
-            label: "Websites",
-            getter: (doctor) => doctor.websites,
-            setter: (doctor, websitesList) => {
-                return { ...doctor, websites: websitesList };
-            },
-            newRecordProvider: () => "",
-            fields: [
-                {
-                    type: "url",
-                    label: "Website",
-                    getter: (website) => website,
-                    setter: (_, website) => {
-                        return website;
-                    },
-                },
-            ],
-        } as ListField<Doctor, Url>,
         {
             type: "url",
             label: "iCareBetter profile",

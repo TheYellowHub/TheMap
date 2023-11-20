@@ -26,9 +26,9 @@ function Button({ label, disabled, variant, type, icon, onClick, href, target, c
             type={type}
             disabled={disabled}
         >
+            {icon && <Icon icon={icon} />}
             {label}
             {children}
-            {icon && <Icon icon={icon} />}
         </ReactButton>
     );
 }

@@ -50,10 +50,11 @@ function MapScreen() {
 
     useEffect(() => {
         if (shouldClearFilters) {
-            setAddress(undefined);
-            setAddressLocation(undefined);
-            setDistance(distanceDefault);
+            // setAddress(undefined);
+            // setAddressLocation(undefined);
+            // setDistance(distanceDefault);
             setShouldClearFilters(false);
+            setCurrentDoctor(null);
         }
     }, [shouldClearFilters]);
 
@@ -85,16 +86,6 @@ function MapScreen() {
             <Container fluid>
                 <Row className="d-flex mt-2 mb-0 flex-md-nowrap">
                     <Col className="mx-3 px-3">
-                        {currentDoctor !== null && (
-                            <DoctorBigCard
-                                doctor={currentDoctor}
-                                show={currentDoctor !== null}
-                                onClose={() => {
-                                    setCurrentDoctor(null);
-                                }}
-                            />
-                        )}
-
                         <Row className="px-2 pb-2 mb-2">
                             <DoctorSearchFilters
                                 address={address}
@@ -150,7 +141,7 @@ function MapScreen() {
                         </Row>
 
                         <Row className="py-2 my-2">
-                            {matchedDoctorsIncludingDistance.length > 0 ? (
+                            {currentDoctor !== null || matchedDoctorsIncludingDistance.length > 0 ? (
                                 <DoctorSearchResults
                                     doctors={matchedDoctorsIncludingDistance}
                                     currentDoctor={currentDoctor}

@@ -14,6 +14,7 @@ export type DoctorLocation = {
     lng?: number;
     phone?: Phone;
     email?: Email;
+    website?: Url;
     privateOnly: boolean;
 };
 
@@ -40,7 +41,6 @@ export type Doctor = {
     locations: DoctorLocation[];
     category?: string;
     specialities: string[];
-    websites: Url[];
     iCareBetter?: Url;
     nancysNook?: boolean;
     image?: ImageFileOrUrl;
@@ -60,7 +60,6 @@ export const newDoctor = (): Doctor => {
         gender: "M",
         locations: [],
         specialities: [],
-        websites: [],
     };
 };
 

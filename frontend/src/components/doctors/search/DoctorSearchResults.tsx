@@ -6,6 +6,7 @@ import DoctorSmallCard, { doctorSmallCardClassName } from "../doctors/DoctorSmal
 import Pagination from "../../utils/Pagination";
 import { DistanceUnit } from "../../utils/DistanceUnit";
 import { Location } from "../../../utils/googleMaps/useGoogleMaps";
+import DoctorBigCard from "../doctors/DoctorBigCard";
 
 interface DoctorSearchResultsProps {
     doctors: Doctor[];
@@ -78,28 +79,41 @@ export default function DoctorSearchResuls({
                     id={doctorCardsContainerId}
                     className="d-flex flex-wrap gap-4 justify-content-between px-0 mx-0"
                 >
-                    {doctorsInPage.map((doctor: Doctor) => (
-                        <DoctorSmallCard
-                            key={doctor.id}
-                            doctor={doctor}
+                    {currentDoctor === null ? (
+                        doctorsInPage.map((doctor: Doctor) => (
+                            <DoctorSmallCard
+                                key={doctor.id}
+                                doctor={doctor}
+                                locationForDistanceCalculation={locationForDistanceCalculation}
+                                distanceUnit={distanceUnit}
+                                onClick={() => {
+                                    setCurrentDoctor(doctor);
+                                }}
+                            />
+                        ))
+                    ) : (
+                        <DoctorBigCard
+                            doctor={currentDoctor}
                             locationForDistanceCalculation={locationForDistanceCalculation}
                             distanceUnit={distanceUnit}
-                            onClick={() => {
-                                setCurrentDoctor(doctor);
+                            onClose={() => {
+                                setCurrentDoctor(null);
                             }}
                         />
-                    ))}
+                    )}
                 </Container>
             </Row>
 
             <Row className="px-0 mx-0 py-2 my-2">
-                <Pagination
-                    rowsCount={doctors.length}
-                    pageIndex={pageIndex}
-                    pageSize={pageSize}
-                    setPageIndex={setPageIndex}
-                    setPageSize={undefined} // setPageSize
-                />
+                {currentDoctor === null && (
+                    <Pagination
+                        rowsCount={doctors.length}
+                        pageIndex={pageIndex}
+                        pageSize={pageSize}
+                        setPageIndex={setPageIndex}
+                        setPageSize={undefined} // setPageSize
+                    />
+                )}
             </Row>
         </>
     );
