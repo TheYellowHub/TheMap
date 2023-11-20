@@ -28,7 +28,7 @@ class Doctor(models.Model):
         DoctorCategory, blank=True, null=True, on_delete=models.SET_NULL
     )
     specialities = models.ManyToManyField(DoctorSpeciality, blank=True)
-    websites = ArrayField(models.URLField(), default=list, null=True, blank=True)
+    # websites = ArrayField(models.URLField(), default=list, null=True, blank=True)
     i_care_better = models.URLField(blank=True)
     nancys_nook = models.BooleanField(default=False)
     image = models.ImageField(blank=True, null=True, upload_to="images")
@@ -58,6 +58,7 @@ class DoctorLocation(models.Model):
     lng = models.DecimalField(max_digits=22, decimal_places=16, blank=True, null=True)
     phone = PhoneNumberField(null=True, blank=True)
     email = models.EmailField(null=True, blank=True)
+    website = models.URLField(null=True, blank=True)
     private_only = models.BooleanField(default=False)
 
     # TODO?

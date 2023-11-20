@@ -41,7 +41,6 @@ def prepare_fixtures(doctors_raw_data: dict) -> tuple[List[dict], List[dict]]:
                             if doctor_data["Specialities"]
                             else []
                         ),
-                        "websites": [doctor_data["Website"]],
                         "i_care_better": (
                             doctor_data["Icarebetter?"]
                             if doctor_data["Icarebetter?"]
@@ -69,6 +68,7 @@ def prepare_fixtures(doctors_raw_data: dict) -> tuple[List[dict], List[dict]]:
                     "lng": doctor_data["Long"],
                     "phone": doctor_data["Phone"],
                     "email": doctor_data["Email"],
+                    "website": doctor_data["Website"],
                     "private_only": True if doctor_data["Private only?"] else False,
                 },
             }
