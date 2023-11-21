@@ -8,8 +8,8 @@ on:
         branches: ["main", "aws-ecr"]
 
 env:
-    AWS_REGION: us-east-1 # set this to your preferred AWS region, e.g. us-west-1 # TODO: change?
-    ECR_REPOSITORY: theyellowhub # set this to your Amazon ECR repository name
+    AWS_REGION: us-east-1 # TODO: change?
+    ECR_REPOSITORY: theyellowhub
 
 permissions:
     contents: read
@@ -45,7 +45,6 @@ jobs:
                   ECR_REPOSITORY_PREFIX: theyellowhub
                   IMAGE_TAG: ${{ matrix.IMAGE_TAG }}
               run: |
-                  # Build a docker container and push it to ECR
                   echo "$ECR_REPOSITORY_PREFIX_$IMAGE_TAG:$ECR_REPOSITORY_PREFIX_$IMAGE_TAG" >> $IMAGE_REF
                   docker build . -f ./docker/$IMAGE_TAG/Dockerfile -t $ECR_REGISTRY/$IMAGE_REF
                   docker push $ECR_REGISTRY/$IMAGE_REF
