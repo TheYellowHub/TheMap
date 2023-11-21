@@ -8,7 +8,7 @@ on:
         branches: ["main", "aws-ecr"]
 
 env:
-    AWS_REGION: us-west-1 # set this to your preferred AWS region, e.g. us-west-1 - TODO
+    AWS_REGION: us-east-1 # set this to your preferred AWS region, e.g. us-west-1 # TODO: change?
     ECR_REPOSITORY: theyellowhub # set this to your Amazon ECR repository name
     IMAGE_TAG: themap_server
     # CONTAINER_NAME: MY_CONTAINER_NAME           # set this to the name of the container in the
