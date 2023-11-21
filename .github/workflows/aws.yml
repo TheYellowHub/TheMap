@@ -1,0 +1,52 @@
+# This workflow will build and push a new container image to Amazon ECR,
+# when there is a push to the "main" branch.
+
+name: Deploy to Amazon ECR
+
+on:
+    push:
+        branches: ["main"]
+
+env:
+    AWS_REGION: us-east-1 # TODO: change?
+    ECR_REPOSITORY: theyellowhub
+
+permissions:
+    contents: read
+
+jobs:
+    deploy:
+        name: Deploy
+        runs-on: ubuntu-latest
+        environment: ECR
+        strategy:
+            matrix:
+                IMAGE_TAG: [backend, nginx]
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+
+            - name: Configure AWS credentials
+              uses: aws-actions/configure-aws-credentials@v4
+              with:
+                  aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                  aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                  aws-region: ${{ env.AWS_REGION }}
+
+            - name: Login to Amazon ECR
+              id: login-ecr
+              uses: aws-actions/amazon-ecr-login@v2
+
+            - name: Build, tag, and push image to Amazon ECR
+              id: build-image
+              env:
+                  ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+                  ECR_REPOSITORY_PREFIX: theyellowhub
+                  IMAGE_TAG: ${{ matrix.IMAGE_TAG }}
+              run: |
+                  IMAGE_REF=$ECR_REGISTRY/$ECR_REPOSITORY_PREFIX-$IMAGE_TAG:$ECR_REPOSITORY_PREFIX-$IMAGE_TAG
+                  echo "IMAGE_REF=$IMAGE_REF"
+                  docker build . -f ./docker/$IMAGE_TAG/Dockerfile -t $IMAGE_REF
+                  docker push $IMAGE_REF
+                  echo "image=$IMAGE_REF" >> $GITHUB_OUTPUT
