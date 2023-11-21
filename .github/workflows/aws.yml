@@ -10,10 +10,6 @@ on:
 env:
     AWS_REGION: us-east-1 # set this to your preferred AWS region, e.g. us-west-1 # TODO: change?
     ECR_REPOSITORY: theyellowhub # set this to your Amazon ECR repository name
-    SERVER_IMAGE_TAG: backend
-    NGINX_IMAGE_TAG: nginx
-    # CONTAINER_NAME: MY_CONTAINER_NAME           # set this to the name of the container in the
-    # containerDefinitions section of your task definition
 
 permissions:
     contents: read
@@ -46,18 +42,11 @@ jobs:
               id: build-image
               env:
                   ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-                  #   IMAGE_TAG: ${{ env.IMAGE_TAG }}
+                  ECR_REPOSITORY_PREFIX: theyellowhub
                   IMAGE_TAG: ${{ matrix.IMAGE_TAG }}
               run: |
                   # Build a docker container and push it to ECR
-                  docker build . -f ./docker/$IMAGE_TAG/Dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-                  docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-                  echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
-              #   # Build "server" docker container and push it to ECR
-              #   docker build . -f ./docker/backend/Dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY:$SERVER_IMAGE_TAG
-              #   docker push $ECR_REGISTRY/$ECR_REPOSITORY:$SERVER_IMAGE_TAG
-              #   echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$SERVER_IMAGE_TAG" >> $GITHUB_OUTPUT
-              #   # Build "nginx" docker container and push it to ECR
-              #   docker build . -f ./docker/nginx/Dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY:$NGINX_IMAGE_TAG
-              #   docker push $ECR_REGISTRY/$ECR_REPOSITORY:$NGINX_IMAGE_TAG
-              #   echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$NGINX_IMAGE_TAG" >> $GITHUB_OUTPUT
+                  echo "$ECR_REPOSITORY_PREFIX_$IMAGE_TAG:$ECR_REPOSITORY_PREFIX_$IMAGE_TAG" >> $IMAGE_REF
+                  docker build . -f ./docker/$IMAGE_TAG/Dockerfile -t $ECR_REGISTRY/$IMAGE_REF
+                  docker push $ECR_REGISTRY/$IMAGE_REF
+                  echo "image=$ECR_REGISTRY/$IMAGE_REF" >> $GITHUB_OUTPUT
