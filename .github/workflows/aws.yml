@@ -45,7 +45,9 @@ jobs:
                   ECR_REPOSITORY_PREFIX: theyellowhub
                   IMAGE_TAG: ${{ matrix.IMAGE_TAG }}
               run: |
-                  echo "IMAGE_REF=$(echo $ECR_REPOSITORY_PREFIX_$IMAGE_TAG:$ECR_REPOSITORY_PREFIX_$IMAGE_TAG)" >> $GITHUB_ENV
+                  IMAGE_REF=$ECR_REPOSITORY_PREFIX_$IMAGE_TAG:$ECR_REPOSITORY_PREFIX_$IMAGE_TAG
+                  echo "IMAGE_REF=$IMAGE_REF"
+                  echo "IMAGE_REF=$IMAGE_REF" >> $GITHUB_ENV
                   docker build . -f ./docker/$IMAGE_TAG/Dockerfile -t $ECR_REGISTRY/${{ env.IMAGE_REF }}
                   docker push $ECR_REGISTRY/${{ env.IMAGE_REF }}
                   echo "image=$ECR_REGISTRY/${{ env.IMAGE_REF }}" >> $GITHUB_OUTPUT
