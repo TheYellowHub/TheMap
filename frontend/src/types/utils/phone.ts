@@ -1,3 +1,3 @@
 export type Phone = string;
 
-export const phoneValidation = "[+]\\d{11}";
+export const phoneValidation = "[+](\\d+-)*(\\d)+";
