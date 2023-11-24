@@ -29,6 +29,9 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
     const [currentDoctor, setCurrentDoctor] = useState<Doctor | null>(null);
     const [currentDoctorLocation, setCurrentDoctorLocation] = useState<DoctorLocation | null>(null);
 
+    const myListFilterName = "My list";
+    const [listFilter, setListFilter] = useState<string | undefined>();
+
     const { setCurrentLocation, getAddress } = useGoogleMaps();
     const [address, setAddress] = useState<string | undefined>(undefined);
     const [addressLocation, setAddressLocation] = useState<Location | undefined>();
@@ -106,6 +109,10 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
                                 distance={distance}
                                 setDistance={setDistance}
                                 distanceUnit={distanceUnit}
+                                startWithMyList={startWithMyList}
+                                myListFilterName={myListFilterName}
+                                listFilter={listFilter}
+                                setListFilter={setListFilter}
                                 doctors={doctors}
                                 setMatchedDoctorsIgnoringDistance={setMatchedDoctorsIgnoringDistance}
                                 setMatchedDoctorsIncludingDistance={setMatchedDoctorsIncludingDistance}
@@ -113,7 +120,6 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
                                 setShouldClearFilters={setShouldClearFilters}
                                 shouldClearAddress={shouldClearAddress}
                                 setShouldClearAddress={setShouldClearAddress}
-                                startWithMyList={startWithMyList}
                             />
 
                             {address === undefined && currentDoctor === null && !startWithMyList && (
@@ -168,6 +174,7 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
                                     distance={distance}
                                     setDistance={setDistance}
                                     setShouldClearFilters={setShouldClearFilters}
+                                    myList={listFilter === myListFilterName}
                                 />
                             )}
                         </Row>

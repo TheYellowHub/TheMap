@@ -9,7 +9,6 @@ import { DoctorSpeciality } from "../../../types/doctors/DoctorSpeciality";
 import { Doctor, getDoctorMinimalDistance, getDoctorNameWithoutPrefix } from "../../../types/doctors/doctor";
 import Icon from "../../utils/Icon";
 import DoctorSearchAddressFilter from "./DoctorSearchAddressFilter";
-import MultiSelectField from "../../utils/form/multiSelectFormField";
 import Select from "../../utils/Select";
 import { DoctorCategory } from "../../../types/doctors/doctorCategory";
 import useAuth from "../../../auth/useAuth";
@@ -24,6 +23,10 @@ interface DoctorSearchFiltersProps {
     distance: number | undefined;
     setDistance: (distance: number | undefined) => void;
     distanceUnit: DistanceUnit;
+    startWithMyList: boolean;
+    listFilter: string | undefined;
+    setListFilter: (listFilter: string | undefined) => void;
+    myListFilterName: string;
     doctors: Doctor[];
     setMatchedDoctorsIgnoringDistance: (doctors: Doctor[]) => void;
     setMatchedDoctorsIncludingDistance: (doctors: Doctor[]) => void;
@@ -31,7 +34,6 @@ interface DoctorSearchFiltersProps {
     setShouldClearFilters: (shouldClearFilters: boolean) => void;
     shouldClearAddress: boolean;
     setShouldClearAddress: (shouldClearAddress: boolean) => void;
-    startWithMyList: boolean;
 }
 
 export default function DoctorSearchFilters({
@@ -44,13 +46,16 @@ export default function DoctorSearchFilters({
     setDistance,
     distanceUnit,
     doctors,
+    startWithMyList,
+    listFilter,
+    setListFilter,
+    myListFilterName,
     setMatchedDoctorsIgnoringDistance,
     setMatchedDoctorsIncludingDistance,
     shouldClearFilters,
     setShouldClearFilters,
     shouldClearAddress,
     setShouldClearAddress,
-    startWithMyList,
 }: DoctorSearchFiltersProps) {
     const { data: categories } = useDoctorCategories();
     const { data: specialities } = useDoctorSpecialities();
@@ -63,12 +68,10 @@ export default function DoctorSearchFilters({
     const [categoryFilter, setCategoryFilter] = useState<string | undefined>();
     const [specialitiesFilter, setSpecialitiesFilter] = useState<string[]>([]);
 
-    const myListFilterName = "My list";
-    const [startWithMyListParamWasUsed, setStartWithMyListParamWasUsed] = useState(false);
-    const [listFilter, setListFilter] = useState<string | undefined>();
-
     const defaultSortKey = "Closest first";
     const [sortKey, setSortKey] = useState<string>(defaultSortKey);
+
+    const [startWithMyListParamWasUsed, setStartWithMyListParamWasUsed] = useState(false);
 
     const listOptions: ReadonlyMap<string, (doctor: Doctor) => boolean> = new Map([
         ["icarebetter.com", (doctor: Doctor) => Boolean(doctor.iCareBetter)],
