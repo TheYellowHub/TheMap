@@ -57,7 +57,7 @@ function DoctorBigCard({ doctor, locationForDistanceCalculation, distanceUnit = 
                                 <Col className="px-0 doctorBigCardButtons" sm="auto">
                                     <Icon
                                         icon="fa-bookmark fa-sm"
-                                        solid={userInfo?.savedDoctors?.includes(doctor.id!)}
+                                        solid={userInfo?.savedDoctors?.includes(doctor.id!) === true}
                                         onClick={() => {
                                             mutateSavedDoctors(doctor.id!);
                                         }}
