@@ -7,7 +7,6 @@ from functools import wraps
 from django.http import JsonResponse
 
 from django.conf import settings
-import rest_framework
 from rest_framework.request import Request
 
 

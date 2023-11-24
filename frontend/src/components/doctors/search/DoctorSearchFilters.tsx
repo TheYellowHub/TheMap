@@ -12,6 +12,8 @@ import DoctorSearchAddressFilter from "./DoctorSearchAddressFilter";
 import MultiSelectField from "../../utils/form/multiSelectFormField";
 import Select from "../../utils/Select";
 import { DoctorCategory } from "../../../types/doctors/doctorCategory";
+import useAuth from "../../../auth/useAuth";
+import useUser from "../../../hooks/doctors/useUsers";
 
 interface DoctorSearchFiltersProps {
     address: string | undefined;
@@ -27,6 +29,9 @@ interface DoctorSearchFiltersProps {
     setMatchedDoctorsIncludingDistance: (doctors: Doctor[]) => void;
     shouldClearFilters: boolean;
     setShouldClearFilters: (shouldClearFilters: boolean) => void;
+    shouldClearAddress: boolean;
+    setShouldClearAddress: (shouldClearAddress: boolean) => void;
+    startWithMyList: boolean;
 }
 
 export default function DoctorSearchFilters({
@@ -43,15 +48,23 @@ export default function DoctorSearchFilters({
     setMatchedDoctorsIncludingDistance,
     shouldClearFilters,
     setShouldClearFilters,
+    shouldClearAddress,
+    setShouldClearAddress,
+    startWithMyList,
 }: DoctorSearchFiltersProps) {
     const { data: categories } = useDoctorCategories();
     const { data: specialities } = useDoctorSpecialities();
+
+    const { user } = useAuth();
+    const { userInfo } = useUser(user);
 
     const formRef = useRef<HTMLFormElement>(null);
 
     const [categoryFilter, setCategoryFilter] = useState<string | undefined>();
     const [specialitiesFilter, setSpecialitiesFilter] = useState<string[]>([]);
 
+    const myListFilterName = "My list";
+    const [startWithMyListParamWasUsed, setStartWithMyListParamWasUsed] = useState(false);
     const [listFilter, setListFilter] = useState<string | undefined>();
 
     const defaultSortKey = "Closest first";
@@ -60,6 +73,7 @@ export default function DoctorSearchFilters({
     const listOptions: ReadonlyMap<string, (doctor: Doctor) => boolean> = new Map([
         ["icarebetter.com", (doctor: Doctor) => Boolean(doctor.iCareBetter)],
         ["Nancy’s Nook", (doctor: Doctor) => doctor.nancysNook === true],
+        [myListFilterName, (doctor: Doctor) => userInfo?.savedDoctors?.includes(doctor.id)],
     ]);
 
     const sortByName = (a: Doctor, b: Doctor) => {
@@ -86,11 +100,22 @@ export default function DoctorSearchFilters({
     ]);
 
     useEffect(() => {
+        setStartWithMyListParamWasUsed(false);
+        setShouldClearFilters(true);
+        setShouldClearAddress(true);
+    }, [startWithMyList]);
+
+    useEffect(() => {
         if (shouldClearFilters) {
             formRef?.current?.reset();
             setCategoryFilter(undefined);
             setSpecialitiesFilter([]);
-            setListFilter(undefined);
+            if (startWithMyListParamWasUsed) {
+                setListFilter(undefined);
+            } else {
+                setListFilter(startWithMyList ? myListFilterName : undefined);
+                setStartWithMyListParamWasUsed(true);
+            }
             setShouldClearFilters(false);
         }
     }, [shouldClearFilters]);
@@ -123,7 +148,7 @@ export default function DoctorSearchFilters({
             .sort(sortOptions.get(sortKey));
 
         setMatchedDoctorsIncludingDistance(newMatchedDoctorsIncludingDistance);
-    }, [doctors, addressLocation, distance, categoryFilter, specialitiesFilter, listFilter, sortKey]);
+    }, [doctors, addressLocation, distance, categoryFilter, specialitiesFilter, listFilter, sortKey, userInfo]);
 
     return (
         <Form ref={formRef} className="px-0 mx-0">

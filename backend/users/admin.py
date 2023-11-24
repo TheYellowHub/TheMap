@@ -1,3 +1,12 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import User
+
+
+@admin.register(User)
+class UserAdmin(admin.ModelAdmin):
+    """
+    Admin page for User model
+    """
+
+    list_display = ["id", "remote_id"]
