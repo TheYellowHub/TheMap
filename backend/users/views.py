@@ -26,6 +26,8 @@ class UserRetrieveUpdateView(generics.RetrieveUpdateAPIView):
     serializer_class = UserSerializer
     lookup_field = "remote_id"
 
+    # TODO: Create if doesn't exists
+
     # def patch(self, request, *args, **kwargs):
     #     logger.debug(f"Doctor update - patch request data: {request.data}")
     #     return super().patch(request, *args, **kwargs)

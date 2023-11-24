@@ -10,14 +10,29 @@ export default function useUser(user?: User) {
     const url = `/api/users/user/${userRemoteId}`;
 
     const getUserInfo = async () => {
-        const response = userRemoteId ? await get(url) : undefined;
-        return response?.data;
+        if (userRemoteId) {
+            try {
+                const response = await get(url);
+                return response?.data;
+            } catch (error: any) {
+                if (error?.response?.status === 404) {
+                    return {
+                        remoteId: userRemoteId,
+                        savedDoctors: [],
+                    };
+                } else {
+                    throw error;
+                }
+            }
+        } else {
+            return undefined;
+        }
     };
 
     const userInfoQueryKey = `user/${userRemoteId}`;
 
     const {
-        data: userInfo,
+        data: userInfo, // TODO: type
         isLoading: isUserInfoLoading,
         isError: isUserInfoError,
         error: userInfoError,
