@@ -9,9 +9,10 @@ import { DoctorSpeciality } from "../../../types/doctors/DoctorSpeciality";
 import { Doctor, getDoctorMinimalDistance, getDoctorNameWithoutPrefix } from "../../../types/doctors/doctor";
 import Icon from "../../utils/Icon";
 import DoctorSearchAddressFilter from "./DoctorSearchAddressFilter";
-import MultiSelectField from "../../utils/form/multiSelectFormField";
 import Select from "../../utils/Select";
 import { DoctorCategory } from "../../../types/doctors/doctorCategory";
+import useAuth from "../../../auth/useAuth";
+import useUser from "../../../hooks/auth/useUsers";
 
 interface DoctorSearchFiltersProps {
     address: string | undefined;
@@ -22,11 +23,17 @@ interface DoctorSearchFiltersProps {
     distance: number | undefined;
     setDistance: (distance: number | undefined) => void;
     distanceUnit: DistanceUnit;
+    startWithMyList: boolean;
+    listFilter: string | undefined;
+    setListFilter: (listFilter: string | undefined) => void;
+    myListFilterName: string;
     doctors: Doctor[];
     setMatchedDoctorsIgnoringDistance: (doctors: Doctor[]) => void;
     setMatchedDoctorsIncludingDistance: (doctors: Doctor[]) => void;
     shouldClearFilters: boolean;
     setShouldClearFilters: (shouldClearFilters: boolean) => void;
+    shouldClearAddress: boolean;
+    setShouldClearAddress: (shouldClearAddress: boolean) => void;
 }
 
 export default function DoctorSearchFilters({
@@ -39,27 +46,37 @@ export default function DoctorSearchFilters({
     setDistance,
     distanceUnit,
     doctors,
+    startWithMyList,
+    listFilter,
+    setListFilter,
+    myListFilterName,
     setMatchedDoctorsIgnoringDistance,
     setMatchedDoctorsIncludingDistance,
     shouldClearFilters,
     setShouldClearFilters,
+    shouldClearAddress,
+    setShouldClearAddress,
 }: DoctorSearchFiltersProps) {
     const { data: categories } = useDoctorCategories();
     const { data: specialities } = useDoctorSpecialities();
+
+    const { user } = useAuth();
+    const { userInfo } = useUser(user);
 
     const formRef = useRef<HTMLFormElement>(null);
 
     const [categoryFilter, setCategoryFilter] = useState<string | undefined>();
     const [specialitiesFilter, setSpecialitiesFilter] = useState<string[]>([]);
 
-    const [listFilter, setListFilter] = useState<string | undefined>();
-
     const defaultSortKey = "Closest first";
     const [sortKey, setSortKey] = useState<string>(defaultSortKey);
+
+    const [startWithMyListParamWasUsed, setStartWithMyListParamWasUsed] = useState(false);
 
     const listOptions: ReadonlyMap<string, (doctor: Doctor) => boolean> = new Map([
         ["icarebetter.com", (doctor: Doctor) => Boolean(doctor.iCareBetter)],
         ["Nancy’s Nook", (doctor: Doctor) => doctor.nancysNook === true],
+        [myListFilterName, (doctor: Doctor) => userInfo?.savedDoctors?.includes(doctor.id!) === true],
     ]);
 
     const sortByName = (a: Doctor, b: Doctor) => {
@@ -86,11 +103,22 @@ export default function DoctorSearchFilters({
     ]);
 
     useEffect(() => {
+        setStartWithMyListParamWasUsed(false);
+        setShouldClearFilters(true);
+        setShouldClearAddress(true);
+    }, [startWithMyList]);
+
+    useEffect(() => {
         if (shouldClearFilters) {
             formRef?.current?.reset();
             setCategoryFilter(undefined);
             setSpecialitiesFilter([]);
-            setListFilter(undefined);
+            if (startWithMyListParamWasUsed) {
+                setListFilter(undefined);
+            } else {
+                setListFilter(startWithMyList ? myListFilterName : undefined);
+                setStartWithMyListParamWasUsed(true);
+            }
             setShouldClearFilters(false);
         }
     }, [shouldClearFilters]);
@@ -123,7 +151,7 @@ export default function DoctorSearchFilters({
             .sort(sortOptions.get(sortKey));
 
         setMatchedDoctorsIncludingDistance(newMatchedDoctorsIncludingDistance);
-    }, [doctors, addressLocation, distance, categoryFilter, specialitiesFilter, listFilter, sortKey]);
+    }, [doctors, addressLocation, distance, categoryFilter, specialitiesFilter, listFilter, sortKey, userInfo]);
 
     return (
         <Form ref={formRef} className="px-0 mx-0">

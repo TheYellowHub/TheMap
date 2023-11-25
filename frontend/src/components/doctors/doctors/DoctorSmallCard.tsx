@@ -1,3 +1,5 @@
+import { Col, Container, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
+
 import { Doctor, getDoctorNearestLocation } from "../../../types/doctors/doctor";
 import { Location } from "../../../utils/googleMaps/useGoogleMaps";
 import { DistanceUnit } from "../../utils/DistanceUnit";
@@ -6,7 +8,9 @@ import DoctorVerification from "./DoctorVerification";
 import Rating from "./Rating";
 import DoctorCategory from "./DoctorCategory";
 import DoctorLocationAddress from "./DoctorLocationAddress";
-import { Col, Container, Row } from "react-bootstrap";
+import Icon from "../../utils/Icon";
+import useAuth from "../../../auth/useAuth";
+import useUser from "../../../hooks/auth/useUsers";
 
 interface DoctorSmallCardProps {
     doctor: Doctor;
@@ -30,6 +34,9 @@ function DoctorSmallCard({
     const averageRating = undefined;
     const totalReviews = undefined;
 
+    const { user } = useAuth();
+    const { userInfo } = useUser(user);
+
     return (
         <Container className={`${doctorSmallCardClassName} mx-0 ps-0 pe-3`} onClick={onClick} fluid>
             <Row className="flex-nowrap">
@@ -39,6 +46,13 @@ function DoctorSmallCard({
                 <Col className="d-grid px-2 py-2 gap-2 align-content-between">
                     <Row className="w-100 m-0">
                         <Col className="px-0 doctorSmallCardName font-assistant lg-font">{doctor.fullName}</Col>
+                        {userInfo?.savedDoctors?.includes(doctor.id!) && (
+                            <OverlayTrigger placement="bottom" overlay={<Tooltip className="tooltip">My list</Tooltip>}>
+                                <Col className="px-0" sm="auto">
+                                    <Icon icon="fa-bookmark fa-sm" className="px-1" />
+                                </Col>
+                            </OverlayTrigger>
+                        )}
                     </Row>
                     <Row className="w-100 m-0 gap-1">
                         <Col className="px-0">

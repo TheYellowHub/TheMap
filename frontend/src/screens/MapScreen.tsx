@@ -8,7 +8,6 @@ import useDoctors from "../hooks/doctors/useDoctors";
 import DoctorSearchFilters from "../components/doctors/search/DoctorSearchFilters";
 import DoctorSearchResults from "../components/doctors/search/DoctorSearchResults";
 import DoctorSearchMap from "../components/doctors/search/DoctorSearchMap";
-import DoctorBigCard from "../components/doctors/doctors/DoctorBigCard";
 import Icon from "../components/utils/Icon";
 import DoctorSearchNoResuls from "../components/doctors/search/DoctorSearchNoResults";
 import MapLoadingError from "../components/map/MapLoadingError";
@@ -16,15 +15,22 @@ import useGoogleMaps, { Location } from "../utils/googleMaps/useGoogleMaps";
 import DoctorSearchAddressFilter from "../components/doctors/search/DoctorSearchAddressFilter";
 import { useParams } from "react-router-dom";
 
-function MapScreen() {
+interface MapScreenProps {
+    startWithMyList?: boolean;
+}
+
+function MapScreen({ startWithMyList = false }: MapScreenProps) {
     const { data: doctors, isListLoading, isListError, listError } = useDoctors();
-    const { id: currentDoctorId } = useParams();
-    const [idParamWasUsed, setIdParamWasUsed] = useState(false);
+    const { id: initialDoctorId } = useParams();
+    const [initialDoctorIdParamWasUsed, setInitialDoctorIdParamWasUsed] = useState(false);
 
     const [matchedDoctorsIgnoringDistance, setMatchedDoctorsIgnoringDistance] = useState<Doctor[]>([]);
     const [matchedDoctorsIncludingDistance, setMatchedDoctorsIncludingDistance] = useState<Doctor[]>([]);
     const [currentDoctor, setCurrentDoctor] = useState<Doctor | null>(null);
     const [currentDoctorLocation, setCurrentDoctorLocation] = useState<DoctorLocation | null>(null);
+
+    const myListFilterName = "My list";
+    const [listFilter, setListFilter] = useState<string | undefined>();
 
     const { setCurrentLocation, getAddress } = useGoogleMaps();
     const [address, setAddress] = useState<string | undefined>(undefined);
@@ -34,6 +40,7 @@ function MapScreen() {
     const distanceUnit = addressLocation?.country === "US" ? "mi" : "km";
 
     const [shouldClearFilters, setShouldClearFilters] = useState(false);
+    const [shouldClearAddress, setShouldClearAddress] = useState(false);
 
     const useCurrenetLocation = () => {
         setCurrentLocation((location) => {
@@ -50,13 +57,19 @@ function MapScreen() {
 
     useEffect(() => {
         if (shouldClearFilters) {
-            // setAddress(undefined);
-            // setAddressLocation(undefined);
-            // setDistance(distanceDefault);
             setShouldClearFilters(false);
             setCurrentDoctor(null);
         }
     }, [shouldClearFilters]);
+
+    useEffect(() => {
+        if (shouldClearAddress) {
+            setAddress(undefined);
+            setAddressLocation(undefined);
+            setDistance(distanceDefault);
+            setShouldClearAddress(false);
+        }
+    }, [shouldClearAddress]);
 
     useEffect(() => {
         if (currentDoctor === null) {
@@ -72,14 +85,18 @@ function MapScreen() {
     }, [currentDoctor]);
 
     useEffect(() => {
-        if (doctors && currentDoctorId && !idParamWasUsed) {
-            const doctor = doctors.find((doctor: Doctor) => doctor.id === Number(currentDoctorId));
-            if (doctor !== undefined) {
-                setCurrentDoctor(doctor);
+        if (doctors && 0 < doctors.length) {
+            if (initialDoctorId && !initialDoctorIdParamWasUsed) {
+                const doctor = doctors.find((doctor: Doctor) => doctor.id === Number(initialDoctorId));
+                if (doctor !== undefined) {
+                    setCurrentDoctor(doctor);
+                }
+                setInitialDoctorIdParamWasUsed(true);
+            } else if (currentDoctor) {
+                setCurrentDoctor(null);
             }
-            setIdParamWasUsed(true);
         }
-    }, [doctors, currentDoctorId]);
+    }, [doctors, matchedDoctorsIncludingDistance, initialDoctorId]);
 
     return (
         <LoadingWrapper isLoading={isListLoading} isError={isListError} error={listError as ResponseError}>
@@ -96,14 +113,20 @@ function MapScreen() {
                                 distance={distance}
                                 setDistance={setDistance}
                                 distanceUnit={distanceUnit}
+                                startWithMyList={startWithMyList}
+                                myListFilterName={myListFilterName}
+                                listFilter={listFilter}
+                                setListFilter={setListFilter}
                                 doctors={doctors}
                                 setMatchedDoctorsIgnoringDistance={setMatchedDoctorsIgnoringDistance}
                                 setMatchedDoctorsIncludingDistance={setMatchedDoctorsIncludingDistance}
                                 shouldClearFilters={shouldClearFilters}
                                 setShouldClearFilters={setShouldClearFilters}
+                                shouldClearAddress={shouldClearAddress}
+                                setShouldClearAddress={setShouldClearAddress}
                             />
 
-                            {address === undefined && currentDoctor === null && (
+                            {address === undefined && currentDoctor === null && !startWithMyList && (
                                 <ReactModal
                                     className="transparent d-flex justify-content-center big-address-filter"
                                     show={true}
@@ -155,6 +178,7 @@ function MapScreen() {
                                     distance={distance}
                                     setDistance={setDistance}
                                     setShouldClearFilters={setShouldClearFilters}
+                                    myList={listFilter === myListFilterName}
                                 />
                             )}
                         </Row>

@@ -4,16 +4,17 @@ type IconProps = {
     onClick?: React.MouseEventHandler;
     link?: string;
     padding?: boolean;
+    className?: string;
 };
 
-function Icon({ icon, solid = true, onClick, link, padding = true }: IconProps) {
+function Icon({ icon, solid = true, onClick, link, padding = true, className }: IconProps) {
     const iconElement =
         icon === null ? (
             <></>
         ) : (
             <i
                 className={`${solid ? "fa-solid" : "fa-regular"} ${icon} 
-                            ${padding ? "" : "p-0"}`}
+                            ${padding ? "" : "p-0"} ${className}`}
                 onClick={onClick}
             />
         );

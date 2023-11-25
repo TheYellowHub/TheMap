@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { Image, Nav, NavDropdown, Navbar } from "react-bootstrap";
 import { EventKey, SelectCallback } from "@restart/ui/esm/types";
 
+import useAuth from "../../auth/useAuth";
+import config from "../../config.json";
 import Icon from "./Icon";
 import { Link } from "react-router-dom";
-import useAuth from "../../auth/useAuth";
 
 function Header() {
     const { user, isAuthenticated, isAdmin, login, logout } = useAuth();
@@ -70,11 +71,11 @@ function Header() {
             //     title: (user?.nickname && capitalizeFirstLetter(user.nickname)) || "My account",
             //     icon: "fa-user",
             // },
-            // {
-            //     to: "/user/saved",
-            //     title: "Saved",
-            //     icon: "fa-bookmark",
-            // },
+            {
+                to: "/user/saved",
+                title: "Saved",
+                icon: "fa-bookmark",
+            },
             {
                 to: "/",
                 onClick: logout,
@@ -97,7 +98,6 @@ function Header() {
     };
 
     const adminMenu = {
-        // TODO: only if admin
         title: "Admin",
         links: [
             {
@@ -127,13 +127,12 @@ function Header() {
             if (isAdmin) {
                 newLinks.push(adminMenu);
             }
-        } else {
-            // TODO once we would like user to login
-            // newLinks.push({
-            //     to: "/user/login",
-            //     onClick: login,
-            //     title: "Login",
-            // });
+        } else if (config.auth0.enabled) {
+            newLinks.push({
+                to: "/user/login",
+                onClick: login,
+                title: "Login",
+            });
         }
         setLinks(newLinks);
     }, [user, isAuthenticated, isAdmin]);
@@ -173,6 +172,7 @@ function Header() {
                                             onClick={(e) => {
                                                 setSelectedSubMenu(dropdown.title);
                                                 link.onClick && link.onClick(e);
+                                                // link.onClick ? link.onClick(e) : (window.location.href = link.to);
                                             }}
                                             eventKey={link.to}
                                         >

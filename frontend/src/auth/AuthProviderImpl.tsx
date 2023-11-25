@@ -20,7 +20,6 @@ export default function AuthProvider({ children }: React.PropsWithChildren) {
 
     const login = useCallback(async () => {
         await auth0login();
-        console.log(user);
     }, [auth0login]);
 
     const logout = useCallback(async () => {

@@ -11,6 +11,8 @@ import { Col, Container, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
 import Icon from "../../utils/Icon";
 import Button from "../../utils/Button";
 import { useState } from "react";
+import useAuth from "../../../auth/useAuth";
+import useUser from "../../../hooks/auth/useUsers";
 
 interface DoctorBigCardProps {
     doctor: Doctor;
@@ -29,6 +31,9 @@ function DoctorBigCard({ doctor, locationForDistanceCalculation, distanceUnit = 
     const averageRating = undefined;
     const totalReviews = undefined;
 
+    const { user, isAuthenticated } = useAuth();
+    const { userInfo, mutateSavedDoctors } = useUser(user);
+
     return (
         <Container className={`doctorBigCard mx-0 ps-0 pe-3`} fluid>
             <Row className="flex-nowrap">
@@ -38,6 +43,28 @@ function DoctorBigCard({ doctor, locationForDistanceCalculation, distanceUnit = 
                 <Col className="d-grid px-2 py-2 gap-2 align-content-between">
                     <Row className="w-100 m-0 pb-1">
                         <Col className="px-0 doctorBigCardName font-assistant lg-font">{doctor.fullName}</Col>
+                        {user && isAuthenticated && (
+                            <OverlayTrigger
+                                placement="bottom"
+                                overlay={
+                                    <Tooltip className="tooltip">
+                                        {userInfo?.savedDoctors?.includes(doctor.id!)
+                                            ? "Remove from my list"
+                                            : "Add to my list"}
+                                    </Tooltip>
+                                }
+                            >
+                                <Col className="px-0 doctorBigCardButtons" sm="auto">
+                                    <Icon
+                                        icon="fa-bookmark fa-sm"
+                                        solid={userInfo?.savedDoctors?.includes(doctor.id!) === true}
+                                        onClick={() => {
+                                            mutateSavedDoctors(doctor.id!);
+                                        }}
+                                    />
+                                </Col>
+                            </OverlayTrigger>
+                        )}
                         <OverlayTrigger placement="bottom" overlay={<Tooltip className="tooltip">Close</Tooltip>}>
                             <Col className="px-0 doctorBigCardButtons" sm="auto">
                                 <Icon icon="fa-minus fa-sm" onClick={onClose} />
@@ -67,7 +94,7 @@ function DoctorBigCard({ doctor, locationForDistanceCalculation, distanceUnit = 
                                     location === selectedLocation ? "doctorLocationBtnSelected" : "doctorLocationBtn"
                                 }
                                 icon={location === selectedLocation ? "fa-hospital" : ""}
-                                key={`${location}-btn`}
+                                key={`${location?.hospitalName || location?.address}-btn`}
                                 onClick={() => setSelectedLocation(location)}
                             >
                                 {location.privateOnly && (
