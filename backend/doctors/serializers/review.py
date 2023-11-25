@@ -9,8 +9,8 @@ from users.serializers import UserNameSerializer
 logger = logging.getLogger(__name__)
 
 
-class DoctorReviewSerializer(serializers.ModelSerializer):
-    """Doctor single location serializer"""
+class DoctorReviewReadSerializer(serializers.ModelSerializer):
+    """Doctor review serializer"""
 
     class Meta:
         model = DoctorReview
@@ -18,3 +18,19 @@ class DoctorReviewSerializer(serializers.ModelSerializer):
 
     doctor = DoctorNameSerializer(many=False, read_only=True)
     added_by = UserNameSerializer(many=False, read_only=True)
+
+
+class DoctorReviewWriteSerializer(serializers.ModelSerializer):
+    """Doctor review serializer for adding / updating reviews"""
+
+    class Meta:
+        model = DoctorReview
+        fields = [
+            "doctor",
+            "added_by",
+            "description",
+            "past_operation",
+            "future_operation",
+            "operation_month",
+            "status",
+        ]

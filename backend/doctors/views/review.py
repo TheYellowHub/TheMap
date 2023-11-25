@@ -8,7 +8,7 @@ import logging
 
 from users.auth import ADMIN_SCOPE, requires_scope
 from ..models.review import DoctorReview
-from ..serializers.review import DoctorReviewSerializer
+from ..serializers.review import DoctorReviewReadSerializer, DoctorReviewWriteSerializer
 
 
 logger = logging.getLogger(__name__)
@@ -26,7 +26,7 @@ class DoctorReviewFilter(filters.FilterSet):
         model = DoctorReview
         fields = (
             "status",
-            "doctor",
+            "doctor__id",
             "added_by__remote_id",
         )
 
@@ -36,30 +36,14 @@ class DoctorReviewListView(generics.ListAPIView):
     Get list of doctors with thies basic info, matching the search criteria.
     Usage:
         /api/doctors/review/list
-        /api/doctors/doctor/list?doctor_id=11
+        /api/doctors/doctor/list?doctor__id=11
         /api/doctors/doctor/list?added_by__remote_id=username
         /api/doctors/doctor/list?&status=pending_approval
     """
 
     queryset = DoctorReview.objects.all()
-    serializer_class = DoctorReviewSerializer
+    serializer_class = DoctorReviewReadSerializer
     filterset_class = DoctorReviewFilter
-
-
-# TODO: is auth, owner / admin
-# @requires_scope(ADMIN_SCOPE)
-class DoctorReviewUpdateView(generics.UpdateAPIView):
-    """
-    Update a doctor review.
-    Usage: /api/doctors/review/<pk>/update
-    """
-
-    queryset = DoctorReview.objects.all()
-    serializer_class = DoctorReviewSerializer
-
-    def patch(self, request, *args, **kwargs):
-        logger.debug(f"Doctor review update - patch request data: {request.data}")
-        return super().patch(request, *args, **kwargs)
 
 
 # TODO: is auth
@@ -71,8 +55,24 @@ class DoctorReviewCreateView(generics.CreateAPIView):
     """
 
     queryset = DoctorReview.objects.all()
-    serializer_class = DoctorReviewSerializer
+    serializer_class = DoctorReviewWriteSerializer
 
     def post(self, request, *args, **kwargs):
         logger.debug(f"Doctor review addition - post request data: {request.data}")
         return super().post(request, *args, **kwargs)
+
+
+# TODO: is auth, owner / admin
+# @requires_scope(ADMIN_SCOPE)
+class DoctorReviewUpdateView(generics.UpdateAPIView):
+    """
+    Update a doctor review.
+    Usage: /api/doctors/review/<pk>/update
+    """
+
+    queryset = DoctorReview.objects.all()
+    serializer_class = DoctorReviewWriteSerializer
+
+    def patch(self, request, *args, **kwargs):
+        logger.debug(f"Doctor review update - patch request data: {request.data}")
+        return super().patch(request, *args, **kwargs)

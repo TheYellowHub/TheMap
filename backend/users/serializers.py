@@ -21,4 +21,4 @@ class UserNameSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["remote_id"]
+        fields = ["id", "remote_id"]
