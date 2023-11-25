@@ -12,7 +12,7 @@ import DoctorSearchAddressFilter from "./DoctorSearchAddressFilter";
 import Select from "../../utils/Select";
 import { DoctorCategory } from "../../../types/doctors/doctorCategory";
 import useAuth from "../../../auth/useAuth";
-import useUser from "../../../hooks/doctors/useUsers";
+import useUser from "../../../hooks/auth/useUsers";
 
 interface DoctorSearchFiltersProps {
     address: string | undefined;
@@ -76,7 +76,7 @@ export default function DoctorSearchFilters({
     const listOptions: ReadonlyMap<string, (doctor: Doctor) => boolean> = new Map([
         ["icarebetter.com", (doctor: Doctor) => Boolean(doctor.iCareBetter)],
         ["Nancy’s Nook", (doctor: Doctor) => doctor.nancysNook === true],
-        [myListFilterName, (doctor: Doctor) => userInfo?.savedDoctors?.includes(doctor.id)],
+        [myListFilterName, (doctor: Doctor) => userInfo?.savedDoctors?.includes(doctor.id!) === true],
     ]);
 
     const sortByName = (a: Doctor, b: Doctor) => {

@@ -21,8 +21,8 @@ interface MapScreenProps {
 
 function MapScreen({ startWithMyList = false }: MapScreenProps) {
     const { data: doctors, isListLoading, isListError, listError } = useDoctors();
-    const { id: currentDoctorId } = useParams();
-    const [idParamWasUsed, setIdParamWasUsed] = useState(false);
+    const { id: initialDoctorId } = useParams();
+    const [initialDoctorIdParamWasUsed, setInitialDoctorIdParamWasUsed] = useState(false);
 
     const [matchedDoctorsIgnoringDistance, setMatchedDoctorsIgnoringDistance] = useState<Doctor[]>([]);
     const [matchedDoctorsIncludingDistance, setMatchedDoctorsIncludingDistance] = useState<Doctor[]>([]);
@@ -85,14 +85,18 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
     }, [currentDoctor]);
 
     useEffect(() => {
-        if (doctors && 0 < doctors.length && currentDoctorId && !idParamWasUsed) {
-            const doctor = doctors.find((doctor: Doctor) => doctor.id === Number(currentDoctorId));
-            if (doctor !== undefined) {
-                setCurrentDoctor(doctor);
+        if (doctors && 0 < doctors.length) {
+            if (initialDoctorId && !initialDoctorIdParamWasUsed) {
+                const doctor = doctors.find((doctor: Doctor) => doctor.id === Number(initialDoctorId));
+                if (doctor !== undefined) {
+                    setCurrentDoctor(doctor);
+                }
+                setInitialDoctorIdParamWasUsed(true);
+            } else if (currentDoctor) {
+                setCurrentDoctor(null);
             }
-            setIdParamWasUsed(true);
         }
-    }, [doctors, currentDoctorId]);
+    }, [doctors, matchedDoctorsIncludingDistance, initialDoctorId]);
 
     return (
         <LoadingWrapper isLoading={isListLoading} isError={isListError} error={listError as ResponseError}>

@@ -12,7 +12,7 @@ import Icon from "../../utils/Icon";
 import Button from "../../utils/Button";
 import { useState } from "react";
 import useAuth from "../../../auth/useAuth";
-import useUser from "../../../hooks/doctors/useUsers";
+import useUser from "../../../hooks/auth/useUsers";
 
 interface DoctorBigCardProps {
     doctor: Doctor;

@@ -2,14 +2,15 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { User } from "@auth0/auth0-react";
 
 import useApiRequests from "../useApiRequest";
+import { UserInfo } from "../../auth/userInfo";
 
 export default function useUser(user?: User) {
     const userRemoteId = user?.sub;
     const queryClient = useQueryClient();
-    const { get, post, patch } = useApiRequests();
+    const { get, patch } = useApiRequests();
     const url = `/api/users/user/${userRemoteId}`;
 
-    const getUserInfo = async () => {
+    const getUserInfo = async (): Promise<UserInfo | undefined> => {
         if (userRemoteId) {
             try {
                 const response = await get(url);
@@ -19,7 +20,7 @@ export default function useUser(user?: User) {
                     return {
                         remoteId: userRemoteId,
                         savedDoctors: [],
-                    };
+                    } as unknown as UserInfo;
                 } else {
                     throw error;
                 }
@@ -32,7 +33,7 @@ export default function useUser(user?: User) {
     const userInfoQueryKey = `user/${userRemoteId}`;
 
     const {
-        data: userInfo, // TODO: type
+        data: userInfo,
         isLoading: isUserInfoLoading,
         isError: isUserInfoError,
         error: userInfoError,
@@ -42,15 +43,19 @@ export default function useUser(user?: User) {
     });
 
     const saveOrRemoveDoctor = async (doctorId: number) => {
-        if (userInfo.savedDoctors.includes(doctorId)) {
-            userInfo.savedDoctors = userInfo.savedDoctors.filter(
-                (existingDoctorId: number) => existingDoctorId !== doctorId
-            );
+        if (userInfo === undefined) {
+            return undefined;
         } else {
-            userInfo.savedDoctors.push(doctorId);
+            if (userInfo.savedDoctors.includes(doctorId)) {
+                userInfo.savedDoctors = userInfo.savedDoctors.filter(
+                    (existingDoctorId: number) => existingDoctorId !== doctorId
+                );
+            } else {
+                userInfo.savedDoctors.push(doctorId);
+            }
+            const response = await patch(url, { ...userInfo });
+            return response?.data;
         }
-        const response = await patch(url, { ...userInfo });
-        return response?.data;
     };
 
     const savedDoctorsMutation = useMutation({

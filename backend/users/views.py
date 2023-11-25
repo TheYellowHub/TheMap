@@ -1,9 +1,14 @@
 from rest_framework import generics, permissions
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
+from http import HTTPMethod
+import logging
 
 from .models import User
 from .serializers import UserSerializer
+
+
+logger = logging.getLogger(__name__)
 
 
 class IsCurrentUser(permissions.BasePermission):
@@ -28,6 +33,17 @@ class UserRetrieveUpdateView(generics.RetrieveUpdateAPIView):
 
     # TODO: Create if doesn't exists
 
-    # def patch(self, request, *args, **kwargs):
-    #     logger.debug(f"Doctor update - patch request data: {request.data}")
-    #     return super().patch(request, *args, **kwargs)
+    def get_object(self):
+        if self.request.method == HTTPMethod.PATCH:
+            user, created = User.objects.get_or_create(
+                remote_id=self.kwargs.get(self.lookup_field)
+            )
+            return user
+        else:
+            return super(UserRetrieveUpdateView, self).get_object()
+
+    def patch(self, request, *args, **kwargs):
+        logger.debug(
+            f"User's saved doctors update - patch request data: {request.data}"
+        )
+        return super().patch(request, *args, **kwargs)

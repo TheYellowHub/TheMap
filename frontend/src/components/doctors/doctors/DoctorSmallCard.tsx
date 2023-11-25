@@ -10,7 +10,7 @@ import DoctorCategory from "./DoctorCategory";
 import DoctorLocationAddress from "./DoctorLocationAddress";
 import Icon from "../../utils/Icon";
 import useAuth from "../../../auth/useAuth";
-import useUser from "../../../hooks/doctors/useUsers";
+import useUser from "../../../hooks/auth/useUsers";
 
 interface DoctorSmallCardProps {
     doctor: Doctor;
