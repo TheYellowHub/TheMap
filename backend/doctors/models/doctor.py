@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.postgres.fields import ArrayField
 from model_utils.fields import StatusField, MonitorField
 from model_utils import Choices
 from phonenumber_field.modelfields import PhoneNumberField
@@ -28,15 +27,16 @@ class Doctor(models.Model):
         DoctorCategory, blank=True, null=True, on_delete=models.SET_NULL
     )
     specialities = models.ManyToManyField(DoctorSpeciality, blank=True)
-    # websites = ArrayField(models.URLField(), default=list, null=True, blank=True)
     i_care_better = models.URLField(blank=True)
     nancys_nook = models.BooleanField(default=False)
     image = models.ImageField(blank=True, null=True, upload_to="images")
     status = StatusField()
-    # added_by  # TODO
+    added_by = models.ForeignKey(
+        "users.User", blank=True, null=True, on_delete=models.SET_NULL
+    )
     added_at = models.DateTimeField(auto_now_add=True, null=True)
-    approved_at = MonitorField(monitor="status", when=["APPROVED"], null=True)  # type: ignore
-    rejected_at = MonitorField(monitor="status", when=["REJECTED"], null=True)  # type: ignore
+    approved_at = MonitorField(monitor="status", when=["APPROVED"], null=True, blank=True, default=None)  # type: ignore
+    rejected_at = MonitorField(monitor="status", when=["REJECTED"], null=True, blank=True, default=None)  # type: ignore
     updated_at = models.DateTimeField(auto_now=True, null=True)
     # reviews - one-to-many
     # average rating - calculated

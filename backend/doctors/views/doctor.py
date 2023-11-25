@@ -8,7 +8,7 @@ import logging
 
 from users.auth import ADMIN_SCOPE, requires_scope
 from ..models.doctor import Doctor
-from ..serializers.doctor import DoctorBasicSerializer, DoctorExtendedSerializer
+from ..serializers.doctor import DoctorSerializer
 
 
 logger = logging.getLogger(__name__)
@@ -33,27 +33,17 @@ class DoctorFilter(filters.FilterSet):
 
 class DoctorListView(generics.ListAPIView):
     """
-    Get list of doctors with thies basic info, matching the search criteria.
+    Get list of doctors with thier info, matching the search criteria.
     Usage:
         /api/doctors/doctor/list
         /api/doctors/doctor/list?category=1&category=2&specialities=1&status=1
         /api/doctors/doctor/list?full_name=jesi
-        /api/doctors/doctor/list?&status_name=pending_approval
+        /api/doctors/doctor/list?&status=pending_approval
     """
 
     queryset = Doctor.objects.all()
-    serializer_class = DoctorBasicSerializer
+    serializer_class = DoctorSerializer
     filterset_class = DoctorFilter
-
-
-class DoctorInfoView(generics.RetrieveAPIView):
-    """
-    Get full information about a doctor.
-    Usage: /api/doctors/doctor/<pk>
-    """
-
-    queryset = Doctor.objects.all()
-    serializer_class = DoctorExtendedSerializer
 
 
 @requires_scope(ADMIN_SCOPE)
@@ -64,7 +54,7 @@ class DoctorUpdateView(generics.UpdateAPIView):
     """
 
     queryset = Doctor.objects.all()
-    serializer_class = DoctorBasicSerializer
+    serializer_class = DoctorSerializer
 
     def patch(self, request, *args, **kwargs):
         logger.debug(f"Doctor update - patch request data: {request.data}")
@@ -80,4 +70,4 @@ class DoctorCreateView(generics.CreateAPIView):
     """
 
     queryset = Doctor.objects.all()
-    serializer_class = DoctorBasicSerializer
+    serializer_class = DoctorSerializer
