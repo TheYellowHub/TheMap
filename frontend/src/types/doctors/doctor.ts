@@ -1,3 +1,4 @@
+import { UserInfo } from "../../auth/userInfo";
 import { DistanceUnit } from "../../components/utils/DistanceUnit";
 import useGoogleMaps, { Location } from "../../utils/googleMaps/useGoogleMaps";
 import { ImageFileOrUrl } from "../Image";
@@ -45,13 +46,13 @@ export type Doctor = {
     nancysNook?: boolean;
     image?: ImageFileOrUrl;
     status?: DoctorStatus;
-    // TODO: addedBy?: User;
+    addedBy?: UserInfo;
     addedAt?: DateTime;
     approvedAt?: DateTime;
     rejectedAt?: DateTime;
     updatedAt?: DateTime;
-    // TODO: reviews
-    // TODO: average rating
+    numOfReviews?: number;
+    avgRating?: number;
 };
 
 export const newDoctor = (): Doctor => {

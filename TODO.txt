@@ -1,10 +1,12 @@
 TODO:
 1. Check review list API, including filter by user-remote-id and doctor-id      V
 2. Check add review API                                                         V
-3. Add rating property to review model
+3. Add rating property to review model                                      
 4. Add average rating property and num of reviews property to doctor model
 5. Add it to doctor list/info API 
 6. Add it to the small card
-7. Hook - get reviews of a doctor / a user
-8. Present reviews and rating in big doctor card
-9. Option to add a review & review approval process 
+7. Handle auth
+8. Hook - get reviews of a doctor / a user
+9. Present reviews and rating in big doctor card
+10. Option to add a review & review approval process 
+11. Relevant data migration

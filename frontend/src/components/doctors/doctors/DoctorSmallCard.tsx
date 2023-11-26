@@ -72,8 +72,8 @@ function DoctorSmallCard({
                         )}
                     </Row>
                     <Row className="w-100 m-0">
-                        {averageRating && totalReviews && (
-                            <Rating averageRating={averageRating} totalReviews={totalReviews} />
+                        {doctor.avgRating && doctor.numOfReviews && (
+                            <Rating averageRating={doctor.avgRating} totalReviews={doctor.numOfReviews} />
                         )}
                     </Row>
                 </Col>

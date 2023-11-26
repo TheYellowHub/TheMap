@@ -13,6 +13,7 @@ import Select from "../../utils/Select";
 import { DoctorCategory } from "../../../types/doctors/doctorCategory";
 import useAuth from "../../../auth/useAuth";
 import useUser from "../../../hooks/auth/useUsers";
+import useEffectOnlyAfterMount from "../../../hooks/useEffectOnlyAfterMount";
 
 interface DoctorSearchFiltersProps {
     address: string | undefined;
@@ -34,6 +35,8 @@ interface DoctorSearchFiltersProps {
     setShouldClearFilters: (shouldClearFilters: boolean) => void;
     shouldClearAddress: boolean;
     setShouldClearAddress: (shouldClearAddress: boolean) => void;
+    filterChange: boolean;
+    setFilterChange: (filterChange: boolean) => void;
 }
 
 export default function DoctorSearchFilters({
@@ -56,6 +59,8 @@ export default function DoctorSearchFilters({
     setShouldClearFilters,
     shouldClearAddress,
     setShouldClearAddress,
+    filterChange,
+    setFilterChange,
 }: DoctorSearchFiltersProps) {
     const { data: categories } = useDoctorCategories();
     const { data: specialities } = useDoctorSpecialities();
@@ -109,21 +114,6 @@ export default function DoctorSearchFilters({
     }, [startWithMyList]);
 
     useEffect(() => {
-        if (shouldClearFilters) {
-            formRef?.current?.reset();
-            setCategoryFilter(undefined);
-            setSpecialitiesFilter([]);
-            if (startWithMyListParamWasUsed) {
-                setListFilter(undefined);
-            } else {
-                setListFilter(startWithMyList ? myListFilterName : undefined);
-                setStartWithMyListParamWasUsed(true);
-            }
-            setShouldClearFilters(false);
-        }
-    }, [shouldClearFilters]);
-
-    useEffect(() => {
         const newMatchedDoctorsIgnoringDistance: Doctor[] = doctors.filter((doctor: Doctor) => {
             return (
                 doctor.status === "APPROVED" &&
@@ -152,6 +142,28 @@ export default function DoctorSearchFilters({
 
         setMatchedDoctorsIncludingDistance(newMatchedDoctorsIncludingDistance);
     }, [doctors, addressLocation, distance, categoryFilter, specialitiesFilter, listFilter, sortKey, userInfo]);
+
+    useEffectOnlyAfterMount(() => {
+        if (shouldClearFilters) {
+            formRef?.current?.reset();
+            setCategoryFilter(undefined);
+            setSpecialitiesFilter([]);
+            if (startWithMyListParamWasUsed) {
+                setListFilter(undefined);
+            } else {
+                setListFilter(startWithMyList ? myListFilterName : undefined);
+                setStartWithMyListParamWasUsed(true);
+            }
+            setShouldClearFilters(false);
+        }
+    }, [shouldClearFilters]);
+
+    useEffectOnlyAfterMount(() => {
+        if (!filterChange) {
+            console.log("setting filter change");
+            setFilterChange(true);
+        }
+    }, [addressLocation, distance, categoryFilter, specialitiesFilter, listFilter, sortKey]);
 
     return (
         <Form ref={formRef} className="px-0 mx-0">

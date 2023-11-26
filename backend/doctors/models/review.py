@@ -1,8 +1,7 @@
+from decimal import Decimal
 from django.db import models
 from model_utils.fields import StatusField, MonitorField
-from model_utils import Choices
-
-from .doctor import Doctor
+from model_utils import Choices, choices
 
 
 class DoctorReview(models.Model):
@@ -12,8 +11,23 @@ class DoctorReview(models.Model):
 
     STATUS = Choices("PENDING_APPROVAL", "APPROVED", "REJECTED")
 
-    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
+    MIN_RATING = 0
+    MAX_RATING = 5
+    RATING_CHOICES = [
+        (Decimal(i), str(i))
+        for i in [float(x) / 2 for x in range(MIN_RATING, MAX_RATING * 2 + 1)]
+    ]
+
+    doctor = models.ForeignKey("doctors.Doctor", on_delete=models.CASCADE)
     description = models.TextField()
+    rating = models.DecimalField(
+        max_digits=2,
+        decimal_places=1,
+        choices=RATING_CHOICES,
+        null=True,
+        blank=True,
+        default=None,
+    )
     past_operation = models.BooleanField()
     future_operation = models.BooleanField()
     operation_month = models.DateField(blank=True, null=True)

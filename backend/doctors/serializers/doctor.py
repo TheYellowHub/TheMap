@@ -20,7 +20,7 @@ class DoctorLocationSerializer(serializers.ModelSerializer):
 
 
 class DoctorSerializer(WritableNestedModelSerializer):
-    """Doctor basic serializer"""
+    """Doctor serializer"""
 
     class Meta:
         model = Doctor
@@ -43,6 +43,10 @@ class DoctorSerializer(WritableNestedModelSerializer):
     )
 
     added_by = UserNameSerializer(many=False, read_only=True)
+
+    num_of_reviews = serializers.ReadOnlyField()
+
+    avg_rating = serializers.ReadOnlyField()
 
     def update(self, instance, validated_data):
         logger.debug(f"Doctor update - validated data: {validated_data}")

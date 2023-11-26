@@ -27,10 +27,6 @@ function DoctorBigCard({ doctor, locationForDistanceCalculation, distanceUnit = 
 
     const [selectedLocation, setSelectedLocation] = useState(closestLocation || doctor.locations[0]);
 
-    // TODO: replace with the real fields
-    const averageRating = undefined;
-    const totalReviews = undefined;
-
     const { user, isAuthenticated } = useAuth();
     const { userInfo, mutateSavedDoctors } = useUser(user);
 
@@ -140,8 +136,8 @@ function DoctorBigCard({ doctor, locationForDistanceCalculation, distanceUnit = 
                         )}
                     </Row>
                     <Row className="w-100 m-0">
-                        {averageRating && totalReviews && (
-                            <Rating averageRating={averageRating} totalReviews={totalReviews} />
+                        {doctor.avgRating && doctor.numOfReviews && (
+                            <Rating averageRating={doctor.avgRating} totalReviews={doctor.numOfReviews} />
                         )}
                     </Row>
                 </Col>
