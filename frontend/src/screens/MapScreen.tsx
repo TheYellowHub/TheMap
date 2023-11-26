@@ -74,14 +74,12 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
     }, [shouldClearAddress]);
 
     useEffectOnlyAfterMount(() => {
-        // console.log(1, filterChangeSinceLastDoctorPick);
         if (filterChangeSinceLastDoctorPick) {
             setCurrentDoctor(null);
         }
     }, [filterChangeSinceLastDoctorPick]);
 
     useEffect(() => {
-        // console.log(2, currentDoctor);
         if (currentDoctor === null) {
             setCurrentDoctorLocation(null);
         } else {
@@ -98,14 +96,12 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
     }, [currentDoctor]);
 
     useEffect(() => {
-        console.log(3, doctorIdParam);
         if (doctorIdParam) {
             setDoctorIdParamWasUsed(false);
         }
     }, [doctorIdParam]);
 
     useEffect(() => {
-        console.log(4, doctorIdParam);
         if (doctors && 0 < doctors.length) {
             if (doctorIdParam && !doctorIdParamWasUsed) {
                 const doctor = doctors.find((doctor: Doctor) => doctor.id === Number(doctorIdParam));

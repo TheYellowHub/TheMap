@@ -1,4 +1,4 @@
-import { Doctor, getDoctorNearestLocation } from "../../../types/doctors/doctor";
+import { Doctor, getDoctorNearestLocation, getDoctorReviews } from "../../../types/doctors/doctor";
 import { Location } from "../../../utils/googleMaps/useGoogleMaps";
 import { DistanceUnit } from "../../utils/DistanceUnit";
 import DoctorImage from "./DoctorImage";
@@ -26,6 +26,8 @@ function DoctorBigCard({ doctor, locationForDistanceCalculation, distanceUnit = 
         locationForDistanceCalculation && getDoctorNearestLocation(doctor, locationForDistanceCalculation);
 
     const [selectedLocation, setSelectedLocation] = useState(closestLocation || doctor.locations[0]);
+
+    const reviews = getDoctorReviews(doctor);
 
     const { user, isAuthenticated } = useAuth();
     const { userInfo, mutateSavedDoctors } = useUser(user);
@@ -139,6 +141,14 @@ function DoctorBigCard({ doctor, locationForDistanceCalculation, distanceUnit = 
                         {doctor.avgRating && doctor.numOfReviews && (
                             <Rating averageRating={doctor.avgRating} totalReviews={doctor.numOfReviews} />
                         )}
+                    </Row>
+                    <Row className="w-100 m-0">
+                        {/* TODO: Design in a separated component */}
+                        {reviews.map((review) => (
+                            <Row key={review.id!}>
+                                {review.description} {review.rating}
+                            </Row>
+                        ))}
                     </Row>
                 </Col>
             </Row>

@@ -2,17 +2,21 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 
 import useApiRequests, { RequestDataItem } from "./useApiRequest";
 
-export default function useApi<T extends RequestDataItem>(urlDirectory: string, sortKey = (t: T) => (t.id ? t.id : 0)) {
+export default function useApi<T extends RequestDataItem>(
+    urlDirectory: string,
+    fetchListUrlParams = "",
+    sortKey = (t: T) => (t.id ? t.id : 0)
+) {
     return function () {
         const queryClient = useQueryClient();
         const { get, post, patch } = useApiRequests();
         const key = urlDirectory;
 
         const fetchList = async () => {
-            const response = await get(`/api/${urlDirectory}/list`);
+            const response = await get(`/api/${urlDirectory}/list${fetchListUrlParams ? fetchListUrlParams : ""}`);
             const list: T[] = response.data;
             list.sort((a: T, b: T) => (sortKey(a) < sortKey(b) ? -1 : 1));
-            return response.data;
+            return list;
         };
 
         const {

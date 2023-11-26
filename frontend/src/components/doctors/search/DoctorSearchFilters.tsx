@@ -160,7 +160,6 @@ export default function DoctorSearchFilters({
 
     useEffectOnlyAfterMount(() => {
         if (!filterChange) {
-            console.log("setting filter change");
             setFilterChange(true);
         }
     }, [addressLocation, distance, categoryFilter, specialitiesFilter, listFilter, sortKey]);

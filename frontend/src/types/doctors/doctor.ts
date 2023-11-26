@@ -1,5 +1,6 @@
 import { UserInfo } from "../../auth/userInfo";
 import { DistanceUnit } from "../../components/utils/DistanceUnit";
+import { useDoctorReviews } from "../../hooks/doctors/useReviews";
 import useGoogleMaps, { Location } from "../../utils/googleMaps/useGoogleMaps";
 import { ImageFileOrUrl } from "../Image";
 import { DateTime } from "../utils/dateTime";
@@ -96,4 +97,9 @@ export function getDoctorMinimalDistance(doctor: Doctor, location: Location, dis
     const doctorLocation = getDoctorNearestLocation(doctor, location);
 
     return doctorLocation === null ? Infinity : getDoctorLocationDistance(doctorLocation, location, distanceUnit);
+}
+
+export function getDoctorReviews(doctor: Doctor) {
+    const { data } = useDoctorReviews(doctor)();
+    return data;
 }
