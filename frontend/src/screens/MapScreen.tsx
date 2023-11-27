@@ -174,7 +174,7 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
                             </Col>
                             <Col sm={4} className="d-flex justify-content-end text-nowrap" style={{ paddingRight: 12 }}>
                                 {address && distance && (
-                                    <a href="#" onClick={() => setDistance(distance + 20)}>
+                                    <a onClick={() => setDistance(distance + 20)} className="sm-font">
                                         <Icon icon="fa-location-crosshairs" />
                                         Search larger area
                                     </a>

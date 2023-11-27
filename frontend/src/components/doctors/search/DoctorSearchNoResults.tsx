@@ -25,7 +25,7 @@ export default function DoctorSearchNoResuls({
                 No Results found
                 <br />
                 <br />
-                <a href="#" onClick={() => setShouldClearFilters(true)} className="inheritTextStyle">
+                <a onClick={() => setShouldClearFilters(true)} className="inheritTextStyle">
                     Clear filters
                 </a>{" "}
                 {myList ? (
@@ -46,7 +46,7 @@ export default function DoctorSearchNoResuls({
                         <>
                             <br />
                             or{" "}
-                            <a href="#" onClick={() => setDistance(distance + 10)} className="inheritTextStyle">
+                            <a onClick={() => setDistance(distance + 10)} className="inheritTextStyle">
                                 try a larger area
                             </a>
                         </>

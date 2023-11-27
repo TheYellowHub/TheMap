@@ -13,6 +13,7 @@ import Button from "../../utils/Button";
 import { useState } from "react";
 import useAuth from "../../../auth/useAuth";
 import useUser from "../../../hooks/auth/useUsers";
+import Review from "../../reviews/Review";
 
 interface DoctorBigCardProps {
     doctor: Doctor;
@@ -137,16 +138,16 @@ function DoctorBigCard({ doctor, locationForDistanceCalculation, distanceUnit = 
                             />
                         )}
                     </Row>
-                    <Row className="w-100 m-0">
+                    <img src="images/line.png" className="py-3" />
+                    <Row className="m-0">
                         {doctor.avgRating && doctor.numOfReviews && (
                             <Rating averageRating={doctor.avgRating} totalReviews={doctor.numOfReviews} />
                         )}
                     </Row>
-                    <Row className="w-100 m-0">
-                        {/* TODO: Design in a separated component */}
+                    <Row className="m-0">
                         {reviews.map((review) => (
-                            <Row key={review.id!}>
-                                {review.description} {review.rating}
+                            <Row key={review.id!} className="m-0 p-0 pt-4">
+                                <Review review={review} />
                             </Row>
                         ))}
                     </Row>

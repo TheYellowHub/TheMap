@@ -10,7 +10,7 @@ export default function useApi<T extends RequestDataItem>(
     return function () {
         const queryClient = useQueryClient();
         const { get, post, patch } = useApiRequests();
-        const key = urlDirectory;
+        const key = `${urlDirectory}${fetchListUrlParams ? "/" + fetchListUrlParams : ""}`;
 
         const fetchList = async () => {
             const response = await get(`/api/${urlDirectory}/list${fetchListUrlParams ? fetchListUrlParams : ""}`);

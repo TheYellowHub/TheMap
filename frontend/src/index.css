@@ -13,6 +13,7 @@
     --very-light-grey: #f8f9fa;
     --dark-yellow: #97750b;
     --med-dark-yellow: #fabc05;
+    --star-yellow: #e3bb40;
     --med-yellow: #f2c94c;
     --med-light-yellow: #f6db87;
     --light-yellow: #fcefca;
@@ -44,6 +45,10 @@
 
 .med-yellow {
     color: var(--med-yellow);
+}
+
+.star-yellow {
+    color: var(--star-yellow) !important;
 }
 
 .light-yellow {
@@ -123,10 +128,10 @@
     border-color: transparent;
 }
 
-a {
+a, a:not([href]):not([class]) {
     color: var(--dark-blue);
-    font-size: 0.875rem;
     text-decoration-line: underline;
+    cursor: pointer;
 }
 
 i {

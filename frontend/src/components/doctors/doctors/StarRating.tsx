@@ -2,9 +2,10 @@ import Icon from "../../utils/Icon";
 
 interface StarRatingProps {
     rating: number;
+    color?: boolean;
 }
 
-function StarRating({ rating }: StarRatingProps) {
+function StarRating({ rating, color = false }: StarRatingProps) {
     function renderStars() {
         const stars = [];
         for (let i = 1; i <= 5; i++) {
@@ -15,7 +16,15 @@ function StarRating({ rating }: StarRatingProps) {
                 icon.name = "fa-star-half-alt";
                 icon.solid = true;
             }
-            stars.push(<Icon icon={icon.name} solid={icon.solid} padding={false} key={`star-${i}`} />);
+            stars.push(
+                <Icon
+                    icon={icon.name}
+                    solid={icon.solid}
+                    padding={false}
+                    key={`star-${i}`}
+                    className={color ? "star-yellow" : ""}
+                />
+            );
         }
         return stars;
     }

@@ -38,7 +38,7 @@ export default function DoctorSearchAddressFilter({
                     />
                 </Col>
                 <Col className="d-flex use-my-location">
-                    <a href="#" onClick={useCurrenetLocation}>
+                    <a onClick={useCurrenetLocation} className="sm-font">
                         Use my location
                     </a>
                 </Col>
