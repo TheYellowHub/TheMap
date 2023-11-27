@@ -9,6 +9,7 @@ interface DoctorSearchAddressFilterProps {
     addressLocation: Location | undefined;
     setAddressLocation: (addressLocation: Location | undefined) => void;
     useCurrenetLocation: () => void;
+    setValueChange?: (valueChange: boolean) => void;
 }
 
 export default function DoctorSearchAddressFilter({
@@ -17,6 +18,7 @@ export default function DoctorSearchAddressFilter({
     useCurrenetLocation,
     addressLocation,
     setAddressLocation,
+    setValueChange,
 }: DoctorSearchAddressFilterProps) {
     const { getLocation } = useGoogleMaps();
     return (
@@ -31,6 +33,7 @@ export default function DoctorSearchAddressFilter({
                             setter: (_: undefined, newAddress: string) => {
                                 setAddress(newAddress);
                                 getLocation(newAddress).then((location) => setAddressLocation(location));
+                                setValueChange !== undefined && setValueChange(true);
                                 return undefined;
                             },
                         }}

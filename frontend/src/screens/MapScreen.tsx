@@ -14,7 +14,6 @@ import MapLoadingError from "../components/map/MapLoadingError";
 import useGoogleMaps, { Location } from "../utils/googleMaps/useGoogleMaps";
 import DoctorSearchAddressFilter from "../components/doctors/search/DoctorSearchAddressFilter";
 import { useParams } from "react-router-dom";
-import useEffectOnlyAfterMount from "../hooks/useEffectOnlyAfterMount";
 
 interface MapScreenProps {
     startWithMyList?: boolean;
@@ -60,7 +59,9 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
     useEffect(() => {
         if (shouldClearFilters) {
             setShouldClearFilters(false);
-            setCurrentDoctor(null);
+            if (currentDoctor !== null) {
+                setCurrentDoctor(null);
+            }
         }
     }, [shouldClearFilters]);
 
@@ -73,8 +74,8 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
         }
     }, [shouldClearAddress]);
 
-    useEffectOnlyAfterMount(() => {
-        if (filterChangeSinceLastDoctorPick) {
+    useEffect(() => {
+        if (filterChangeSinceLastDoctorPick && currentDoctor !== null) {
             setCurrentDoctor(null);
         }
     }, [filterChangeSinceLastDoctorPick]);
@@ -82,7 +83,10 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
     useEffect(() => {
         if (currentDoctor === null) {
             setCurrentDoctorLocation(null);
-        } else {
+        } else if (currentDoctor !== null) {
+            if (doctorIdParam && !doctorIdParamWasUsed) {
+                setDoctorIdParamWasUsed(true);
+            }
             setFilterChangeSinceLastDoctorPick(false);
             if (currentDoctorLocation === null) {
                 if (addressLocation !== undefined) {
@@ -99,6 +103,7 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
         if (doctorIdParam) {
             setDoctorIdParamWasUsed(false);
         }
+        console.log(doctorIdParam);
     }, [doctorIdParam]);
 
     useEffect(() => {
@@ -107,8 +112,7 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
                 const doctor = doctors.find((doctor: Doctor) => doctor.id === Number(doctorIdParam));
                 if (doctor !== undefined) {
                     setCurrentDoctor(doctor);
-                    setDoctorIdParamWasUsed(true);
-                } else {
+                } else if (currentDoctor !== null) {
                     setCurrentDoctor(null);
                 }
             }
@@ -141,8 +145,7 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
                                 setShouldClearFilters={setShouldClearFilters}
                                 shouldClearAddress={shouldClearAddress}
                                 setShouldClearAddress={setShouldClearAddress}
-                                filterChange={filterChangeSinceLastDoctorPick}
-                                setFilterChange={setFilterChangeSinceLastDoctorPick}
+                                setValueChange={setFilterChangeSinceLastDoctorPick}
                             />
 
                             {address === undefined && currentDoctor === null && !startWithMyList && (

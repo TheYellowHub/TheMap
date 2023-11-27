@@ -128,12 +128,6 @@
     border-color: transparent;
 }
 
-a, a:not([href]):not([class]) {
-    color: var(--dark-blue);
-    text-decoration-line: underline;
-    cursor: pointer;
-}
-
 i {
     color: inherit;
     line-height: inherit !important;
@@ -142,15 +136,19 @@ i {
     padding: 0rem 0.5rem;
 }
 
-a {
+a, a:not([href]):not([class]) {
+    color: var(--med-blue);
     text-decoration: none;
+    text-decoration-line: underline;
+    cursor: pointer;
 }
 
-a:hover {
+a:hover, a:not([href]):not([class]):hover {
+    color: var(--med-blue);
     text-decoration: underline;
 }
 
-a:hover i {
+a:hover i, a:not([href]):not([class]) i {
     text-decoration: underline var(--very-light-grey) !important;
 }
 
@@ -801,11 +799,11 @@ div:has(.small-address-filter) {
     border-radius: 0.25rem;
     gap: 1rem;
     min-height: 8.875rem;
-    cursor: pointer;
 }
 
 .doctorSmallCard {
     max-width: 26rem;
+    cursor: pointer;
 }
 
 .doctorBigCard {

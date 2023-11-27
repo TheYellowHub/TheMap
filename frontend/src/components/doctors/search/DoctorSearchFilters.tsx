@@ -35,8 +35,7 @@ interface DoctorSearchFiltersProps {
     setShouldClearFilters: (shouldClearFilters: boolean) => void;
     shouldClearAddress: boolean;
     setShouldClearAddress: (shouldClearAddress: boolean) => void;
-    filterChange: boolean;
-    setFilterChange: (filterChange: boolean) => void;
+    setValueChange: (filterChange: boolean) => void;
 }
 
 export default function DoctorSearchFilters({
@@ -59,8 +58,7 @@ export default function DoctorSearchFilters({
     setShouldClearFilters,
     shouldClearAddress,
     setShouldClearAddress,
-    filterChange,
-    setFilterChange,
+    setValueChange,
 }: DoctorSearchFiltersProps) {
     const { data: categories } = useDoctorCategories();
     const { data: specialities } = useDoctorSpecialities();
@@ -143,7 +141,7 @@ export default function DoctorSearchFilters({
         setMatchedDoctorsIncludingDistance(newMatchedDoctorsIncludingDistance);
     }, [doctors, addressLocation, distance, categoryFilter, specialitiesFilter, listFilter, sortKey, userInfo]);
 
-    useEffectOnlyAfterMount(() => {
+    useEffect(() => {
         if (shouldClearFilters) {
             formRef?.current?.reset();
             setCategoryFilter(undefined);
@@ -158,12 +156,6 @@ export default function DoctorSearchFilters({
         }
     }, [shouldClearFilters]);
 
-    useEffectOnlyAfterMount(() => {
-        if (!filterChange) {
-            setFilterChange(true);
-        }
-    }, [addressLocation, distance, categoryFilter, specialitiesFilter, listFilter, sortKey]);
-
     return (
         <Form ref={formRef} className="px-0 mx-0">
             <Container className="d-grid gap-3" fluid>
@@ -175,6 +167,7 @@ export default function DoctorSearchFilters({
                             addressLocation={addressLocation}
                             setAddressLocation={setAddressLocation}
                             useCurrenetLocation={useCurrenetLocation}
+                            setValueChange={setValueChange}
                         />
                     </Col>
                 </Row>
@@ -185,7 +178,10 @@ export default function DoctorSearchFilters({
                             currentValue={categoryFilter}
                             allowEmptySelection={true}
                             placeHolder="All Categories"
-                            onChange={setCategoryFilter}
+                            onChange={(newValue: string | undefined) => {
+                                setCategoryFilter(newValue);
+                                setValueChange(true);
+                            }}
                         />
                     </Col>
                     <Col sm={5} lg={3} className="px-0">
@@ -195,7 +191,10 @@ export default function DoctorSearchFilters({
                             allowEmptySelection={true}
                             placeHolder="All specialities"
                             title="Specialities"
-                            onChange={setSpecialitiesFilter}
+                            onChange={(newValue: string[]) => {
+                                setSpecialitiesFilter(newValue);
+                                setValueChange(true);
+                            }}
                             isMulti={true}
                         />
                     </Col>
@@ -205,14 +204,20 @@ export default function DoctorSearchFilters({
                             currentValue={listFilter}
                             allowEmptySelection={true}
                             placeHolder="All Lists"
-                            onChange={(newValue: string | undefined) => setListFilter(newValue)}
+                            onChange={(newValue: string | undefined) => {
+                                setListFilter(newValue);
+                                setValueChange(true);
+                            }}
                         />
                     </Col>
                     <Col sm={5} lg={3} className="d-flex align-items-center justify-content-end ps-0 pe-1">
                         <Col className="d-flex justify-content-end icon-select">
                             <Select
                                 values={Array.from(sortOptions.keys())}
-                                onChange={setSortKey as (newValue: string | undefined) => void}
+                                onChange={(newValue: string | undefined) => {
+                                    (setSortKey as (newValue: string | undefined) => void)(newValue);
+                                    setValueChange(true);
+                                }}
                                 currentValue={sortKey}
                                 icon="fa-arrow-down-wide-short"
                             />

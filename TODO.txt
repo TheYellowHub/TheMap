@@ -1,5 +1,8 @@
 TODO:
-9. Present reviews and rating in big doctor card
+9. Present reviews and rating in big doctor card -> add surgury date
 10. Option to add a review & review approval process 
 11. Handle auth
 12. Relevant data migration
+
+* set username - when? where?
+* can we edit review post approval?

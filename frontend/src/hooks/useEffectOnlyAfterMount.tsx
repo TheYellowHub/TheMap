@@ -1,11 +1,14 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 
 const useEffectOnlyAfterMount = (func: () => void, deps: any[]) => {
-    const didMount = useRef(false);
+    const [didMount, setDidMount] = useState(false);
 
     useEffect(() => {
-        if (didMount.current) func();
-        else didMount.current = true;
+        if (didMount) {
+            func();
+        } else {
+            setDidMount(true);
+        }
     }, deps);
 };
 
