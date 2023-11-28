@@ -3,7 +3,7 @@ Doctor review model related APIs
 """
 
 from rest_framework import generics
-from django_filters import rest_framework as filters
+from django_filters import MultipleChoiceFilter, rest_framework as filters
 import logging
 
 from users.auth import ADMIN_SCOPE, requires_scope
@@ -19,7 +19,7 @@ class DoctorReviewFilter(filters.FilterSet):
     Filter options for DoctorReviewListView
     """
 
-    status = filters.CharFilter(lookup_expr="iexact")
+    status = MultipleChoiceFilter(choices=DoctorReview.STATUS, lookup_expr="iexact")
     added_by = filters.CharFilter(lookup_expr="iexact")
 
     class Meta:

@@ -10,10 +10,13 @@ import DoctorLocationAddress from "./DoctorLocationAddress";
 import { Col, Container, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
 import Icon from "../../utils/Icon";
 import Button from "../../utils/Button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useAuth from "../../../auth/useAuth";
 import useUser from "../../../hooks/auth/useUsers";
-import Review from "../../reviews/Review";
+import SingleReviewCard from "../../reviews/SingleReviewCard";
+import { useUserReviews } from "../../../hooks/doctors/useReviews";
+import UserReviewsForm from "../../reviews/UserReviewsForm";
+import { reviewEditableStatuses } from "../../../types/doctors/review";
 
 interface DoctorBigCardProps {
     doctor: Doctor;
@@ -28,10 +31,14 @@ function DoctorBigCard({ doctor, locationForDistanceCalculation, distanceUnit = 
 
     const [selectedLocation, setSelectedLocation] = useState(closestLocation || doctor.locations[0]);
 
-    const reviews = getDoctorReviews(doctor);
+    const allReviews = getDoctorReviews(doctor);
 
     const { user, isAuthenticated } = useAuth();
     const { userInfo, mutateSavedDoctors } = useUser(user);
+
+    const { data: userReviews } = (userInfo && useUserReviews(userInfo, doctor)()) || { data: [] };
+
+    const [addingReview, setAddingReview] = useState(false);
 
     return (
         <Container className={`doctorBigCard mx-0 ps-0 pe-3`} fluid>
@@ -140,16 +147,53 @@ function DoctorBigCard({ doctor, locationForDistanceCalculation, distanceUnit = 
                     </Row>
                     <img src="images/line.png" className="py-3" />
                     <Row className="m-0">
-                        {doctor.avgRating && doctor.numOfReviews && (
-                            <Rating averageRating={doctor.avgRating} totalReviews={doctor.numOfReviews} />
-                        )}
+                        <Col className="p-0 m-0" sm="auto">
+                            {doctor.avgRating && doctor.numOfReviews && (
+                                <Rating averageRating={doctor.avgRating} totalReviews={doctor.numOfReviews} />
+                            )}
+                        </Col>
+
+                        <Col className="p-0 m-0 d-flex justify-content-end">
+                            {userInfo &&
+                                !addingReview &&
+                                !(
+                                    0 <
+                                    userReviews?.filter(
+                                        (review) =>
+                                            review.status &&
+                                            (reviewEditableStatuses as any as string[]).includes(review.status) === true
+                                    ).length
+                                ) && (
+                                    <a
+                                        onClick={() => setAddingReview(true)}
+                                        className="inherit-font-style a-no-decoration-line"
+                                    >
+                                        <Icon icon="fa-plus" />
+                                        Add a review
+                                    </a>
+                                )}
+                        </Col>
                     </Row>
+
+                    {userInfo && (
+                        <Row className="m-0">
+                            <UserReviewsForm
+                                userInfo={userInfo}
+                                doctor={doctor}
+                                addingReview={addingReview}
+                                setAddingReview={setAddingReview}
+                            />
+                        </Row>
+                    )}
+
                     <Row className="m-0">
-                        {reviews.map((review) => (
-                            <Row key={review.id!} className="m-0 p-0 pt-4">
-                                <Review review={review} />
-                            </Row>
-                        ))}
+                        {allReviews
+                            .filter((review) => review.status == "APPROVED")
+                            .map((review) => (
+                                <Row key={review.id!} className="m-0 p-0 pt-4">
+                                    <SingleReviewCard review={review} />
+                                </Row>
+                            ))}
                     </Row>
                 </Col>
             </Row>

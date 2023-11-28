@@ -103,7 +103,6 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
         if (doctorIdParam) {
             setDoctorIdParamWasUsed(false);
         }
-        console.log(doctorIdParam);
     }, [doctorIdParam]);
 
     useEffect(() => {

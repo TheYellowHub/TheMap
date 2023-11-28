@@ -22,9 +22,9 @@ function LoadingWrapper({
                 <Loader />
             ) : isError && error ? (
                 <Message variant="danger" className={errorClassName}>
-                    {error.message}
+                    {error.message || ""}
                     <br />
-                    {JSON.stringify(error.response.data)}
+                    {error.response?.data ? JSON.stringify(error.response.data) : ""}
                 </Message>
             ) : (
                 <>{children}</>

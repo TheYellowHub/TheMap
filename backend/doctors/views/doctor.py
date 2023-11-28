@@ -3,7 +3,7 @@ Doctor model related APIs
 """
 
 from rest_framework import generics
-from django_filters import rest_framework as filters
+from django_filters import MultipleChoiceFilter, rest_framework as filters
 import logging
 
 from users.auth import ADMIN_SCOPE, requires_scope
@@ -20,7 +20,7 @@ class DoctorFilter(filters.FilterSet):
     """
 
     full_name = filters.CharFilter(field_name="full_name", lookup_expr="icontains")
-    status = filters.CharFilter(lookup_expr="iexact")
+    status = MultipleChoiceFilter(choices=Doctor.STATUS, lookup_expr="iexact")
 
     class Meta:
         model = Doctor

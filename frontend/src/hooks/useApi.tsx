@@ -32,21 +32,26 @@ export default function useApi<T extends RequestDataItem>(
         const updateItem = async (t: T) => {
             const newItem = t.id === undefined;
             let fileProperties = {};
-            let withoutfileProperties = { ...t };
+            let withoutFileProperties = { ...t };
             for (const property in t) {
                 if (t[property] instanceof File) {
                     fileProperties = { ...fileProperties, [property]: t[property] };
-                    delete withoutfileProperties[property];
+                    delete withoutFileProperties[property];
                 } else if (t[property] === undefined) {
-                    withoutfileProperties = { ...withoutfileProperties, [property]: null };
+                    withoutFileProperties = { ...withoutFileProperties, [property]: null };
+                } else if (t[property] instanceof Object && "id" in (t[property] as object)) {
+                    withoutFileProperties = {
+                        ...withoutFileProperties,
+                        [property]: (t[property] as { id: number })["id"],
+                    };
                 }
             }
 
             let response;
             let id = t.id;
-            if (1 < Object.keys(withoutfileProperties).length) {
+            if (0 < Object.keys(withoutFileProperties).length) {
                 const url = `/api/${urlDirectory}` + (newItem ? "/create" : `/${id}/update`);
-                response = newItem ? await post(url, withoutfileProperties) : await patch(url, withoutfileProperties);
+                response = newItem ? await post(url, withoutFileProperties) : await patch(url, withoutFileProperties);
                 id = response.data.id;
             }
             if (0 < Object.keys(fileProperties).length) {

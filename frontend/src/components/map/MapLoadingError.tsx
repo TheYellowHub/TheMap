@@ -17,7 +17,7 @@ export default function MapLoadingError() {
                 <div className="bold">
                     The map couldn’t load
                     <br />
-                    <a onClick={() => window.location.reload()} className="inheritTextStyle">
+                    <a onClick={() => window.location.reload()} className="inherit-font-style">
                         Reload to try again
                     </a>
                 </div>

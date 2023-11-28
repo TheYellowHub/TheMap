@@ -105,7 +105,7 @@
     box-sizing: border-box !important;
 }
 
-.inheritTextStyle {
+.inherit-font-style {
     color: inherit;
     font-family: inherit;
     font-size: inherit;
@@ -150,6 +150,14 @@ a:hover, a:not([href]):not([class]):hover {
 
 a:hover i, a:not([href]):not([class]) i {
     text-decoration: underline var(--very-light-grey) !important;
+}
+
+a.a-no-decoration-line {
+    text-decoration-line: none;
+}
+
+a.a-no-decoration-line:hover {
+    text-decoration-line: none;
 }
 
 .title {
@@ -479,6 +487,13 @@ td {
     color: var(--med-grey);
     background: white;
     border-color: var(--med-grey);
+}
+
+.btn-no-colors,
+.btn-no-colors:hover,
+.btn-no-colors:disabled {
+    background: white;
+    border-color: white;
 }
 
 /* Forms */

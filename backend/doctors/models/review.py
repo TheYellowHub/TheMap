@@ -9,7 +9,7 @@ class DoctorReview(models.Model):
     A doctor review.
     """
 
-    STATUS = Choices("PENDING_APPROVAL", "APPROVED", "REJECTED")
+    STATUS = Choices("DRAFT", "PENDING_APPROVAL", "APPROVED", "REJECTED", "DELETED")
 
     MIN_RATING = 0
     MAX_RATING = 5
@@ -28,8 +28,8 @@ class DoctorReview(models.Model):
         blank=True,
         default=None,
     )
-    past_operation = models.BooleanField()
-    future_operation = models.BooleanField()
+    past_operation = models.BooleanField(default=False)
+    future_operation = models.BooleanField(default=False)
     operation_month = models.DateField(blank=True, null=True)
     status = StatusField()
     added_by = models.ForeignKey(
@@ -39,6 +39,7 @@ class DoctorReview(models.Model):
     approved_at = MonitorField(monitor="status", when=["APPROVED"], null=True, blank=True, default=None)  # type: ignore
     rejected_at = MonitorField(monitor="status", when=["REJECTED"], null=True, blank=True, default=None)  # type: ignore
     updated_at = models.DateTimeField(auto_now=True, null=True)
+    rejection_reason = models.TextField(blank=True, null=True)
 
     def __str__(self) -> str:
         return f"Review #{self.pk} - {self.doctor.full_name} / {self.added_by}"
