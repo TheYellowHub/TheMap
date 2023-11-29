@@ -38,6 +38,7 @@ class DoctorReview(models.Model):
     added_at = models.DateTimeField(auto_now_add=True, null=True)
     approved_at = MonitorField(monitor="status", when=["APPROVED"], null=True, blank=True, default=None)  # type: ignore
     rejected_at = MonitorField(monitor="status", when=["REJECTED"], null=True, blank=True, default=None)  # type: ignore
+    deleted_at = MonitorField(monitor="status", when=["DELETED"], null=True, blank=True, default=None)  # type: ignore
     updated_at = models.DateTimeField(auto_now=True, null=True)
     rejection_reason = models.TextField(blank=True, null=True)
 

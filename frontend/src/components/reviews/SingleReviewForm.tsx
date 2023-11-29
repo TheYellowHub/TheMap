@@ -9,6 +9,7 @@ import {
     getOperationYear,
     setOperationMonthAndYear,
     reviewStatusToString,
+    reviewEditableStatuses,
 } from "../../types/doctors/review";
 import { useUserReviews } from "../../hooks/doctors/useReviews";
 import Icon from "../utils/Icon";
@@ -37,8 +38,10 @@ function SingleReviewForm({ originalReview, setDeleted, setSaved }: SingleReview
         review.doctor
     )();
 
-    type EditStatus = "CLOSED" | "EDITING" | "SAVED" | "SUBMITTED";
-    const [editStatus, setEditStatus] = useState<EditStatus>(review.status !== "APPROVED" ? "EDITING" : "CLOSED");
+    const disabled = !reviewEditableStatuses.includes(review.status);
+
+    type EditStatus = "DELETED" | "EDITING" | "SAVED" | "SUBMITTED";
+    const [editStatus, setEditStatus] = useState<EditStatus>("EDITING");
 
     const formRef = useRef<HTMLFormElement>(null);
 
@@ -142,7 +145,7 @@ function SingleReviewForm({ originalReview, setDeleted, setSaved }: SingleReview
 
     return (
         <Form className="p-0 m-0" ref={formRef}>
-            <fieldset disabled={review.status === "DELETED" || review.status === "APPROVED" || editStatus === "CLOSED"}>
+            <fieldset disabled={disabled}>
                 <Form.Group as={Row} className="p-0 m-0 pb-2 gap-3">
                     <Col className="m-0 p-0">
                         <strong>{review.addedBy?.remoteId}</strong>
@@ -211,73 +214,75 @@ function SingleReviewForm({ originalReview, setDeleted, setSaved }: SingleReview
                         <Col className="p-0 m-0 d-flex gap-2">{review.futureOperation && dateFields}</Col>
                     </Form.Group>
                 )}
-                <Form.Group as={Row} className="p-0 m-0 pt-2 pb-3 w-100 gap-3">
-                    <OverlayTrigger
-                        placement="bottom"
-                        overlay={<Tooltip className="tooltip">{review.id === undefined ? "Cancel" : "Delete"}</Tooltip>}
-                    >
-                        <Col className="m-0 p-0" sm="auto">
-                            <Button
-                                label=""
-                                type="button"
-                                className="p-0 m-0"
-                                variant="no-colors"
-                                onClick={() => {
-                                    setReview(originalReview);
-                                    if (review.id !== undefined) {
-                                        submitReview(originalReview, "DELETED", "CLOSED");
-                                    }
-                                }}
-                            >
-                                <Icon icon="fa-close" padding={false} />
-                            </Button>
-                        </Col>
-                    </OverlayTrigger>
-                    <Col className="m-0 p-0 d-flex justify-content-end">
-                        <Button
-                            variant="secondary"
-                            label="Save for later"
-                            type="button"
-                            onClick={() => {
-                                submitReview(review, "DRAFT", "SAVED");
-                            }}
-                        />
-                    </Col>
-                    <Col variant="primary" className="m-0 p-0" sm="auto">
-                        <Button
-                            label="Submit"
-                            type="button"
-                            onClick={() => {
-                                submitReview(review, "PENDING_APPROVAL", "SUBMITTED");
-                            }}
-                        />
-                    </Col>
-                </Form.Group>
-                <LoadingWrapper
-                    isLoading={isMutateLoading}
-                    isError={isMutateError}
-                    error={mutateError as ResponseError}
-                    loaderSize={20}
-                    loaderText="Submitting..."
-                >
-                    {editStatus == "SAVED" && (
-                        <Row className="p-0 m-0 pb-2 w-100 gap-3">
-                            <Col className="m-0 p-0">
-                                <strong>Saved!</strong> Your review is saved. You can find it under{" "}
-                                <a href="">My Reviews</a>.{/* TODO: link */}
-                            </Col>
-                        </Row>
-                    )}
-                    {editStatus == "SUBMITTED" && (
-                        <Row className="p-0 m-0 w-100 gap-3">
-                            <Col className="m-0 p-0">
-                                <strong>Thank you!</strong> Your review has been submitted and will be approved shortly,
-                                as long as it complies with our <a href="">Community Guidelines</a>. {/* TODO: link */}
-                            </Col>
-                        </Row>
-                    )}
-                </LoadingWrapper>
             </fieldset>
+            <Form.Group as={Row} className="p-0 m-0 pt-2 pb-3 w-100 gap-3">
+                <OverlayTrigger
+                    placement="bottom"
+                    overlay={<Tooltip className="tooltip">{review.id === undefined ? "Cancel" : "Delete"}</Tooltip>}
+                >
+                    <Col className="m-0 p-0" sm="auto">
+                        <Button
+                            label=""
+                            type="button"
+                            className="p-0 m-0"
+                            variant="no-colors"
+                            onClick={() => {
+                                setReview(originalReview);
+                                if (review.id !== undefined) {
+                                    submitReview(originalReview, "DELETED", "DELETED");
+                                }
+                            }}
+                        >
+                            <Icon icon="fa-close" padding={false} />
+                        </Button>
+                    </Col>
+                </OverlayTrigger>
+                <Col className="m-0 p-0 d-flex justify-content-end">
+                    <Button
+                        variant="secondary"
+                        label="Save for later"
+                        type="button"
+                        onClick={() => {
+                            submitReview(review, "DRAFT", "SAVED");
+                        }}
+                        disabled={disabled}
+                    />
+                </Col>
+                <Col variant="primary" className="m-0 p-0" sm="auto">
+                    <Button
+                        label="Submit"
+                        type="button"
+                        onClick={() => {
+                            submitReview(review, "PENDING_APPROVAL", "SUBMITTED");
+                        }}
+                        disabled={disabled}
+                    />
+                </Col>
+            </Form.Group>
+            <LoadingWrapper
+                isLoading={isMutateLoading}
+                isError={isMutateError}
+                error={mutateError as ResponseError}
+                loaderSize={20}
+                loaderText="Submitting..."
+            >
+                {editStatus == "SAVED" && (
+                    <Row className="p-0 m-0 pb-2 w-100 gap-3">
+                        <Col className="m-0 p-0">
+                            <strong>Saved!</strong> Your review is saved. You can find it under{" "}
+                            <a href="">My Reviews</a>.{/* TODO: link */}
+                        </Col>
+                    </Row>
+                )}
+                {editStatus == "SUBMITTED" && (
+                    <Row className="p-0 m-0 w-100 gap-3">
+                        <Col className="m-0 p-0">
+                            <strong>Thank you!</strong> Your review has been submitted and will be approved shortly, as
+                            long as it complies with our <a href="">Community Guidelines</a>. {/* TODO: link */}
+                        </Col>
+                    </Row>
+                )}
+            </LoadingWrapper>
         </Form>
     );
 }

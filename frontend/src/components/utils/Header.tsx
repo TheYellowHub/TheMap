@@ -101,16 +101,20 @@ function Header() {
         title: "Admin",
         links: [
             {
-                to: "/doctors/doctors",
+                to: "/admin/doctors",
                 title: "Doctors",
             },
             {
-                to: "/doctors/categories",
+                to: "/admin/categories",
                 title: "Categories",
             },
             {
-                to: "/doctors/specialities",
+                to: "/admin/specialities",
                 title: "Specialities",
+            },
+            {
+                to: "/admin/reviews",
+                title: "Reviews",
             },
             // TODO
             // {

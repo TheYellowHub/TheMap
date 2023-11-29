@@ -17,7 +17,6 @@ import useUser from "../../../hooks/auth/useUsers";
 import SingleReviewCard from "../../reviews/SingleReviewCard";
 import { useUserReviews } from "../../../hooks/doctors/useReviews";
 import UserReviewsForm from "../../reviews/UserReviewsForm";
-import { reviewEditableStatuses } from "../../../types/doctors/review";
 
 interface DoctorBigCardProps {
     doctor: Doctor;

@@ -5,8 +5,8 @@ import { ID } from "../utils/id";
 import { Doctor } from "./doctor";
 
 export const reviewStatuses = ["DRAFT", "PENDING_APPROVAL", "APPROVED", "REJECTED", "DELETED"] as const;
-export const reviewEditableStatuses = ["DRAFT", "PENDING_APPROVAL", "REJECTED"] as const;
 export type ReviewStatus = (typeof reviewStatuses)[number];
+export const reviewEditableStatuses: Readonly<ReviewStatus[]> = ["DRAFT", "PENDING_APPROVAL", "REJECTED"] as const;
 export const reviewStatusToString = (status: ReviewStatus) => status.replaceAll("_", " ");
 
 export type DoctorReview = {
@@ -22,6 +22,7 @@ export type DoctorReview = {
     addedAt?: DateTime;
     approvedAt?: DateTime;
     rejectedAt?: DateTime;
+    deletedAt?: DateTime;
     updatedAt?: DateTime;
     rejectionReason?: string;
 };
@@ -125,7 +126,7 @@ export const reviewFieldsMap: ReadonlyMap<string, ModalField<DoctorReview>> = ne
         {
             type: "singleSelect",
             label: "Status",
-            getter: (review: DoctorReview) => review.status,
+            getter: (review: DoctorReview) => reviewStatusToString(review.status),
             setter: (review: DoctorReview, newValue: string | undefined) => {
                 return { ...review, status: newValue as ReviewStatus };
             },
@@ -171,11 +172,31 @@ export const reviewFieldsMap: ReadonlyMap<string, ModalField<DoctorReview>> = ne
         },
     ],
     [
+        "deletedAt",
+        {
+            type: "datetime",
+            label: "Deleted at",
+            getter: (review: DoctorReview) => review.deletedAt,
+        },
+    ],
+    [
         "updatedAt",
         {
             type: "datetime",
             label: "Updated at",
             getter: (review: DoctorReview) => review.updatedAt,
+        },
+    ],
+    [
+        "rejectionReason",
+        {
+            type: "text",
+            label: "Rejection reason",
+            required: false,
+            getter: (review: DoctorReview) => review.rejectionReason,
+            setter: (review: DoctorReview, newValue: string) => {
+                return { ...review, rejectionReason: newValue };
+            },
         },
     ],
 ]);
