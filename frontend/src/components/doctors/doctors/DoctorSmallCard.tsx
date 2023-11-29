@@ -5,7 +5,7 @@ import { Location } from "../../../utils/googleMaps/useGoogleMaps";
 import { DistanceUnit } from "../../utils/DistanceUnit";
 import DoctorImage from "./DoctorImage";
 import DoctorVerification from "./DoctorVerification";
-import Rating from "./Rating";
+import Rating from "../../utils/Rating";
 import DoctorCategory from "./DoctorCategory";
 import DoctorLocationAddress from "./DoctorLocationAddress";
 import Icon from "../../utils/Icon";

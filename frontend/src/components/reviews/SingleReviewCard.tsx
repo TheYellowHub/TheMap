@@ -1,8 +1,8 @@
 import { Container, Col, Row, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { ReactElement } from "react";
 
-import { DoctorReview, getOperationMonth } from "../../types/doctors/review";
-import StarRating from "../doctors/doctors/StarRating";
+import { DoctorReview, getOperationMonthAndYear } from "../../types/doctors/review";
+import StarRating from "../utils/StarRating";
 import ExpandableText from "../utils/ExpandableText";
 import Icon from "../utils/Icon";
 
@@ -13,7 +13,7 @@ interface ReviewProps {
 function SingleReviewCard({ review }: ReviewProps) {
     const surgeryElementWrapper = (element: ReactElement) =>
         review.operationMonth ? (
-            <OverlayTrigger placement="top" overlay={<Tooltip>Surgery {getOperationMonth(review)}</Tooltip>}>
+            <OverlayTrigger placement="top" overlay={<Tooltip>Surgery {getOperationMonthAndYear(review)}</Tooltip>}>
                 {element}
             </OverlayTrigger>
         ) : (

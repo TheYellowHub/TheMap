@@ -7,6 +7,7 @@ interface SingleSelectFormFieldProps<T> {
     placeHolder?: string;
     onChange?: (newObject: T) => void;
     allowEmptySelection?: boolean;
+    className?: string;
 }
 
 export default function SingleSelectFormField<T>({
@@ -15,6 +16,7 @@ export default function SingleSelectFormField<T>({
     placeHolder,
     onChange = undefined,
     allowEmptySelection = false,
+    className = "",
 }: SingleSelectFormFieldProps<T>) {
     function onChangeImpl(newValue: string | undefined) {
         if (field.setter !== undefined) {
@@ -35,6 +37,7 @@ export default function SingleSelectFormField<T>({
             placeHolder={placeHolder}
             allowEmptySelection={allowEmptySelection}
             disabled={field.setter === undefined}
+            className={className}
         />
     );
 }

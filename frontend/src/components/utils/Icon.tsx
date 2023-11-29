@@ -2,12 +2,14 @@ type IconProps = {
     icon: string | null;
     solid?: boolean;
     onClick?: React.MouseEventHandler;
+    onMouseEnter?: React.MouseEventHandler;
+    onMouseLeave?: React.MouseEventHandler;
     link?: string;
     padding?: boolean;
     className?: string;
 };
 
-function Icon({ icon, solid = true, onClick, link, padding = true, className }: IconProps) {
+function Icon({ icon, solid = true, onClick, onMouseEnter, onMouseLeave, link, padding = true, className }: IconProps) {
     const iconElement =
         icon === null ? (
             <></>
@@ -16,6 +18,8 @@ function Icon({ icon, solid = true, onClick, link, padding = true, className }: 
                 className={`${solid ? "fa-solid" : "fa-regular"} ${icon} 
                             ${padding ? "" : "p-0"} ${className}`}
                 onClick={onClick}
+                onMouseEnter={onMouseEnter}
+                onMouseLeave={onMouseLeave}
             />
         );
 

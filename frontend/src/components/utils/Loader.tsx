@@ -2,14 +2,15 @@ import { Container, Row, Col, Spinner } from "react-bootstrap";
 
 interface LoaderProps {
     size?: number;
+    text?: string;
 }
 
-function Loader({ size = 100 }: LoaderProps) {
+function Loader({ size = 100, text = "Loading..." }: LoaderProps) {
     return (
         <>
             <Container style={{ marginTop: 20 }}>
                 <Row>
-                    <Col align="left">
+                    <Col sm="auto">
                         <Spinner
                             animation="border"
                             style={{
@@ -20,7 +21,7 @@ function Loader({ size = 100 }: LoaderProps) {
                         />
                     </Col>
                     <Col className="d-flex align-items-center justify-content-right">
-                        <h5>Loading...</h5>
+                        <h5>{text}</h5>
                     </Col>
                 </Row>
             </Container>

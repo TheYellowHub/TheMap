@@ -1,11 +1,20 @@
 TODO:
-10. Option to add a review & review approval process 
-11. Handle auth
-- status change - only admin
-12. Relevant data migration
 
-* set username - when? where?
-* can we edit review post approval?
-- multiple locations on the same spot
-- font awesome pro
-- my propile -> set username, all reviews
+REVIEWS:
+auth - handle auth classes
+auth - status change - only admin
+approval process -> review table 
+approval process -> review modal
+anonymous review
+message post submit / save - add links
+
+hooks / render issue
+ 
+Relevant data migration
+ 
+multiple locations on the same spot
+
+my propile -> set username, all reviews
+set username during review?
+
+font awesome pro - local version - change all icons

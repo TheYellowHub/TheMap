@@ -1,16 +1,17 @@
+import { useState } from "react";
+import { Col, Container, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
+
 import { Doctor, getDoctorNearestLocation, getDoctorReviews } from "../../../types/doctors/doctor";
 import { Location } from "../../../utils/googleMaps/useGoogleMaps";
 import { DistanceUnit } from "../../utils/DistanceUnit";
 import DoctorImage from "./DoctorImage";
 import DoctorVerification from "./DoctorVerification";
-import Rating from "./Rating";
 import DoctorCategoryRibbon from "./DoctorCategory";
 import DoctorSpecialityRibbon from "./DoctorSpeciality";
 import DoctorLocationAddress from "./DoctorLocationAddress";
-import { Col, Container, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
 import Icon from "../../utils/Icon";
 import Button from "../../utils/Button";
-import { useEffect, useState } from "react";
+import Rating from "../../utils/Rating";
 import useAuth from "../../../auth/useAuth";
 import useUser from "../../../hooks/auth/useUsers";
 import SingleReviewCard from "../../reviews/SingleReviewCard";
@@ -156,14 +157,7 @@ function DoctorBigCard({ doctor, locationForDistanceCalculation, distanceUnit = 
                         <Col className="p-0 m-0 d-flex justify-content-end">
                             {userInfo &&
                                 !addingReview &&
-                                !(
-                                    0 <
-                                    userReviews?.filter(
-                                        (review) =>
-                                            review.status &&
-                                            (reviewEditableStatuses as any as string[]).includes(review.status) === true
-                                    ).length
-                                ) && (
+                                !(0 < userReviews?.filter((review) => review.status !== "DELETED").length) && (
                                     <a
                                         onClick={() => setAddingReview(true)}
                                         className="inherit-font-style a-no-decoration-line"

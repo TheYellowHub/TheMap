@@ -28,6 +28,7 @@ class DoctorReviewWriteSerializer(serializers.ModelSerializer):
         fields = [
             "doctor",
             "added_by",
+            "rating",
             "description",
             "past_operation",
             "future_operation",

@@ -1,12 +1,13 @@
 import { UserInfo } from "../../auth/userInfo";
 import { ModalField } from "../../utils/fields";
+import { DateTime, MonthName, monthNames } from "../utils/dateTime";
 import { ID } from "../utils/id";
 import { Doctor } from "./doctor";
 
 export const reviewStatuses = ["DRAFT", "PENDING_APPROVAL", "APPROVED", "REJECTED", "DELETED"] as const;
 export const reviewEditableStatuses = ["DRAFT", "PENDING_APPROVAL", "REJECTED"] as const;
 export type ReviewStatus = (typeof reviewStatuses)[number];
-export const ReviewStatusToString = (status: ReviewStatus) => status.replaceAll("_", " ");
+export const reviewStatusToString = (status: ReviewStatus) => status.replaceAll("_", " ");
 
 export type DoctorReview = {
     id?: ID;
@@ -16,17 +17,49 @@ export type DoctorReview = {
     rating?: number;
     pastOperation?: boolean;
     futureOperation?: boolean;
-    operationMonth?: string; // yyyy-mm-dd
-    status?: ReviewStatus;
+    operationMonth?: DateTime; // yyyy-mm-dd
+    status: ReviewStatus;
+    addedAt?: DateTime;
+    approvedAt?: DateTime;
+    rejectedAt?: DateTime;
+    updatedAt?: DateTime;
     rejectionReason?: string;
 };
 
+export function getOperationMonthAndYear(review: DoctorReview) {
+    return review.operationMonth === undefined || review.operationMonth === null
+        ? undefined
+        : getOperationMonth(review) + "/" + getOperationYear(review);
+}
+
 export function getOperationMonth(review: DoctorReview) {
-    return review.operationMonth && review.operationMonth.substring(5, 7) + "/" + review.operationMonth.substring(0, 4);
+    return review.operationMonth === undefined || review.operationMonth === null
+        ? undefined
+        : Number(review.operationMonth.substring(5, 7));
+}
+
+export function getOperationMonthName(review: DoctorReview) {
+    const month = getOperationMonth(review);
+    return month === undefined ? undefined : monthNames[month - 1];
+}
+
+export function getOperationYear(review: DoctorReview) {
+    return review.operationMonth === undefined || review.operationMonth === null
+        ? undefined
+        : Number(review.operationMonth.substring(0, 4));
+}
+
+export function setOperationMonthAndYear(review: DoctorReview, month?: MonthName, year?: number): DoctorReview {
+    const yearStr = year === undefined || Number.isNaN(year) ? undefined : year.toString().padStart(4, "0");
+    const monthStr = month === undefined ? undefined : (monthNames.indexOf(month) + 1).toString().padStart(2, "0");
+    return {
+        ...review,
+        operationMonth: month === undefined || year === undefined ? undefined : `${yearStr}-${monthStr}-01`,
+    };
 }
 
 export const getNewReview = (doctor: Doctor, userInfo: UserInfo): DoctorReview => {
-    return { doctor: doctor, addedBy: userInfo };
+    return { doctor: doctor, addedBy: userInfo, status: "DRAFT" };
 };
 
 export const reviewFieldsMap: ReadonlyMap<string, ModalField<DoctorReview>> = new Map([
@@ -42,7 +75,7 @@ export const reviewFieldsMap: ReadonlyMap<string, ModalField<DoctorReview>> = ne
     [
         "description",
         {
-            type: "text",
+            type: "long-text",
             label: "description",
             required: true,
             getter: (review: DoctorReview) => review.description,
@@ -51,61 +84,98 @@ export const reviewFieldsMap: ReadonlyMap<string, ModalField<DoctorReview>> = ne
             },
         },
     ],
-    // TODO
-    // {
-    //     type: "boolean",
-    //     label: "pastOperation",
-    //     getter: (doctor) => doctor.pastOperation,
-    //     setter: (doctor, newValue) => {
-    //         return { ...doctor, pastOperation: newValue };
-    //     },
-    // },
-    // {
-    //     type: "boolean",
-    //     label: "futureOperation",
-    //     getter: (doctor) => doctor.futureOperation,
-    //     setter: (doctor, newValue) => {
-    //         return { ...doctor, futureOperation: newValue };
-    //     },
-    // },
-    // {
-    //     type: "singleSelect",
-    //     label: "Status",
-    //     getter: (doctor) => doctor.status,
-    //     setter: (doctor, newValue) => {
-    //         return { ...doctor, status: newValue as DoctorStatus };
-    //     },
-    //     options: doctorStatuses.map((status) => {
-    //         return {
-    //             value: status,
-    //             label: doctorStatusToString(status),
-    //         };
-    //     }),
-    //     required: true,
-    // },
-    // {
-    //     type: "text",
-    //     label: "Added by",
-    //     getter: (doctor) => doctor.addedBy,
-    // },
-    // {
-    //     type: "datetime",
-    //     label: "Added at",
-    //     getter: (doctor) => doctor.addedAt,
-    // },
-    // {
-    //     type: "datetime",
-    //     label: "Approved at",
-    //     getter: (doctor) => doctor.approvedAt,
-    // },
-    // {
-    //     type: "datetime",
-    //     label: "Rejected at",
-    //     getter: (doctor) => doctor.rejectedAt,
-    // },
-    // {
-    //     type: "datetime",
-    //     label: "Updated at",
-    //     getter: (doctor) => doctor.updatedAt,
-    // },
+    [
+        "rating",
+        {
+            type: "number",
+            label: "rating",
+            required: true,
+            getter: (review: DoctorReview) => review.rating,
+            setter: (review: DoctorReview, newValue: number) => {
+                return { ...review, rating: newValue };
+            },
+        },
+    ],
+    [
+        "pastOperation",
+        {
+            type: "boolean",
+            label: "Past operation",
+            required: true,
+            getter: (review: DoctorReview) => review.pastOperation,
+            setter: (review: DoctorReview, newValue: boolean) => {
+                return { ...review, pastOperation: newValue };
+            },
+        },
+    ],
+    [
+        "futureOperation",
+        {
+            type: "boolean",
+            label: "Future operation",
+            required: true,
+            getter: (review: DoctorReview) => review.futureOperation,
+            setter: (review: DoctorReview, newValue: boolean) => {
+                return { ...review, futureOperation: newValue };
+            },
+        },
+    ],
+    [
+        "status",
+        {
+            type: "singleSelect",
+            label: "Status",
+            getter: (review: DoctorReview) => review.status,
+            setter: (review: DoctorReview, newValue: string | undefined) => {
+                return { ...review, status: newValue as ReviewStatus };
+            },
+            options: reviewStatuses.map((status) => {
+                return {
+                    value: status,
+                    label: reviewStatusToString(status),
+                };
+            }),
+            required: true,
+        },
+    ],
+    [
+        "addedBy",
+        {
+            type: "text",
+            label: "Added by",
+            getter: (review: DoctorReview) => review.addedBy.remoteId,
+        },
+    ],
+    [
+        "addedAt",
+        {
+            type: "datetime",
+            label: "Added at",
+            getter: (review: DoctorReview) => review.addedAt,
+        },
+    ],
+    [
+        "approvedAt",
+        {
+            type: "datetime",
+            label: "Approved at",
+            getter: (review: DoctorReview) => review.approvedAt,
+        },
+    ],
+    [
+        "rejectedAt",
+        {
+            type: "datetime",
+            label: "Rejected at",
+            getter: (review: DoctorReview) => review.rejectedAt,
+        },
+    ],
+    [
+        "updatedAt",
+        {
+            type: "datetime",
+            label: "Updated at",
+            getter: (review: DoctorReview) => review.updatedAt,
+        },
+    ],
 ]);

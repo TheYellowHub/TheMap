@@ -7,6 +7,8 @@ interface LoadingWrapperProps extends React.PropsWithChildren {
     isError: boolean;
     error: ResponseError;
     errorClassName?: string;
+    loaderSize?: number;
+    loaderText?: string;
 }
 
 function LoadingWrapper({
@@ -14,12 +16,14 @@ function LoadingWrapper({
     isError,
     error,
     errorClassName = "alert-padding alert-margin",
+    loaderSize = 100,
+    loaderText = "Loading...",
     children,
 }: LoadingWrapperProps) {
     return (
         <>
             {isLoading ? (
-                <Loader />
+                <Loader size={loaderSize} text={loaderText} />
             ) : isError && error ? (
                 <Message variant="danger" className={errorClassName}>
                     {error.message || ""}

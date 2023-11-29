@@ -1,5 +1,23 @@
 @import url("https://fonts.googleapis.com/css2?family=Assistant:wght@700&family=Poppins:wght@400;500;700&family=Roboto:ital@0;1&display=swap");
 
+@font-face {
+    font-family: "Font Awesome 6 Pro";
+    font-weight: 900;
+    src: url('./fonts/Font Awesome/FONT AWESOME 6 PRO-SOLID-900.OTF') format('opentype');
+}
+
+@font-face {
+    font-family: "Font Awesome 6 Pro";
+    font-weight: 400;
+    src: url('./fonts/Font Awesome/FONT AWESOME 6 PRO-REGULAR-400.OTF') format('opentype');
+}
+
+@font-face {
+    font-family: "Font Awesome 6 Pro";
+    font-weight: 300;
+    src: url('./fonts/Font Awesome/FONT AWESOME 6 PRO-LIGHT-300.OTF') format('opentype');
+}
+
 :root {
     --logo-height: 4rem;
     --header-height: calc(var(--logo-height) + var(--layout-padding));
@@ -174,6 +192,12 @@ a.a-no-decoration-line:hover {
     position: absolute;
 }
 
+.min-height div {
+    padding-top: 1px !important;
+    padding-bottom: 1px !important;
+    min-height: 0 !important;
+}
+
 /* Header & footer */
 
 header {
@@ -326,7 +350,7 @@ footer {
 }
 
 .navbar i {
-    font-family: "Font Awesome 6 Free";
+    font-family: "Font Awesome 6 Pro";
     font-size: 0.625rem;
 }
 
@@ -491,9 +515,10 @@ td {
 
 .btn-no-colors,
 .btn-no-colors:hover,
+.btn-no-colors:active,
 .btn-no-colors:disabled {
     background: white;
-    border-color: white;
+    border-color: white !important;
 }
 
 /* Forms */
@@ -519,7 +544,6 @@ input,
 
 select,
 input,
-.form-select,
 .form-select,
 .multiSelectContainer input 
 .react-datetime-picker__wrapper,
@@ -571,6 +595,33 @@ input[type="checkbox"] {
     width: 1rem;
     height: 1rem;
     margin-inline-end: 0.3rem;
+}
+
+.switch-on input[type="checkbox"],
+.switch-off input[type="checkbox"] {
+    display: none;
+}
+
+.switch-on input[type="checkbox"] + label:before,
+.switch-off input[type="checkbox"] + label:before {
+    font-family: "Font Awesome 6 Pro";
+    font-weight: 400;
+}
+
+.switch-on input[type="checkbox"] + label:before{
+    color: var(--med-blue);
+    content: "\e5b1 \00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0";
+}
+
+.switch-off input[type="checkbox"] + label:before{
+    color: var(--med-grey);
+    content: "\e5b0 \00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0";
+}
+
+.textarea {
+    border-radius: 0.625rem !important;
+    border: 1px solid var(--med-blue) !important;
+    height: 7rem;
 }
 
 /* react-datetime */
@@ -678,7 +729,7 @@ input[type="checkbox"] {
     content: "\f0c8";
     vertical-align: top;
     color: var(--dark-grey);
-    font-family: "Font Awesome 6 Free";
+    font-family: "Font Awesome 6 Pro";
     font-size: 0.625rem;
     padding-right: 0.625rem;
 }

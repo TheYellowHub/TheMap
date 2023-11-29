@@ -46,7 +46,7 @@ class Doctor(models.Model):
 
     @property
     def reviews(self) -> list[DoctorReview]:
-        return list(DoctorReview.objects.filter(doctor=self))
+        return list(DoctorReview.objects.filter(doctor=self, status="APPROVED"))
 
     @property
     def num_of_reviews(self) -> int:
