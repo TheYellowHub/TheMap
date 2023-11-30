@@ -13,6 +13,7 @@ export type DoctorReview = {
     id?: ID;
     doctor: Doctor;
     addedBy: UserInfo;
+    anonymous: boolean;
     description?: string;
     rating?: number;
     pastOperation?: boolean;
@@ -60,7 +61,7 @@ export function setOperationMonthAndYear(review: DoctorReview, month?: MonthName
 }
 
 export const getNewReview = (doctor: Doctor, userInfo: UserInfo): DoctorReview => {
-    return { doctor: doctor, addedBy: userInfo, status: "DRAFT" };
+    return { doctor: doctor, addedBy: userInfo, anonymous: false, status: "DRAFT" };
 };
 
 export const reviewFieldsMap: ReadonlyMap<string, ModalField<DoctorReview>> = new Map([
@@ -145,6 +146,14 @@ export const reviewFieldsMap: ReadonlyMap<string, ModalField<DoctorReview>> = ne
             type: "text",
             label: "Added by",
             getter: (review: DoctorReview) => review.addedBy.remoteId,
+        },
+    ],
+    [
+        "anonymous",
+        {
+            type: "boolean",
+            label: "Anonymous",
+            getter: (review: DoctorReview) => review.anonymous,
         },
     ],
     [

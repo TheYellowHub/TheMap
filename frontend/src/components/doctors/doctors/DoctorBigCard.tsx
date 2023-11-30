@@ -36,7 +36,7 @@ function DoctorBigCard({ doctor, locationForDistanceCalculation, distanceUnit = 
     const { user, isAuthenticated } = useAuth();
     const { userInfo, mutateSavedDoctors } = useUser(user);
 
-    const { data: userReviews } = (userInfo && useUserReviews(userInfo, doctor)()) || { data: [] };
+    const { data: userReviews } = (userInfo && useUserReviews(userInfo, doctor)) || { data: [] };
 
     const [addingReview, setAddingReview] = useState(false);
 
@@ -92,7 +92,7 @@ function DoctorBigCard({ doctor, locationForDistanceCalculation, distanceUnit = 
                             </Col>
                         ))}
                     </Row>
-                    <Row className="w-100 m-0 gap-0 py-1">
+                    <Row className="w-100 m-0 gap-0 py-1 doctor-location">
                         {doctor.locations.map((location) => (
                             <Button
                                 label={location?.hospitalName || ""}
@@ -111,7 +111,7 @@ function DoctorBigCard({ doctor, locationForDistanceCalculation, distanceUnit = 
                             </Button>
                         ))}
                     </Row>
-                    <Row className="w-100 m-0 gap-3 py-1">
+                    <Row className="w-100 m-0 gap-3 py-1 doctor-location">
                         {selectedLocation?.privateOnly}
                         <DoctorLocationAddress
                             doctorLocation={selectedLocation}
@@ -145,7 +145,7 @@ function DoctorBigCard({ doctor, locationForDistanceCalculation, distanceUnit = 
                             />
                         )}
                     </Row>
-                    <img src="images/line.png" className="py-3" />
+                    <img src="images/line.png" className="py-3" width="100%" />
                     <Row className="m-0">
                         <Col className="p-0 m-0" sm="auto">
                             {doctor.avgRating && doctor.numOfReviews && (
@@ -175,6 +175,9 @@ function DoctorBigCard({ doctor, locationForDistanceCalculation, distanceUnit = 
                                 doctor={doctor}
                                 addingReview={addingReview}
                                 setAddingReview={setAddingReview}
+                                allowAddingReview={true}
+                                showOnlyEditableReviews={true}
+                                showDoctorName={false}
                             />
                         </Row>
                     )}

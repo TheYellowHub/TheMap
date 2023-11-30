@@ -37,19 +37,21 @@ export default function DoctorSearchResuls({
     const readjustPageSize = () => {
         const rem = 16;
 
-        const doctorCards = Array.from(document.getElementsByClassName(doctorSmallCardClassName));
-        const cardWidth = 0 < doctorCards.length ? doctorCards[0].clientWidth : 26 * rem;
-        const cardHeight = 0 < doctorCards.length ? doctorCards[0].clientHeight : 9 * rem;
-
         const cardsDiv = document.getElementById(doctorCardsContainerId);
-        const cardsDivWidth = cardsDiv!.clientWidth;
-        const cardsDivHeight = window.innerHeight - 300;
+        if (cardsDiv !== null) {
+            const cardsDivWidth = cardsDiv.clientWidth;
+            const cardsDivHeight = window.innerHeight - 300;
 
-        const cols = Math.max(1, Math.floor(cardsDivWidth / (cardWidth + 1.5 * rem)));
-        const rows = Math.max(1, Math.floor(cardsDivHeight / (cardHeight + 1.5 * rem)));
-        const newPageSize = cols * rows;
-        if (pageSize !== newPageSize) {
-            setPageSize(newPageSize);
+            const doctorCards = Array.from(document.getElementsByClassName(doctorSmallCardClassName));
+            const cardWidth = 0 < doctorCards.length ? doctorCards[0].clientWidth : 26 * rem;
+            const cardHeight = 0 < doctorCards.length ? doctorCards[0].clientHeight : 9 * rem;
+
+            const cols = Math.max(1, Math.floor(cardsDivWidth / (cardWidth + 1.5 * rem)));
+            const rows = Math.max(1, Math.floor(cardsDivHeight / (cardHeight + 1.5 * rem)));
+            const newPageSize = cols * rows;
+            if (pageSize !== newPageSize) {
+                setPageSize(newPageSize);
+            }
         }
     };
 

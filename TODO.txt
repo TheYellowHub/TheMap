@@ -1,19 +1,7 @@
 TODO:
-
-REVIEWS:
-auth - handle auth classes
-auth - status change - only admin
-anonymous review
-message post submit / save - add links
-surgery scalpel icon
-
-hooks / render issue
- 
-Relevant data migration
- 
-multiple locations on the same spot
-
-my propile -> set username, all reviews
+my propile -> set username
 set username during review?
-
-font awesome pro - local version - change all icons
+hooks / render issue
+multiple locations on the same spot
+Relevant data migration
+message post review submit / save - add links

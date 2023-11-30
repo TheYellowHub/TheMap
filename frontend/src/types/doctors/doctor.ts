@@ -100,6 +100,6 @@ export function getDoctorMinimalDistance(doctor: Doctor, location: Location, dis
 }
 
 export function getDoctorReviews(doctor: Doctor) {
-    const { data } = useDoctorReviews(doctor)();
+    const { data } = useDoctorReviews(doctor);
     return data;
 }

@@ -1,15 +1,11 @@
 import { useEffect, useState } from "react";
 
 import LoadingWrapper from "../components/utils/LoadingWrapper";
-import { Doctor, newDoctor } from "../types/doctors/doctor";
-import DoctorsTable from "../components/doctors/doctors/DoctorsTable";
-import DoctorModal from "../components/doctors/doctors/DoctorModal";
-import Button from "../components/utils/Button";
 import Title from "../components/utils/Title";
 import { objectsDiff } from "../utils/utils";
 import { ResponseError } from "../hooks/useApiRequest";
 import { useAllReviews } from "../hooks/doctors/useReviews";
-import { DoctorReview, getNewReview } from "../types/doctors/review";
+import { DoctorReview } from "../types/doctors/review";
 import ReviewsTable from "../components/reviews/ReviewsTable";
 import ReviewModal from "../components/reviews/ReviewModal";
 
@@ -25,7 +21,7 @@ function ReviewsScreen() {
         isMutateSuccess,
         isMutateError,
         mutateError,
-    } = useAllReviews()();
+    } = useAllReviews();
 
     const [currentReview, setCurrentReview] = useState<DoctorReview | null>(null);
 

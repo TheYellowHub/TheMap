@@ -23,8 +23,8 @@ function SingleReviewCard({ review }: ReviewProps) {
     return (
         <Container className="p-0 m-0">
             <Row className="p-0 m-0 pb-2">
-                <Col className="m-0 p-0">
-                    <strong>{review.addedBy?.remoteId}</strong>
+                <Col className="m-0 p-0" sm="auto">
+                    <strong>{review.anonymous ? "Anonymous" : review.addedBy.remoteId}</strong>
                 </Col>
                 {(review.pastOperation || review.futureOperation) &&
                     surgeryElementWrapper(

@@ -68,6 +68,7 @@ export default function useApi<T extends RequestDataItem>(
 
         const {
             mutate: mutateItem,
+            data: mutateResult,
             reset: resetMutation,
             isLoading: isMutateLoading,
             isSuccess: isMutateSuccess,
@@ -81,6 +82,7 @@ export default function useApi<T extends RequestDataItem>(
             isListError,
             listError,
             mutateItem,
+            mutateResult,
             resetMutation,
             isMutateLoading,
             isMutateSuccess,

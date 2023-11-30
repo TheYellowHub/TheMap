@@ -109,6 +109,13 @@
     font-size: 0.625rem;
 }
 
+/* Icons */
+
+.fa-syringe::before {
+    content: "\f61d";
+    font-family: "Font Awesome 6 Pro";
+}
+
 /* General */
 
 * {
@@ -138,6 +145,10 @@
     font-style: normal;
     font-weight: 700;
     line-height: 1.25rem;
+}
+
+.strong {
+    font-weight: bold;
 }
 
 .transparent,
@@ -192,10 +203,15 @@ a.a-no-decoration-line:hover {
     position: absolute;
 }
 
-.min-height div {
+.select-min-height .react-select__control {
     padding-top: 1px !important;
     padding-bottom: 1px !important;
     min-height: 0 !important;
+}
+
+.select-no-border .react-select__control {
+    padding-left: 0 !important;
+    border-width: 0 !important;
 }
 
 /* Header & footer */
@@ -680,6 +696,7 @@ input[type="checkbox"] {
     border-radius: 0.125rem;
     background: white;
     box-shadow: 5px 5px 12px 2px rgba(120, 120, 120, 0.25), 0px 4px 20px 3px rgba(65, 65, 65, 0.25);
+    width: max-content;
 }
 
 .react-select__option {
@@ -913,10 +930,12 @@ div:has(.small-address-filter) {
 .doctorBigCard .btn {
     line-height: 2rem;
     padding: 0 1rem;
+}
+
+.doctorBigCard .doctor-location .btn {
     word-break: break-all;
     overflow: hidden;
     display: -webkit-box;
-    /* display: -webkit-inline-box; */
     line-clamp: 1;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;

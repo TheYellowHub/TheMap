@@ -30,10 +30,6 @@ function DoctorSmallCard({
     const closestLocation =
         locationForDistanceCalculation && getDoctorNearestLocation(doctor, locationForDistanceCalculation);
 
-    // TODO: replace with the real fields
-    const averageRating = undefined;
-    const totalReviews = undefined;
-
     const { user } = useAuth();
     const { userInfo } = useUser(user);
 

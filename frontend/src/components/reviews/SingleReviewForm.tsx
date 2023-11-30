@@ -12,31 +12,31 @@ import {
     reviewEditableStatuses,
 } from "../../types/doctors/review";
 import { useUserReviews } from "../../hooks/doctors/useReviews";
-import Icon from "../utils/Icon";
-import InputFormField from "../utils/form/inputField";
-import { BooleanField, TextField } from "../../utils/fields";
-import Button from "../utils/Button";
-import BooleanFormField from "../utils/form/booleanField";
-import SingleSelectFormField from "../utils/form/singleSelectField";
-import { MonthName, monthNames } from "../../types/utils/dateTime";
-import StarRating from "../utils/StarRating";
 import LoadingWrapper from "../utils/LoadingWrapper";
 import { ResponseError } from "../../hooks/useApiRequest";
+import Icon from "../utils/Icon";
+import Button from "../utils/Button";
+import StarRating from "../utils/StarRating";
+import InputFormField from "../utils/form/inputField";
+import SingleSelectFormField from "../utils/form/singleSelectField";
+import BooleanFormField from "../utils/form/booleanField";
+import { BooleanField, TextField } from "../../utils/fields";
+import { MonthName, monthNames } from "../../types/utils/dateTime";
+import { ID } from "../../types/utils/id";
 
 interface SingleReviewFormProps {
     originalReview: DoctorReview;
     setDeleted?: () => void;
-    setSaved?: () => void;
+    setId?: (id: ID) => void;
 }
 
-function SingleReviewForm({ originalReview, setDeleted, setSaved }: SingleReviewFormProps) {
+function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFormProps) {
     const [review, setReview] = useState(originalReview);
 
-    const { mutateItem, isMutateLoading, isMutateSuccess, isMutateError, mutateError } = useUserReviews(
-        // TODO: handle errors
+    const { mutateItem, mutateResult, isMutateLoading, isMutateSuccess, isMutateError, mutateError } = useUserReviews(
         review.addedBy,
         review.doctor
-    )();
+    );
 
     const disabled = !reviewEditableStatuses.includes(review.status);
 
@@ -73,12 +73,21 @@ function SingleReviewForm({ originalReview, setDeleted, setSaved }: SingleReview
 
     useEffect(() => {
         if (isMutateSuccess) {
-            setSaved && setSaved();
             if (review.status === "DELETED") {
                 setDeleted && setDeleted();
             }
         }
     }, [isMutateSuccess]);
+
+    useEffect(() => {
+        if (isMutateSuccess) {
+            const newId = mutateResult.id;
+            if (newId !== review.id) {
+                setId && setId(newId);
+                setReview({ ...review, id: newId });
+            }
+        }
+    }, [mutateResult]);
 
     const dateFields = (
         <>
@@ -112,7 +121,7 @@ function SingleReviewForm({ originalReview, setDeleted, setSaved }: SingleReview
                 }}
                 object={review}
                 onChange={setReview}
-                className="min-height d-inline-block"
+                className="select-min-height d-inline-block"
                 allowEmptySelection={review.futureOperation}
             />
             <SingleSelectFormField<DoctorReview>
@@ -137,7 +146,7 @@ function SingleReviewForm({ originalReview, setDeleted, setSaved }: SingleReview
                 }}
                 object={review}
                 onChange={setReview}
-                className="min-height d-inline-block"
+                className="select-min-height d-inline-block"
                 allowEmptySelection={review.futureOperation}
             />
         </>
@@ -146,12 +155,29 @@ function SingleReviewForm({ originalReview, setDeleted, setSaved }: SingleReview
     return (
         <Form className="p-0 m-0" ref={formRef}>
             <fieldset disabled={disabled}>
-                <Form.Group as={Row} className="p-0 m-0 pb-2 gap-3">
-                    <Col className="m-0 p-0">
-                        <strong>{review.addedBy?.remoteId}</strong>
+                <Form.Group as={Row} className="p-0 m-0 pb-2 gap-3  align-items-center">
+                    <Col className="m-0 p-0" sm="auto">
+                        <SingleSelectFormField<DoctorReview>
+                            field={{
+                                type: "singleSelect",
+                                label: "",
+                                getter: (review: DoctorReview) =>
+                                    review.anonymous ? "Anonymous" : review.addedBy.remoteId,
+                                setter: (review: DoctorReview, newValue: string | undefined) => {
+                                    return { ...review, anonymous: newValue === "true" };
+                                },
+                                options: [
+                                    { value: "false", label: review.addedBy.remoteId },
+                                    { value: "true", label: "Anonymous" },
+                                ],
+                            }}
+                            object={review}
+                            onChange={setReview}
+                            className="select-no-border d-inline-block"
+                        />
                     </Col>
-                    <Col>{reviewStatusToString(review.status)}</Col>
-                    <Col className="m-0 p-0 d-flex justify-content-end">
+                    <Col className="m-0 p-0 d-flex justify-content-end">{reviewStatusToString(review.status)}</Col>
+                    <Col className="m-0 p-0 d-flex justify-content-end" xxl="auto">
                         {
                             <StarRating
                                 rating={review.rating || 0}
@@ -230,8 +256,11 @@ function SingleReviewForm({ originalReview, setDeleted, setSaved }: SingleReview
                                 setReview(originalReview);
                                 if (review.id !== undefined) {
                                     submitReview(originalReview, "DELETED", "DELETED");
+                                } else {
+                                    setDeleted && setDeleted();
                                 }
                             }}
+                            disabled={review.status === "DELETED"}
                         >
                             <Icon icon="fa-close" padding={false} />
                         </Button>
@@ -248,7 +277,7 @@ function SingleReviewForm({ originalReview, setDeleted, setSaved }: SingleReview
                         disabled={disabled}
                     />
                 </Col>
-                <Col variant="primary" className="m-0 p-0" sm="auto">
+                <Col variant="primary" className="m-0 p-0 d-flex justify-content-end" lg="auto">
                     <Button
                         label="Submit"
                         type="button"
