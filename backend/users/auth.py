@@ -7,6 +7,7 @@ from functools import wraps
 from django.http import JsonResponse
 
 from django.conf import settings
+from rest_framework import permissions
 from rest_framework.request import Request
 
 
@@ -109,3 +110,12 @@ def requires_scope(required_scope: str):
             return decorated
 
     return require_scope
+
+
+class IsAdmin(permissions.BasePermission):
+    """
+    Admin permissions.
+    """
+
+    def has_permission(self, request, view):
+        return has_scope(request, ADMIN_SCOPE)

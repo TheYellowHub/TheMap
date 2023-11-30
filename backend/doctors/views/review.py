@@ -2,16 +2,64 @@
 Doctor review model related APIs
 """
 
-from rest_framework import generics
+from rest_framework import generics, permissions
+from rest_framework.decorators import permission_classes
 from django_filters import MultipleChoiceFilter, rest_framework as filters
 import logging
 
-from users.auth import ADMIN_SCOPE, requires_scope
+from users.models import User
+from users.auth import IsAdmin
 from ..models.review import DoctorReview
-from ..serializers.review import DoctorReviewReadSerializer, DoctorReviewWriteSerializer
+from ..serializers.review import (
+    DoctorReviewCreateSerializer,
+    DoctorReviewReadSerializer,
+    DoctorReviewUpdateSerializer,
+)
 
 
 logger = logging.getLogger(__name__)
+
+
+class IsStatusAllowed(permissions.BasePermission):
+    """
+    Allow user to use only specific statuses.
+    """
+
+    def has_permission(self, request, view):
+        new_status = request.data.get("status")
+        permission = not new_status or new_status in DoctorReview.USER_ALLOWED_STATUSES
+        print("IsStatusAllowed", "has_permission", permission)
+        return permission
+
+    def has_object_permission(self, request, view, review_object: DoctorReview):
+        new_status = request.data.get("status")
+        current_status = review_object.status
+        permission = (
+            not new_status and current_status in DoctorReview.USER_ALLOWED_STATUSES
+        ) or (new_status and new_status in DoctorReview.USER_ALLOWED_STATUSES)
+        print("IsStatusAllowed", "has_object_permission", permission)
+        return permission
+
+
+class IsCurrentUser(permissions.BasePermission):
+    """
+    Object-level permission to only allow only the relevant user to edit its details.
+    """
+
+    def has_permission(self, request, view):
+        new_user_id = request.data.get("added_by")
+        new_user = User.objects.filter(id=new_user_id).first()
+        permission = new_user == request.user
+        print(
+            "IsCurrentUser", "has_permission", permission, new_user, str(request.user)
+        )
+        return permission
+
+    def has_object_permission(self, request, view, review_object: DoctorReview):
+        review_user: User = review_object.added_by
+        permission = review_user == request.user
+        print("IsCurrentUser", "has_object_permission", permission)
+        return permission
 
 
 class DoctorReviewFilter(filters.FilterSet):
@@ -46,8 +94,12 @@ class DoctorReviewListView(generics.ListAPIView):
     filterset_class = DoctorReviewFilter
 
 
-# TODO: is auth
-# @requires_scope(ADMIN_SCOPE)
+PERMISSION_CLASSES = [
+    permissions.IsAuthenticated & (IsAdmin | (IsCurrentUser & IsStatusAllowed))
+]
+
+
+@permission_classes(PERMISSION_CLASSES)
 class DoctorReviewCreateView(generics.CreateAPIView):
     """
     Add a doctor review.
@@ -55,15 +107,15 @@ class DoctorReviewCreateView(generics.CreateAPIView):
     """
 
     queryset = DoctorReview.objects.all()
-    serializer_class = DoctorReviewWriteSerializer
+    serializer_class = DoctorReviewCreateSerializer
+    http_method_names = ["post"]
 
     def post(self, request, *args, **kwargs):
         logger.debug(f"Doctor review addition - post request data: {request.data}")
         return super().post(request, *args, **kwargs)
 
 
-# TODO: is auth, owner / admin
-# @requires_scope(ADMIN_SCOPE)
+@permission_classes(PERMISSION_CLASSES)
 class DoctorReviewUpdateView(generics.UpdateAPIView):
     """
     Update a doctor review.
@@ -71,7 +123,8 @@ class DoctorReviewUpdateView(generics.UpdateAPIView):
     """
 
     queryset = DoctorReview.objects.all()
-    serializer_class = DoctorReviewWriteSerializer
+    serializer_class = DoctorReviewUpdateSerializer
+    http_method_names = ["patch"]
 
     def patch(self, request, *args, **kwargs):
         logger.debug(f"Doctor review update - patch request data: {request.data}")

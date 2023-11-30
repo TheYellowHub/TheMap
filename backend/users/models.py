@@ -12,4 +12,7 @@ class User(models.Model):
     saved_doctors = models.ManyToManyField(Doctor, blank=True)
 
     def __str__(self) -> str:
-        return self.remote_id
+        return self.remote_id.replace("|", ".")
+
+    def __eq__(self, __value: object) -> bool:
+        return str(self) == str(__value)

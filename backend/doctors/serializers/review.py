@@ -20,14 +20,33 @@ class DoctorReviewReadSerializer(serializers.ModelSerializer):
     added_by = UserNameSerializer(many=False, read_only=True)
 
 
-class DoctorReviewWriteSerializer(serializers.ModelSerializer):
-    """Doctor review serializer for adding / updating reviews"""
+class DoctorReviewCreateSerializer(serializers.ModelSerializer):
+    """Doctor review serializer for adding reviews"""
 
     class Meta:
         model = DoctorReview
         fields = [
+            "id",
             "doctor",
             "added_by",
+            "anonymous",
+            "rating",
+            "description",
+            "past_operation",
+            "future_operation",
+            "operation_month",
+            "status",
+        ]
+
+
+class DoctorReviewUpdateSerializer(serializers.ModelSerializer):
+    """Doctor review serializer for updating reviews"""
+
+    class Meta:
+        model = DoctorReview
+        fields = [
+            "id",
+            "anonymous",
             "rating",
             "description",
             "past_operation",

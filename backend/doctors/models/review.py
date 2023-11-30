@@ -10,6 +10,7 @@ class DoctorReview(models.Model):
     """
 
     STATUS = Choices("DRAFT", "PENDING_APPROVAL", "APPROVED", "REJECTED", "DELETED")
+    USER_ALLOWED_STATUSES = ["DRAFT", "PENDING_APPROVAL", "DELETED"]
 
     MIN_RATING = 0
     MAX_RATING = 5
@@ -32,9 +33,8 @@ class DoctorReview(models.Model):
     future_operation = models.BooleanField(default=False)
     operation_month = models.DateField(blank=True, null=True)
     status = StatusField()
-    added_by = models.ForeignKey(
-        "users.User", blank=True, null=True, on_delete=models.SET_NULL
-    )
+    added_by = models.ForeignKey("users.User", on_delete=models.CASCADE)
+    anonymous = models.BooleanField(default=False)
     added_at = models.DateTimeField(auto_now_add=True, null=True)
     approved_at = MonitorField(monitor="status", when=["APPROVED"], null=True, blank=True, default=None)  # type: ignore
     rejected_at = MonitorField(monitor="status", when=["REJECTED"], null=True, blank=True, default=None)  # type: ignore
