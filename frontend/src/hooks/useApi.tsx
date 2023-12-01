@@ -2,17 +2,21 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 
 import useApiRequests, { RequestDataItem } from "./useApiRequest";
 
-export default function useApi<T extends RequestDataItem>(urlDirectory: string, sortKey = (t: T) => (t.id ? t.id : 0)) {
+export default function useApi<T extends RequestDataItem>(
+    urlDirectory: string,
+    fetchListUrlParams = "",
+    sortKey = (t: T) => (t.id ? t.id : 0)
+) {
     return function () {
         const queryClient = useQueryClient();
         const { get, post, patch } = useApiRequests();
-        const key = urlDirectory;
+        const key = `${urlDirectory}${fetchListUrlParams ? "/" + fetchListUrlParams : ""}`;
 
         const fetchList = async () => {
-            const response = await get(`/api/${urlDirectory}/list`);
+            const response = await get(`/api/${urlDirectory}/list${fetchListUrlParams ? fetchListUrlParams : ""}`);
             const list: T[] = response.data;
             list.sort((a: T, b: T) => (sortKey(a) < sortKey(b) ? -1 : 1));
-            return response.data;
+            return list;
         };
 
         const {
@@ -28,21 +32,26 @@ export default function useApi<T extends RequestDataItem>(urlDirectory: string, 
         const updateItem = async (t: T) => {
             const newItem = t.id === undefined;
             let fileProperties = {};
-            let withoutfileProperties = { ...t };
+            let withoutFileProperties = { ...t };
             for (const property in t) {
                 if (t[property] instanceof File) {
                     fileProperties = { ...fileProperties, [property]: t[property] };
-                    delete withoutfileProperties[property];
+                    delete withoutFileProperties[property];
                 } else if (t[property] === undefined) {
-                    withoutfileProperties = { ...withoutfileProperties, [property]: null };
+                    withoutFileProperties = { ...withoutFileProperties, [property]: null };
+                } else if (t[property] instanceof Object && "id" in (t[property] as object)) {
+                    withoutFileProperties = {
+                        ...withoutFileProperties,
+                        [property]: (t[property] as { id: number })["id"],
+                    };
                 }
             }
 
             let response;
             let id = t.id;
-            if (1 < Object.keys(withoutfileProperties).length) {
+            if (0 < Object.keys(withoutFileProperties).length) {
                 const url = `/api/${urlDirectory}` + (newItem ? "/create" : `/${id}/update`);
-                response = newItem ? await post(url, withoutfileProperties) : await patch(url, withoutfileProperties);
+                response = newItem ? await post(url, withoutFileProperties) : await patch(url, withoutFileProperties);
                 id = response.data.id;
             }
             if (0 < Object.keys(fileProperties).length) {
@@ -59,6 +68,7 @@ export default function useApi<T extends RequestDataItem>(urlDirectory: string, 
 
         const {
             mutate: mutateItem,
+            data: mutateResult,
             reset: resetMutation,
             isLoading: isMutateLoading,
             isSuccess: isMutateSuccess,
@@ -72,6 +82,7 @@ export default function useApi<T extends RequestDataItem>(urlDirectory: string, 
             isListError,
             listError,
             mutateItem,
+            mutateResult,
             resetMutation,
             isMutateLoading,
             isMutateSuccess,

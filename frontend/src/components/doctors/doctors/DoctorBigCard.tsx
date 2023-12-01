@@ -1,18 +1,22 @@
-import { Doctor, getDoctorNearestLocation } from "../../../types/doctors/doctor";
+import { useState } from "react";
+import { Col, Container, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
+
+import { Doctor, getDoctorNearestLocation, getDoctorReviews } from "../../../types/doctors/doctor";
 import { Location } from "../../../utils/googleMaps/useGoogleMaps";
 import { DistanceUnit } from "../../utils/DistanceUnit";
 import DoctorImage from "./DoctorImage";
 import DoctorVerification from "./DoctorVerification";
-import Rating from "./Rating";
 import DoctorCategoryRibbon from "./DoctorCategory";
 import DoctorSpecialityRibbon from "./DoctorSpeciality";
 import DoctorLocationAddress from "./DoctorLocationAddress";
-import { Col, Container, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
 import Icon from "../../utils/Icon";
 import Button from "../../utils/Button";
-import { useState } from "react";
+import Rating from "../../utils/Rating";
 import useAuth from "../../../auth/useAuth";
 import useUser from "../../../hooks/auth/useUsers";
+import SingleReviewCard from "../../reviews/SingleReviewCard";
+import { useUserReviews } from "../../../hooks/doctors/useReviews";
+import UserReviewsForm from "../../reviews/UserReviewsForm";
 
 interface DoctorBigCardProps {
     doctor: Doctor;
@@ -27,12 +31,14 @@ function DoctorBigCard({ doctor, locationForDistanceCalculation, distanceUnit = 
 
     const [selectedLocation, setSelectedLocation] = useState(closestLocation || doctor.locations[0]);
 
-    // TODO: replace with the real fields
-    const averageRating = undefined;
-    const totalReviews = undefined;
+    const allReviews = getDoctorReviews(doctor);
 
     const { user, isAuthenticated } = useAuth();
     const { userInfo, mutateSavedDoctors } = useUser(user);
+
+    const { data: userReviews } = (userInfo && useUserReviews(userInfo, doctor)) || { data: [] };
+
+    const [addingReview, setAddingReview] = useState(false);
 
     return (
         <Container className={`doctorBigCard mx-0 ps-0 pe-3`} fluid>
@@ -86,7 +92,7 @@ function DoctorBigCard({ doctor, locationForDistanceCalculation, distanceUnit = 
                             </Col>
                         ))}
                     </Row>
-                    <Row className="w-100 m-0 gap-0 py-1">
+                    <Row className="w-100 m-0 gap-0 py-1 doctor-location">
                         {doctor.locations.map((location) => (
                             <Button
                                 label={location?.hospitalName || ""}
@@ -105,7 +111,7 @@ function DoctorBigCard({ doctor, locationForDistanceCalculation, distanceUnit = 
                             </Button>
                         ))}
                     </Row>
-                    <Row className="w-100 m-0 gap-3 py-1">
+                    <Row className="w-100 m-0 gap-3 py-1 doctor-location">
                         {selectedLocation?.privateOnly}
                         <DoctorLocationAddress
                             doctorLocation={selectedLocation}
@@ -139,10 +145,51 @@ function DoctorBigCard({ doctor, locationForDistanceCalculation, distanceUnit = 
                             />
                         )}
                     </Row>
-                    <Row className="w-100 m-0">
-                        {averageRating && totalReviews && (
-                            <Rating averageRating={averageRating} totalReviews={totalReviews} />
-                        )}
+                    <img src="images/line.png" className="py-3" width="100%" />
+                    <Row className="m-0">
+                        <Col className="p-0 m-0" sm="auto">
+                            {doctor.avgRating && doctor.numOfReviews && (
+                                <Rating averageRating={doctor.avgRating} totalReviews={doctor.numOfReviews} />
+                            )}
+                        </Col>
+
+                        <Col className="p-0 m-0 d-flex justify-content-end">
+                            {userInfo &&
+                                !addingReview &&
+                                !(0 < userReviews?.filter((review) => review.status !== "DELETED").length) && (
+                                    <a
+                                        onClick={() => setAddingReview(true)}
+                                        className="inherit-font-style a-no-decoration-line"
+                                    >
+                                        <Icon icon="fa-plus" />
+                                        Add a review
+                                    </a>
+                                )}
+                        </Col>
+                    </Row>
+
+                    {userInfo && (
+                        <Row className="m-0">
+                            <UserReviewsForm
+                                userInfo={userInfo}
+                                doctor={doctor}
+                                addingReview={addingReview}
+                                setAddingReview={setAddingReview}
+                                allowAddingReview={true}
+                                showOnlyEditableReviews={true}
+                                showDoctorName={false}
+                            />
+                        </Row>
+                    )}
+
+                    <Row className="m-0">
+                        {allReviews
+                            .filter((review) => review.status == "APPROVED")
+                            .map((review) => (
+                                <Row key={review.id!} className="m-0 p-0 pt-4">
+                                    <SingleReviewCard review={review} />
+                                </Row>
+                            ))}
                     </Row>
                 </Col>
             </Row>

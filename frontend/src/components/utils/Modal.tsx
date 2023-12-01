@@ -14,7 +14,7 @@ import { ResponseError } from "../../hooks/useApiRequest";
 import AddressInputFormField from "./form/addressField";
 import MultiSelectField from "./form/multiSelectFormField";
 
-interface ModalProps<T> {
+interface ModalProps<T> extends React.PropsWithChildren {
     t: T;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     fields: (ModalField<T> | ListField<T, any>)[];
@@ -37,6 +37,7 @@ function Modal<T>({
     isSaving,
     isSavingError,
     savingError,
+    children,
 }: ModalProps<T>) {
     const [dataChanged, setDataChanged] = useState(false);
     const [dataObject, setDataObject] = useState({ ...t });
@@ -105,10 +106,14 @@ function Modal<T>({
                 );
                 break;
             case "datetime":
-                return reacteNodeWrapper(
-                    <DateTimeFormField<O> field={field} object={object} onChange={onChange} />,
-                    field.label,
-                    wrapAsFormRow
+                return field.setter || field.getter(object) ? (
+                    reacteNodeWrapper(
+                        <DateTimeFormField<O> field={field} object={object} onChange={onChange} />,
+                        field.label,
+                        wrapAsFormRow
+                    )
+                ) : (
+                    <></>
                 );
                 break;
             case "boolean":
@@ -161,6 +166,7 @@ function Modal<T>({
                 <ReactModal.Header closeButton={true}>
                     <ReactModal.Title>{getTitle(dataObject)}</ReactModal.Title>
                 </ReactModal.Header>
+                <ReactModal.Body>{children}</ReactModal.Body>
                 <ReactModal.Body>
                     {fields.map((field) => {
                         if (field.type === "list") {

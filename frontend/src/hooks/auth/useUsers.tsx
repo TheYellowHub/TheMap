@@ -46,12 +46,12 @@ export default function useUser(user?: User) {
         if (userInfo === undefined) {
             return undefined;
         } else {
-            if (userInfo.savedDoctors.includes(doctorId)) {
-                userInfo.savedDoctors = userInfo.savedDoctors.filter(
+            if (userInfo.savedDoctors?.includes(doctorId)) {
+                userInfo.savedDoctors = userInfo.savedDoctors?.filter(
                     (existingDoctorId: number) => existingDoctorId !== doctorId
                 );
             } else {
-                userInfo.savedDoctors.push(doctorId);
+                userInfo.savedDoctors?.push(doctorId);
             }
             const response = await patch(url, { ...userInfo });
             return response?.data;

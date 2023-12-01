@@ -17,6 +17,7 @@ interface SingleSelectProps {
     onChange?: (newValue: string | undefined) => void;
     icon?: string;
     disabled?: boolean;
+    className?: string;
 }
 
 interface MultiSelectProps {
@@ -30,6 +31,7 @@ interface MultiSelectProps {
     onChange?: (newValue: string[]) => void;
     icon?: string;
     disabled?: boolean;
+    className?: string;
 }
 
 export default function Select({
@@ -43,6 +45,7 @@ export default function Select({
     onChange = undefined,
     icon = undefined,
     disabled = false,
+    className = "",
 }: SingleSelectProps | MultiSelectProps) {
     const [dropdownOpen, setDropdownOpen] = icon === undefined ? [undefined, undefined] : useState(false);
     const valueToSelectOption = (value: string) => ({ value: value, label: value }) as SelectOption;
@@ -92,7 +95,7 @@ export default function Select({
             placeholder={placeHolder}
             menuIsOpen={dropdownOpen}
             classNamePrefix="react-select"
-            className="multi-select"
+            className={`multi-select ${className}`}
             onChange={(newValues) => onChange && onChange(newValues.map((newValue) => newValue!.value) as any)}
             isClearable={allowEmptySelection}
             isDisabled={disabled}
@@ -108,7 +111,7 @@ export default function Select({
             placeholder={placeHolder}
             menuIsOpen={dropdownOpen}
             classNamePrefix="react-select"
-            className="single-select"
+            className={`single-select ${className}`}
             onChange={(newValue) => onChange && onChange(newValue === null ? undefined : (newValue!.value as any))}
             isClearable={allowEmptySelection}
             isDisabled={disabled}

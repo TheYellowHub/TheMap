@@ -1,5 +1,23 @@
 @import url("https://fonts.googleapis.com/css2?family=Assistant:wght@700&family=Poppins:wght@400;500;700&family=Roboto:ital@0;1&display=swap");
 
+@font-face {
+    font-family: "Font Awesome 6 Pro";
+    font-weight: 900;
+    src: url('./fonts/Font Awesome/FONT AWESOME 6 PRO-SOLID-900.OTF') format('opentype');
+}
+
+@font-face {
+    font-family: "Font Awesome 6 Pro";
+    font-weight: 400;
+    src: url('./fonts/Font Awesome/FONT AWESOME 6 PRO-REGULAR-400.OTF') format('opentype');
+}
+
+@font-face {
+    font-family: "Font Awesome 6 Pro";
+    font-weight: 300;
+    src: url('./fonts/Font Awesome/FONT AWESOME 6 PRO-LIGHT-300.OTF') format('opentype');
+}
+
 :root {
     --logo-height: 4rem;
     --header-height: calc(var(--logo-height) + var(--layout-padding));
@@ -13,6 +31,7 @@
     --very-light-grey: #f8f9fa;
     --dark-yellow: #97750b;
     --med-dark-yellow: #fabc05;
+    --star-yellow: #e3bb40;
     --med-yellow: #f2c94c;
     --med-light-yellow: #f6db87;
     --light-yellow: #fcefca;
@@ -44,6 +63,10 @@
 
 .med-yellow {
     color: var(--med-yellow);
+}
+
+.star-yellow {
+    color: var(--star-yellow) !important;
 }
 
 .light-yellow {
@@ -86,6 +109,13 @@
     font-size: 0.625rem;
 }
 
+/* Icons */
+
+.fa-syringe::before {
+    content: "\f61d";
+    font-family: "Font Awesome 6 Pro";
+}
+
 /* General */
 
 * {
@@ -100,7 +130,7 @@
     box-sizing: border-box !important;
 }
 
-.inheritTextStyle {
+.inherit-font-style {
     color: inherit;
     font-family: inherit;
     font-size: inherit;
@@ -117,16 +147,14 @@
     line-height: 1.25rem;
 }
 
+.strong {
+    font-weight: bold;
+}
+
 .transparent,
 .transparent .modal-content {
     background-color: transparent;
     border-color: transparent;
-}
-
-a {
-    color: var(--dark-blue);
-    font-size: 0.875rem;
-    text-decoration-line: underline;
 }
 
 i {
@@ -137,16 +165,28 @@ i {
     padding: 0rem 0.5rem;
 }
 
-a {
+a, a:not([href]):not([class]) {
+    color: var(--med-blue);
     text-decoration: none;
+    text-decoration-line: underline;
+    cursor: pointer;
 }
 
-a:hover {
+a:hover, a:not([href]):not([class]):hover {
+    color: var(--med-blue);
     text-decoration: underline;
 }
 
-a:hover i {
+a:hover i, a:not([href]):not([class]) i {
     text-decoration: underline var(--very-light-grey) !important;
+}
+
+a.a-no-decoration-line {
+    text-decoration-line: none;
+}
+
+a.a-no-decoration-line:hover {
+    text-decoration-line: none;
 }
 
 .title {
@@ -161,6 +201,17 @@ a:hover i {
     z-index: 99999 !important;
     background-color: #035763;
     position: absolute;
+}
+
+.select-min-height .react-select__control {
+    padding-top: 1px !important;
+    padding-bottom: 1px !important;
+    min-height: 0 !important;
+}
+
+.select-no-border .react-select__control {
+    padding-left: 0 !important;
+    border-width: 0 !important;
 }
 
 /* Header & footer */
@@ -315,7 +366,7 @@ footer {
 }
 
 .navbar i {
-    font-family: "Font Awesome 6 Free";
+    font-family: "Font Awesome 6 Pro";
     font-size: 0.625rem;
 }
 
@@ -478,6 +529,14 @@ td {
     border-color: var(--med-grey);
 }
 
+.btn-no-colors,
+.btn-no-colors:hover,
+.btn-no-colors:active,
+.btn-no-colors:disabled {
+    background: white;
+    border-color: white !important;
+}
+
 /* Forms */
 
 select,
@@ -501,7 +560,6 @@ input,
 
 select,
 input,
-.form-select,
 .form-select,
 .multiSelectContainer input 
 .react-datetime-picker__wrapper,
@@ -553,6 +611,33 @@ input[type="checkbox"] {
     width: 1rem;
     height: 1rem;
     margin-inline-end: 0.3rem;
+}
+
+.switch-on input[type="checkbox"],
+.switch-off input[type="checkbox"] {
+    display: none;
+}
+
+.switch-on input[type="checkbox"] + label:before,
+.switch-off input[type="checkbox"] + label:before {
+    font-family: "Font Awesome 6 Pro";
+    font-weight: 400;
+}
+
+.switch-on input[type="checkbox"] + label:before{
+    color: var(--med-blue);
+    content: "\e5b1 \00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0";
+}
+
+.switch-off input[type="checkbox"] + label:before{
+    color: var(--med-grey);
+    content: "\e5b0 \00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0";
+}
+
+.textarea {
+    border-radius: 0.625rem !important;
+    border: 1px solid var(--med-blue) !important;
+    height: 7rem;
 }
 
 /* react-datetime */
@@ -611,6 +696,7 @@ input[type="checkbox"] {
     border-radius: 0.125rem;
     background: white;
     box-shadow: 5px 5px 12px 2px rgba(120, 120, 120, 0.25), 0px 4px 20px 3px rgba(65, 65, 65, 0.25);
+    width: max-content;
 }
 
 .react-select__option {
@@ -660,7 +746,7 @@ input[type="checkbox"] {
     content: "\f0c8";
     vertical-align: top;
     color: var(--dark-grey);
-    font-family: "Font Awesome 6 Free";
+    font-family: "Font Awesome 6 Pro";
     font-size: 0.625rem;
     padding-right: 0.625rem;
 }
@@ -796,11 +882,11 @@ div:has(.small-address-filter) {
     border-radius: 0.25rem;
     gap: 1rem;
     min-height: 8.875rem;
-    cursor: pointer;
 }
 
 .doctorSmallCard {
     max-width: 26rem;
+    cursor: pointer;
 }
 
 .doctorBigCard {
@@ -844,10 +930,12 @@ div:has(.small-address-filter) {
 .doctorBigCard .btn {
     line-height: 2rem;
     padding: 0 1rem;
+}
+
+.doctorBigCard .doctor-location .btn {
     word-break: break-all;
     overflow: hidden;
     display: -webkit-box;
-    /* display: -webkit-inline-box; */
     line-clamp: 1;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;

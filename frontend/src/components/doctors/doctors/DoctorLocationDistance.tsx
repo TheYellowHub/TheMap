@@ -34,6 +34,7 @@ function DoctorLocationDistance({
                         target="_blank"
                         rel="noreferrer"
                         onClick={(e) => e.stopPropagation()}
+                        className="a-no-decoration-line"
                     >
                         <p className="med-grey p-0 m-0">
                             {distance.toFixed(1)} {distanceUnit}

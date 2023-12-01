@@ -7,7 +7,8 @@ interface BooleanFormFieldProps<T> {
     field: BooleanField<T>;
     object: T;
     onChange?: (newObject: T) => void;
-    withLabel: boolean;
+    withLabel?: boolean;
+    label?: string;
 }
 
 export default function BooleanFormField<T>({
@@ -15,15 +16,16 @@ export default function BooleanFormField<T>({
     object,
     onChange = undefined,
     withLabel = true,
+    label = undefined,
 }: BooleanFormFieldProps<T>) {
     return (
         <Form.Check
             type="switch"
             id={field.label}
-            label={withLabel ? field.label : ""}
+            label={withLabel ? (label ? label : field.label) : ""}
             defaultChecked={field.getter(object)}
             readOnly={field.setter === undefined}
-            onBlur={(e: FocusEvent<HTMLInputElement>) => {
+            onChange={(e: FocusEvent<HTMLInputElement>) => {
                 if (field.setter !== undefined && e.target.checked != e.target.defaultChecked) {
                     object = field.setter(object, e.target.checked);
                     if (onChange !== undefined) {
@@ -31,6 +33,7 @@ export default function BooleanFormField<T>({
                     }
                 }
             }}
+            className={`d-flex align-items-center px-0 switch-${field.getter(object) ? "on" : "off"}`}
         />
     );
 }

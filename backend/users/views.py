@@ -17,10 +17,10 @@ class IsCurrentUser(permissions.BasePermission):
     """
 
     def has_object_permission(self, request, view, user_object: User):
-        return user_object.remote_id.replace("|", ".") == str(request.user)
+        return user_object == request.user
 
 
-@permission_classes([IsCurrentUser])
+@permission_classes([permissions.IsAuthenticated & IsCurrentUser])
 class UserRetrieveUpdateView(generics.RetrieveUpdateAPIView):
     """
     Get full information about a user or update it.
@@ -31,10 +31,8 @@ class UserRetrieveUpdateView(generics.RetrieveUpdateAPIView):
     serializer_class = UserSerializer
     lookup_field = "remote_id"
 
-    # TODO: Create if doesn't exists
-
     def get_object(self):
-        if self.request.method == HTTPMethod.PATCH:
+        if self.request.method:
             user, created = User.objects.get_or_create(
                 remote_id=self.kwargs.get(self.lookup_field)
             )

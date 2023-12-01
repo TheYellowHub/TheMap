@@ -19,6 +19,11 @@ export interface TextField<T> extends Field<T, string | undefined> {
     setter?: (t: T, newValue: string) => T;
 }
 
+export interface LongTextField<T> extends Field<T, string | undefined> {
+    type: "long-text";
+    setter?: (t: T, newValue: string) => T;
+}
+
 export interface AddressField<T> extends Field<T, string | undefined> {
     type: "address";
     setter?: (t: T, newValue: string) => T;
@@ -73,6 +78,7 @@ export interface ImageField<T> extends Field<T, ImageFileOrUrl | undefined> {
 
 export type ModalField<T> =
     | TextField<T>
+    | LongTextField<T>
     | AddressField<T>
     | UrlField<T>
     | EmailField<T>

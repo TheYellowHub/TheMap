@@ -1,4 +1,6 @@
+import { UserInfo } from "../../auth/userInfo";
 import { DistanceUnit } from "../../components/utils/DistanceUnit";
+import { useDoctorReviews } from "../../hooks/doctors/useReviews";
 import useGoogleMaps, { Location } from "../../utils/googleMaps/useGoogleMaps";
 import { ImageFileOrUrl } from "../Image";
 import { DateTime } from "../utils/dateTime";
@@ -45,13 +47,13 @@ export type Doctor = {
     nancysNook?: boolean;
     image?: ImageFileOrUrl;
     status?: DoctorStatus;
-    // TODO: addedBy?: User;
+    addedBy?: UserInfo;
     addedAt?: DateTime;
     approvedAt?: DateTime;
     rejectedAt?: DateTime;
     updatedAt?: DateTime;
-    // TODO: reviews
-    // TODO: average rating
+    numOfReviews?: number;
+    avgRating?: number;
 };
 
 export const newDoctor = (): Doctor => {
@@ -95,4 +97,9 @@ export function getDoctorMinimalDistance(doctor: Doctor, location: Location, dis
     const doctorLocation = getDoctorNearestLocation(doctor, location);
 
     return doctorLocation === null ? Infinity : getDoctorLocationDistance(doctorLocation, location, distanceUnit);
+}
+
+export function getDoctorReviews(doctor: Doctor) {
+    const { data } = useDoctorReviews(doctor);
+    return data;
 }

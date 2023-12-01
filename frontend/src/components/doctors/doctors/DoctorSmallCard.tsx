@@ -5,7 +5,7 @@ import { Location } from "../../../utils/googleMaps/useGoogleMaps";
 import { DistanceUnit } from "../../utils/DistanceUnit";
 import DoctorImage from "./DoctorImage";
 import DoctorVerification from "./DoctorVerification";
-import Rating from "./Rating";
+import Rating from "../../utils/Rating";
 import DoctorCategory from "./DoctorCategory";
 import DoctorLocationAddress from "./DoctorLocationAddress";
 import Icon from "../../utils/Icon";
@@ -29,10 +29,6 @@ function DoctorSmallCard({
 }: DoctorSmallCardProps) {
     const closestLocation =
         locationForDistanceCalculation && getDoctorNearestLocation(doctor, locationForDistanceCalculation);
-
-    // TODO: replace with the real fields
-    const averageRating = undefined;
-    const totalReviews = undefined;
 
     const { user } = useAuth();
     const { userInfo } = useUser(user);
@@ -72,8 +68,8 @@ function DoctorSmallCard({
                         )}
                     </Row>
                     <Row className="w-100 m-0">
-                        {averageRating && totalReviews && (
-                            <Rating averageRating={averageRating} totalReviews={totalReviews} />
+                        {doctor.avgRating && doctor.numOfReviews && (
+                            <Rating averageRating={doctor.avgRating} totalReviews={doctor.numOfReviews} />
                         )}
                     </Row>
                 </Col>

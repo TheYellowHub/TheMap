@@ -186,7 +186,6 @@ function DoctorModal({ doctor, showModal, onCancel, onSave, isSaving, isSavingEr
                 return { ...doctor, image: newValue };
             },
         },
-        // TODO: replace status with action buttons ?
         {
             type: "singleSelect",
             label: "Status",
@@ -201,6 +200,11 @@ function DoctorModal({ doctor, showModal, onCancel, onSave, isSaving, isSavingEr
                 };
             }),
             required: true,
+        },
+        {
+            type: "text",
+            label: "Added by",
+            getter: (doctor) => doctor.addedBy?.remoteId,
         },
         {
             type: "datetime",

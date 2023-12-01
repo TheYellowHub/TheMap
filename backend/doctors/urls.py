@@ -20,9 +20,13 @@ from .views.doctor import (
     DoctorListView,
     DoctorCreateView,
     DoctorUpdateView,
-    DoctorInfoView,
 )
 
+from .views.review import (
+    DoctorReviewCreateView,
+    DoctorReviewListView,
+    DoctorReviewUpdateView,
+)
 
 urlpatterns = [
     # Doctor category
@@ -51,5 +55,14 @@ urlpatterns = [
     path("doctor/list", DoctorListView.as_view(), name="list-doctors"),
     path("doctor/create", DoctorCreateView.as_view(), name="create-doctor"),
     path("doctor/<int:pk>/update", DoctorUpdateView.as_view(), name="update-doctor"),
-    path("doctor/<int:pk>", DoctorInfoView.as_view(), name="retrieve-doctor"),
+    # Doctor's reviews
+    path("review/list", DoctorReviewListView.as_view(), name="list-doctors-review"),
+    path(
+        "review/create", DoctorReviewCreateView.as_view(), name="create-doctor-review"
+    ),
+    path(
+        "review/<int:pk>/update",
+        DoctorReviewUpdateView.as_view(),
+        name="update-doctor-review",
+    ),
 ]

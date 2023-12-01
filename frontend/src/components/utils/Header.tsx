@@ -77,6 +77,11 @@ function Header() {
                 icon: "fa-bookmark",
             },
             {
+                to: "/user/reviews",
+                title: "My reviews",
+                icon: "fa-star-half-stroke",
+            },
+            {
                 to: "/",
                 onClick: logout,
                 title: "Log out",
@@ -90,10 +95,6 @@ function Header() {
             //     to: "/user/addeddoctors",
             //     title: "Doctors I added",
             // },
-            // {
-            //     to: "/user/reviews",
-            //     title: "My reviews",
-            // },
         ],
     };
 
@@ -101,16 +102,20 @@ function Header() {
         title: "Admin",
         links: [
             {
-                to: "/doctors/doctors",
+                to: "/admin/doctors",
                 title: "Doctors",
             },
             {
-                to: "/doctors/categories",
+                to: "/admin/categories",
                 title: "Categories",
             },
             {
-                to: "/doctors/specialities",
+                to: "/admin/specialities",
                 title: "Specialities",
+            },
+            {
+                to: "/admin/reviews",
+                title: "Reviews",
             },
             // TODO
             // {
@@ -172,7 +177,6 @@ function Header() {
                                             onClick={(e) => {
                                                 setSelectedSubMenu(dropdown.title);
                                                 link.onClick && link.onClick(e);
-                                                // link.onClick ? link.onClick(e) : (window.location.href = link.to);
                                             }}
                                             eventKey={link.to}
                                         >

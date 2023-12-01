@@ -21,8 +21,9 @@ interface MapScreenProps {
 
 function MapScreen({ startWithMyList = false }: MapScreenProps) {
     const { data: doctors, isListLoading, isListError, listError } = useDoctors();
-    const { id: initialDoctorId } = useParams();
-    const [initialDoctorIdParamWasUsed, setInitialDoctorIdParamWasUsed] = useState(false);
+    const { id: doctorIdParam } = useParams();
+    const [doctorIdParamWasUsed, setDoctorIdParamWasUsed] = useState(false);
+    const [filterChangeSinceLastDoctorPick, setFilterChangeSinceLastDoctorPick] = useState(false);
 
     const [matchedDoctorsIgnoringDistance, setMatchedDoctorsIgnoringDistance] = useState<Doctor[]>([]);
     const [matchedDoctorsIncludingDistance, setMatchedDoctorsIncludingDistance] = useState<Doctor[]>([]);
@@ -58,7 +59,9 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
     useEffect(() => {
         if (shouldClearFilters) {
             setShouldClearFilters(false);
-            setCurrentDoctor(null);
+            if (currentDoctor !== null) {
+                setCurrentDoctor(null);
+            }
         }
     }, [shouldClearFilters]);
 
@@ -72,31 +75,48 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
     }, [shouldClearAddress]);
 
     useEffect(() => {
+        if (filterChangeSinceLastDoctorPick && currentDoctor !== null) {
+            setCurrentDoctor(null);
+        }
+    }, [filterChangeSinceLastDoctorPick]);
+
+    useEffect(() => {
         if (currentDoctor === null) {
             setCurrentDoctorLocation(null);
-        } else if (currentDoctorLocation === null) {
-            if (addressLocation !== undefined) {
-                setCurrentDoctorLocation(getDoctorNearestLocation(currentDoctor, addressLocation));
-            } else if (currentDoctor.locations.length > 0) {
-                setCurrentDoctorLocation(currentDoctor.locations[0]);
+        } else if (currentDoctor !== null) {
+            if (doctorIdParam && !doctorIdParamWasUsed) {
+                setDoctorIdParamWasUsed(true);
+            }
+            setFilterChangeSinceLastDoctorPick(false);
+            if (currentDoctorLocation === null) {
+                if (addressLocation !== undefined) {
+                    setCurrentDoctorLocation(getDoctorNearestLocation(currentDoctor, addressLocation));
+                } else if (currentDoctor.locations.length > 0) {
+                    setCurrentDoctorLocation(currentDoctor.locations[0]);
+                }
             }
         }
-        currentDoctor && window.history.replaceState(null, "", `#/${currentDoctor?.id}`);
+        window.history.replaceState(null, "", `#/${currentDoctor?.id || ""}`);
     }, [currentDoctor]);
 
     useEffect(() => {
+        if (doctorIdParam) {
+            setDoctorIdParamWasUsed(false);
+        }
+    }, [doctorIdParam]);
+
+    useEffect(() => {
         if (doctors && 0 < doctors.length) {
-            if (initialDoctorId && !initialDoctorIdParamWasUsed) {
-                const doctor = doctors.find((doctor: Doctor) => doctor.id === Number(initialDoctorId));
+            if (doctorIdParam && !doctorIdParamWasUsed) {
+                const doctor = doctors.find((doctor: Doctor) => doctor.id === Number(doctorIdParam));
                 if (doctor !== undefined) {
                     setCurrentDoctor(doctor);
+                } else if (currentDoctor !== null) {
+                    setCurrentDoctor(null);
                 }
-                setInitialDoctorIdParamWasUsed(true);
-            } else if (currentDoctor) {
-                setCurrentDoctor(null);
             }
         }
-    }, [doctors, matchedDoctorsIncludingDistance, initialDoctorId]);
+    }, [doctors, matchedDoctorsIncludingDistance, doctorIdParam, doctorIdParamWasUsed]);
 
     return (
         <LoadingWrapper isLoading={isListLoading} isError={isListError} error={listError as ResponseError}>
@@ -124,6 +144,7 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
                                 setShouldClearFilters={setShouldClearFilters}
                                 shouldClearAddress={shouldClearAddress}
                                 setShouldClearAddress={setShouldClearAddress}
+                                setValueChange={setFilterChangeSinceLastDoctorPick}
                             />
 
                             {address === undefined && currentDoctor === null && !startWithMyList && (
@@ -155,7 +176,7 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
                             </Col>
                             <Col sm={4} className="d-flex justify-content-end text-nowrap" style={{ paddingRight: 12 }}>
                                 {address && distance && (
-                                    <a href="#" onClick={() => setDistance(distance + 20)}>
+                                    <a onClick={() => setDistance(distance + 20)} className="sm-font">
                                         <Icon icon="fa-location-crosshairs" />
                                         Search larger area
                                     </a>
