@@ -19,4 +19,3 @@ TODO:
 7. report an issue - button + external link
 
 8. Tests
-
