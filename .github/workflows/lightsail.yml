@@ -80,4 +80,4 @@ jobs:
                   ENDPOINT=$(echo $LAST_DEPLOYMENT | jq -r '.publicEndpoint')
                   echo CONTAINER=$CONTAINER
                   echo ENDPOINT=$ENDPOINT
-                  aws lightsail create-container-service-deployment --region ${{ vars.AWS_REGION }} --service-name ${{ vars.AWS_LIGHTSAIL_SERVICE }} --containers "$CONTAINER" --public-endpoint $ENDPOINT
+                  aws lightsail create-container-service-deployment --region ${{ vars.AWS_REGION }} --service-name ${{ vars.AWS_LIGHTSAIL_SERVICE }} --containers "$CONTAINER" --public-endpoint "$ENDPOINT"
