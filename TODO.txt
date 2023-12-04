@@ -1,7 +1,5 @@
 TODO:
 
-*. debug / allowed host issue
-
 0. Review all the changes in both side branches
 
 1. AWS - deployment
