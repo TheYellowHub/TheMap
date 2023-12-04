@@ -21,7 +21,7 @@ python manage.py initadmin
 # coverage html
 
 # echo "Starting gunicorn server in production mode"
-gunicorn base.wsgi --bind 0.0.0.0:8000 --workers $((2*$(grep -c ^processor /proc/cpuinfo) + 1)) --worker-class gthread
+gunicorn base.wsgi --bind 0.0.0.0:8000 --workers $((2*$(grep -c ^processor /proc/cpuinfo) + 1)) --threads 4 # --worker-class gthread causes out-of-memory in this version
 
 # TODO: var
 # echo "Starting gunicorn server in DEBUG mode"

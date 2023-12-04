@@ -5,8 +5,7 @@ services:
   db:
     image: postgres
     env_file:
-      - ./docker/env/db_variables.env
-      - ./docker/env/envkey.env
+      - ./docker/backend/envkey.env
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 10s
@@ -22,11 +21,7 @@ services:
       context: .
       dockerfile: ./docker/backend/Dockerfile
     env_file:
-      - ./docker/env/db_variables.env
-      - ./docker/env/auth_variables.env
-      - ./docker/env/envkey.env
-      - ./docker/env/django_variables.env
-      - ./docker/backend/django_variables.env
+      - ./docker/backend/envkey.env
     entrypoint: ./backend-entrypoint.sh
     volumes:
       - static_volume:/app/django_static
