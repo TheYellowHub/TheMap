@@ -16,12 +16,11 @@ ADMIN_SCOPE = "adminPermission"
 
 def jwt_get_username_from_payload_handler(payload: dict) -> str | None:
     """Gets a request's payload and returns the username of the user who sent it"""
-    if payload:
-        sub = payload.get("sub")
-        if sub:
-            username = sub.replace("|", ".")
-            authenticate(remote_user=username)
-            return username
+    sub = payload.get("sub")
+    if sub:
+        username = sub.replace("|", ".")
+        authenticate(remote_user=username)
+        return username
 
 
 def jwt_decode_token(token: str):
