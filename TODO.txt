@@ -5,10 +5,8 @@ TODO:
 0. Review all the changes in both side branches
 
 1. AWS - deployment
-- compelete CI/CD:
--- delete all images
--- redeploy
-- adjust env vars
+- CI/CD - redeploy
+- adjust env vars ?
 
 2. Relevant data migration
 
