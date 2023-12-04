@@ -4,23 +4,21 @@ TODO:
 
 0. Review all the changes in both side branches
 
-1. AWS - deployment
-- CI/CD - redeploy
-- adjust env vars ?
+1. AWS CI/CD - redeploy
 
 2. Relevant data migration
 
 3. Mobile version bugs 
 
-3. 
+4. 
 - my propile -> set username
 - set username during review?
 
-4. multiple locations on the same spot - WIP, pending https://stackoverflow.com/questions/77557668/using-markerf-component-is-not-working-with-ts-overlapping-marker-spiderfier
+5. multiple locations on the same spot - WIP, pending https://stackoverflow.com/questions/77557668/using-markerf-component-is-not-working-with-ts-overlapping-marker-spiderfier
 
-5. message post review submit / save - add links
+6. message post review submit / save - add links
 
-6. report an issue - button + external link
+7. report an issue - button + external link
 
-7. Tests
+8. Tests
 
