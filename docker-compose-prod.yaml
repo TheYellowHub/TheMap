@@ -31,7 +31,7 @@ services:
       - static_volume:/app/static
       - media:/app/media
     ports:
-      - 80:8000
+      - 8000:8000
     healthcheck:
       test: [ "CMD-SHELL", "curl http://localhost:8000/ || exit 1" ]
       interval: 60s
