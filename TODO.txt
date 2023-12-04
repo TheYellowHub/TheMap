@@ -4,18 +4,20 @@ TODO:
 
 1. AWS CI/CD - redeploy
 
+0. Replace billing details in AWS
+
+1. Mobile version bugs 
+
 2. Relevant data migration
 
-3. Mobile version bugs 
-
-4. 
+3. 
 - my propile -> set username
 - set username during review?
 
-5. multiple locations on the same spot - WIP, pending https://stackoverflow.com/questions/77557668/using-markerf-component-is-not-working-with-ts-overlapping-marker-spiderfier
+4. multiple locations on the same spot - WIP, pending https://stackoverflow.com/questions/77557668/using-markerf-component-is-not-working-with-ts-overlapping-marker-spiderfier
 
-6. message post review submit / save - add links
+5. message post review submit / save - add links
 
-7. report an issue - button + external link
+6. report an issue - button + external link
 
-8. Tests
+7. Tests
