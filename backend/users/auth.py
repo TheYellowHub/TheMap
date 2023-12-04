@@ -80,7 +80,6 @@ def requires_scope(required_scope: str):
     ERROR_CODE = 403
 
     def require_scope(f):
-        # TODO: make sure it inheritis from rest_framework.views.APIView
         if inspect.isclass(f):
 
             class Decorated(f):

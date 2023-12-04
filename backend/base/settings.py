@@ -37,10 +37,17 @@ ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "").split(",")
 ECS_CONTAINER_METADATA_URI = os.environ.get("ECS_CONTAINER_METADATA_URI", None)
 if ECS_CONTAINER_METADATA_URI:
     container_metadata = requests.get(ECS_CONTAINER_METADATA_URI).json()
-    IP = container_metadata["Networks"][0]["IPv4Addresses"][0] 
+    IP = container_metadata["Networks"][0]["IPv4Addresses"][0]
     PORT = os.environ.get("DJANGO_PORT", None)
     ALLOWED_HOSTS.append(f"${IP}:${PORT}" if PORT else IP)
-    
+
+print("***************************")
+print("ECS_CONTAINER_METADATA_URI")
+print(os.environ.get("ECS_CONTAINER_METADATA_URI", None))
+print("ALLOWED_HOSTS")
+print(ALLOWED_HOSTS)
+print("***************************")
+
 
 # Application definition
 
