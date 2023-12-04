@@ -2,8 +2,6 @@ TODO:
 
 *. Lightsail / ALLOWED_HOST error
 
-0. Review all the changes in both side branches
-
 1. AWS CI/CD - redeploy
 
 2. Relevant data migration
