@@ -59,7 +59,7 @@ jobs:
                   echo $AWS_IMAGE_NAMES
                   FIRST=0
                   while read LINE; do
-                      aws lightsail delete-container-image --region ${{ vars.AWS_REGION }} --service-name ${{ vars.AWS_LIGHTSAIL_SERVICE }} --image $LINE;
+                      aws lightsail delete-container-image --region ${{ vars.AWS_REGION }} --service-name ${{ vars.AWS_LIGHTSAIL_SERVICE }} --image $LINE || true;
                   done <<< $AWS_IMAGE_NAMES
 
             - name: Push image
