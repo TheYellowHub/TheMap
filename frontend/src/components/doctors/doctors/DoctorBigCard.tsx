@@ -145,6 +145,10 @@ function DoctorBigCard({ doctor, locationForDistanceCalculation, distanceUnit = 
                             />
                         )}
                     </Row>
+                </Col>
+            </Row>
+            <Row>
+                <Col>
                     <img src="images/line.png" className="py-3" width="100%" />
                     <Row className="m-0">
                         <Col className="p-0 m-0" sm="auto">

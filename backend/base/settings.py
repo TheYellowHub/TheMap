@@ -16,7 +16,11 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 BACKEND_DIR = BASE_DIR
-FRONTEND_DIR = BASE_DIR.parent / "frontend"
+FRONTEND_DIR = (
+    BASE_DIR.parent / "frontend"
+    if os.environ.get("DJANGO_WITH_FRONTEND", "false").lower() == "true"
+    else None
+)
 
 
 # Quick-start development settings - unsuitable for production
@@ -91,8 +95,10 @@ TEMPLATES = [
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
             os.path.join(BACKEND_DIR, "templates"),
-            os.path.join(FRONTEND_DIR, "build"),
-        ],
+        ]
+        + [os.path.join(FRONTEND_DIR, "build")]
+        if FRONTEND_DIR
+        else [],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -192,13 +198,18 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 
-STATICFILES_DIRS = [
-    FRONTEND_DIR / "build" / "static",
-]
+STATICFILES_DIRS = (
+    [
+        FRONTEND_DIR / "build" / "static",
+    ]
+    if FRONTEND_DIR
+    else []
+)
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-STATIC_URL = "/static/"
+STATIC_URL = "/static/" if FRONTEND_DIR else "/django_static/"
 STATIC_ROOT = BACKEND_DIR / "static"
-WHITENOISE_ROOT = FRONTEND_DIR / "build" / "root"
+if FRONTEND_DIR:
+    WHITENOISE_ROOT = FRONTEND_DIR / "build" / "root"
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BACKEND_DIR / "media"

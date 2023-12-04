@@ -1,8 +1,10 @@
 TODO:
 
 1. AWS - deployment
-- with local images
-- fix CI/CD
+- compelete CI/CD:
+-- delete all images
+-- redploy
+- heaktcheck
 - adjust env vars
 
 2. Relevant data migration
@@ -18,3 +20,6 @@ TODO:
 5. message post review submit / save - add links
 
 6. report an issue - button + external link
+
+7. Tests
+

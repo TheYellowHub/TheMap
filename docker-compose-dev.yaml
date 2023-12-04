@@ -16,7 +16,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
       - ./htmlcov:/app/htmlcov # TODO: save it in the host automatically somehow
 
-  server:
+  backend:
     restart: unless-stopped
     build:
       context: .
@@ -24,8 +24,9 @@ services:
     env_file:
       - ./docker/env/db_variables.env
       - ./docker/env/auth_variables.env
-      - ./docker/env/django_variables.env
       - ./docker/env/envkey.env
+      - ./docker/env/django_variables.env
+      - ./docker/backend/django_variables.env
     entrypoint: ./backend-entrypoint.sh
     volumes:
       - static_volume:/app/django_static
@@ -45,19 +46,18 @@ services:
       db:
         condition: service_healthy
 
-  nginx:
+  frontend:
     restart: always
     build:
       context: .
-      dockerfile: ./docker/nginx/Dockerfile
+      dockerfile: ./docker/frontend/Dockerfile
     ports:
       - 80:80
     volumes:
       - static_volume:/app/django_static
       - media:/app/media
-      - ./docker/nginx/development:/etc/nginx/conf.d
     depends_on:
-      server:
+      backend:
         condition: service_healthy
 
 volumes:

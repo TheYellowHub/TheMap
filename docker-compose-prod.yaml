@@ -24,17 +24,17 @@ services:
     env_file:
       - ./docker/env/db_variables.env
       - ./docker/env/auth_variables.env
-      - ./docker/env/django_variables.env
       - ./docker/env/envkey.env
-    entrypoint: /app/server-entrypoint.sh
+      - ./docker/env/django_variables.env
+      - ./docker/server/django_variables.env
     volumes:
       - static_volume:/app/static
       - media:/app/media
     ports:
-      - 8000:8000
+      - 80:8000
     healthcheck:
       test: [ "CMD-SHELL", "curl http://localhost:8000/ || exit 1" ]
-      interval: 10s
+      interval: 60s
       timeout: 5s
       retries: 5
     depends_on:

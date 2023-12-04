@@ -30,4 +30,4 @@ COPY ./docker/env /app/env
 RUN chmod +x /app/*.sh
 
 # Start the server
-# CMD ["sh", "server-entrypoint.sh"]
+CMD ["sh", "/app/server-entrypoint.sh"]

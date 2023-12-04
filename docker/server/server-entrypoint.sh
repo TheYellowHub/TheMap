@@ -16,19 +16,21 @@ echo "Collect static files"
 python $app collectstatic --noinput 
 echo "Create a superuser"
 python $app initadmin
+
 # TODO
 # echo "Run tests"
 # coverage run $app test -v 2
 # coverage report -m
 # coverage html
 
-# echo "Starting gunicorn server in production mode"
-# gunicorn base.wsgi --bind 0.0.0.0:8000 --workers 1 --threads 1
+# TODO: env/server variable
 
-echo "Starting waitress server in production mode"
-waitress-serve --port=8000 base.wsgi:application
+echo "Starting gunicorn server in production mode"
+gunicorn base.wsgi --bind 0.0.0.0:8000 --workers 4 --threads 4
 
-# TODO: var
+# echo "Starting waitress server in production mode"
+# waitress-serve --port=8000 base.wsgi:application
+
 # echo "Starting gunicorn server in DEBUG mode"
 # gunicorn base.wsgi --bind 0.0.0.0:8000 --workers 1 --threads 1 --log-level debug
 

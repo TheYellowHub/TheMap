@@ -17,7 +17,7 @@ jobs:
         environment: ECR
         strategy:
             matrix:
-                IMAGE_TAG: [server] # [backend, nginx]
+                IMAGE_TAG: [server] # [backend, frontend]
 
         steps:
             - name: Checkout
