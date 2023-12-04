@@ -40,13 +40,6 @@ if ECS_CONTAINER_METADATA_URI:
     IP = container_metadata["Networks"][0]["IPv4Addresses"][0].split(".")
     ALLOWED_CIDR_NETS = [f"{IP[0]}.{IP[1]}.0.0/16"]
 
-print("***************************")
-print("ECS_CONTAINER_METADATA_URI")
-print(os.environ.get("ECS_CONTAINER_METADATA_URI", None))
-print("ALLOWED_HOSTS")
-print(ALLOWED_HOSTS)
-print("***************************")
-
 
 # Application definition
 
