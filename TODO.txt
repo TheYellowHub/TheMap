@@ -2,7 +2,7 @@ TODO:
 
 *. Lightsail / ALLOWED_HOST error
 
-1. AWS CI/CD - redeploy
+*. AWS CI/CD - redeploy
 
 0. Replace billing details in AWS
 
