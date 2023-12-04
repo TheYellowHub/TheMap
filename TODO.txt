@@ -1,11 +1,14 @@
 TODO:
 
+0. Review all the changes in both side branches
+
 1. AWS - deployment
 - compelete CI/CD:
 -- delete all images
 -- redploy
 - heaktcheck
 - adjust env vars
+- num of gunicorn workers & theads ? 
 
 2. Relevant data migration
 
