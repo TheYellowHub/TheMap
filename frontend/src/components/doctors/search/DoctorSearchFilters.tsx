@@ -13,7 +13,6 @@ import Select from "../../utils/Select";
 import { DoctorCategory } from "../../../types/doctors/doctorCategory";
 import useAuth from "../../../auth/useAuth";
 import useUser from "../../../hooks/auth/useUsers";
-import useEffectOnlyAfterMount from "../../../hooks/useEffectOnlyAfterMount";
 
 interface DoctorSearchFiltersProps {
     address: string | undefined;
