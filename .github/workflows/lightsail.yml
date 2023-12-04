@@ -76,9 +76,6 @@ jobs:
             - name: Redeploy container
               run: |
                   CONTAINERS=$(aws lightsail get-container-service-deployments --region  eu-central-1 --service-name theyellowhub --query "deployments[0]")
-                  CONTAINER=$(echo $CONTAINERS | jq -r '.containers')
+                  CONTAINER=$(echo $CONTAINERS | jq -r '.containers' | sed -E 's/[0-9]+/latest/g')
                   echo $CONTAINER
-              # aws lightsail create-container-service-deployment --region ${{ vars.AWS_REGION }} --service-name ${{ vars.AWS_LIGHTSAIL_SERVICE }} --containers "$CONTAINER"
-
-            # The details should be copied from the results + change to latest
-            # sudo aws lightsail create-container-service-deployment --region  eu-central-1 --service-name theyellowhub --containers '{ "theyellowhub-backend": { "image": ":theyellowhub.theyellowhub-backend.latest", "command": [ "./server-entrypoint.sh" ], "environment": { "DJANGO_ALLOWED_HOST": "theyellowhub.e436k0l4ceo56.eu-central-1.cs.amazonlightsail.com", "DJANGO_AUTH_DEFAULT_ADMIN_PASSWORD": "admin", "DJANGO_AUTH_DEFAULT_ADMIN_USERNAME": "admin", "DJANGO_DB": "postgresql", "ENVKEY": "ek2JMzuYnXfbDzBT7zohjbfh-emFiXLSR3wuHYXK2ne6tMQ", "JWT_AUDIENCE": "TheYellowHubAPI", "JWT_DOMAIN": "dev-n1xcjabxc8i8oa6x.us.auth0.com", "POSTGRES_HOST": "ls-b17583d6192af3df9e43963dd117a0d8ddf9477f.cfuntwgwqi4b.eu-central-1.rds.amazonaws.com", "POSTGRES_INITDB_ARGS": "--auth=scram-sha-256", "POSTGRES_NAME": "dbmaster", "POSTGRES_PASSWORD": "]A5rR1f`rK3=F=UJ+wr5g>UjVGF~|OmN", "POSTGRES_USER": "dbmasteruser" }, "ports": { "8000": "HTTP" } }, "theyellowhub-nginx": { "image": ":theyellowhub.theyellowhub-nginx.latest", "command": [], "environment": {}, "ports": { "80": "HTTP" } } }' --public-endpoint '{ "containerName": "theyellowhub-nginx", "containerPort": 80, "healthCheck": { "healthyThreshold": 2, "unhealthyThreshold": 2, "timeoutSeconds": 2, "intervalSeconds": 60, "path": "/", "successCodes": "200-499" } }'
+                  aws lightsail create-container-service-deployment --region ${{ vars.AWS_REGION }} --service-name ${{ vars.AWS_LIGHTSAIL_SERVICE }} --containers "$CONTAINER"
