@@ -1,7 +1,20 @@
 TODO:
-my propile -> set username
-set username during review?
-hooks / render issue
-multiple locations on the same spot
-Relevant data migration
-message post review submit / save - add links
+
+1. AWS - deployment
+- with local images
+- fix CI/CD
+- adjust env vars
+
+2. Relevant data migration
+
+3. Mobile version bugs 
+
+3. 
+- my propile -> set username
+- set username during review?
+
+4. multiple locations on the same spot - WIP, pending https://stackoverflow.com/questions/77557668/using-markerf-component-is-not-working-with-ts-overlapping-marker-spiderfier
+
+5. message post review submit / save - add links
+
+6. report an issue - button + external link

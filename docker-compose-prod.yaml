@@ -20,44 +20,25 @@ services:
     restart: unless-stopped
     build:
       context: .
-      dockerfile: ./docker/backend/Dockerfile
+      dockerfile: ./docker/server/Dockerfile
     env_file:
       - ./docker/env/db_variables.env
       - ./docker/env/auth_variables.env
       - ./docker/env/django_variables.env
       - ./docker/env/envkey.env
-    entrypoint: ./backend-entrypoint.sh
+    entrypoint: /app/server-entrypoint.sh
     volumes:
-      - static_volume:/app/django_static
+      - static_volume:/app/static
       - media:/app/media
-    expose:
-      - 8000
+    ports:
+      - 8000:8000
     healthcheck:
-      test:
-        [
-          "CMD-SHELL",
-          "curl http://localhost:8000/admin || exit 1"
-        ]
+      test: [ "CMD-SHELL", "curl http://localhost:8000/ || exit 1" ]
       interval: 10s
       timeout: 5s
       retries: 5
     depends_on:
       db:
-        condition: service_healthy
-
-  nginx:
-    restart: always
-    build:
-      context: .
-      dockerfile: ./docker/nginx/Dockerfile
-    ports:
-      - 80:80
-    volumes:
-      - static_volume:/app/django_static
-      - media:/app/media
-      - ./docker/nginx/development:/etc/nginx/conf.d
-    depends_on:
-      server:
         condition: service_healthy
 
 volumes:

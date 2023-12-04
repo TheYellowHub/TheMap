@@ -1,0 +1,73 @@
+# This workflow will build and push a new container image to AWS Lightsail Container,
+# when there is a push to the "main" branch.
+
+name: Deploy to AWS Lightsail Container
+
+on:
+    push:
+        branches: ["main", "single-docker"]
+
+permissions:
+    contents: read
+
+jobs:
+    deploy:
+        name: Deploy
+        runs-on: ubuntu-latest
+        environment: ECR
+        strategy:
+            matrix:
+                IMAGE_TAG: [server] # [backend, nginx]
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+
+            - name: Build
+              env:
+                  IMAGE_TAG: ${{ matrix.IMAGE_TAG }}
+                  BUILD_ARG: CONF_FILE=prod.conf
+              run: |
+                  docker build . -f ./docker/${{ env.IMAGE_TAG }}/Dockerfile -t ${{ env.IMAGE_TAG }} --build-arg ${{ env.BUILD_ARG }}
+
+            - uses: aws-actions/setup-sam@v2
+              with:
+                  use-installer: true
+
+            - uses: aws-actions/configure-aws-credentials@v2
+              with:
+                  aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                  aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                  aws-region: ${{ vars.AWS_REGION }}
+
+            - name: Install AWS Lightsail plugin
+              shell: bash
+              run: |
+                  sudo curl "https://s3.us-west-2.amazonaws.com/lightsailctl/latest/linux-amd64/lightsailctl" -o "/usr/local/bin/lightsailctl"
+                  sudo chmod +x /usr/local/bin/lightsailctl
+
+            # TODO:
+            # delete current images
+            # run: |
+            # AWS_IMAGES=$(aws lightsail get-container-images --region ${{ inputs.aws-region }} --service-name ${{ inputs.aws-lightsail-service }} --output text)
+            # IMAGE_NAMES=$(echo $AWS_IMAGES | grep -Eo ':${{ inputs.aws-lightsail-service }}\.${{ inputs.image-name }}\.[0-9]+')
+            # echo $IMAGE_NAMES
+            # FIRST=0
+            # while read LINE; do
+            #   if [ "$FIRST" -ne 0 ]; then
+            #     aws lightsail delete-container-image --region ${{ inputs.aws-region }} --service-name ${{ inputs.aws-lightsail-service }} --image $LINE;
+            #   fi
+            # FIRST=1;
+            # done <<< $IMAGE_NAMES
+
+            - name: Push image
+              env:
+                  IMAGE_TAG: ${{ matrix.IMAGE_TAG }}
+                  IMAGE_TAG_PREFIX: theyellowhub
+              run: |
+                  aws lightsail push-container-image --region ${{ vars.AWS_REGION }} --service-name ${{ vars.AWS_LIGHTSAIL_SERVICE }} --label ${{env.IMAGE_TAG_PREFIX}}-${{ env.IMAGE_TAG }} --image ${{ env.IMAGE_TAG }}
+
+            # TODO:
+            # sudo aws lightsail   get-container-service-deployments --region  eu-central-1 --service-name theyellowhub --query "deployments[0]"
+            # The details should be copied from the results + change to latest
+            # sudo aws lightsail create-container-service-deployment --region  eu-central-1 --service-name theyellowhub --containers '{ "theyellowhub-backend": { "image": ":theyellowhub.theyellowhub-backend.latest", "command": [ "./server-entrypoint.sh" ], "environment": { "DJANGO_ALLOWED_HOST": "theyellowhub.e436k0l4ceo56.eu-central-1.cs.amazonlightsail.com", "DJANGO_AUTH_DEFAULT_ADMIN_PASSWORD": "admin", "DJANGO_AUTH_DEFAULT_ADMIN_USERNAME": "admin", "DJANGO_DB": "postgresql", "ENVKEY": "ek2JMzuYnXfbDzBT7zohjbfh-emFiXLSR3wuHYXK2ne6tMQ", "JWT_AUDIENCE": "TheYellowHubAPI", "JWT_DOMAIN": "dev-n1xcjabxc8i8oa6x.us.auth0.com", "POSTGRES_HOST": "ls-b17583d6192af3df9e43963dd117a0d8ddf9477f.cfuntwgwqi4b.eu-central-1.rds.amazonaws.com", "POSTGRES_INITDB_ARGS": "--auth=scram-sha-256", "POSTGRES_NAME": "dbmaster", "POSTGRES_PASSWORD": "]A5rR1f`rK3=F=UJ+wr5g>UjVGF~|OmN", "POSTGRES_USER": "dbmasteruser" }, "ports": { "8000": "HTTP" } }, "theyellowhub-nginx": { "image": ":theyellowhub.theyellowhub-nginx.latest", "command": [], "environment": {}, "ports": { "80": "HTTP" } } }' --public-endpoint '{ "containerName": "theyellowhub-nginx", "containerPort": 80, "healthCheck": { "healthyThreshold": 2, "unhealthyThreshold": 2, "timeoutSeconds": 2, "intervalSeconds": 60, "path": "/", "successCodes": "200-499" } }'

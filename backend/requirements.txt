@@ -45,4 +45,6 @@ tomlkit==0.12.1
 typing_extensions==4.7.1
 uritemplate==4.1.1
 urllib3==2.0.4
+waitress==2.1.2
+whitenoise==6.6.0
 wrapt==1.15.0
