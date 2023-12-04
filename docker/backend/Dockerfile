@@ -8,5 +8,5 @@ RUN pip install -r requirements.txt
 COPY ./backend/ /app/
 RUN rm -rf */__pycache__
 RUN rm -rf db.sqlite3
-COPY ./docker/backend/ /app
+COPY ./docker/backend/*.sh /app/
 RUN chmod +x /app/*.sh

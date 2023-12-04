@@ -25,7 +25,7 @@ COPY --from=frontend /app/frontend/build /app/frontend/build
 RUN mkdir /app/frontend/build/root
 RUN for file in $(ls /app/frontend/build | grep -E -v '^(index\.html|static|root)$'); do mv "/app/frontend/build/$file" /app/frontend/build/root; done
 # Copy deploy related scripts
-COPY ./docker/server/* /app/
+COPY ./docker/server/*.sh /app/
 RUN chmod +x /app/*.sh
 
 # Start the server
