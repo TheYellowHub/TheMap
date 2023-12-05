@@ -29,7 +29,7 @@ function SingleReviewCard({ review }: ReviewProps) {
                 {(review.pastOperation || review.futureOperation) &&
                     surgeryElementWrapper(
                         <Col className="m-0 p-0 " sm="auto">
-                            <Icon icon="fa-syringe" />
+                            <Icon icon="fa-scalpel" />
                         </Col>
                     )}
                 <Col className="m-0 p-0 d-flex justify-content-end">

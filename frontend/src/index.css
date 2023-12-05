@@ -111,9 +111,10 @@
 
 /* Icons */
 
-.fa-syringe::before {
+.fa-scalpel::before {
     content: "\f61d";
     font-family: "Font Awesome 6 Pro";
+    color: var(--med-blue);;
 }
 
 /* General */

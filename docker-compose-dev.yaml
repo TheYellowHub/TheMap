@@ -5,8 +5,7 @@ services:
   db:
     image: postgres
     env_file:
-      - ./docker/env/db_variables.env
-      - ./docker/env/envkey.env
+      - ./docker/backend/envkey.env
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 10s
@@ -16,17 +15,14 @@ services:
       - postgres_data:/var/lib/postgresql/data
       - ./htmlcov:/app/htmlcov # TODO: save it in the host automatically somehow
 
-  server:
+  backend:
     restart: unless-stopped
     build:
       context: .
       dockerfile: ./docker/backend/Dockerfile
     env_file:
-      - ./docker/env/db_variables.env
-      - ./docker/env/auth_variables.env
-      - ./docker/env/django_variables.env
-      - ./docker/env/envkey.env
-    entrypoint: ./server-entrypoint.sh
+      - ./docker/backend/envkey.env
+    entrypoint: ./backend-entrypoint.sh
     volumes:
       - static_volume:/app/django_static
       - media:/app/media
@@ -45,19 +41,18 @@ services:
       db:
         condition: service_healthy
 
-  nginx:
+  frontend:
     restart: always
     build:
       context: .
-      dockerfile: ./docker/nginx/Dockerfile
+      dockerfile: ./docker/frontend/Dockerfile
     ports:
       - 80:80
     volumes:
       - static_volume:/app/django_static
       - media:/app/media
-      - ./docker/nginx/development:/etc/nginx/conf.d
     depends_on:
-      server:
+      backend:
         condition: service_healthy
 
 volumes:

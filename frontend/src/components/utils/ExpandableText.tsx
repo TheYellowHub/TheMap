@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Button from "./Button";
 
 interface ExpandableTextProps {
     text: string;
@@ -12,10 +11,10 @@ function ExpandableText({ text, initialLength, className }: ExpandableTextProps)
     const space = "\u00A0\u00A0";
     return (
         <div className={`p-0 m-0 ${className}`}>
-            {showAll ? text : text.substring(0, initialLength) + space + "..."}
+            {showAll ? text : text.substring(0, initialLength)}
             {initialLength < text.length && (
                 <>
-                    {space}
+                    {space + "..." + space}
                     <a onClick={() => setShowAll(!showAll)}>{showAll ? "See less" : "See more"}</a>
                 </>
             )}

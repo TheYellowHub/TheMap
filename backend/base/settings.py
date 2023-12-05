@@ -12,9 +12,16 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+import requests
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+BACKEND_DIR = BASE_DIR
+FRONTEND_DIR = (
+    BASE_DIR.parent / "frontend"
+    if os.environ.get("DJANGO_WITH_FRONTEND", "false").lower() == "true"
+    else None
+)
 
 
 # Quick-start development settings - unsuitable for production
@@ -24,10 +31,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
 
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DJANGO_DEBUG", "false").lower() == "true"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "").split(",")
+ECS_CONTAINER_METADATA_URI = os.environ.get("ECS_CONTAINER_METADATA_URI", None)
+if ECS_CONTAINER_METADATA_URI:
+    container_metadata = requests.get(ECS_CONTAINER_METADATA_URI).json()
+    IP = container_metadata["Networks"][0]["IPv4Addresses"][0].split(".")
+    ALLOWED_CIDR_NETS = [f"{IP[0]}.{IP[1]}.0.0/16"]
 
 
 # Application definition
@@ -38,6 +49,7 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
     "django.contrib.postgres",
     "rest_framework",
@@ -48,7 +60,10 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "allow_cidr.middleware.AllowCIDRMiddleware",
+    "base.middleware.LoggingMiddleware",
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -83,7 +98,12 @@ ROOT_URLCONF = "base.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR, "templates")],
+        "DIRS": [
+            os.path.join(BACKEND_DIR, "templates"),
+        ]
+        + [os.path.join(FRONTEND_DIR, "build")]
+        if FRONTEND_DIR
+        else [],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -106,14 +126,14 @@ DB_POSTGRESQL = "postgresql"
 DATABASES_OPTIONS = {
     DB_SQLITE: {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "NAME": BACKEND_DIR / "db.sqlite3",
     },
     DB_POSTGRESQL: {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": os.environ.get("POSTGRES_NAME"),
         "USER": os.environ.get("POSTGRES_USER"),
         "PASSWORD": os.environ.get("POSTGRES_PASSWORD"),
-        "HOST": "db",
+        "HOST": os.environ.get("POSTGRES_HOST"),
         "PORT": 5432,
     },
 }
@@ -122,7 +142,7 @@ DATABASES = {"default": DATABASES_OPTIONS[os.environ.get("DJANGO_DB", DB_SQLITE)
 
 # Initial data
 
-FIXTURE_DIRS = [BASE_DIR / "fixtures"]
+FIXTURE_DIRS = [BACKEND_DIR / "fixtures"]
 
 
 # Auth
@@ -182,11 +202,22 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media"
-STATIC_URL = "/django_static/"
-STATIC_ROOT = BASE_DIR / "django_static"
 
+STATICFILES_DIRS = (
+    [
+        FRONTEND_DIR / "build" / "static",
+    ]
+    if FRONTEND_DIR
+    else []
+)
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATIC_URL = "/static/" if FRONTEND_DIR else "/django_static/"
+STATIC_ROOT = BACKEND_DIR / "static"
+if FRONTEND_DIR:
+    WHITENOISE_ROOT = FRONTEND_DIR / "build" / "root"
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BACKEND_DIR / "media"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -196,9 +227,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Security
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-]
+CORS_ALLOWED_ORIGINS = os.environ.get("DJANGO_CORS_ALLOWED_ORIGINS", "").split(",")
 
 
 # logging
@@ -215,12 +244,16 @@ LOGGING = {
         "stream": {
             "class": "logging.StreamHandler",
             "formatter": "simple",
-            "level": "INFO",
+            "level": "DEBUG" if DEBUG else "INFO",
         },
     },
     "loggers": {
         "": {
             "level": "DEBUG",
+            "handlers": ["file", "stream"],
+        },
+        "django.db.backends": {
+            "level": "DEBUG" if DEBUG else "INFO",
             "handlers": ["file", "stream"],
         },
     },
