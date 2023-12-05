@@ -39,9 +39,6 @@ if ECS_CONTAINER_METADATA_URI:
     container_metadata = requests.get(ECS_CONTAINER_METADATA_URI).json()
     IP = container_metadata["Networks"][0]["IPv4Addresses"][0].split(".")
     ALLOWED_CIDR_NETS = [f"{IP[0]}.{IP[1]}.0.0/16"]
-    # for i in range(1, 256):
-    #     for j in range(1, 256):
-    #         ALLOWED_HOSTS.append(f"{IP[0]}.{IP[1]}.{i}.{j}")
 
 
 # Application definition
