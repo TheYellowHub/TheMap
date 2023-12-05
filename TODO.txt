@@ -1,11 +1,5 @@
 TODO:
 
-*. Lightsail / ALLOWED_HOST error
-
-*. AWS CI/CD - redeploy
-
-0. Replace billing details in AWS
-
 1. Mobile version bugs 
 
 2. Relevant data migration
@@ -21,3 +15,5 @@ TODO:
 6. report an issue - button + external link
 
 7. Tests
+
+8. Recheck auth0 config
