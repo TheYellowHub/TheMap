@@ -38,10 +38,10 @@ ECS_CONTAINER_METADATA_URI = os.environ.get("ECS_CONTAINER_METADATA_URI", None)
 if ECS_CONTAINER_METADATA_URI:
     container_metadata = requests.get(ECS_CONTAINER_METADATA_URI).json()
     IP = container_metadata["Networks"][0]["IPv4Addresses"][0].split(".")
-    # ALLOWED_CIDR_NETS = [f"{IP[0]}.{IP[1]}.0.0/16"]
-    for i in range(1, 256):
-        for j in range(1, 256):
-            ALLOWED_HOSTS.append(f"{IP[0]}.{IP[1]}.{i}.{j}")
+    ALLOWED_CIDR_NETS = [f"{IP[0]}.{IP[1]}.0.0/16"]
+    # for i in range(1, 256):
+    #     for j in range(1, 256):
+    #         ALLOWED_HOSTS.append(f"{IP[0]}.{IP[1]}.{i}.{j}")
 
 
 # Application definition
@@ -63,7 +63,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    # "allow_cidr.middleware.AllowCIDRMiddleware",
+    "allow_cidr.middleware.AllowCIDRMiddleware",
     "base.middleware.LoggingMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
