@@ -22,17 +22,20 @@ function SingleReviewCard({ review }: ReviewProps) {
 
     return (
         <Container className="p-0 m-0">
-            <Row className="p-0 m-0 pb-2">
-                <Col className="m-0 p-0" sm="auto">
+            <Row className="d-flex p-0 m-0 pb-2 align-items-center flex-nowrap">
+                <Col className="m-0 p-0 flex-grow-0 flex-shrink-2 text-break" xs={7}>
                     <strong>{review.anonymous ? "Anonymous" : review.addedBy.remoteId}</strong>
                 </Col>
-                {(review.pastOperation || review.futureOperation) &&
+                {review.pastOperation || review.futureOperation ? (
                     surgeryElementWrapper(
-                        <Col className="m-0 p-0 " sm="auto">
+                        <Col className="m-0 p-0 flex-grow-0" xs={2}>
                             <Icon icon="fa-scalpel" />
                         </Col>
-                    )}
-                <Col className="m-0 p-0 d-flex justify-content-end">
+                    )
+                ) : (
+                    <Col xs={2}></Col>
+                )}
+                <Col className="m-0 p-0 d-flex justify-content-end" xs={3}>
                     {review.rating && <StarRating rating={review.rating} color={true} />}
                 </Col>
             </Row>

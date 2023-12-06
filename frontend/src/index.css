@@ -132,6 +132,14 @@
     scroll-margin-top: var(--header-height)
 }
 
+.w-fit-content {
+    width: fit-content;
+}
+
+.w-max-content {
+    width: max-content;
+}
+
 .inherit-font-style {
     color: inherit;
     font-family: inherit;
@@ -214,6 +222,14 @@ a.a-no-decoration-line:hover {
 .select-no-border .react-select__control {
     padding-left: 0 !important;
     border-width: 0 !important;
+}
+
+.w-max-contemt {
+    width: max-content;
+}
+
+.h-max-contemt {
+    height: max-content;
 }
 
 /* Header & footer */
@@ -424,28 +440,20 @@ td {
 
 /* pagination */
 
-.paginationContainer {
+.paginationButton,
+.paginationText {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 0.75rem;
+    font-size: 0.6875rem;
 }
 
-.paginationButton,
-.paginationText {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
+.paginationButton {
     width: 1rem;
     height: 1rem;
-    font-size: 0.6875rem;
     border: 0px;
     border-radius: 0.125rem;
     background: transparent;
-}
-
-.paginationText {
-    width: max-content;
 }
 
 .paginationButton:hover {

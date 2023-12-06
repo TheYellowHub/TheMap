@@ -170,9 +170,9 @@ export default function Table<T>({ columns, columnsFilters, actionButton, data }
                 </ReactTable>
             </Row>
 
-            <Row className="align-items-center m-3">
-                <Col>{actionButton}</Col>
-                <Col className="col-10">
+            <Row className="align-items-center my-3 gap-3">
+                <Col className="flex-grow-0 text-nowrap">{actionButton}</Col>
+                <Col>
                     <Pagination
                         rowsCount={table.getFilteredRowModel().rows.length}
                         pageIndex={table.getState().pagination.pageIndex}

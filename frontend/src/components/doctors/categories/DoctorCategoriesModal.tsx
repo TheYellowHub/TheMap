@@ -54,8 +54,7 @@ function DoctorCategoriesModal({
             fields={fields}
             getTitle={(doctorCategory: DoctorCategory) => {
                 return (
-                    "Doctor Category - " +
-                    (doctorCategory.id !== null ? `${doctorCategory.id} ${doctorCategory.name}` : "New")
+                    "Doctor Category - " + (doctorCategory.id ? `${doctorCategory.id} ${doctorCategory.name}` : "New")
                 );
             }}
             showModal={showModal}

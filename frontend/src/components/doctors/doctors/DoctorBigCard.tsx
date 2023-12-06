@@ -37,10 +37,12 @@ function DoctorBigCard({ doctor, locationForDistanceCalculation, distanceUnit = 
     return (
         <Container className={`doctorBigCard mx-0 ps-0 pe-3`} fluid>
             <Row>
-                <Col className="only-mobile med-dark-grey sm-font px-1 pb-3">
-                    <Icon icon="fa-arrow-left fa-sm" onClick={onClose} className=" " />
-                    Back
-                </Col>
+                <a onClick={onClose} className="a-no-decoration-line">
+                    <Col className="only-mobile med-dark-grey sm-font px-1 pb-3">
+                        <Icon icon="fa-arrow-left fa-sm" className=" " />
+                        Back
+                    </Col>
+                </a>
             </Row>
             <Row className="flex-nowrap p-0">
                 <Col className="flex-grow-0 pe-1">
@@ -138,7 +140,7 @@ function DoctorBigCard({ doctor, locationForDistanceCalculation, distanceUnit = 
                     </Row>
 
                     {userInfo && (
-                        <Row className="m-0">
+                        <Row className="mx-0 px-0">
                             <UserReviewsForm
                                 userInfo={userInfo}
                                 doctor={doctor}

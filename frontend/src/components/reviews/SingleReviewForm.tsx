@@ -266,7 +266,8 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
                         </Button>
                     </Col>
                 </OverlayTrigger>
-                <Col className="m-0 p-0 d-flex justify-content-end">
+                <Col></Col>
+                <Col className="m-0 p-0 d-flex flex-grow-0 justify-content-end" xs={12} sm="auto">
                     <Button
                         variant="secondary"
                         label="Save for later"
@@ -275,16 +276,19 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
                             submitReview(review, "DRAFT", "SAVED");
                         }}
                         disabled={disabled}
+                        className="w-100"
                     />
                 </Col>
-                <Col variant="primary" className="m-0 p-0 d-flex justify-content-end flex-grow-0">
+                <Col className="m-0 p-0 d-flex flex-grow-0 justify-content-end" xs={12} sm="auto">
                     <Button
+                        variant="primary"
                         label="Submit"
                         type="button"
                         onClick={() => {
                             submitReview(review, "PENDING_APPROVAL", "SUBMITTED");
                         }}
                         disabled={disabled}
+                        className="w-100"
                     />
                 </Col>
             </Form.Group>

@@ -45,7 +45,7 @@ function UserReviewsForm({
     const [newReviewId, setNewReviewId] = useState<ID>();
 
     return (
-        <Container>
+        <Container className="mx-0 px-0">
             {userReviews && (
                 <Row className="m-0">
                     {allowAddingReview && newReview && addingReview && (
