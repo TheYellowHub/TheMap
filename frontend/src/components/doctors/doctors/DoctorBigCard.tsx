@@ -113,16 +113,16 @@ function DoctorBigCard({ doctor, locationForDistanceCalculation, distanceUnit = 
             </Row>
 
             <Row className="m-0 p-0 pt-3">
-                <Col>
-                    <img src="images/line.png" className="only-desktop pb-3" width="100%" />
-                    <Row className="m-0">
+                <Col className="m-0 p-0">
+                    <img src="images/line.png" className="only-desktop" width="100%" />
+                    <Row className="mx-0 pt-3">
                         <Col className="p-0 m-0" sm="auto">
                             {doctor.avgRating && doctor.numOfReviews && (
                                 <Rating averageRating={doctor.avgRating} totalReviews={doctor.numOfReviews} />
                             )}
                         </Col>
 
-                        <Col className="p-0 m-0 d-flex justify-content-end">
+                        <Col className="px-0 d-flex justify-content-end">
                             {userInfo &&
                                 !addingReview &&
                                 !(0 < userReviews?.filter((review) => review.status !== "DELETED").length) && (

@@ -246,7 +246,7 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
                     placement="bottom"
                     overlay={<Tooltip className="tooltip">{review.id === undefined ? "Cancel" : "Delete"}</Tooltip>}
                 >
-                    <Col className="m-0 p-0" sm="auto">
+                    <Col className="m-0 p-0 flex-grow-0">
                         <Button
                             label=""
                             type="button"
@@ -277,7 +277,7 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
                         disabled={disabled}
                     />
                 </Col>
-                <Col variant="primary" className="m-0 p-0 d-flex justify-content-end" lg="auto">
+                <Col variant="primary" className="m-0 p-0 d-flex justify-content-end flex-grow-0">
                     <Button
                         label="Submit"
                         type="button"

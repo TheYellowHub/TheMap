@@ -157,9 +157,9 @@ export default function DoctorSearchFilters({
 
     return (
         <Form ref={formRef} className="px-0 mx-0">
-            <Container className="d-grid gap-3" fluid>
-                <Row className="d-flex px-0">
-                    <Col className="small-address-filter px-0">
+            <Container className="d-grid gap-3">
+                <Row className="d-flex">
+                    <Col className="small-address-filter">
                         <DoctorSearchAddressFilter
                             address={address}
                             setAddress={setAddress}

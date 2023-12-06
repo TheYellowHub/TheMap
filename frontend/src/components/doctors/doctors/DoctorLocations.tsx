@@ -58,7 +58,7 @@ function DoctorLocations({ doctor, locationForDistanceCalculation, distanceUnit 
                     <Button
                         variant="secondary"
                         icon="fa-envelope"
-                        href={`emailto:${selectedLocation?.email}`}
+                        href={`mailto:${selectedLocation?.email}`}
                         target="_blank"
                         label={selectedLocation?.email}
                     />
