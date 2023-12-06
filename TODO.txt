@@ -1,6 +1,7 @@
 TODO:
 
-1. Mobile version bugs 
+1. Design / mobile version:
+- Option to close and open the map
 
 2. Relevant data migration
 

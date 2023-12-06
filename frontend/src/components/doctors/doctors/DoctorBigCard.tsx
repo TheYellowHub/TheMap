@@ -1,22 +1,21 @@
 import { useState } from "react";
 import { Col, Container, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
 
-import { Doctor, getDoctorNearestLocation, getDoctorReviews } from "../../../types/doctors/doctor";
+import { Doctor, getDoctorReviews } from "../../../types/doctors/doctor";
 import { Location } from "../../../utils/googleMaps/useGoogleMaps";
 import { DistanceUnit } from "../../utils/DistanceUnit";
 import DoctorImage from "./DoctorImage";
 import DoctorVerification from "./DoctorVerification";
 import DoctorCategoryRibbon from "./DoctorCategory";
 import DoctorSpecialityRibbon from "./DoctorSpeciality";
-import DoctorLocationAddress from "./DoctorLocationAddress";
 import Icon from "../../utils/Icon";
-import Button from "../../utils/Button";
 import Rating from "../../utils/Rating";
 import useAuth from "../../../auth/useAuth";
 import useUser from "../../../hooks/auth/useUsers";
 import SingleReviewCard from "../../reviews/SingleReviewCard";
 import { useUserReviews } from "../../../hooks/doctors/useReviews";
 import UserReviewsForm from "../../reviews/UserReviewsForm";
+import DoctorLocations from "./DoctorLocations";
 
 interface DoctorBigCardProps {
     doctor: Doctor;
@@ -26,11 +25,6 @@ interface DoctorBigCardProps {
 }
 
 function DoctorBigCard({ doctor, locationForDistanceCalculation, distanceUnit = "mi", onClose }: DoctorBigCardProps) {
-    const closestLocation =
-        locationForDistanceCalculation && getDoctorNearestLocation(doctor, locationForDistanceCalculation);
-
-    const [selectedLocation, setSelectedLocation] = useState(closestLocation || doctor.locations[0]);
-
     const allReviews = getDoctorReviews(doctor);
 
     const { user, isAuthenticated } = useAuth();
@@ -42,46 +36,54 @@ function DoctorBigCard({ doctor, locationForDistanceCalculation, distanceUnit = 
 
     return (
         <Container className={`doctorBigCard mx-0 ps-0 pe-3`} fluid>
-            <Row className="flex-nowrap">
+            <Row>
+                <Col className="only-mobile med-dark-grey sm-font px-1 pb-3">
+                    <Icon icon="fa-arrow-left fa-sm" onClick={onClose} className=" " />
+                    Back
+                </Col>
+            </Row>
+            <Row className="flex-nowrap p-0">
                 <Col className="flex-grow-0 pe-1">
                     <DoctorImage doctor={doctor} big={true} />
                 </Col>
                 <Col className="d-grid px-2 py-2 gap-2 align-content-between">
                     <Row className="w-100 m-0 pb-1">
                         <Col className="px-0 doctorBigCardName font-assistant lg-font">{doctor.fullName}</Col>
-                        {user && isAuthenticated && (
-                            <OverlayTrigger
-                                placement="bottom"
-                                overlay={
-                                    <Tooltip className="tooltip">
-                                        {userInfo?.savedDoctors?.includes(doctor.id!)
-                                            ? "Remove from my list"
-                                            : "Add to my list"}
-                                    </Tooltip>
-                                }
-                            >
-                                <Col className="px-0 doctorBigCardButtons" sm="auto">
-                                    <Icon
-                                        icon="fa-bookmark fa-sm"
-                                        solid={userInfo?.savedDoctors?.includes(doctor.id!) === true}
-                                        onClick={() => {
-                                            mutateSavedDoctors(doctor.id!);
-                                        }}
-                                    />
+                        <Col className="px-0 d-flex flex-grow-0 flex-nowrap">
+                            {user && isAuthenticated && (
+                                <OverlayTrigger
+                                    placement="bottom"
+                                    overlay={
+                                        <Tooltip className="tooltip">
+                                            {userInfo?.savedDoctors?.includes(doctor.id!)
+                                                ? "Remove from my list"
+                                                : "Add to my list"}
+                                        </Tooltip>
+                                    }
+                                >
+                                    <Col className="px-0 doctorBigCardButtons d-flex justify-content-end" sm="auto">
+                                        <Icon
+                                            icon="fa-bookmark fa-sm"
+                                            solid={userInfo?.savedDoctors?.includes(doctor.id!) === true}
+                                            onClick={() => {
+                                                mutateSavedDoctors(doctor.id!);
+                                            }}
+                                        />
+                                    </Col>
+                                </OverlayTrigger>
+                            )}
+                            <OverlayTrigger placement="bottom" overlay={<Tooltip className="tooltip">Close</Tooltip>}>
+                                <Col className="px-0 doctorBigCardButtons d-flex justify-content-end" sm="auto">
+                                    <Icon icon="fa-minus fa-sm" onClick={onClose} className="only-desktop" />
                                 </Col>
                             </OverlayTrigger>
-                        )}
-                        <OverlayTrigger placement="bottom" overlay={<Tooltip className="tooltip">Close</Tooltip>}>
-                            <Col className="px-0 doctorBigCardButtons" sm="auto">
-                                <Icon icon="fa-minus fa-sm" onClick={onClose} />
-                            </Col>
-                        </OverlayTrigger>
+                        </Col>
                     </Row>
                     <Row className="w-100 m-0 gap-4 py-1">
-                        <Col className="p-0" sm="auto">
+                        <Col className="p-0 flex-grow-0">
                             <DoctorCategoryRibbon category={doctor.category} />
                         </Col>
-                        <Col className="p-0">
+                        <Col className="p-0 flex-grow-0">
                             <DoctorVerification doctor={doctor} />
                         </Col>
                     </Row>
@@ -92,64 +94,27 @@ function DoctorBigCard({ doctor, locationForDistanceCalculation, distanceUnit = 
                             </Col>
                         ))}
                     </Row>
-                    <Row className="w-100 m-0 gap-0 py-1 doctor-location">
-                        {doctor.locations.map((location) => (
-                            <Button
-                                label={location?.hospitalName || ""}
-                                className={
-                                    location === selectedLocation ? "doctorLocationBtnSelected" : "doctorLocationBtn"
-                                }
-                                icon={location === selectedLocation ? "fa-hospital" : ""}
-                                key={`${location?.hospitalName || location?.address}-btn`}
-                                onClick={() => setSelectedLocation(location)}
-                            >
-                                {location.privateOnly && (
-                                    <p className="doctorLocationPrivateLabel p-0 m-0">
-                                        {location === selectedLocation ? "private" : "p"}
-                                    </p>
-                                )}
-                            </Button>
-                        ))}
-                    </Row>
-                    <Row className="w-100 m-0 gap-3 py-1 doctor-location">
-                        {selectedLocation?.privateOnly}
-                        <DoctorLocationAddress
-                            doctorLocation={selectedLocation}
+                    <Row className="only-desktop p-0 m-0">
+                        <DoctorLocations
+                            doctor={doctor}
                             locationForDistanceCalculation={locationForDistanceCalculation}
                             distanceUnit={distanceUnit}
                         />
-                        {selectedLocation?.website && (
-                            <Button
-                                variant="primary"
-                                icon="fa-globe"
-                                href={selectedLocation?.website}
-                                target="_blank"
-                                label={selectedLocation?.website}
-                            />
-                        )}
-                        {selectedLocation?.email && (
-                            <Button
-                                variant="secondary"
-                                icon="fa-envelope"
-                                href={`emailto:${selectedLocation?.email}`}
-                                target="_blank"
-                                label={selectedLocation?.email}
-                            />
-                        )}
-                        {selectedLocation?.phone && (
-                            <Button
-                                variant="secondary"
-                                icon="fa-phone"
-                                href={`tel:${selectedLocation?.phone}`}
-                                label={selectedLocation?.phone}
-                            />
-                        )}
                     </Row>
                 </Col>
             </Row>
-            <Row>
+
+            <Row className="only-mobile m-0 p-0 pt-3">
+                <DoctorLocations
+                    doctor={doctor}
+                    locationForDistanceCalculation={locationForDistanceCalculation}
+                    distanceUnit={distanceUnit}
+                />
+            </Row>
+
+            <Row className="m-0 p-0 pt-3">
                 <Col>
-                    <img src="images/line.png" className="py-3" width="100%" />
+                    <img src="images/line.png" className="only-desktop pb-3" width="100%" />
                     <Row className="m-0">
                         <Col className="p-0 m-0" sm="auto">
                             {doctor.avgRating && doctor.numOfReviews && (

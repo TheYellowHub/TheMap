@@ -171,7 +171,7 @@ export default function DoctorSearchFilters({
                     </Col>
                 </Row>
                 <Row className="d-flex gap-3 justify-content-between flex-lg-nowrap">
-                    <Col sm={6} lg={3} className="px-0">
+                    <Col xs={6} lg={3} className="px-0">
                         <Select
                             values={categories.map((category: DoctorCategory) => category.name)}
                             currentValue={categoryFilter}
@@ -183,7 +183,7 @@ export default function DoctorSearchFilters({
                             }}
                         />
                     </Col>
-                    <Col sm={5} lg={3} className="px-0">
+                    <Col xs={5} lg={3} className="px-0">
                         <Select
                             values={specialities.map((speciality: DoctorSpeciality) => speciality.name)}
                             currentValue={specialitiesFilter}
@@ -197,7 +197,7 @@ export default function DoctorSearchFilters({
                             isMulti={true}
                         />
                     </Col>
-                    <Col sm={6} lg={2} className="px-0">
+                    <Col xs={6} lg={2} className="px-0">
                         <Select
                             values={Array.from(listOptions.keys())}
                             currentValue={listFilter}
@@ -209,8 +209,8 @@ export default function DoctorSearchFilters({
                             }}
                         />
                     </Col>
-                    <Col sm={5} lg={3} className="d-flex align-items-center justify-content-end ps-0 pe-1">
-                        <Col className="d-flex justify-content-end icon-select">
+                    <Col xs={5} lg={3} className="d-flex align-items-center justify-content-end ps-0 pe-1">
+                        <Col className="d-flex justify-content-end icon-select flex-grow-0">
                             <Select
                                 values={Array.from(sortOptions.keys())}
                                 onChange={(newValue: string | undefined) => {
@@ -221,7 +221,7 @@ export default function DoctorSearchFilters({
                                 icon="fa-arrow-down-wide-short"
                             />
                         </Col>
-                        <Col className="d-flex justify-content-end text-nowrap">
+                        <Col className="d-flex justify-content-end text-nowrap flex-grow-0">
                             <a onClick={() => setShouldClearFilters(true)} className="sm-font">
                                 <Icon icon="fa-close" />
                                 Clear all

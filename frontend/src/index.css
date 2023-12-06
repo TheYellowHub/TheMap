@@ -129,6 +129,7 @@
     font-weight: 400;
     line-height: 1.25rem;
     box-sizing: border-box !important;
+    scroll-margin-top: var(--header-height)
 }
 
 .inherit-font-style {
@@ -222,7 +223,7 @@ header {
     /* width: 100%; */
     height: var(--header-height);
     min-height: var(--header-height);
-    z-index: 99;
+    z-index: 999;
     filter: none;
 }
 
@@ -697,7 +698,7 @@ input[type="checkbox"] {
     border-radius: 0.125rem;
     background: white;
     box-shadow: 5px 5px 12px 2px rgba(120, 120, 120, 0.25), 0px 4px 20px 3px rgba(65, 65, 65, 0.25);
-    width: max-content;
+    /* width: fit-content; */
 }
 
 .react-select__option {
@@ -895,11 +896,6 @@ div:has(.small-address-filter) {
     padding: 1.8rem 1.5rem !important;
 }
 
-.doctorSmallCard:hover,
-.doctorBigCard:hover {
-    box-shadow: 5px 5px 12px 2px rgba(120, 120, 120, 0.25), 0px 4px 20px 3px rgba(65, 65, 65, 0.25);
-}
-
 .doctorSmallCardImg,
 .doctorBigCardImg {
     width: 7.125rem;
@@ -914,13 +910,23 @@ div:has(.small-address-filter) {
     height: 11.0625rem;
 }
 
-.doctorSmallCardName,
-.doctorBigCardName {
+.doctorBigCardName,
+.doctorSmallCardName {
     font-family: "Assistant", sans-serif;
-    font-size: 1rem;
     font-style: normal;
     font-weight: 700;
     line-height: 1.25rem;
+}
+
+.doctorSmallCardName {
+    font-size: 1rem;
+}
+
+.doctorBigCardName {
+    font-size: 1.5rem;
+}
+
+.doctorSmallCardName {
     overflow: hidden;
     display: -webkit-box;
     line-clamp: 1;
@@ -940,10 +946,6 @@ div:has(.small-address-filter) {
     line-clamp: 1;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
-}
-
-.doctorBigCardName {
-    font-size: 1.5rem;
 }
 
 .doctorCategoryRibbon {
@@ -1064,4 +1066,72 @@ div:has(.small-address-filter) {
     color: #AB3319;
     font-weight: 700;
     text-transform: uppercase;
+}
+
+/* Desktop */
+
+@media (min-width: 769px)  { 
+    .only-mobile {
+        display: none;
+    }
+
+    .doctorSmallCard:hover,
+    .doctorBigCard:hover {
+        box-shadow: 5px 5px 12px 2px rgba(120, 120, 120, 0.25), 0px 4px 20px 3px rgba(65, 65, 65, 0.25);
+    }
+}
+
+/* Mobile & tablets */
+
+@media (max-width: 768px)  { 
+    .only-desktop {
+        display: none;
+    }
+
+    .gap-3 {
+        gap: 0.6rem !important
+    }
+
+    .py-1, .pt-1 {
+        padding-top: 0.2rem !important;
+    }
+
+    .py-1, .pb-1 {
+        padding-bottom: 0.2rem !important;
+    }
+
+    .py-2, .pt-2 {
+        padding-top: 0.35rem !important;
+    }
+
+    .py-2, .pb-2 {
+        padding-bottom: 0.35rem !important;
+    }
+
+    .py-3, .pt-3 {
+        padding-top: 0.5rem !important;
+    }
+
+    .py-3, .pb-3 {
+        padding-bottom: 0.5rem !important;
+    }
+
+    .doctorBigCard {
+        width: 100%;
+        padding: 0.5rem !important;
+    }
+
+    .doctorBigCardName {
+        font-size: 1.2rem;
+    }
+    
+    .doctorSmallCardImg,
+    .doctorBigCardImg {
+        width: 5.875rem;
+    }
+
+    .doctorBigCardImg {
+        width: 5.875rem;
+        height: 7.323rem;
+    }
 }

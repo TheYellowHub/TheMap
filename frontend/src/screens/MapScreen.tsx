@@ -95,6 +95,7 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
                     setCurrentDoctorLocation(currentDoctor.locations[0]);
                 }
             }
+            document.getElementById("doctor-search-results")?.scrollIntoView();
         }
         window.history.replaceState(null, "", `#/${currentDoctor?.id || ""}`);
     }, [currentDoctor]);
@@ -123,7 +124,7 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
             <Container fluid>
                 <Row className="d-flex mt-2 mb-0 flex-md-nowrap">
                     <Col className="mx-3 px-3">
-                        <Row className="px-2 pb-2 mb-2">
+                        <Row className="pb-2 mb-2">
                             <DoctorSearchFilters
                                 address={address}
                                 setAddress={setAddress}
@@ -166,7 +167,7 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
                         </Row>
 
                         <Row className="d-flex py-2 my-2 gap-3">
-                            <Col className="med-dark-grey fst-italic px-2">
+                            <Col className="med-dark-grey fst-italic p-0">
                                 {matchedDoctorsIncludingDistance.length} results
                                 {address && distance && (
                                     <>
@@ -174,7 +175,11 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
                                     </>
                                 )}
                             </Col>
-                            <Col sm={4} className="d-flex justify-content-end text-nowrap" style={{ paddingRight: 12 }}>
+                            <Col
+                                sm={4}
+                                className="d-flex justify-content-end text-nowrap p-0"
+                                style={{ paddingRight: 12 }}
+                            >
                                 {address && distance && (
                                     <a onClick={() => setDistance(distance + 20)} className="sm-font">
                                         <Icon icon="fa-location-crosshairs" />
@@ -184,7 +189,7 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
                             </Col>
                         </Row>
 
-                        <Row className="py-2 my-2">
+                        <Row className="py-2 my-2" id="doctor-search-results">
                             {currentDoctor !== null || matchedDoctorsIncludingDistance.length > 0 ? (
                                 <DoctorSearchResults
                                     doctors={matchedDoctorsIncludingDistance}
