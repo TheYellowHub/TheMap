@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     "phonenumber_field",
     "users",
     "doctors",
+    "storages",
 ]
 
 MIDDLEWARE = [
@@ -216,8 +217,20 @@ STATIC_ROOT = BACKEND_DIR / "static"
 if FRONTEND_DIR:
     WHITENOISE_ROOT = FRONTEND_DIR / "build" / "root"
 
-MEDIA_URL = "/media/"
 MEDIA_ROOT = BACKEND_DIR / "media"
+USE_S3_STORAGE = os.environ.get("DJANGO_USE_S3", "False").lower() == "true"
+if USE_S3_STORAGE:
+    DEFAULT_FILE_STORAGE = "storages.backends.s3.S3Storage"
+    AWS_S3_ACCESS_KEY_ID = os.environ.get("AWS_S3_ACCESS_KEY_ID")
+    AWS_S3_SECRET_ACCESS_KEY = os.environ.get("AWS_S3_SECRET_ACCESS_KEY")
+    AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_S3_BUCKET_NAME")
+    AWS_S3_REGION_NAME = os.getenv("AWS_S3_REGION_NAME")
+    AWS_DEFAULT_ACL = "public-read"
+    AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com/"
+    MEDIA_URL = AWS_S3_CUSTOM_DOMAIN
+else:
+    MEDIA_URL = "/media/"
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

@@ -121,7 +121,7 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
                 }}
                 object={review}
                 onChange={setReview}
-                className="select-min-height d-inline-block"
+                className="select-min-height d-inline-block w-fit-content"
                 allowEmptySelection={review.futureOperation}
             />
             <SingleSelectFormField<DoctorReview>
@@ -146,7 +146,7 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
                 }}
                 object={review}
                 onChange={setReview}
-                className="select-min-height d-inline-block"
+                className="select-min-height d-inline-block w-fit-content"
                 allowEmptySelection={review.futureOperation}
             />
         </>
@@ -303,7 +303,7 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
                     <Row className="p-0 m-0 pb-2 w-100 gap-3">
                         <Col className="m-0 p-0">
                             <strong>Saved!</strong> Your review is saved. You can find it under{" "}
-                            <a href="">My Reviews</a>.{/* TODO: link */}
+                            <a href="#/user/reviews">My Reviews</a>.
                         </Col>
                     </Row>
                 )}
