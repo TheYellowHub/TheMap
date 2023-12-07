@@ -149,6 +149,7 @@ function DoctorBigCard({ doctor, locationForDistanceCalculation, distanceUnit = 
                                 allowAddingReview={true}
                                 showOnlyEditableReviews={true}
                                 showDoctorName={false}
+                                containerClassName="px-0 mx-0"
                             />
                         </Row>
                     )}
