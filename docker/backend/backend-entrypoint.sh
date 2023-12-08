@@ -6,9 +6,8 @@ echo "Apply database migrations"
 python manage.py migrate
 python manage.py loaddata doctorCategories.json
 python manage.py loaddata doctorSpecialities.json
-# TODO
-# python manage.py loaddata doctors.json
-# python manage.py loaddata doctorLocations.json
+python manage.py loaddata doctors.json
+python manage.py loaddata doctorLocations.json
 
 echo "Collect static files"
 python manage.py collectstatic --noinput 

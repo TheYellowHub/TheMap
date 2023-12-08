@@ -8,9 +8,8 @@ echo "Apply database migrations"
 python $app migrate
 python $app loaddata doctorCategories.json
 python $app loaddata doctorSpecialities.json
-# TODO
-# python $app loaddata doctors.json
-# python $app loaddata doctorLocations.json
+python $app loaddata doctors.json
+python $app loaddata doctorLocations.json
 
 echo "Collect static files"
 python $app collectstatic --noinput 

@@ -36,9 +36,9 @@ function DoctorBigCard({ doctor, locationForDistanceCalculation, distanceUnit = 
 
     return (
         <Container className={`doctorBigCard mx-0 ps-0 pe-3`} fluid>
-            <Row>
+            <Row className="px-0 mx-0">
                 <a onClick={onClose} className="a-no-decoration-line">
-                    <Col className="only-mobile med-dark-grey sm-font px-1 pb-3">
+                    <Col className="only-mobile med-dark-grey sm-font px-0 pb-3">
                         <Icon icon="fa-arrow-left fa-sm" className=" " />
                         Back
                     </Col>
