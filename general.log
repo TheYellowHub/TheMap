@@ -2,3 +2,5 @@
 
 [asyncio DEBUG 2023-09-14 02:12:51,223]: Using selector: EpollSelector
 
+[asyncio DEBUG 2023-12-08 16:10:35,394]: Using selector: EpollSelector
+

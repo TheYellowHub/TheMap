@@ -1966,6 +1966,21 @@
     },
     {
         "model": "doctors.doctorLocation",
+        "pk": 127,
+        "fields": {
+            "doctor": 133,
+            "hospital_name": "Stockport Endometriosis Centre",
+            "address": "stepping hill hospital, Poplar Grove, Stockport SK2 7JE, UK",
+            "lat": 53.3843971,
+            "lng": -2.1330712,
+            "phone": "784-579-9817",
+            "email": "gabriella.rocco@bmichoice.co.uk",
+            "website": "https://www.circlehealthgroup.co.uk/consultants/andrew-pickersgill",
+            "private_only": true
+        }
+    },
+    {
+        "model": "doctors.doctorLocation",
         "pk": 128,
         "fields": {
             "doctor": 134,
@@ -2037,6 +2052,21 @@
             "email": "ahmed.elgohari1@nhs.net",
             "website": "https://www.nuffieldhealth.com/consultants/mr-ahmed-el-gohari",
             "private_only": false
+        }
+    },
+    {
+        "model": "doctors.doctorLocation",
+        "pk": 133,
+        "fields": {
+            "doctor": 138,
+            "hospital_name": "Spencer hospital - Ashford",
+            "address": "William Harvey Hospital, Willesborough, Ashford TN24 0LZ, UK",
+            "lat": 51.1407055,
+            "lng": 0.9157192,
+            "phone": "79-2721-2370",
+            "email": "ahmed.elgohari1@nhs.net",
+            "website": "https://www.spencerprivatehospitals.com/find-a-consultant/mr-ahmed-el-gohari/",
+            "private_only": true
         }
     },
     {

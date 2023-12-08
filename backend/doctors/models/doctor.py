@@ -21,7 +21,7 @@ class Doctor(models.Model):
 
     STATUS = Choices("PENDING_APPROVAL", "APPROVED", "REJECTED", "DELETED")
 
-    full_name = models.CharField(max_length=100, unique=True)
+    full_name = models.CharField(max_length=100)
     gender = models.CharField(
         max_length=1, choices=GENDER_CHOICES, default=GENDER_CHOICES[0][0]
     )
