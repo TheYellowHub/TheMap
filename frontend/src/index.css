@@ -114,7 +114,14 @@
 .fa-scalpel::before {
     content: "\f61d";
     font-family: "Font Awesome 6 Pro";
-    color: var(--med-blue);;
+    color: var(--med-blue);
+}
+
+.fa-circle-info::before {
+    content: "\f05a";
+    font-family: "Font Awesome 6 Pro";
+    font-weight: 400;
+    color: var(--dark-grey);
 }
 
 /* General */

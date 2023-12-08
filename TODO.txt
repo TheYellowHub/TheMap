@@ -1,21 +1,21 @@
 TODO:
 
-1. Relevant data migration
+1. Mobile - Option to close and open the map
 
-2. Mobile - Option to close and open the map
-
-3. 
+2. 
 - my propile -> set username
 - set username during review?
 
-4. multiple locations on the same spot - WIP, pending https://stackoverflow.com/questions/77557668/using-markerf-component-is-not-working-with-ts-overlapping-marker-spiderfier
+3. multiple locations on the same spot - WIP, pending https://stackoverflow.com/questions/77557668/using-markerf-component-is-not-working-with-ts-overlapping-marker-spiderfier
 
-5. Community Guidelines - add link
+4. Other TODOs?
 
-6. report an issue - button + external link
+5. NPM warnings?
 
-7. Tests
+6. Tests
 
-8. Recheck auth0 config / change to production settings
+7. Recheck auth0 config / change to production settings
 
-9. Recheck design / figma
+8. Recheck design / figma
+
+9. Additional data migration
