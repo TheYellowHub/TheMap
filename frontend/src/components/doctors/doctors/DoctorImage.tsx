@@ -7,7 +7,7 @@ interface DoctorImageProps {
 
 function DoctorImage({ doctor, big = false }: DoctorImageProps) {
     const image = doctor.image
-        ? doctor.image.toString().replaceAll("//", "/")
+        ? doctor.image.toString()   // .replaceAll("//", "/").replaceAll(":/", "://")
         : doctor.gender === "F"
         ? "images/default-doctor-f.png"
         : "images/default-doctor-m.png";
