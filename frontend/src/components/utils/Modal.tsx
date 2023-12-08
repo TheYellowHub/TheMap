@@ -66,7 +66,7 @@ function Modal<T>({
                         <Form.Label column htmlFor={field.label}>
                             {field.label}
                         </Form.Label>
-                        <Col sm={10} className="d-flex align-items-center">
+                        <Col sm={10} className="d-flex align-items-center align-content-middle">
                             {fieldOrConstLabel(field, reacteNode)}
                         </Col>
                     </Form.Group>
@@ -166,7 +166,7 @@ function Modal<T>({
                 <ReactModal.Header closeButton={true}>
                     <ReactModal.Title>{getTitle(dataObject)}</ReactModal.Title>
                 </ReactModal.Header>
-                <ReactModal.Body>{children}</ReactModal.Body>
+                {children && <ReactModal.Body>{children}</ReactModal.Body>}
                 <ReactModal.Body>
                     {fields.map((field) => {
                         if (field.type === "list") {

@@ -55,7 +55,7 @@ function DoctorSpecialitiesModal({
             getTitle={(doctorSpeciality: DoctorSpeciality) => {
                 return (
                     "Doctor Speciality - " +
-                    (doctorSpeciality.id !== null ? `${doctorSpeciality.id} ${doctorSpeciality.name}` : "New")
+                    (doctorSpeciality.id ? `${doctorSpeciality.id} ${doctorSpeciality.name}` : "New")
                 );
             }}
             showModal={showModal}

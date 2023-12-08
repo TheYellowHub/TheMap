@@ -44,17 +44,17 @@ function DoctorSmallCard({
                         <Col className="px-0 doctorSmallCardName font-assistant lg-font">{doctor.fullName}</Col>
                         {userInfo?.savedDoctors?.includes(doctor.id!) && (
                             <OverlayTrigger placement="bottom" overlay={<Tooltip className="tooltip">My list</Tooltip>}>
-                                <Col className="px-0" sm="auto">
+                                <Col className="px-0 flex-grow-0">
                                     <Icon icon="fa-bookmark fa-sm" className="px-1" />
                                 </Col>
                             </OverlayTrigger>
                         )}
                     </Row>
                     <Row className="w-100 m-0 gap-1">
-                        <Col className="px-0">
+                        <Col className="px-0 flex-grow-0">
                             <DoctorCategory category={doctor.category} />
                         </Col>
-                        <Col className="px-0" sm="auto">
+                        <Col className="px-0 flex-grow-0">
                             <DoctorVerification doctor={doctor} />
                         </Col>
                     </Row>

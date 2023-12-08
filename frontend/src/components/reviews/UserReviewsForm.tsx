@@ -16,6 +16,7 @@ interface UserReviewsFormPropsWithoutAddingOption {
     allowAddingReview?: false;
     showOnlyEditableReviews?: boolean;
     showDoctorName?: boolean;
+    containerClassName?: string;
 }
 
 interface UserReviewsFormPropsWithAddingOption {
@@ -26,6 +27,7 @@ interface UserReviewsFormPropsWithAddingOption {
     allowAddingReview?: true;
     showOnlyEditableReviews?: boolean;
     showDoctorName?: boolean;
+    containerClassName?: string;
 }
 
 type UserReviewsFormProps = UserReviewsFormPropsWithoutAddingOption | UserReviewsFormPropsWithAddingOption;
@@ -38,6 +40,7 @@ function UserReviewsForm({
     allowAddingReview = false,
     showOnlyEditableReviews = false,
     showDoctorName = true,
+    containerClassName = "",
 }: UserReviewsFormProps) {
     const { data: userReviews } = useUserReviews(userInfo, doctor);
 
@@ -45,7 +48,7 @@ function UserReviewsForm({
     const [newReviewId, setNewReviewId] = useState<ID>();
 
     return (
-        <Container>
+        <Container className={`${containerClassName}`}>
             {userReviews && (
                 <Row className="m-0">
                     {allowAddingReview && newReview && addingReview && (

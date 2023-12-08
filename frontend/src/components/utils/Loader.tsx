@@ -8,9 +8,9 @@ interface LoaderProps {
 function Loader({ size = 100, text = "Loading..." }: LoaderProps) {
     return (
         <>
-            <Container style={{ marginTop: 20 }}>
-                <Row>
-                    <Col sm="auto">
+            <Container className="d-flex align-items-center mt-3">
+                <Row className="gap-3">
+                    <Col xs="auto">
                         <Spinner
                             animation="border"
                             style={{
@@ -20,7 +20,7 @@ function Loader({ size = 100, text = "Loading..." }: LoaderProps) {
                             }}
                         />
                     </Col>
-                    <Col className="d-flex align-items-center justify-content-right">
+                    <Col className="d-flex align-items-center">
                         <h5>{text}</h5>
                     </Col>
                 </Row>

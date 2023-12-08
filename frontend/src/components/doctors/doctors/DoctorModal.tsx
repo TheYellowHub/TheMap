@@ -233,7 +233,7 @@ function DoctorModal({ doctor, showModal, onCancel, onSave, isSaving, isSavingEr
             t={doctor}
             fields={fields}
             getTitle={(doctor: Doctor) => {
-                return "Doctor Card - " + (doctor.id !== null ? `${doctor.id} ${doctor.fullName}` : "New");
+                return "Doctor Card - " + (doctor.id ? `${doctor.id} ${doctor.fullName}` : "New");
             }}
             showModal={showModal}
             onCancel={onCancel}

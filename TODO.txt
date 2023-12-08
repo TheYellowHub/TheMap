@@ -1,8 +1,8 @@
 TODO:
 
-1. Mobile version bugs 
+1. Relevant data migration
 
-2. Relevant data migration
+2. Mobile - Option to close and open the map
 
 3. 
 - my propile -> set username
@@ -10,10 +10,12 @@ TODO:
 
 4. multiple locations on the same spot - WIP, pending https://stackoverflow.com/questions/77557668/using-markerf-component-is-not-working-with-ts-overlapping-marker-spiderfier
 
-5. message post review submit / save - add links
+5. Community Guidelines - add link
 
 6. report an issue - button + external link
 
 7. Tests
 
-8. Recheck auth0 config
+8. Recheck auth0 config / change to production settings
+
+9. Recheck design / figma

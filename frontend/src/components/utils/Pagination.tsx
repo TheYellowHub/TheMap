@@ -26,62 +26,68 @@ function Pagination({ rowsCount, pageIndex, pageSize, setPageIndex, setPageSize 
         .sort();
 
     return (
-        <Container fluid>
-            <Row>
-                <Col className="paginationContainer">
-                    <button
-                        key={`page-previous`}
-                        className="paginationButton"
-                        onClick={() => setPageIndex(pageIndex - 1)}
-                        disabled={pageIndex - 1 < 0}
-                    >
-                        <Icon icon="fa-caret-left" />
-                    </button>
-                    {pagesToSelectList.map((newPageIndex: number, index: number) => (
-                        <Fragment key={`page-${newPageIndex}`}>
-                            {0 < index && pagesToSelectList[index - 1] + 1 < newPageIndex && (
-                                <div
-                                    key={`missing-pages-${pagesToSelectList[index - 1] + 1}-${newPageIndex - 1}`}
-                                    className="paginationText"
-                                >
-                                    ...
-                                </div>
-                            )}
+        <Container>
+            <Row className="d-flex gap-3">
+                <Col className="d-flex justify-content-end align-items-center gap-2 flex-no-wrap">
+                    {1 < pagesCount && (
+                        <>
                             <button
-                                key={`page-${newPageIndex}`}
-                                className={`paginationButton ${pageIndex === newPageIndex ? "selected" : ""}`}
-                                onClick={() => setPageIndex(newPageIndex)}
-                                disabled={pageIndex === newPageIndex}
+                                key={`page-previous`}
+                                className="paginationButton"
+                                onClick={() => setPageIndex(pageIndex - 1)}
+                                disabled={pageIndex - 1 < 0}
                             >
-                                {newPageIndex + 1}
+                                <Icon icon="fa-caret-left" />
                             </button>
-                        </Fragment>
-                    ))}
-                    <button
-                        key={`page-next`}
-                        className="paginationButton"
-                        onClick={() => setPageIndex(pageIndex + 1)}
-                        disabled={pageIndex + 1 === pagesCount}
-                    >
-                        <Icon icon="fa-caret-right" />
-                    </button>
+                            {pagesToSelectList.map((newPageIndex: number, index: number) => (
+                                <Fragment key={`page-${newPageIndex}`}>
+                                    {0 < index && pagesToSelectList[index - 1] + 1 < newPageIndex && (
+                                        <div
+                                            key={`missing-pages-${pagesToSelectList[index - 1] + 1}-${
+                                                newPageIndex - 1
+                                            }`}
+                                            className="paginationText w-max-content"
+                                        >
+                                            ...
+                                        </div>
+                                    )}
+                                    <button
+                                        key={`page-${newPageIndex}`}
+                                        className={`paginationButton ${pageIndex === newPageIndex ? "selected" : ""}`}
+                                        onClick={() => setPageIndex(newPageIndex)}
+                                        disabled={pageIndex === newPageIndex}
+                                    >
+                                        {newPageIndex + 1}
+                                    </button>
+                                </Fragment>
+                            ))}
+                            <button
+                                key={`page-next`}
+                                className="paginationButton"
+                                onClick={() => setPageIndex(pageIndex + 1)}
+                                disabled={pageIndex + 1 === pagesCount}
+                            >
+                                <Icon icon="fa-caret-right" />
+                            </button>
+                        </>
+                    )}
                 </Col>
                 {setPageSize && (
-                    <Col className="paginationContainer" sm={4}>
-                        <div className="paginationText">
-                            In each page
+                    <Col className="d-flex flex-no-wrap justify-content-center align-items-center mx-0 px-0">
+                        <Col className="paginationText d-flex mx-2 text-nowrap justify-content-end">In each page</Col>
+                        <Col className="paginationText flex-grow-0">
                             <input
                                 id="page-size-input"
                                 type="number"
-                                // className="p-1 m-1"
                                 min={1}
                                 max={pagesCount * pageSize}
                                 value={pageSize}
                                 onChange={(e) => {
                                     setPageSize(Number(e.target.value));
                                 }}
+                                className="w-fit-content"
                             />
-                        </div>
+                        </Col>
                     </Col>
                 )}
             </Row>
