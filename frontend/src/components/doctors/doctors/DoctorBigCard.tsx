@@ -36,10 +36,10 @@ function DoctorBigCard({ doctor, locationForDistanceCalculation, distanceUnit = 
 
     return (
         <Container className={`doctorBigCard mx-0 ps-0 pe-3`} fluid>
-            <Row>
+            <Row className="mb-3">
                 <a onClick={onClose} className="a-no-decoration-line">
-                    <Col className="only-mobile med-dark-grey sm-font px-1 pb-3">
-                        <Icon icon="fa-arrow-left fa-sm" className=" " />
+                    <Col className="only-mobile med-dark-grey sm-font">
+                        <Icon icon="fa-arrow-left fa-sm" className="ps-0" />
                         Back
                     </Col>
                 </a>
@@ -52,6 +52,13 @@ function DoctorBigCard({ doctor, locationForDistanceCalculation, distanceUnit = 
                     <Row className="w-100 m-0 pb-1">
                         <Col className="px-0 doctorBigCardName font-assistant lg-font">{doctor.fullName}</Col>
                         <Col className="px-0 d-flex flex-grow-0 flex-nowrap">
+                            <OverlayTrigger placement="bottom" overlay={<Tooltip className="tooltip">Report an issue</Tooltip>}>
+                                <Col className="px-0 doctorBigCardButtons d-flex justify-content-end" sm="auto">
+                                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfgarB_r-MfCtZpnq95XXr-2ZgSNUW92Dbts39Hm9NdGx6P6g/viewform?usp=sf_link" target="_blank" rel="noreferrer">
+                                        <Icon icon="fa-circle-info fa-sm " />
+                                    </a>
+                                </Col>
+                            </OverlayTrigger>
                             {user && isAuthenticated && (
                                 <OverlayTrigger
                                     placement="bottom"

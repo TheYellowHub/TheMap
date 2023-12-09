@@ -19,9 +19,9 @@ class Doctor(models.Model):
         ("F", "Female"),
     )
 
-    STATUS = Choices("PENDING_APPROVAL", "APPROVED", "REJECTED")
+    STATUS = Choices("PENDING_APPROVAL", "APPROVED", "REJECTED", "DELETED")
 
-    full_name = models.CharField(max_length=100, unique=True)
+    full_name = models.CharField(max_length=100)
     gender = models.CharField(
         max_length=1, choices=GENDER_CHOICES, default=GENDER_CHOICES[0][0]
     )
@@ -40,6 +40,8 @@ class Doctor(models.Model):
     approved_at = MonitorField(monitor="status", when=["APPROVED"], null=True, blank=True, default=None)  # type: ignore
     rejected_at = MonitorField(monitor="status", when=["REJECTED"], null=True, blank=True, default=None)  # type: ignore
     updated_at = models.DateTimeField(auto_now=True, null=True)
+    internal_notes = models.CharField(max_length=100, blank=True, null=True)
+
 
     def __str__(self) -> str:
         return str(self.full_name)

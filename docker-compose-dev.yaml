@@ -4,6 +4,8 @@ services:
 
   db:
     image: postgres
+    environment:
+      POSTGRES_PASSWORD: postgres
     env_file:
       - ./docker/backend/envkey.env
     healthcheck:

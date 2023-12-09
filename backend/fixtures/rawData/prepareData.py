@@ -1,32 +1,29 @@
 import datetime
+from decimal import Decimal
 import json
 from typing import List
 
 
-def load_raw_data(path: str) -> dict:
+def load_raw_data(path: str) -> List:
     with open(path) as fp:
         doctors_raw_data = json.load(fp)
     return doctors_raw_data
 
 
-def prepare_fixtures(doctors_raw_data: dict) -> tuple[List[dict], List[dict]]:
-    doctor_name_to_id = dict()
+def prepare_fixtures(doctors_raw_data: List) -> tuple[List[dict], List[dict]]:
     doctors_fixture, doctors_locations_fixtures = [], []
-    for doctor_id, doctor_data in doctors_raw_data.items():
-        name = doctor_data["Name"]
-        location_id = doctor_id
+    for doctor_data in doctors_raw_data:
+        doctor_id = int(doctor_data["Doc ID"])
+        location_id = int(doctor_data["Loc ID"].replace("e", ""))
 
         # Doctor
-        if name in doctor_name_to_id:
-            doctor_id = doctor_name_to_id[name]
-        else:
-            doctor_name_to_id[name] = doctor_id
+        if doctor_id not in doctors_fixture:
             doctors_fixture.append(
                 {
                     "model": "doctors.doctor",
                     "pk": doctor_id,
                     "fields": {
-                        "full_name": name,
+                        "full_name": doctor_data["Name"],
                         "gender": (
                             doctor_data["Gender"][0] if doctor_data["Gender"] else "M"
                         ),
@@ -47,10 +44,12 @@ def prepare_fixtures(doctors_raw_data: dict) -> tuple[List[dict], List[dict]]:
                             else ""
                         ),
                         "nancys_nook": True if doctor_data["Nancy's Nook?"] else False,
-                        "status": "APPROVED",
+                        "status": "APPROVED" if doctor_data["Status"].lower() == "approved" else "DELETED",
+                        "internal_notes": "" if doctor_data["Status"].lower() == "approved" else doctor_data["Status"],
                         "added_at": datetime.datetime.now().strftime(
                             "%Y-%m-%d %H:%M:%S"
                         ),
+                        "image": f"images/{doctor_id}.jpg"
                     },
                 }
             )
@@ -64,8 +63,8 @@ def prepare_fixtures(doctors_raw_data: dict) -> tuple[List[dict], List[dict]]:
                     "doctor": doctor_id,
                     "hospital_name": doctor_data["Hospital"],
                     "address": doctor_data["Address"],
-                    "lat": doctor_data["Lat"],
-                    "lng": doctor_data["Long"],
+                    "lat": float(doctor_data["Lat"]),
+                    "lng": float(doctor_data["Long"]),
                     "phone": doctor_data["Phone"],
                     "email": doctor_data["Email"],
                     "website": doctor_data["Website"],
