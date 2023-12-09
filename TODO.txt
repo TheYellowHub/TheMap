@@ -1,8 +1,6 @@
 TODO:
 
-0. Local auth0 issue
-
-- App name V
+0. Local auth0 issue ? 
 
 1. Mobile 
 - Scrolling
