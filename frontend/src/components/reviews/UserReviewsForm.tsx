@@ -65,7 +65,7 @@ function UserReviewsForm({
                         .filter(
                             (review) =>
                                 (showOnlyEditableReviews
-                                    ? (review.status && (reviewEditableStatuses as any as string[])).includes(
+                                    ? (review.status && (reviewEditableStatuses as unknown as string[])).includes(
                                           review.status
                                       )
                                     : true) && review.id !== newReviewId

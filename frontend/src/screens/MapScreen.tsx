@@ -69,9 +69,12 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
     };
 
     useEffect(() => {
-        window.addEventListener("resize", handleResize, false);
-        handleResize();
+        window.addEventListener("resize", handleResize);
     }, []);
+
+    useEffect(() => {
+        handleResize();
+    });
 
     const useCurrenetLocation = () => {
         setCurrentLocation((location) => {

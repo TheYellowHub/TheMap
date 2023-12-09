@@ -44,6 +44,7 @@ export default function DoctorSearchFilters({
     setAddressLocation,
     useCurrenetLocation,
     distance,
+    // eslint-disable-next-line
     setDistance,
     distanceUnit,
     doctors,
@@ -55,6 +56,7 @@ export default function DoctorSearchFilters({
     setMatchedDoctorsIncludingDistance,
     shouldClearFilters,
     setShouldClearFilters,
+    // eslint-disable-next-line
     shouldClearAddress,
     setShouldClearAddress,
     setValueChange,
