@@ -3,8 +3,8 @@ TODO:
 0. Local auth0 issue ? 
 
 1. Mobile 
-- Scrolling
-- Option to close and open the map
+- Scrolling V
+- Option to close and open the map V
 
 2. 
 - my propile -> set username

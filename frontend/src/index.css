@@ -291,6 +291,7 @@ main {
 footer {
     position: absolute;
     width: 100%;
+    z-index: -1 !important;
 }
 
 .logo {
@@ -553,6 +554,18 @@ td {
     background: white;
     border-color: white !important;
 }
+
+.btn-map,
+.btn-map:hover,
+.btn-map:active,
+.btn-map:disabled {
+    background: var(--light-yellow);
+    border-color: var(--dark-yellow);
+    border-radius: 4px 4px 0px 0px !important;
+    border: 1px 1px 0px 1px !important; 
+    border-bottom: 0 !important;
+}
+
 
 /* Forms */
 
@@ -866,7 +879,27 @@ div:has(.small-address-filter) {
 
 /* Google map */ 
 
-.map {
+.doctors-map-below-results-closed,
+.doctors-map-below-results-open {
+    position: fixed;
+    width: 100%;
+    /* bottom: calc(var(--footer-height) + var(--layout-padding)); */
+    bottom: 0;
+}
+
+.doctors-map-below-results-open .map {
+    padding: 0;
+    position: relative;
+    min-height: calc(0.8 * 100vh);
+    height: calc(0.8 * 100vh);
+    z-index: 1;
+}
+
+.doctors-map-next-to-results {
+    position: static;
+}
+
+.doctors-map-next-to-results .map {
     padding: 0;
     position: relative;
     min-height: calc(100vh - 10rem);
