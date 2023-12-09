@@ -314,7 +314,7 @@ footer {
 }
 
 .navbar-collapse {
-    justify-content: end;
+    justify-content: flex-end;
 }
 
 .nav-item {
@@ -756,7 +756,7 @@ input[type="checkbox"] {
 
 .multi-select .react-select__control {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
 }
 
 .multi-select-counter {
@@ -824,7 +824,7 @@ div:has(.small-address-filter) {
     bottom: -1rem;
     align-items: center;
     width: fit-content;
-    justify-content: end;
+    justify-content: flex-end;
     white-space: nowrap !important;
     z-index: 100;
 }
@@ -860,7 +860,7 @@ div:has(.small-address-filter) {
     bottom: -2rem;
     align-items: center;
     width: fit-content;
-    justify-content: end;
+    justify-content: flex-end;
     white-space: nowrap !important;
 }
 

@@ -43,11 +43,11 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
 
     const [shouldClearFilters, setShouldClearFilters] = useState(false);
     const [shouldClearAddress, setShouldClearAddress] = useState(false);
-    
-    const doctorsSearchResultsId = "doctor-search-results"
-    const doctorsSearchColumnId = "doctors-search-column"
-    const doctorsMapColumnId = "doctors-map-column"
-    const [mapIsOpen, setMapIsOpen] = useState(false)
+
+    const doctorsSearchResultsId = "doctor-search-results";
+    const doctorsSearchColumnId = "doctors-search-column";
+    const doctorsMapColumnId = "doctors-map-column";
+    const [mapIsOpen, setMapIsOpen] = useState(false);
     const [pagination, setPagination] = useState(true);
     const mapNode = (<DoctorSearchMap
         key={`DoctorSearchMap-Pagination:${pagination.toString()}`}
@@ -58,7 +58,7 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
         setCurrentDoctor={setCurrentDoctor}
         currentDoctorLocation={currentDoctorLocation}
         setCurrentDoctorLocation={setCurrentDoctorLocation}
-    />)
+    />);
 
     const handleResize = () => {
         const mapColumn = document.getElementById(doctorsMapColumnId);

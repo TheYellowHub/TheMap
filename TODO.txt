@@ -1,19 +1,10 @@
 TODO:
 
-
 Content:
 
-    0. Bugs?
-    - Local auth0 issue ? 
-    - Rerender w/ more hooks?
+    1. multiple locations on the same spot - WIP, pending https://stackoverflow.com/questions/77557668/using-markerf-component-is-not-working-with-ts-overlapping-marker-spiderfier
 
-    2. Other TODOs in the code?
-
-    3. NPM warnings?
-
-    4. multiple locations on the same spot - WIP, pending https://stackoverflow.com/questions/77557668/using-markerf-component-is-not-working-with-ts-overlapping-marker-spiderfier
-
-    5. 
+    2. 
     - my propile -> set username
     - set username during review?
 
@@ -23,6 +14,8 @@ Design:
     1. Mobile 
     - Scrolling V
     - Option to close and open the map V
+    - Map size? Button 
+    - z-index issue
 
     2. Recheck design / figma
 
@@ -40,3 +33,18 @@ Before production:
     3. Tests
 
     4. Additional data migration - Pending data
+
+
+Stats etc:
+
+    - Usage stats?
+
+    - Alerts?
+
+
+Later inthe project:
+
+    - Add a doctor
+
+    - Report an issue
+    
