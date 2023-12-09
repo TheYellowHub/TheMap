@@ -22,7 +22,6 @@ python manage.py initadmin
 echo "Starting gunicorn server in production mode"
 gunicorn base.wsgi --bind 0.0.0.0:8000 --workers $((2*$(grep -c ^processor /proc/cpuinfo) + 1)) --worker-class gthread
 
-# TODO: var
 # echo "Starting gunicorn server in DEBUG mode"
 # gunicorn base.wsgi --bind 0.0.0.0:8000 --workers 1 --threads 1 --log-level debug
 

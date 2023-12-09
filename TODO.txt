@@ -1,27 +1,50 @@
 TODO:
 
-0. Local auth0 issue
+Content:
 
-- App name V
+    1. multiple locations on the same spot - WIP, pending https://stackoverflow.com/questions/77557668/using-markerf-component-is-not-working-with-ts-overlapping-marker-spiderfier
 
-1. Mobile 
-- Scrolling
-- Option to close and open the map
+    2. 
+    - my propile -> set username
+    - set username during review?
 
-2. 
-- my propile -> set username
-- set username during review?
 
-3. multiple locations on the same spot - WIP, pending https://stackoverflow.com/questions/77557668/using-markerf-component-is-not-working-with-ts-overlapping-marker-spiderfier
+Design:
 
-4. Other TODOs in the code?
+    1. Mobile 
+    - Scrolling V
+    - Option to close and open the map V
+    - Map size? Button 
+    - z-index issue
 
-5. NPM warnings?
+    2. Recheck design / figma
 
-6. Tests
 
-7. Recheck auth0 config / change to production settings
+Before production:
 
-8. Recheck design / figma
+    1. Auth0:
+    - Recheck config / change to production settings
+    - Recheck bills
 
-9. Additional data migration
+    2. GMaps:
+    - Recheck config / change to production settings
+    - Recheck bills
+
+    3. Tests
+
+    4. Additional data migration - Pending data
+
+
+Stats etc:
+
+    - Usage stats?
+
+    - Alerts?
+
+
+Later inthe project:
+
+    - Add a doctor
+
+    - Report an issue
+    

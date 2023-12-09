@@ -14,6 +14,7 @@ import MapLoadingError from "../components/map/MapLoadingError";
 import useGoogleMaps, { Location } from "../utils/googleMaps/useGoogleMaps";
 import DoctorSearchAddressFilter from "../components/doctors/search/DoctorSearchAddressFilter";
 import { useParams } from "react-router-dom";
+import Button from "../components/utils/Button";
 
 interface MapScreenProps {
     startWithMyList?: boolean;
@@ -42,6 +43,35 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
 
     const [shouldClearFilters, setShouldClearFilters] = useState(false);
     const [shouldClearAddress, setShouldClearAddress] = useState(false);
+
+    const doctorsSearchResultsId = "doctor-search-results";
+    const doctorsSearchColumnId = "doctors-search-column";
+    const doctorsMapColumnId = "doctors-map-column";
+    const [mapIsOpen, setMapIsOpen] = useState(false);
+    const [pagination, setPagination] = useState(true);
+    const mapNode = (<DoctorSearchMap
+        key={`DoctorSearchMap-Pagination:${pagination.toString()}`}
+        doctors={matchedDoctorsIgnoringDistance}
+        centerLocation={addressLocation}
+        boundsDistanceFromCenter={distance}
+        currentDoctor={currentDoctor}
+        setCurrentDoctor={setCurrentDoctor}
+        currentDoctorLocation={currentDoctorLocation}
+        setCurrentDoctorLocation={setCurrentDoctorLocation}
+    />);
+
+    const handleResize = () => {
+        const mapColumn = document.getElementById(doctorsMapColumnId);
+        const newPagination = mapColumn !== null && window.getComputedStyle(mapColumn, null).display.toLowerCase() !== "none";
+        if (newPagination !== pagination) {
+            setPagination(newPagination);
+        }
+    };
+
+    useEffect(() => {
+        window.addEventListener("resize", handleResize, false);
+        handleResize();
+    }, []);
 
     const useCurrenetLocation = () => {
         setCurrentLocation((location) => {
@@ -95,7 +125,7 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
                     setCurrentDoctorLocation(currentDoctor.locations[0]);
                 }
             }
-            document.getElementById("doctor-search-results")?.scrollIntoView();
+            document.getElementById(doctorsSearchResultsId)?.scrollIntoView();
         }
         window.history.replaceState(null, "", `#/${currentDoctor?.id || ""}`);
     }, [currentDoctor]);
@@ -123,7 +153,7 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
         <LoadingWrapper isLoading={isListLoading} isError={isListError} error={listError as ResponseError}>
             <Container fluid>
                 <Row className="d-flex mt-2 mb-0 flex-md-nowrap">
-                    <Col className="mx-3 px-3">
+                    <Col className="mx-3 px-3" id={doctorsSearchColumnId}>
                         <Row className="pb-2 mb-2">
                             <DoctorSearchFilters
                                 address={address}
@@ -189,14 +219,16 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
                             </Col>
                         </Row>
 
-                        <Row className="py-2 my-2" id="doctor-search-results">
+                        <Row className="py-2 my-2" id={doctorsSearchResultsId}>
                             {currentDoctor !== null || matchedDoctorsIncludingDistance.length > 0 ? (
                                 <DoctorSearchResults
+                                    key={`DoctorSearchResults-Pagination:${pagination.toString()}`}
                                     doctors={matchedDoctorsIncludingDistance}
                                     currentDoctor={currentDoctor}
                                     setCurrentDoctor={setCurrentDoctor}
                                     locationForDistanceCalculation={addressLocation}
                                     distanceUnit={distanceUnit}
+                                    pagination={pagination}
                                 />
                             ) : (
                                 <DoctorSearchNoResuls
@@ -210,18 +242,23 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
                         </Row>
                     </Col>
 
-                    <Col className="mx-0 px-0" md={5}>
-                        <DoctorSearchMap
-                            doctors={matchedDoctorsIgnoringDistance}
-                            centerLocation={addressLocation}
-                            boundsDistanceFromCenter={distance}
-                            currentDoctor={currentDoctor}
-                            setCurrentDoctor={setCurrentDoctor}
-                            currentDoctorLocation={currentDoctorLocation}
-                            setCurrentDoctorLocation={setCurrentDoctorLocation}
-                        />
+                    <Col className="mx-0 px-0 only-desktop doctors-map-next-to-results" xs={5} id={doctorsMapColumnId}>
+                        {mapNode}
                     </Col>
                 </Row>
+
+                {currentDoctor === null && <Container className={`mx-0 px-0 only-mobile doctors-map-below-results-${mapIsOpen ? "open" : "closed"}`} fluid>
+                    <Row className="mx-0 px-0 only-mobile">
+                        <Col className="mx-0 px-0 d-flex justify-content-end">
+                            <Button onClick={() => setMapIsOpen(!mapIsOpen)} label={`${mapIsOpen ? "Hide" : "Show"} Map`} icon="fa-location-dot" className="btn-map" />
+                        </Col>
+                    </Row>
+                    {mapIsOpen && <Row className="mx-0 px-0">
+                        <Col className="mx-0 px-0">
+                            {mapNode}
+                        </Col>
+                    </Row>}
+                </Container>}
             </Container>
 
             <MapLoadingError />
