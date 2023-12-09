@@ -28,7 +28,7 @@ function Pagination({ rowsCount, pageIndex, pageSize, setPageIndex, setPageSize 
     return (
         <Container>
             <Row className="d-flex gap-3">
-                <Col className="d-flex justify-content-end align-items-center gap-2 flex-no-wrap">
+                <Col className={`d-flex ${setPageSize ? "justify-content-end" : "justify-content-center"} align-items-center gap-2 flex-no-wrap`}>
                     {1 < pagesCount && (
                         <>
                             <button

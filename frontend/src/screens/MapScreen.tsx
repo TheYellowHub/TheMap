@@ -42,6 +42,21 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
 
     const [shouldClearFilters, setShouldClearFilters] = useState(false);
     const [shouldClearAddress, setShouldClearAddress] = useState(false);
+    
+    const doctorsSearchResultsId = "doctor-search-results"
+    const doctorsSearchColumnId = "doctors-search"
+    const doctorsMapColumnId = "doctors-map"
+    const [pagination, setPagination] = useState(true);
+
+    const handleResize = () => {
+        // No pagination if the map "wrapped" to be below the search area
+        setPagination(document.getElementById(doctorsSearchColumnId)?.offsetTop === document.getElementById(doctorsMapColumnId)?.offsetTop)
+    };
+
+    useEffect(() => {
+        window.addEventListener("resize", handleResize, false);
+        handleResize();
+    }, []);
 
     const useCurrenetLocation = () => {
         setCurrentLocation((location) => {
@@ -95,7 +110,7 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
                     setCurrentDoctorLocation(currentDoctor.locations[0]);
                 }
             }
-            document.getElementById("doctor-search-results")?.scrollIntoView();
+            document.getElementById(doctorsSearchResultsId)?.scrollIntoView();
         }
         window.history.replaceState(null, "", `#/${currentDoctor?.id || ""}`);
     }, [currentDoctor]);
@@ -123,7 +138,7 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
         <LoadingWrapper isLoading={isListLoading} isError={isListError} error={listError as ResponseError}>
             <Container fluid>
                 <Row className="d-flex mt-2 mb-0 flex-md-nowrap">
-                    <Col className="mx-3 px-3">
+                    <Col className="mx-3 px-3" id={doctorsSearchColumnId}>
                         <Row className="pb-2 mb-2">
                             <DoctorSearchFilters
                                 address={address}
@@ -189,7 +204,7 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
                             </Col>
                         </Row>
 
-                        <Row className="py-2 my-2" id="doctor-search-results">
+                        <Row className="py-2 my-2" id={doctorsSearchResultsId}>
                             {currentDoctor !== null || matchedDoctorsIncludingDistance.length > 0 ? (
                                 <DoctorSearchResults
                                     doctors={matchedDoctorsIncludingDistance}
@@ -197,6 +212,7 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
                                     setCurrentDoctor={setCurrentDoctor}
                                     locationForDistanceCalculation={addressLocation}
                                     distanceUnit={distanceUnit}
+                                    pagination={pagination}
                                 />
                             ) : (
                                 <DoctorSearchNoResuls
@@ -210,7 +226,7 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
                         </Row>
                     </Col>
 
-                    <Col className="mx-0 px-0" md={5}>
+                    <Col className="mx-0 px-0" md={5} id={doctorsMapColumnId}>
                         <DoctorSearchMap
                             doctors={matchedDoctorsIgnoringDistance}
                             centerLocation={addressLocation}
