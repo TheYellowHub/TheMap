@@ -1,6 +1,12 @@
 TODO:
 
-1. Mobile - Option to close and open the map
+0. Local auth0 issue
+
+- App name V
+
+1. Mobile 
+- Scrolling
+- Option to close and open the map
 
 2. 
 - my propile -> set username
@@ -8,7 +14,7 @@ TODO:
 
 3. multiple locations on the same spot - WIP, pending https://stackoverflow.com/questions/77557668/using-markerf-component-is-not-working-with-ts-overlapping-marker-spiderfier
 
-4. Other TODOs?
+4. Other TODOs in the code?
 
 5. NPM warnings?
 
