@@ -42,8 +42,6 @@ function Modal<T>({
     const [dataChanged, setDataChanged] = useState(false);
     const [dataObject, setDataObject] = useState({ ...t });
 
-    // TODO: stylish validaition error messages
-
     function fieldToComponent<O>(
         field: ModalField<O>,
         object: O,

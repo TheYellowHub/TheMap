@@ -7,7 +7,7 @@ interface DoctorImageProps {
 }
 
 function DoctorImage({ doctor, big = false }: DoctorImageProps) {
-    const [error, setError] = useState(false)
+    const [error, setError] = useState(false);
 
     const image = doctor.image && !error
         ? doctor.image.toString()   // .replaceAll("//", "/").replaceAll(":/", "://")
