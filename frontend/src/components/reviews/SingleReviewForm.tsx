@@ -311,7 +311,7 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
                     <Row className="p-0 m-0 w-100 gap-3">
                         <Col className="m-0 p-0">
                             <strong>Thank you!</strong> Your review has been submitted and will be approved shortly, as
-                            long as it complies with our <a href="https://www.theyellowhub.org/guidelines">Community Guidelines</a>. {/* TODO: link */}
+                            long as it complies with our <a href="https://www.theyellowhub.org/guidelines" target="_blank" rel="noreferrer">Community Guidelines</a>.
                         </Col>
                     </Row>
                 )}
