@@ -20,7 +20,7 @@ function DoctorLocations({ doctor, locationForDistanceCalculation, distanceUnit 
         const closestLocation =
             locationForDistanceCalculation && getDoctorNearestLocation(doctor, locationForDistanceCalculation);
         setSelectedLocation(closestLocation || doctor.locations[0]);
-    }, [doctor])
+    }, [doctor]);
 
     return (
         <Container className="p-0 m-0">
@@ -56,7 +56,7 @@ function DoctorLocations({ doctor, locationForDistanceCalculation, distanceUnit 
                         <Button
                             variant="primary"
                             icon="fa-globe"
-                            iconClassName="px-3"
+                            iconClassName="ps-0 pe-3"
                             href={selectedLocation?.website}
                             target="_blank"
                             label="Website"
@@ -67,7 +67,7 @@ function DoctorLocations({ doctor, locationForDistanceCalculation, distanceUnit 
                         <Button
                             variant="secondary"
                             icon="fa-envelope"
-                            iconClassName="px-3"
+                            iconClassName="ps-0 pe-3"
                             href={`mailto:${selectedLocation?.email}`}
                             target="_blank"
                             label={selectedLocation?.email}
@@ -78,7 +78,7 @@ function DoctorLocations({ doctor, locationForDistanceCalculation, distanceUnit 
                         <Button
                             variant="secondary"
                             icon="fa-phone"
-                            iconClassName="px-3"
+                            iconClassName="ps-0 pe-3"
                             href={`tel:${selectedLocation?.phone}`}
                             label={selectedLocation?.phone}
                             className="w-min-100-max-content"
