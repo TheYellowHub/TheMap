@@ -83,7 +83,7 @@ export default function DoctorSearchFilters({
         [myListFilterName, (doctor: Doctor) => userInfo?.savedDoctors?.includes(doctor.id!) === true],
     ]);
 
-    const filtered = (categoryFilter !== undefined || 0 < specialitiesFilter.length || listFilter !== undefined)
+    const filtered = (address !== undefined || categoryFilter !== undefined || 0 < specialitiesFilter.length || listFilter !== undefined)
 
     const sortByName = (a: Doctor, b: Doctor) => {
         const nameA = getDoctorNameWithoutPrefix(a);
@@ -215,7 +215,10 @@ export default function DoctorSearchFilters({
                     </Col>
                     <Col xs={5} lg={3} className="d-flex align-items-center justify-content-between px-0">
                         <Col className="d-flex text-nowrap flex-grow-0">
-                            {filtered && <a onClick={() => setShouldClearFilters(true)} className="sm-font">
+                            {filtered && <a onClick={() => {
+                                setShouldClearFilters(true);
+                                setShouldClearAddress(true);
+                            }} className="sm-font">
                                 <Icon icon="fa-close" className="ps-0" />
                                 Clear all
                             </a>}

@@ -965,7 +965,7 @@ div:has(.small-address-filter) {
 }
 
 .doctorBigCard {
-    width: 100%;
+    width: 100% !important;
     padding: 1.8rem 1.5rem !important;
 }
 

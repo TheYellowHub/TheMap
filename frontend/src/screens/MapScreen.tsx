@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Col, Container, Row, Modal as ReactModal } from "react-bootstrap";
 
+import config from "../config.json";
 import LoadingWrapper from "../components/utils/LoadingWrapper";
 import { ResponseError } from "../hooks/useApiRequest";
 import { Doctor, DoctorLocation, getDoctorNearestLocation } from "../types/doctors/doctor";
@@ -181,7 +182,7 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
                                 setValueChange={setFilterChangeSinceLastDoctorPick}
                             />
 
-                            {address === undefined && currentDoctor === null && !startWithMyList && (
+                            {config.app.forceAddressInput && address === undefined && currentDoctor === null && !startWithMyList && (
                                 <ReactModal
                                     className="transparent d-flex justify-content-center big-address-filter"
                                     show={true}

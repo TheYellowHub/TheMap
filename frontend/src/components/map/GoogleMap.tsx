@@ -24,6 +24,7 @@ function GoogleMap({ center, markers = emptyMarkersArray as Marker[], resetClick
     const mapRef = useRef<google.maps.Map | null>(null);
     const [markersMap, setMarkersMap] = useState(new Map<string, Marker[]>());
     const [currentLocationStr, setCurrentLocationStr] = useState<string | null>();
+    const [fitBoundsDone, setFitBoundsDone] = useState(false);
 
     const locationToStr = (location: Location) => `location-${location.lat}/${location.lng}`;
 
@@ -46,7 +47,7 @@ function GoogleMap({ center, markers = emptyMarkersArray as Marker[], resetClick
     };
 
     const fitBounds = () => {
-        if (mapRef.current !== null) {
+        if (mapRef.current !== null && !fitBoundsDone) {
             const bounds = new window.google.maps.LatLngBounds();
             markers.filter((marker) => marker.inBounds).map((marker) => bounds.extend(marker.location));
             if (center !== undefined) {
@@ -58,6 +59,8 @@ function GoogleMap({ center, markers = emptyMarkersArray as Marker[], resetClick
             if (newZoom) {
                 mapRef.current.setZoom(newZoom);
             }
+
+            setFitBoundsDone(true);
         }
     };
 

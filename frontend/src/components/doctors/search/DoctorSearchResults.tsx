@@ -58,9 +58,7 @@ export default function DoctorSearchResuls({
             if (cardsDiv !== null) {
                 const width = (cols * (cardWidth +  1 * rem)).toString() + "px";
                 console.log(width);
-                cardsDiv.style.width = width;
                 cardsDiv.style.minWidth = width;
-                cardsDiv.style.maxWidth = width;
             }
         }
     };

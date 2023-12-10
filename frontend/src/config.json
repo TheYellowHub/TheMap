@@ -7,7 +7,8 @@
     },
     "app": {
         "name": "",
-        "logoUrl": ""
+        "logoUrl": "",
+        "forceAddressInput": false
     },
     "maps": {
         "googleMapsApiKey": "AIzaSyAsUkJcItqv4xJIUiYm2Tz0lf4y0ayRq78"

@@ -35,7 +35,7 @@ function DoctorBigCard({ doctor, locationForDistanceCalculation, distanceUnit = 
     const [addingReview, setAddingReview] = useState(false);
 
     return (
-        <Container className={`doctorBigCard mx-0 ps-0 pe-3`} fluid>
+        <Container className={`doctorBigCard mx-0 ps-0 pe-3 w-100`}>
             <Row className="mb-3">
                 <a onClick={onClose} className="a-no-decoration-line">
                     <Col className="only-mobile med-dark-grey sm-font">
