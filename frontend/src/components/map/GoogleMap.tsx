@@ -14,12 +14,13 @@ export interface Marker {
 interface GoogleMapProps {
     center: Location | undefined;
     markers?: Marker[];
+    getGroupIcon?: (selected: boolean) => string;
     resetClicks?: () => void;
 }
 
 const emptyMarkersArray: Marker[] = [];
 
-function GoogleMap({ center, markers = emptyMarkersArray as Marker[], resetClicks }: GoogleMapProps) {
+function GoogleMap({ center, markers = emptyMarkersArray as Marker[], getGroupIcon, resetClicks }: GoogleMapProps) {
     const minimalZoom = 13;
     const mapRef = useRef<google.maps.Map | null>(null);
     const [markersMap, setMarkersMap] = useState(new Map<string, Marker[]>());
@@ -39,11 +40,9 @@ function GoogleMap({ center, markers = emptyMarkersArray as Marker[], resetClick
             if (!newMarkersMap.has(locationStr)) {
                 newMarkersMap.set(locationStr, []);
             }
-
             newMarkersMap.get(locationStr)!.push(marker);
         });
         setMarkersMap(newMarkersMap);
-
     };
 
     const fitBounds = () => {
@@ -106,15 +105,11 @@ function GoogleMap({ center, markers = emptyMarkersArray as Marker[], resetClick
                         </Fragment>);
                     } else {
                         const location = markers![0].location;
-                        return (<Fragment key={`location-${index}-${locationToStr(location)}-group`}>
+                        const icon = getGroupIcon && getGroupIcon(currentLocationStr === locationToStr(location));
+                        return (<Fragment key={`location-${index}-${locationToStr(location)}-${icon}`}>
                             <MarkerF
                                 key={`marker-${index}-${locationToStr(location)}`}
-                                // TODO: 
-                                // icon={
-                                //     marker.icon && {
-                                //         url: marker.icon,
-                                //     }
-                                // }
+                                icon={icon}
                                 position={location}
                                 onClick={() => {
                                     resetClicks && resetClicks();

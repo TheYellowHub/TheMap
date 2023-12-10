@@ -950,6 +950,17 @@ div:has(.small-address-filter) {
     z-index: 30;
 }
 
+.gm-style-iw,
+.gm-style-iw-c,
+.gm-style-iw-d {
+    padding: 0 !important;
+}
+
+.gm-style-iw-d > div > div {
+    height: 3.9rem !important;
+    overflow: hidden;
+}
+
 /* Doctor's cards */
 
 .doctorSmallCard,

@@ -1,6 +1,10 @@
 import { Doctor } from "../../types/doctors/doctor";
 
-export default function getMarkerIcon(doctor: Doctor, isDoctorSelected: boolean, isLocationSelected: boolean) {
+export function getGroupMarkerIcon(selected: boolean) {
+    return `/images/markers/${selected ? "selectedGroup" : "notSelected/group"}.svg`;
+}
+
+export function getDoctorMarkerIcon(doctor: Doctor, isDoctorSelected: boolean, isLocationSelected: boolean) {
     const categoriesIconsMap = new Map();
     categoriesIconsMap.set(/.*pelvic pain.*/, "pp");
     categoriesIconsMap.set(/.*pelvic floor therap.*/, "pft");
@@ -19,7 +23,7 @@ export default function getMarkerIcon(doctor: Doctor, isDoctorSelected: boolean,
             ? categoriesIconsMap.get(categoryKeys[0])
             : "default";
 
-    const url = `${window.location.origin}/images/markers/${dir}/${file}.svg`;
+    const url = `/images/markers/${dir}/${file}.svg`;
 
     return url;
 }
