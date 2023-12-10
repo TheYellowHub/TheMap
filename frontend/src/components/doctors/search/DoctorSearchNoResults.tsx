@@ -1,4 +1,6 @@
 import { Container } from "react-bootstrap";
+
+import config from "../../../config.json"
 import useAuth from "../../../auth/useAuth";
 
 interface DoctorSearchNoResultsProps {
@@ -51,7 +53,7 @@ export default function DoctorSearchNoResuls({
                         <>
                             <br />
                             or{" "}
-                            <a onClick={() => setDistance(distance + 10)} className="inherit-font-style">
+                            <a onClick={() => setDistance(distance + config.app.distanceJumps)} className="inherit-font-style">
                                 try a larger area
                             </a>
                         </>

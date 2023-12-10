@@ -38,7 +38,7 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
     const { setCurrentLocation, getAddress } = useGoogleMaps();
     const [address, setAddress] = useState<string | undefined>(undefined);
     const [addressLocation, setAddressLocation] = useState<Location | undefined>();
-    const distanceDefault = 100;
+    const distanceDefault = config.app.distanceDefault;
     const [distance, setDistance] = useState<number | undefined>(distanceDefault);
     const distanceUnit = addressLocation?.country === "US" ? "mi" : "km";
 
@@ -87,8 +87,6 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
             });
         });
     };
-
-    useEffect(() => setDistance(distanceDefault), [address]);
 
     useEffect(() => {
         if (shouldClearFilters) {
@@ -212,7 +210,7 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
                                 </div>
                                 <div className="px-2 med-dark-grey sm-font text-decoration-underline d-inline">
                                     {address && distance && (
-                                        <a onClick={() => setDistance(distance + 20)} className="a-only-hover-decoration">
+                                        <a onClick={() => setDistance(distance + config.app.distanceJumps)} className="a-only-hover-decoration">
                                             Search larger area
                                         </a>
                                     )}

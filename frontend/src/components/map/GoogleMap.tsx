@@ -46,9 +46,12 @@ function GoogleMap({ center, markers = emptyMarkersArray as Marker[], getGroupIc
     };
 
     const fitBounds = () => {
-        if (mapRef.current !== null && !fitBoundsDone) {
+        console.log("fit???", center, mapRef)
+        if (mapRef.current !== null) {
             const bounds = new window.google.maps.LatLngBounds();
-            markers.filter((marker) => marker.inBounds).map((marker) => bounds.extend(marker.location));
+            const markersInBounds = markers.filter((marker) => marker.inBounds);
+            console.log("fit", markersInBounds.length)
+            markersInBounds.forEach((marker) => bounds.extend(marker.location));
             if (center !== undefined) {
                 bounds.extend(center);
             }
@@ -58,7 +61,6 @@ function GoogleMap({ center, markers = emptyMarkersArray as Marker[], getGroupIc
             if (newZoom) {
                 mapRef.current.setZoom(newZoom);
             }
-
             setFitBoundsDone(true);
         }
     };
@@ -68,8 +70,14 @@ function GoogleMap({ center, markers = emptyMarkersArray as Marker[], getGroupIc
     }, [markers]);
 
     useEffect(() => {
-        fitBounds();
-    }, [markers, center, mapRef]);
+        if (!fitBoundsDone) {
+            fitBounds();
+        }
+    }, [markers, mapRef, fitBoundsDone]);
+
+    useEffect(() => {
+        setFitBoundsDone(false)
+    }, [center]);
 
     return (
         <div id="map" key={`${center && locationToStr(center)}`}>

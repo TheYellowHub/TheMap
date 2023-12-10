@@ -52,44 +52,39 @@ function DoctorLocations({ doctor, locationForDistanceCalculation, distanceUnit 
                     />
                 </Row>
                 <Row className="w-100 m-0 gap-3 py-1 doctor-location">
-                    <Col className="px-0">
-                        {selectedLocation?.website && (
-                            <Button
-                                variant="primary"
-                                icon="fa-globe"
-                                iconClassName="px-3"
-                                href={selectedLocation?.website}
-                                target="_blank"
-                                label="Website"
-                                className="w-min-100-max-content"
-                            />
-                        )}
-                    </Col>
-                    <Col className="px-0">
-                        {selectedLocation?.email && (
-                            <Button
-                                variant="secondary"
-                                icon="fa-envelope"
-                                iconClassName="px-3"
-                                href={`mailto:${selectedLocation?.email}`}
-                                target="_blank"
-                                label={selectedLocation?.email}
-                                className="w-min-100-max-content"
-                            />
-                        )}
-                    </Col>
-                    <Col className="px-0">
-                        {selectedLocation?.phone && (
-                            <Button
-                                variant="secondary"
-                                icon="fa-phone"
-                                iconClassName="px-3"
-                                href={`tel:${selectedLocation?.phone}`}
-                                label={selectedLocation?.phone}
-                                className="w-min-100-max-content"
-                            />
-                        )}
-                    </Col>
+                    {selectedLocation?.website && (<Col className="px-0">
+                        <Button
+                            variant="primary"
+                            icon="fa-globe"
+                            iconClassName="px-3"
+                            href={selectedLocation?.website}
+                            target="_blank"
+                            label="Website"
+                            className="w-min-100-max-content"
+                        />
+                    </Col>)}
+                    {selectedLocation?.email && (<Col className="px-0">
+                        <Button
+                            variant="secondary"
+                            icon="fa-envelope"
+                            iconClassName="px-3"
+                            href={`mailto:${selectedLocation?.email}`}
+                            target="_blank"
+                            label={selectedLocation?.email}
+                            className="w-min-100-max-content"
+                        />
+                    </Col>)}
+                    {selectedLocation?.phone && (<Col className="px-0">
+                        <Button
+                            variant="secondary"
+                            icon="fa-phone"
+                            iconClassName="px-3"
+                            href={`tel:${selectedLocation?.phone}`}
+                            label={selectedLocation?.phone}
+                            className="w-min-100-max-content"
+                        />
+                    </Col>)}
+                    
                 </Row>
             </>)}
         </Container>

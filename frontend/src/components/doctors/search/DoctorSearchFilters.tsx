@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Col, Container, Form, Row } from "react-bootstrap";
 
+import config from "../../../config.json";
 import { Location } from "../../../utils/googleMaps/useGoogleMaps";
 import useDoctorCategories from "../../../hooks/doctors/useDoctorCategories";
 import useDoctorSpecialities from "../../../hooks/doctors/useDoctorSpecialities";
@@ -84,6 +85,7 @@ export default function DoctorSearchFilters({
     ]);
 
     const filtered = (address !== undefined || categoryFilter !== undefined || 0 < specialitiesFilter.length || listFilter !== undefined)
+    const [ignoreNextDistanceChange, setIgnoreNextDistanceChange] = useState(false);
 
     const sortByName = (a: Doctor, b: Doctor) => {
         const nameA = getDoctorNameWithoutPrefix(a);
@@ -108,13 +110,7 @@ export default function DoctorSearchFilters({
         ["Z - A", (a, b) => -sortByName(a, b)],
     ]);
 
-    useEffect(() => {
-        setStartWithMyListParamWasUsed(false);
-        setShouldClearFilters(true);
-        setShouldClearAddress(true);
-    }, [startWithMyList]);
-
-    useEffect(() => {
+    const refilterDoctors = (filterDistance: number | undefined) => {
         const newMatchedDoctorsIgnoringDistance: Doctor[] = doctors.filter((doctor: Doctor) => {
             return (
                 doctor.status === "APPROVED" &&
@@ -130,19 +126,48 @@ export default function DoctorSearchFilters({
         const newMatchedDoctorsIncludingDistance: Doctor[] = newMatchedDoctorsIgnoringDistance
             .filter((doctor: Doctor) => {
                 const doctorDistance =
-                    distance === undefined || addressLocation === undefined
+                    filterDistance === undefined || addressLocation === undefined
                         ? undefined
                         : getDoctorMinimalDistance(doctor, addressLocation, distanceUnit);
                 return (
-                    distance === undefined ||
+                    filterDistance === undefined ||
                     addressLocation === undefined ||
-                    (doctorDistance && doctorDistance <= distance)
+                    (doctorDistance && doctorDistance <= filterDistance)
                 );
             })
             .sort(sortOptions.get(sortKey));
-
         setMatchedDoctorsIncludingDistance(newMatchedDoctorsIncludingDistance);
-    }, [doctors, addressLocation, distance, categoryFilter, specialitiesFilter, listFilter, sortKey, userInfo]);
+        return newMatchedDoctorsIncludingDistance;
+    }
+
+    useEffect(() => {
+        setStartWithMyListParamWasUsed(false);
+        setShouldClearFilters(true);
+        setShouldClearAddress(true);
+    }, [startWithMyList]);
+
+    useEffect(() => {
+        refilterDoctors(distance);
+    }, [doctors, categoryFilter, specialitiesFilter, listFilter, sortKey, userInfo]);
+
+    useEffect(() => {
+        if (ignoreNextDistanceChange) {
+            setIgnoreNextDistanceChange(false);
+        } else {
+            refilterDoctors(distance);
+        }
+    }, [distance]);
+
+    useEffect(() => {
+        let filterDistance = config.app.distanceDefault;
+        let matchedDoctors = refilterDoctors(filterDistance);
+        while (matchedDoctors.length < config.app.minimumDoctorsInResults) {
+            filterDistance += 10;
+            matchedDoctors = refilterDoctors(filterDistance);
+        }
+        setIgnoreNextDistanceChange(true);
+        setDistance(filterDistance);
+    }, [addressLocation]);
 
     useEffect(() => {
         if (shouldClearFilters) {

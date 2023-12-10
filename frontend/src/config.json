@@ -8,7 +8,10 @@
     "app": {
         "name": "",
         "logoUrl": "",
-        "forceAddressInput": false
+        "forceAddressInput": false,
+        "minimumDoctorsInResults": 4,
+        "distanceDefault": 100,
+        "distanceJumps": 10
     },
     "maps": {
         "googleMapsApiKey": "AIzaSyAsUkJcItqv4xJIUiYm2Tz0lf4y0ayRq78"
