@@ -71,7 +71,10 @@ export default function DoctorSearchMap({
 
     return (
         <Container fluid className="map px-0 mx-0">
-            <GoogleMap center={centerLocation} markers={markers} />
+            <GoogleMap center={centerLocation} markers={markers} resetClicks={() => {
+                setCurrentDoctor(null);
+                setCurrentDoctorLocation(null);
+            }} />
             <div className="aboveMap">
                 <a href="https://urlzs.com/bVdAh" target="_blank" rel="noreferrer">
                     <Button variant="primary" label="Recommend a doctor"></Button>

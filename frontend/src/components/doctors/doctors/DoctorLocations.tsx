@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Container, Row } from "react-bootstrap";
 
-import { Doctor, getDoctorNearestLocation } from "../../../types/doctors/doctor";
+import { Doctor, DoctorLocation, getDoctorNearestLocation } from "../../../types/doctors/doctor";
 import { Location } from "../../../utils/googleMaps/useGoogleMaps";
 import { DistanceUnit } from "../../utils/DistanceUnit";
 import DoctorLocationAddress from "./DoctorLocationAddress";
@@ -14,10 +14,13 @@ interface DoctorLocationsProps {
 }
 
 function DoctorLocations({ doctor, locationForDistanceCalculation, distanceUnit = "mi" }: DoctorLocationsProps) {
-    const closestLocation =
-        locationForDistanceCalculation && getDoctorNearestLocation(doctor, locationForDistanceCalculation);
+    const [selectedLocation, setSelectedLocation] = useState<DoctorLocation>();
 
-    const [selectedLocation, setSelectedLocation] = useState(closestLocation || doctor.locations[0]);
+    useEffect(() => {
+        const closestLocation =
+            locationForDistanceCalculation && getDoctorNearestLocation(doctor, locationForDistanceCalculation);
+        setSelectedLocation(closestLocation || doctor.locations[0]);
+    }, [doctor])
 
     return (
         <Container className="p-0 m-0">
@@ -38,7 +41,7 @@ function DoctorLocations({ doctor, locationForDistanceCalculation, distanceUnit 
                     </Button>
                 ))}
             </Row>
-            <Row className="w-100 m-0 gap-3 py-1 doctor-location">
+            {selectedLocation && (<Row className="w-100 m-0 gap-3 py-1 doctor-location">
                 {selectedLocation?.privateOnly}
                 <DoctorLocationAddress
                     doctorLocation={selectedLocation}
@@ -71,7 +74,7 @@ function DoctorLocations({ doctor, locationForDistanceCalculation, distanceUnit 
                         label={selectedLocation?.phone}
                     />
                 )}
-            </Row>
+            </Row>)}
         </Container>
     );
 }
