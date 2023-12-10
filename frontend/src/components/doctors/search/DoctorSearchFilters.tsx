@@ -83,6 +83,8 @@ export default function DoctorSearchFilters({
         [myListFilterName, (doctor: Doctor) => userInfo?.savedDoctors?.includes(doctor.id!) === true],
     ]);
 
+    const filtered = (categoryFilter !== undefined || 0 < specialitiesFilter.length || listFilter !== undefined)
+
     const sortByName = (a: Doctor, b: Doctor) => {
         const nameA = getDoctorNameWithoutPrefix(a);
         const nameB = getDoctorNameWithoutPrefix(b);
@@ -211,7 +213,13 @@ export default function DoctorSearchFilters({
                             }}
                         />
                     </Col>
-                    <Col xs={5} lg={3} className="d-flex align-items-center justify-content-end ps-0 pe-1">
+                    <Col xs={5} lg={3} className="d-flex align-items-center justify-content-between px-0">
+                        <Col className="d-flex text-nowrap flex-grow-0">
+                            {filtered && <a onClick={() => setShouldClearFilters(true)} className="sm-font">
+                                <Icon icon="fa-close" className="ps-0" />
+                                Clear all
+                            </a>}
+                        </Col>
                         <Col className="d-flex justify-content-end icon-select flex-grow-0">
                             <Select
                                 values={Array.from(sortOptions.keys())}
@@ -222,12 +230,6 @@ export default function DoctorSearchFilters({
                                 currentValue={sortKey}
                                 icon="fa-arrow-down-wide-short"
                             />
-                        </Col>
-                        <Col className="d-flex justify-content-end text-nowrap flex-grow-0">
-                            <a onClick={() => setShouldClearFilters(true)} className="sm-font">
-                                <Icon icon="fa-close" />
-                                Clear all
-                            </a>
                         </Col>
                     </Col>
                 </Row>

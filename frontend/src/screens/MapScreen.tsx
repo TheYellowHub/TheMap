@@ -200,25 +200,29 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
                         </Row>
 
                         <Row className="d-flex py-2 my-2 gap-3">
-                            <Col className="med-dark-grey fst-italic p-0">
-                                {matchedDoctorsIncludingDistance.length} results
-                                {address && distance && (
-                                    <>
-                                        &nbsp;for &quot;{address}&quot; within {distance} {distanceUnit}
-                                    </>
-                                )}
-                            </Col>
-                            <Col
+                            <Col className=" p-0">
+                                <div className="med-dark-grey sm-font fst-italic d-inline">
+                                    {matchedDoctorsIncludingDistance.length} results
+                                    {address && distance && (
+                                        <>
+                                            &nbsp;for &quot;{address}&quot; within {distance} {distanceUnit}
+                                        </>
+                                    )}
+                                </div>
+                            {/* </Col> */}
+                            {/* <Col
                                 sm={4}
-                                className="d-flex justify-content-end text-nowrap p-0"
+                                className="d-flex text-nowrap p-0"
                                 style={{ paddingRight: 12 }}
-                            >
-                                {address && distance && (
-                                    <a onClick={() => setDistance(distance + 20)} className="sm-font">
-                                        <Icon icon="fa-location-crosshairs" />
-                                        Search larger area
-                                    </a>
-                                )}
+                            > */}
+                                <div className="px-2 med-dark-grey sm-font text-decoration-underline d-inline">
+                                    {address && distance && (
+                                        <a onClick={() => setDistance(distance + 20)} className="a-only-hover-decoration">
+                                            {/* <Icon icon="fa-location-crosshairs" /> */}
+                                            Search larger area
+                                        </a>
+                                    )}
+                                </div>
                             </Col>
                         </Row>
 
@@ -239,6 +243,7 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
                                     distance={distance}
                                     setDistance={setDistance}
                                     setShouldClearFilters={setShouldClearFilters}
+                                    setShouldClearAddress={setShouldClearAddress}
                                     myList={listFilter === myListFilterName}
                                 />
                             )}

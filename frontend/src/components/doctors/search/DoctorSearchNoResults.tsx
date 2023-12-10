@@ -6,6 +6,7 @@ interface DoctorSearchNoResultsProps {
     distance: number | undefined;
     setDistance: (distance: number | undefined) => void;
     setShouldClearFilters: (shouldClearFilters: boolean) => void;
+    setShouldClearAddress: (shouldClearFilters: boolean) => void;
     myList: boolean;
 }
 
@@ -14,6 +15,7 @@ export default function DoctorSearchNoResuls({
     distance,
     setDistance,
     setShouldClearFilters,
+    setShouldClearAddress,
     myList,
 }: DoctorSearchNoResultsProps) {
     const { user } = useAuth();
@@ -25,7 +27,10 @@ export default function DoctorSearchNoResuls({
                 No Results found
                 <br />
                 <br />
-                <a onClick={() => setShouldClearFilters(true)} className="inherit-font-style">
+                <a onClick={() => {
+                    setShouldClearFilters(true);
+                    setShouldClearAddress(true);
+                }} className="inherit-font-style">
                     Clear filters
                 </a>{" "}
                 {myList ? (

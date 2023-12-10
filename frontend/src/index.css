@@ -20,9 +20,10 @@
 
 :root {
     --logo-height: 4rem;
+    --logo-max-height: 4rem;
     --header-height: calc(var(--logo-height) + var(--layout-padding));
     --footer-height: 4rem;
-    --layout-padding: 0.5rem;
+    --layout-padding: 1.3rem;
     --main-height: calc(100vh - var(--footer-height));
     --dark-grey: #333;
     --med-dark-grey: #6a6a6a;
@@ -147,6 +148,11 @@
     width: max-content;
 }
 
+.w-min-100-max-content {
+    width: max-content;
+    min-width: 100%;
+}
+
 .inherit-font-style {
     color: inherit;
     font-family: inherit;
@@ -189,17 +195,24 @@ a, a:not([href]):not([class]) {
     cursor: pointer;
 }
 
-a:hover, a:not([href]):not([class]):hover {
+a.a-only-hover-decoration {
+    color: inherit;
+    font-size: inherit;
+}
+
+a.a-only-hover-decoration,
+a.a-no-decoration-line {
+    text-decoration-line: none;
+}
+
+a:hover, a:not([href]):not([class]):hover,
+a.a-only-hover-decoration:hover {
     color: var(--med-blue);
     text-decoration: underline;
 }
 
 a:hover i, a:not([href]):not([class]) i {
     text-decoration: underline var(--very-light-grey) !important;
-}
-
-a.a-no-decoration-line {
-    text-decoration-line: none;
 }
 
 a.a-no-decoration-line:hover {
@@ -218,6 +231,10 @@ a.a-no-decoration-line:hover {
     z-index: 99999 !important;
     background-color: #035763;
     position: absolute;
+}
+
+.pointer {
+    cursor: pointer;
 }
 
 .select-min-height .react-select__control {
@@ -301,8 +318,7 @@ footer {
 
 .navbar {
     background-color: white;
-    padding: 0.5rem;
-    padding-right: 1rem;
+    padding: var(--layout-padding);
     width: 100vw;
     text-transform: none;
     box-sizing: border-box !important;
@@ -325,7 +341,7 @@ footer {
     color: var(--dark-blue) !important;
     font-family: "Poppins";
     font-weight: 500;
-    font-size: 1.125rem;
+    font-size: 0.875rem;
     line-height: 1.25rem;
 }
 
@@ -637,6 +653,11 @@ div:has(>.select) {
     margin: 0 !important;
 }
 
+.pac-item:hover {
+    background-color: var(--light-yellow);
+    cursor: pointer;
+}
+
 input[type="checkbox"] {
     width: 1rem;
     height: 1rem;
@@ -915,6 +936,10 @@ div:has(.small-address-filter) {
     text-align: end;
 }
 
+.gm-style-mtc-bbw {
+    display: none;
+}
+
 .gm-style .gm-style-iw-c,
 .gm-style .gm-style-iw-tc {
     top: -25px;
@@ -1059,7 +1084,7 @@ div:has(.small-address-filter) {
     -webkit-box-orient: vertical;
 }
 
-.doctorBigCard .doctor-address p {
+.doctorBigCard .doctor-address * {
     font-size: 1rem;
 }
 
@@ -1124,7 +1149,7 @@ div:has(.small-address-filter) {
     }
 
     .doctorSmallCard:hover,
-    .doctorBigCard:hover {
+    .doctorBigCard {
         box-shadow: 5px 5px 12px 2px rgba(120, 120, 120, 0.25), 0px 4px 20px 3px rgba(65, 65, 65, 0.25);
     }
 }

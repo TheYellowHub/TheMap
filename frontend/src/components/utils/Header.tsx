@@ -144,12 +144,13 @@ function Header() {
 
     return (
         <Navbar expand="lg" className="aboveAll header" collapseOnSelect>
-            <Navbar.Toggle aria-controls="navbarCollapse" />
             <Nav.Link as={Link} to="http://theyellowhub.org/" target="_blank" className="no-padding">
                 <Navbar.Brand>
                     <Image src={"/images/logo.svg"} className="logo" />
                 </Navbar.Brand>
             </Nav.Link>
+            
+            <Navbar.Toggle aria-controls="navbarCollapse" />
 
             <Navbar.Collapse id="navbarCollapse">
                 <Nav activeKey={selectedPage as EventKey} onSelect={setSelectedPage as SelectCallback}>
