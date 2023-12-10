@@ -890,8 +890,8 @@ div:has(.small-address-filter) {
 .doctors-map-below-results-open .map {
     padding: 0;
     position: relative;
-    min-height: calc(0.8 * 100vh);
-    height: calc(0.8 * 100vh);
+    min-height: 60vh;
+    height: 60vh;
     z-index: 1;
 }
 
