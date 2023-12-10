@@ -5,7 +5,7 @@ name: Deploy to AWS Lightsail Container
 
 on:
     push:
-        branches: ["main", "mobile-scrolling"]
+        branches: ["main", "V2"]
 
 env:
     IMAGE_TAG_PREFIX: ${{ vars.AWS_LIGHTSAIL_SERVICE }}

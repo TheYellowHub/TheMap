@@ -2,22 +2,24 @@ TODO:
 
 Content:
 
-    1. multiple locations on the same spot - WIP, pending https://stackoverflow.com/questions/77557668/using-markerf-component-is-not-working-with-ts-overlapping-marker-spiderfier
+    1. multiple locations on the same spot - WIP - change marker
 
-    2. 
-    - my propile -> set username
-    - set username during review?
+    2. Set username during review?
+
+    3. No office name - Office 1/2/3/..
+
+    4. Search functionality: 
+    - Force initial search / full list ?
+    - Automatically use a larger radious in case of empty results ?
 
 
 Design:
 
-    1. Mobile 
-    - Scrolling V
-    - Option to close and open the map V
-    - Map size? Button 
-    - z-index issue
+    1. Mobile - Map size
 
     2. Recheck design / figma
+
+    3. Desktop - Pagination vs. scrolling 
 
 
 Before production:
