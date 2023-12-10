@@ -1,6 +1,6 @@
 import { Container } from "react-bootstrap";
 
-import config from "../../../config.json"
+import config from "../../../config.json";
 import useAuth from "../../../auth/useAuth";
 
 interface DoctorSearchNoResultsProps {

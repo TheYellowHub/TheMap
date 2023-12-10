@@ -84,7 +84,7 @@ export default function DoctorSearchFilters({
         [myListFilterName, (doctor: Doctor) => userInfo?.savedDoctors?.includes(doctor.id!) === true],
     ]);
 
-    const filtered = (address !== undefined || categoryFilter !== undefined || 0 < specialitiesFilter.length || listFilter !== undefined)
+    const filtered = (address !== undefined || categoryFilter !== undefined || 0 < specialitiesFilter.length || listFilter !== undefined);
     const [ignoreNextDistanceChange, setIgnoreNextDistanceChange] = useState(false);
 
     const sortByName = (a: Doctor, b: Doctor) => {
@@ -138,7 +138,7 @@ export default function DoctorSearchFilters({
             .sort(sortOptions.get(sortKey));
         setMatchedDoctorsIncludingDistance(newMatchedDoctorsIncludingDistance);
         return newMatchedDoctorsIncludingDistance;
-    }
+    };
 
     useEffect(() => {
         setStartWithMyListParamWasUsed(false);

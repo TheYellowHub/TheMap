@@ -9,7 +9,6 @@ import useDoctors from "../hooks/doctors/useDoctors";
 import DoctorSearchFilters from "../components/doctors/search/DoctorSearchFilters";
 import DoctorSearchResults from "../components/doctors/search/DoctorSearchResults";
 import DoctorSearchMap from "../components/doctors/search/DoctorSearchMap";
-import Icon from "../components/utils/Icon";
 import DoctorSearchNoResuls from "../components/doctors/search/DoctorSearchNoResults";
 import MapLoadingError from "../components/map/MapLoadingError";
 import useGoogleMaps, { Location } from "../utils/googleMaps/useGoogleMaps";

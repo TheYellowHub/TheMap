@@ -28,7 +28,6 @@ export default function DoctorSearchResuls({
     const [doctorsInPage, setDoctorsInPage] = useState<Doctor[]>([]);
     const [pageIndex, setPageIndex] = useState(0);
     const [pageSize, setPageSize] = useState(10);
-    const [cols, setCols] = useState(2);
 
     const [dimensions, setDimensions] = useState({
         width: window.innerWidth,
