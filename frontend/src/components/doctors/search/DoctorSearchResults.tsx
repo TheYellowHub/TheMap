@@ -28,6 +28,7 @@ export default function DoctorSearchResuls({
     const [doctorsInPage, setDoctorsInPage] = useState<Doctor[]>([]);
     const [pageIndex, setPageIndex] = useState(0);
     const [pageSize, setPageSize] = useState(10);
+    const [cols, setCols] = useState(2);
 
     const [dimensions, setDimensions] = useState({
         width: window.innerWidth,
@@ -39,21 +40,27 @@ export default function DoctorSearchResuls({
     const readjustPageSize = () => {
         if (pagination) {
             const rem = 16;
+
+            const cardsDivWidth = 0.7 * window.innerWidth;
+            const cardsDivHeight = window.innerHeight - 300;
+            const doctorCards = Array.from(document.getElementsByClassName(doctorSmallCardClassName));
+            const cardWidth = 0 < doctorCards.length ? doctorCards[0].clientWidth : 26 * rem;
+            const cardHeight = 0 < doctorCards.length ? doctorCards[0].clientHeight : 9 * rem;
+            const cols = Math.max(1200 < window.innerWidth ? 2 : 1, Math.floor(cardsDivWidth / (cardWidth + 1 * rem)));
+            const rows = Math.max(1, Math.floor(cardsDivHeight / (cardHeight + 2 * rem)));
+            
+            const newPageSize = cols * rows;
+            if (pageSize !== newPageSize) {
+                setPageSize(newPageSize);
+            }
+                
             const cardsDiv = document.getElementById(doctorCardsContainerId);
             if (cardsDiv !== null) {
-                const cardsDivWidth = cardsDiv.clientWidth;
-                const cardsDivHeight = window.innerHeight - 300;
-
-                const doctorCards = Array.from(document.getElementsByClassName(doctorSmallCardClassName));
-                const cardWidth = 0 < doctorCards.length ? doctorCards[0].clientWidth : 26 * rem;
-                const cardHeight = 0 < doctorCards.length ? doctorCards[0].clientHeight : 9 * rem;
-
-                const cols = Math.max(1, Math.floor(cardsDivWidth / (cardWidth + 1 * rem)));
-                const rows = Math.max(1, Math.floor(cardsDivHeight / (cardHeight + 2 * rem)));
-                const newPageSize = cols * rows;
-                if (pageSize !== newPageSize) {
-                    setPageSize(newPageSize);
-                }
+                const width = (cols * (cardWidth +  1 * rem)).toString() + "px";
+                console.log(width);
+                cardsDiv.style.width = width;
+                cardsDiv.style.minWidth = width;
+                cardsDiv.style.maxWidth = width;
             }
         }
     };

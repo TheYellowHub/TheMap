@@ -209,16 +209,9 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
                                         </>
                                     )}
                                 </div>
-                            {/* </Col> */}
-                            {/* <Col
-                                sm={4}
-                                className="d-flex text-nowrap p-0"
-                                style={{ paddingRight: 12 }}
-                            > */}
                                 <div className="px-2 med-dark-grey sm-font text-decoration-underline d-inline">
                                     {address && distance && (
                                         <a onClick={() => setDistance(distance + 20)} className="a-only-hover-decoration">
-                                            {/* <Icon icon="fa-location-crosshairs" /> */}
                                             Search larger area
                                         </a>
                                     )}
@@ -250,7 +243,7 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
                         </Row>
                     </Col>
 
-                    <Col className="mx-0 px-0 only-desktop doctors-map-next-to-results" xs={5} id={doctorsMapColumnId}>
+                    <Col className="mx-0 px-0 only-desktop doctors-map-next-to-results" id={doctorsMapColumnId}>
                         {mapNode}
                     </Col>
                 </Row>
