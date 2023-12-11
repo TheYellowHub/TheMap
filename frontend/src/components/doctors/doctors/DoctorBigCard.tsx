@@ -28,7 +28,7 @@ function DoctorBigCard({ doctor, locationForDistanceCalculation, distanceUnit = 
     const allReviews = getDoctorReviews(doctor);
 
     const { user, isAuthenticated } = useAuth();
-    const { userInfo, mutateSavedDoctors } = useUser(user);
+    const { userInfo, mutateSavedDoctors } = useUser(user); // TODO: handle mutation errors?
 
     const { data: userReviews } = (userInfo && useUserReviews(userInfo, doctor)) || { data: [] };
 

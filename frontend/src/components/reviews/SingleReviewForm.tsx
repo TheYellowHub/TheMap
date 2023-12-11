@@ -23,6 +23,9 @@ import BooleanFormField from "../utils/form/booleanField";
 import { BooleanField, TextField } from "../../utils/fields";
 import { MonthName, monthNames } from "../../types/utils/dateTime";
 import { ID } from "../../types/utils/id";
+import useUser from "../../hooks/auth/useUsers";
+import useAuth from "../../auth/useAuth";
+import { UserInfo, userInfoFieldsMap } from "../../auth/userInfo";
 
 interface SingleReviewFormProps {
     originalReview: DoctorReview;
@@ -33,10 +36,27 @@ interface SingleReviewFormProps {
 function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFormProps) {
     const [review, setReview] = useState(originalReview);
 
-    const { mutateItem, mutateResult, isMutateLoading, isMutateSuccess, isMutateError, mutateError } = useUserReviews(
+    const { user } = useAuth();
+    const { 
+        userInfo: originalUserInfo, 
+        mutateUsername, 
+        isUsernameMutationLoading,
+        isUsernameMutationSuccess,
+        isUsernameMutationError,
+        usernameMutationError, 
+    } = useUser(user);
+    const { 
+        mutateItem, 
+        mutateResult, 
+        isMutateLoading, 
+        isMutateSuccess, 
+        isMutateError, 
+        mutateError 
+    } = useUserReviews(
         review.addedBy,
         review.doctor
     );
+    const [userInfo, setUserInfo] = useState<UserInfo | undefined>();
 
     const disabled = !reviewEditableStatuses.includes(review.status);
 
@@ -54,6 +74,10 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
             setReview(newReview);
             mutateItem(newReview);
             setEditStatus(newEditStatus);
+
+            if (changingUsername && userInfo?.username !== originalUserInfo?.username) {
+                mutateUsername(userInfo!.username!);
+            }
         }
     };
 
@@ -61,6 +85,26 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
     const currentMonthName = monthNames[currentDate.getMonth()];
     const currentYear = currentDate.getFullYear();
     const years = [currentYear - 2, currentYear - 1, currentYear, currentYear + 1, currentYear + 2];
+
+    const CURRENT_USERNAME = "CURRENT_USERNAME";
+    const NEW_USERNAME = "NEW_USERNAME";
+    const ANONYMOUS = "ANONYMOUS";
+    const [changingUsername, setChangingUsername] = useState(true);
+    const [usernameFieldOptions, setUsernameFieldOptions] = useState([
+        { value: NEW_USERNAME, label: "Public username" },
+        { value: ANONYMOUS, label: "Anonymous" },
+    ]);
+
+    useEffect(() => {    
+        if (originalUserInfo?.username) {
+            setUsernameFieldOptions([{ value: CURRENT_USERNAME, label: originalUserInfo.username! }, ...usernameFieldOptions]);
+            setChangingUsername(false);
+        }
+        setUserInfo({
+            ...originalUserInfo, 
+            username: originalUserInfo?.username ? originalUserInfo?.username : user?.nickname
+        } as UserInfo);
+    }, [originalUserInfo]);
 
     useEffect(() => {
         const inputs = formRef.current?.querySelectorAll("input, textarea");
@@ -72,12 +116,12 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
     }, [formRef]);
 
     useEffect(() => {
-        if (isMutateSuccess) {
+        if (isMutateSuccess && isUsernameMutationSuccess) {
             if (review.status === "DELETED") {
                 setDeleted && setDeleted();
             }
         }
-    }, [isMutateSuccess]);
+    }, [isMutateSuccess, isUsernameMutationSuccess]);
 
     useEffect(() => {
         if (isMutateSuccess) {
@@ -96,7 +140,7 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
                     type: "singleSelect",
                     label: "",
                     getter: (review: DoctorReview) => getOperationMonthName(review)?.toString(),
-                    setter: (review: DoctorReview, newValue: string | undefined) => {
+                    setter: disabled ? undefined : (review: DoctorReview, newValue: string | undefined) => {
                         let year = getOperationYear(review);
                         if (year === undefined && newValue !== undefined) {
                             year = currentYear;
@@ -129,7 +173,7 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
                     type: "singleSelect",
                     label: "",
                     getter: (review: DoctorReview) => getOperationYear(review)?.toString(),
-                    setter: (review: DoctorReview, newValue: string | undefined) => {
+                    setter: disabled ? undefined : (review: DoctorReview, newValue: string | undefined) => {
                         let month = getOperationMonthName(review);
                         if (month === undefined && newValue !== undefined) {
                             month = currentMonthName;
@@ -156,32 +200,52 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
         <Form className="p-0 m-0" ref={formRef}>
             <fieldset disabled={disabled}>
                 <Form.Group as={Row} className="p-0 m-0 pb-2 gap-3  align-items-center">
-                    <Col className="m-0 p-0" sm="auto">
+                    <Col className="m-0 p-0">
                         <SingleSelectFormField<DoctorReview>
                             field={{
                                 type: "singleSelect",
                                 label: "",
-                                getter: (review: DoctorReview) =>
-                                    review.anonymous ? "Anonymous" : review.addedBy.remoteId,
-                                setter: (review: DoctorReview, newValue: string | undefined) => {
-                                    return { ...review, anonymous: newValue === "true" };
+                                getter: (review: DoctorReview) => {
+                                    const findOption = (value: string) => {
+                                        const options = usernameFieldOptions.filter((option) => option.value === value);
+                                        return (0 < options.length ? options[0].label : undefined);
+                                    };
+                                    const currentUsernameOption = findOption(CURRENT_USERNAME);
+                                    const value = (
+                                        review.anonymous ? findOption(ANONYMOUS) 
+                                        : !changingUsername && currentUsernameOption ? currentUsernameOption
+                                        : findOption(NEW_USERNAME)
+                                    );
+                                    return value;
                                 },
-                                options: [
-                                    { value: "false", label: review.addedBy.remoteId },
-                                    { value: "true", label: "Anonymous" },
-                                ],
+                                setter: disabled ? undefined : (review: DoctorReview, newValue: string | undefined) => {
+                                    setChangingUsername(newValue === NEW_USERNAME);
+                                    return { ...review, anonymous: newValue === ANONYMOUS };
+                                },
+                                options: usernameFieldOptions,
                             }}
                             object={review}
                             onChange={setReview}
                             className="select-no-border d-inline-block"
                         />
                     </Col>
+                    <Col className="m-0 p-0" xs="auto">
+                        {
+                            userInfo && changingUsername && 
+                            <InputFormField<UserInfo>
+                                field={userInfoFieldsMap.get("username") as TextField<UserInfo>}
+                                object={userInfo}
+                                onChange={setUserInfo}
+                                placeHolder="Username"
+                            />
+                        }
+                    </Col>
                     <Col className="m-0 p-0 d-flex justify-content-end">{reviewStatusToString(review.status)}</Col>
                     <Col className="m-0 p-0 d-flex justify-content-end" xxl="auto">
                         {
                             <StarRating
                                 rating={review.rating || 0}
-                                setRating={(newRating) => setReview({ ...review, rating: newRating })}
+                                setRating={disabled ? undefined : (newRating) => setReview({ ...review, rating: newRating })}
                                 color={true}
                             />
                         }
@@ -293,9 +357,9 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
                 </Col>
             </Form.Group>
             <LoadingWrapper
-                isLoading={isMutateLoading}
-                isError={isMutateError}
-                error={mutateError as ResponseError}
+                isLoading={isMutateLoading || isUsernameMutationLoading}
+                isError={isMutateError || isUsernameMutationError}
+                error={mutateError as ResponseError || usernameMutationError as ResponseError}
                 loaderSize={20}
                 loaderText="Submitting..."
             >

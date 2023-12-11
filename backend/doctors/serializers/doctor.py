@@ -5,7 +5,7 @@ import logging
 from ..models.doctor import Doctor, DoctorLocation
 from ..models.doctorCategory import DoctorCategory
 from ..models.doctorSpeciality import DoctorSpeciality
-from users.serializers import UserNameSerializer
+from users.serializers import UserBasicSerializer
 
 
 logger = logging.getLogger(__name__)
@@ -42,7 +42,7 @@ class DoctorSerializer(WritableNestedModelSerializer):
         many=True, queryset=DoctorSpeciality.objects.all(), slug_field="name"
     )
 
-    added_by = UserNameSerializer(many=False, read_only=True)
+    added_by = UserBasicSerializer(many=False, read_only=True)
 
     num_of_reviews = serializers.ReadOnlyField()
 

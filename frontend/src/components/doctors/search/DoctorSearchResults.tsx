@@ -41,7 +41,7 @@ export default function DoctorSearchResuls({
             const rem = 16;
 
             const cardsDivWidth = 0.7 * window.innerWidth;
-            const cardsDivHeight = window.innerHeight - 300;
+            const cardsDivHeight = window.innerHeight - 400;
             const doctorCards = Array.from(document.getElementsByClassName(doctorSmallCardClassName));
             const cardWidth = 0 < doctorCards.length ? doctorCards[0].clientWidth : 26 * rem;
             const cardHeight = 0 < doctorCards.length ? doctorCards[0].clientHeight : 9 * rem;
@@ -57,6 +57,8 @@ export default function DoctorSearchResuls({
             if (cardsDiv !== null) {
                 const width = (cols * (cardWidth +  1 * rem)).toString() + "px";
                 cardsDiv.style.minWidth = width;
+                cardsDiv.style.width = width;
+                cardsDiv.style.maxWidth = width;
             }
         }
     };

@@ -19,6 +19,7 @@ export default function useUser(user?: User) {
                 if (error?.response?.status === 404) {
                     return {
                         remoteId: userRemoteId,
+
                         savedDoctors: [],
                     } as unknown as UserInfo;
                 } else {
@@ -41,6 +42,34 @@ export default function useUser(user?: User) {
         queryKey: [userInfoQueryKey],
         queryFn: getUserInfo,
     });
+
+    // Username 
+
+    const setUsername = async (username: string) => {
+        if (userInfo === undefined) {
+            return undefined;
+        } else {
+            userInfo.username = username;
+            const response = await patch(url, { ...userInfo });
+            return response?.data;
+        }
+    };
+
+    const setUsernameMutation = useMutation({
+        mutationFn: setUsername,
+        onSuccess: () => queryClient.invalidateQueries({ queryKey: userInfoQueryKey }),
+    });
+
+    const {
+        mutate: mutateUsername,
+        reset: resetUsernameMutation,
+        isLoading: isUsernameMutationLoading,
+        isSuccess: isUsernameMutationSuccess,
+        isError: isUsernameMutationError,
+        error: usernameMutationError,
+    } = setUsernameMutation;
+
+    // Saved docters
 
     const saveOrRemoveDoctor = async (doctorId: number) => {
         if (userInfo === undefined) {
@@ -77,7 +106,14 @@ export default function useUser(user?: User) {
         isUserInfoLoading,
         isUserInfoError,
         userInfoError,
-        // saved doctors
+        // Username
+        mutateUsername,
+        resetUsernameMutation,
+        isUsernameMutationLoading,
+        isUsernameMutationSuccess,
+        isUsernameMutationError,
+        usernameMutationError,
+        // Saved doctors
         mutateSavedDoctors,
         resetSavedDoctorsMutation,
         isSavedDoctorsMutationLoading,

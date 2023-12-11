@@ -13,7 +13,7 @@ function ExpandableText({ text, initialLength, className }: ExpandableTextProps)
 
     return (
         <div className={`p-0 m-0 ${className}`} id={id}>
-            {showAll ? text : text.substring(0, initialLength)}
+            {(showAll ? text : text.substring(0, initialLength)).replaceAll("\n", "\r\n")}
             {initialLength < text.length && (
                 <>
                     {space + "..." + space}
