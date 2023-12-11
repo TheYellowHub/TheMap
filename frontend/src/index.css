@@ -24,7 +24,7 @@
     --header-height: calc(var(--logo-height) + var(--layout-padding));
     --footer-height: 4rem;
     --layout-padding: 1.3rem;
-    --main-height: calc(100vh - var(--header-height) - 2.8 * var(--layout-padding) - var(--footer-height));
+    --main-height: calc(100vh - var(--header-height) - 2 * var(--layout-padding) - var(--footer-height));
     --dark-grey: #333;
     --med-dark-grey: #6a6a6a;
     --med-grey: #989898;
@@ -279,7 +279,7 @@ main {
     position: relative;
     width: 100%;
     padding-top: calc(var(--header-height) + var(--layout-padding));
-    padding-bottom: var(--layout-padding);
+    padding-bottom: 0;
     min-height: var(--main-height);
 }
 
@@ -911,6 +911,8 @@ div:has(.small-address-filter) {
 .doctors-map-below-results-closed,
 .doctors-map-below-results-open {
     position: fixed;
+    position: -webkit-sticky; /* Safari */  
+    position: sticky;
     width: 100%;
     bottom: 0;
 }
