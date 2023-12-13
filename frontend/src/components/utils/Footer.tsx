@@ -12,8 +12,8 @@ function Footer() {
                         2023 <Link to="https://www.theyellowhub.org/">TheYellowHub.org</Link>
                     </div>
                     <div className="footer-content-smaller">
-                        <Icon icon="fa-brands fa-github" link="https://github.com/HanaBenami" />
-                        <Icon icon="fa-brands fa-linkedin" link="https://www.linkedin.com/in/hana-oliver-b9268313/" />
+                        <Icon icon="fa-brands fa-github" className="my-0 py-0" link="https://github.com/HanaBenami" />
+                        <Icon icon="fa-brands fa-linkedin" className="my-0 py-0" link="https://www.linkedin.com/in/hana-oliver-b9268313/" />
                         Developed by{" "}
                         <a href="mailto:hana.benami@gmail.com" target="_blank" rel="noreferrer">
                             Hana Oliver

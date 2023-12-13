@@ -240,7 +240,7 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
                             />
                         }
                     </Col>
-                    <Col className="m-0 p-0 d-flex justify-content-end">{reviewStatusToString(review.status)}</Col>
+                    <Col className="m-0 p-0 d-flex justify-content-end">{review.status !== "DRAFT" && reviewStatusToString(review.status)}</Col>
                     <Col className="m-0 p-0 d-flex justify-content-end" xxl="auto">
                         {
                             <StarRating
