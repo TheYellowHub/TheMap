@@ -24,7 +24,8 @@
     --header-height: calc(var(--logo-height) + var(--layout-padding));
     --footer-height: 4rem;
     --layout-padding: 1.3rem;
-    --main-height: calc(100vh - var(--header-height) - 2 * var(--layout-padding) - var(--footer-height));
+    --main-height: calc(100vh - var(--footer-height));
+    --main-padding-top: calc(var(--header-height) + var(--layout-padding));
     --dark-grey: #333;
     --med-dark-grey: #6a6a6a;
     --med-grey: #989898;
@@ -278,7 +279,7 @@ header {
 main {
     position: relative;
     width: 100%;
-    padding-top: calc(var(--header-height) + var(--layout-padding));
+    padding-top: var(--main-padding-top);
     padding-bottom: 0;
     min-height: var(--main-height);
 }
@@ -314,9 +315,9 @@ main {
 }
 
 footer {
-    position: absolute;
+    position: sticky;
+    bottom: 0;
     width: 100%;
-    z-index: -1 !important;
 }
 
 .logo {
@@ -914,14 +915,14 @@ div:has(.small-address-filter) {
     position: -webkit-sticky; /* Safari */  
     position: sticky;
     width: 100%;
-    bottom: 0;
+    bottom: var(--footer-height);
 }
 
 .doctors-map-below-results-open .map {
     padding: 0;
     position: relative;
-    min-height: 60vh;
-    height: 60vh;
+    min-height: 50vh;
+    height: 50vh;
     z-index: 1;
 }
 
@@ -932,8 +933,8 @@ div:has(.small-address-filter) {
 .doctors-map-next-to-results .map {
     padding: 0;
     position: relative;
-    min-height: var(--main-height);
-    height: var(--main-height);
+    min-height: calc(var(--main-height) - var(--main-padding-top) - 0.5rem);
+    height: calc(var(--main-height) - var(--main-padding-top) - 0.5rem);
     z-index: 1;
 }
 

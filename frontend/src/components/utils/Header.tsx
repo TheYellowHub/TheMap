@@ -3,7 +3,6 @@ import { Image, Nav, NavDropdown, Navbar } from "react-bootstrap";
 import { EventKey, SelectCallback } from "@restart/ui/esm/types";
 
 import useAuth from "../../auth/useAuth";
-import config from "../../config.json";
 import Icon from "./Icon";
 import { Link } from "react-router-dom";
 
@@ -132,7 +131,7 @@ function Header() {
             if (isAdmin) {
                 newLinks.push(adminMenu);
             }
-        } else if (config.auth0.enabled) {
+        } else {
             newLinks.push({
                 to: "/user/login",
                 onClick: login,

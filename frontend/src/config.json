@@ -1,10 +1,4 @@
 {
-    "auth0": {
-        "domain": "dev-n1xcjabxc8i8oa6x.us.auth0.com",
-        "clientId": "FJpk8ZL4dW0JrDIlCkNanO9e0JGTF1O3",
-        "audience": "TheYellowHubAPI",
-        "enabled": true
-    },
     "app": {
         "name": "",
         "logoUrl": "",
@@ -12,8 +6,5 @@
         "minimumDoctorsInResults": 4,
         "distanceDefault": 100,
         "distanceJumps": 10
-    },
-    "maps": {
-        "googleMapsApiKey": "AIzaSyAsUkJcItqv4xJIUiYm2Tz0lf4y0ayRq78"
     }
 }

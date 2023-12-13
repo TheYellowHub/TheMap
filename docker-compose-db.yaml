@@ -1,0 +1,21 @@
+version: '3.9'
+
+services:
+
+  db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: postgres
+    env_file:
+      - ./docker/backend/envkey.env
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./htmlcov:/app/htmlcov # TODO: save it in the host automatically somehow
+
+volumes:
+  postgres_data: {}
