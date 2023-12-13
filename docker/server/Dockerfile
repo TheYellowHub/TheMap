@@ -18,7 +18,7 @@ RUN npm ci --legacy-peer-deps --fetch-timeout=600000
 COPY ./frontend/ ./docker/server/*.env ./  
 RUN if [[ -z "$ENVKEY" ]]; \
     then echo "ENVKEY argument wasn't provided - going to use the local $ENVKEY_FILE file"; \
-    else echo "ENVKEY argument was provided - going to ignore the local $ENVKEY_FILE file" && echo "ENVKEY=$ENVKRY" > $ENVKEY_FILE && cat $ENVKEY_FILE; \
+    else echo "ENVKEY argument was provided - going to ignore the local $ENVKEY_FILE file" && echo "ENVKEY=$ENVKEY" > $ENVKEY_FILE && cat $ENVKEY_FILE; \
     fi
 RUN envkey-source --env-file $ENVKEY_FILE -- npm run build
 
