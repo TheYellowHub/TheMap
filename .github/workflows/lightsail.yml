@@ -60,7 +60,7 @@ jobs:
               shell: bash
               run: |
                   AWS_IMAGES=$(aws lightsail get-container-images --region ${{ vars.AWS_REGION }} --service-name ${{ vars.AWS_LIGHTSAIL_SERVICE }} --output text)
-                  AWS_IMAGE_NAMES=$(echo $AWS_IMAGES | grep -Eo ':${{ vars.AWS_LIGHTSAIL_SERVICE }}\.${{env.IMAGE_TAG_PREFIX}}-${{ matrix.IMAGE_TAG }}\.[0-9]+')
+                  AWS_IMAGE_NAMES=$(echo $AWS_IMAGES | grep -Eo ':${{ vars.AWS_LIGHTSAIL_SERVICE }}\.${{env.IMAGE_TAG_PREFIX}}-${{ matrix.IMAGE_TAG }}\.[0-9]+' || true)
                   echo $AWS_IMAGE_NAMES
                   FIRST=0
                   while read LINE; do
@@ -75,7 +75,7 @@ jobs:
 
             - name: Redeploy container
               run: |
-                  LAST_DEPLOYMENT=$(aws lightsail get-container-service-deployments --region  eu-central-1 --service-name theyellowhub --query "deployments[0]")
+                  LAST_DEPLOYMENT=$(aws lightsail get-container-service-deployments --region ${{ vars.AWS_REGION }} --service-name ${{ vars.AWS_LIGHTSAIL_SERVICE }} --query "deployments[0]")
                   CONTAINER=$(echo $LAST_DEPLOYMENT | jq -r '.containers' | sed -E 's/.[0-9]+",/.latest",/g')
                   ENDPOINT=$(echo $LAST_DEPLOYMENT | jq -r '.publicEndpoint')
                   echo CONTAINER=$CONTAINER
