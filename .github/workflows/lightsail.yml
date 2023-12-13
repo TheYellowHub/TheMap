@@ -75,7 +75,7 @@ jobs:
 
             - name: Redeploy container
               run: |
-                  LAST_DEPLOYMENT=$(aws lightsail get-container-service-deployments --region  eu-central-1 --service-name theyellowhub --query "deployments[0]")
+                  LAST_DEPLOYMENT=$(aws lightsail get-container-service-deployments --region  eu-central-1 --service-name ${{ vars.AWS_LIGHTSAIL_SERVICE }} --query "deployments[0]")
                   CONTAINER=$(echo $LAST_DEPLOYMENT | jq -r '.containers' | sed -E 's/.[0-9]+",/.latest",/g')
                   ENDPOINT=$(echo $LAST_DEPLOYMENT | jq -r '.publicEndpoint')
                   echo CONTAINER=$CONTAINER
