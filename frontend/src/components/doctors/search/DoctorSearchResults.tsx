@@ -39,13 +39,15 @@ export default function DoctorSearchResuls({
     const readjustPageSize = () => {
         if (pagination) {
             const rem = 16;
+            const paddingBetween = 1.5 * rem;
 
             const cardsDivWidth = 0.7 * window.innerWidth;
             const cardsDivHeight = window.innerHeight - 400;
             const doctorCards = Array.from(document.getElementsByClassName(doctorSmallCardClassName));
             const cardWidth = 0 < doctorCards.length ? doctorCards[0].clientWidth : 26 * rem;
             const cardHeight = 0 < doctorCards.length ? doctorCards[0].clientHeight : 9 * rem;
-            const cols = Math.max(1200 < window.innerWidth ? 2 : 1, Math.floor(cardsDivWidth / (cardWidth + 1 * rem)));
+            // cardsDivWidth = cols * cardWidth + (cols - 1) * paddingBetween
+            const cols = Math.max(1200 < window.innerWidth ? 2 : 1, Math.floor((cardsDivWidth + paddingBetween) / (cardWidth + paddingBetween)));
             const rows = Math.max(1, Math.floor(cardsDivHeight / (cardHeight + 2 * rem)));
             
             const newPageSize = cols * rows;
@@ -55,7 +57,7 @@ export default function DoctorSearchResuls({
                 
             const cardsDiv = document.getElementById(doctorCardsContainerId);
             if (cardsDiv !== null) {
-                const width = (cols * (cardWidth +  1 * rem)).toString() + "px";
+                const width = (cols * cardWidth + (cols - 1) * paddingBetween).toString() + "px";
                 cardsDiv.style.minWidth = width;
             }
         }

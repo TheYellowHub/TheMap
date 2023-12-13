@@ -261,8 +261,12 @@ a.a-no-decoration-line:hover {
     width: max-content;
 }
 
-.h-max-contemt {
+.h-max-content {
     height: max-content;
+}
+
+.h-2 {
+    height: 2rem;
 }
 
 /* Header & footer */
