@@ -41,6 +41,13 @@
     --med-blue: #137c8a;
 }
 
+
+@media (max-width: 768px)  { 
+    :root {
+        --main-height: calc(100vh); 
+    }
+}
+
 /* Colors */ 
 
 .dark-grey {
@@ -267,6 +274,10 @@ a.a-no-decoration-line:hover {
 
 .h-2 {
     height: 2rem;
+}
+
+.d-none {
+    display: none;
 }
 
 /* Header & footer */
@@ -595,7 +606,6 @@ td {
     border-bottom: 0 !important;
 }
 
-
 /* Forms */
 
 select,
@@ -913,16 +923,13 @@ div:has(.small-address-filter) {
 
 /* Google map */ 
 
-.doctors-map-below-results-closed,
-.doctors-map-below-results-open {
+.doctors-map-below-results {
     position: fixed;
-    position: -webkit-sticky; /* Safari */  
-    position: sticky;
     width: 100%;
     bottom: var(--footer-height);
 }
 
-.doctors-map-below-results-open .map {
+.doctors-map-below-results .map {
     padding: 0;
     position: relative;
     min-height: 50vh;
@@ -1169,6 +1176,10 @@ div:has(.small-address-filter) {
 /* Desktop */
 
 @media (min-width: 769px)  { 
+    :root {
+        --is-mobile: false;
+    }
+    
     .only-mobile {
         display: none;
     }
@@ -1182,6 +1193,12 @@ div:has(.small-address-filter) {
 /* Mobile & tablets */
 
 @media (max-width: 768px)  { 
+    :root {
+        --is-mobile: true;
+        --logo-height: 2rem;
+        --logo-max-height: 2rem;
+    }
+
     .only-desktop {
         display: none;
     }
@@ -1215,6 +1232,8 @@ div:has(.small-address-filter) {
     }
 
     .doctorBigCard {
+        position: absolute;
+        top: var(--header-height);
         width: 100%;
         padding: 0.5rem !important;
     }

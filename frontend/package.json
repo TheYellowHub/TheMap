@@ -6,6 +6,7 @@
   "dependencies": {
     "@auth0/auth0-react": "^2.2.1",
     "@react-google-maps/api": "^2.19.2",
+    "@smakss/react-scroll-direction": "^3.1.4",
     "@tanstack/react-table": "^8.9.7",
     "@testing-library/jest-dom": "^6.1.5",
     "@testing-library/react": "^13.4.0",
