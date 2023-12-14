@@ -51,8 +51,8 @@ function DoctorLocations({ doctor, locationForDistanceCalculation, distanceUnit 
                         distanceUnit={distanceUnit}
                     />
                 </Row>
-                <Row className="w-100 m-0 gap-3 py-1 doctor-location">
-                    {selectedLocation?.website && (<Col className="px-0">
+                <Row className="m-0 gap-3 py-1 doctor-location">
+                    {selectedLocation?.website && (<Col className="px-0" xs="auto">
                         <Button
                             variant="primary"
                             icon="fa-globe"
@@ -60,10 +60,20 @@ function DoctorLocations({ doctor, locationForDistanceCalculation, distanceUnit 
                             href={selectedLocation?.website}
                             target="_blank"
                             label="Website"
-                            className="w-min-100-max-content"
+                            className="w-max-content"
                         />
                     </Col>)}
-                    {selectedLocation?.email && (<Col className="px-0">
+                    {selectedLocation?.phone && (<Col className="px-0" xs="auto">
+                        <Button
+                            variant="secondary"
+                            icon="fa-phone"
+                            iconClassName="ps-0 pe-3"
+                            href={`tel:${selectedLocation?.phone}`}
+                            label={selectedLocation?.phone}
+                            className="w-max-content"
+                        />
+                    </Col>)}
+                    {selectedLocation?.email && (<Col className="px-0" xs="auto">
                         <Button
                             variant="secondary"
                             icon="fa-envelope"
@@ -71,17 +81,7 @@ function DoctorLocations({ doctor, locationForDistanceCalculation, distanceUnit 
                             href={`mailto:${selectedLocation?.email}`}
                             target="_blank"
                             label={selectedLocation?.email}
-                            className="w-min-100-max-content"
-                        />
-                    </Col>)}
-                    {selectedLocation?.phone && (<Col className="px-0">
-                        <Button
-                            variant="secondary"
-                            icon="fa-phone"
-                            iconClassName="ps-0 pe-3"
-                            href={`tel:${selectedLocation?.phone}`}
-                            label={selectedLocation?.phone}
-                            className="w-min-100-max-content"
+                            className="w-max-content btn-no-colors"
                         />
                     </Col>)}
                     

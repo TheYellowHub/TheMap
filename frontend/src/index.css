@@ -19,12 +19,15 @@
 }
 
 :root {
+    --is-mobile-bp: 768;
     --logo-height: 4rem;
     --logo-max-height: 4rem;
     --header-height: calc(var(--logo-height) + var(--layout-padding));
     --footer-height: 4rem;
+    --footer-height-mobile: 4rem;
+    --footer-height-desktop: 2.5rem;
     --layout-padding: 1.3rem;
-    --main-height: calc(100vh - var(--footer-height));
+    --main-height: calc(100vh - var(--footer-height-desktop));
     --main-padding-top: calc(var(--header-height) + var(--layout-padding));
     --dark-grey: #333;
     --med-dark-grey: #6a6a6a;
@@ -154,6 +157,10 @@
 
 .w-fit-content {
     width: fit-content;
+}
+
+.w-min-content {
+    width: min-content;
 }
 
 .w-max-content {
@@ -301,9 +308,9 @@ main {
 
 .footer {
     align-items: center;
-    height: var(--footer-height);
-    min-height: var(--footer-height);
     background-color: var(--med-yellow);
+    height: var(--footer-height-desktop);
+    min-height: var(--footer-height-desktop);
 }
 
 .footer-content,
@@ -1176,11 +1183,11 @@ div:has(.small-address-filter) {
 /* Desktop */
 
 @media (min-width: 769px)  { 
-    :root {
-        --is-mobile: false;
+    .only-mobile {
+        display: none;
     }
     
-    .only-mobile {
+    .only-mobile * {
         display: none;
     }
 
@@ -1194,12 +1201,20 @@ div:has(.small-address-filter) {
 
 @media (max-width: 768px)  { 
     :root {
-        --is-mobile: true;
         --logo-height: 2rem;
         --logo-max-height: 2rem;
     }
 
+    .footer {
+        height: var(--footer-height-mobile);
+        min-height: var(--footer-height-mobile);
+    }
+
     .only-desktop {
+        display: none;
+    }
+
+    .only-desktop * {
         display: none;
     }
 
