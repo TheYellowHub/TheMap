@@ -34,7 +34,7 @@ function DoctorSmallCard({
     const { userInfo } = useUser(user);
 
     return (
-        <Container className={`${doctorSmallCardClassName} mx-0 ps-0 pe-3`} onClick={onClick} fluid>
+        <Container className={`${doctorSmallCardClassName} mx-0 px-0`} onClick={onClick} fluid>
             <Row className="flex-nowrap">
                 <Col className="flex-grow-0 pe-1">
                     <DoctorImage doctor={doctor} big={false} />
@@ -44,7 +44,7 @@ function DoctorSmallCard({
                         <Col className="px-0 doctorSmallCardName font-assistant lg-font">{doctor.fullName}</Col>
                         {userInfo?.savedDoctors?.includes(doctor.id!) && (
                             <OverlayTrigger placement="bottom" overlay={<Tooltip className="tooltip">My list</Tooltip>}>
-                                <Col className="px-0 flex-grow-0">
+                                <Col className="ps-0 pe-3 flex-grow-0">
                                     <Icon icon="fa-bookmark fa-sm" className="px-1" />
                                 </Col>
                             </OverlayTrigger>
@@ -62,12 +62,10 @@ function DoctorSmallCard({
                         {closestLocation && (
                             <DoctorLocationAddress
                                 doctorLocation={closestLocation}
-                                locationForDistanceCalculation={locationForDistanceCalculation}
-                                distanceUnit={distanceUnit}
                             />
                         )}
                     </Row>
-                    <Row className="w-100 m-0">
+                    <Row className="m-0">
                         {doctor.avgRating && doctor.numOfReviews && (
                             <Rating averageRating={doctor.avgRating} totalReviews={doctor.numOfReviews} />
                         )}

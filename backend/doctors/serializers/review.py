@@ -3,7 +3,7 @@ import logging
 
 from ..models.review import DoctorReview
 from doctors.serializers.doctor import DoctorNameSerializer
-from users.serializers import UserNameSerializer
+from users.serializers import UserBasicSerializer
 
 
 logger = logging.getLogger(__name__)
@@ -17,7 +17,7 @@ class DoctorReviewReadSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
     doctor = DoctorNameSerializer(many=False, read_only=True)
-    added_by = UserNameSerializer(many=False, read_only=True)
+    added_by = UserBasicSerializer(many=False, read_only=True)
 
 
 class DoctorReviewCreateSerializer(serializers.ModelSerializer):

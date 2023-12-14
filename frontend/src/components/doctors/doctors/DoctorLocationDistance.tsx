@@ -24,23 +24,23 @@ function DoctorLocationDistance({
         <>
             {distance && distance !== Infinity && (
                 <OverlayTrigger placement="bottom" overlay={tooltipMessage}>
-                    <a
-                        href={`${
-                            doctorLocation?.address
-                                ? "http://maps.google.com/maps/dir/?api=1&dir_action=navigate&destination=" +
-                                  doctorLocation.address
-                                : "#"
-                        }`}
-                        target="_blank"
-                        rel="noreferrer"
-                        onClick={(e) => e.stopPropagation()}
-                        className="a-no-decoration-line"
-                    >
-                        <p className="med-grey p-0 m-0">
-                            {distance.toFixed(1)} {distanceUnit}
-                            <Icon icon="fas fa-location-arrow ps-1" solid={false} padding={false} />
-                        </p>
-                    </a>
+                    <p className="med-grey p-0 m-0">
+                        <a
+                            href={`${
+                                doctorLocation?.address
+                                    ? "http://maps.google.com/maps/dir/?api=1&dir_action=navigate&destination=" +
+                                    doctorLocation.address
+                                    : "#"
+                            }`}
+                            target="_blank"
+                            rel="noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            className="a-only-hover-decoration"
+                        >
+                                {distance.toFixed(1)} {distanceUnit}
+                                <Icon icon="fas fa-location-arrow ps-1" solid={false} padding={false} />
+                        </a>
+                    </p>
                 </OverlayTrigger>
             )}
         </>

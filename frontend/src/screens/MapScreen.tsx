@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Col, Container, Row, Modal as ReactModal } from "react-bootstrap";
 
+import config from "../config.json";
 import LoadingWrapper from "../components/utils/LoadingWrapper";
 import { ResponseError } from "../hooks/useApiRequest";
 import { Doctor, DoctorLocation, getDoctorNearestLocation } from "../types/doctors/doctor";
@@ -8,7 +9,6 @@ import useDoctors from "../hooks/doctors/useDoctors";
 import DoctorSearchFilters from "../components/doctors/search/DoctorSearchFilters";
 import DoctorSearchResults from "../components/doctors/search/DoctorSearchResults";
 import DoctorSearchMap from "../components/doctors/search/DoctorSearchMap";
-import Icon from "../components/utils/Icon";
 import DoctorSearchNoResuls from "../components/doctors/search/DoctorSearchNoResults";
 import MapLoadingError from "../components/map/MapLoadingError";
 import useGoogleMaps, { Location } from "../utils/googleMaps/useGoogleMaps";
@@ -37,7 +37,7 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
     const { setCurrentLocation, getAddress } = useGoogleMaps();
     const [address, setAddress] = useState<string | undefined>(undefined);
     const [addressLocation, setAddressLocation] = useState<Location | undefined>();
-    const distanceDefault = 100;
+    const distanceDefault = config.app.distanceDefault;
     const [distance, setDistance] = useState<number | undefined>(distanceDefault);
     const distanceUnit = addressLocation?.country === "US" ? "mi" : "km";
 
@@ -86,8 +86,6 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
             });
         });
     };
-
-    useEffect(() => setDistance(distanceDefault), [address]);
 
     useEffect(() => {
         if (shouldClearFilters) {
@@ -181,7 +179,7 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
                                 setValueChange={setFilterChangeSinceLastDoctorPick}
                             />
 
-                            {address === undefined && currentDoctor === null && !startWithMyList && (
+                            {config.app.forceAddressInput && address === undefined && currentDoctor === null && !startWithMyList && (
                                 <ReactModal
                                     className="transparent d-flex justify-content-center big-address-filter"
                                     show={true}
@@ -199,28 +197,25 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
                             )}
                         </Row>
 
-                        <Row className="d-flex py-2 my-2 gap-3">
-                            <Col className="med-dark-grey fst-italic p-0">
-                                {matchedDoctorsIncludingDistance.length} results
-                                {address && distance && (
-                                    <>
-                                        &nbsp;for &quot;{address}&quot; within {distance} {distanceUnit}
-                                    </>
-                                )}
+                        {!currentDoctor && <Row className="d-flex py-2 my-2 gap-3">
+                            <Col className=" p-0">
+                                <div className="med-dark-grey sm-font fst-italic d-inline">
+                                    {matchedDoctorsIncludingDistance.length} results
+                                    {address && distance && (
+                                        <>
+                                            &nbsp;for &quot;{address}&quot; within {distance} {distanceUnit}
+                                        </>
+                                    )}
+                                </div>
+                                <div className="px-2 med-dark-grey sm-font text-decoration-underline d-inline">
+                                    {address && distance && (
+                                        <a onClick={() => setDistance(distance + config.app.distanceJumps)} className="a-only-hover-decoration">
+                                            Search larger area
+                                        </a>
+                                    )}
+                                </div>
                             </Col>
-                            <Col
-                                sm={4}
-                                className="d-flex justify-content-end text-nowrap p-0"
-                                style={{ paddingRight: 12 }}
-                            >
-                                {address && distance && (
-                                    <a onClick={() => setDistance(distance + 20)} className="sm-font">
-                                        <Icon icon="fa-location-crosshairs" />
-                                        Search larger area
-                                    </a>
-                                )}
-                            </Col>
-                        </Row>
+                        </Row>}
 
                         <Row className="py-2 my-2" id={doctorsSearchResultsId}>
                             {currentDoctor !== null || matchedDoctorsIncludingDistance.length > 0 ? (
@@ -239,13 +234,14 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
                                     distance={distance}
                                     setDistance={setDistance}
                                     setShouldClearFilters={setShouldClearFilters}
+                                    setShouldClearAddress={setShouldClearAddress}
                                     myList={listFilter === myListFilterName}
                                 />
                             )}
                         </Row>
                     </Col>
 
-                    <Col className="mx-0 px-0 only-desktop doctors-map-next-to-results" xs={5} id={doctorsMapColumnId}>
+                    <Col className="mx-0 px-0 only-desktop doctors-map-next-to-results" id={doctorsMapColumnId}>
                         {mapNode}
                     </Col>
                 </Row>

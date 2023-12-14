@@ -9,6 +9,7 @@ interface BooleanFormFieldProps<T> {
     onChange?: (newObject: T) => void;
     withLabel?: boolean;
     label?: string;
+    className?: string;
 }
 
 export default function BooleanFormField<T>({
@@ -17,6 +18,7 @@ export default function BooleanFormField<T>({
     onChange = undefined,
     withLabel = true,
     label = undefined,
+    className = undefined
 }: BooleanFormFieldProps<T>) {
     return (
         <Form.Check
@@ -33,7 +35,7 @@ export default function BooleanFormField<T>({
                     }
                 }
             }}
-            className={`d-flex align-items-center px-0 switch-${field.getter(object) ? "on" : "off"}`}
+            className={`d-flex align-items-center px-0 switch-${field.getter(object) ? "on" : "off"} ${className}`}
         />
     );
 }

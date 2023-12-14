@@ -1,5 +1,6 @@
-docker/**/*envkey*
+*.env
 frontend/.env
 venv*
 aws
 *.log
+auth0deploy

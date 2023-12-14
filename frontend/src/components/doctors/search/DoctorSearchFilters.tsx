@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Col, Container, Form, Row } from "react-bootstrap";
 
+import config from "../../../config.json";
 import { Location } from "../../../utils/googleMaps/useGoogleMaps";
 import useDoctorCategories from "../../../hooks/doctors/useDoctorCategories";
 import useDoctorSpecialities from "../../../hooks/doctors/useDoctorSpecialities";
@@ -83,6 +84,9 @@ export default function DoctorSearchFilters({
         [myListFilterName, (doctor: Doctor) => userInfo?.savedDoctors?.includes(doctor.id!) === true],
     ]);
 
+    const filtered = (address !== undefined || categoryFilter !== undefined || 0 < specialitiesFilter.length || listFilter !== undefined);
+    const [ignoreNextDistanceChange, setIgnoreNextDistanceChange] = useState(false);
+
     const sortByName = (a: Doctor, b: Doctor) => {
         const nameA = getDoctorNameWithoutPrefix(a);
         const nameB = getDoctorNameWithoutPrefix(b);
@@ -106,13 +110,7 @@ export default function DoctorSearchFilters({
         ["Z - A", (a, b) => -sortByName(a, b)],
     ]);
 
-    useEffect(() => {
-        setStartWithMyListParamWasUsed(false);
-        setShouldClearFilters(true);
-        setShouldClearAddress(true);
-    }, [startWithMyList]);
-
-    useEffect(() => {
+    const refilterDoctors = (filterDistance: number | undefined) => {
         const newMatchedDoctorsIgnoringDistance: Doctor[] = doctors.filter((doctor: Doctor) => {
             return (
                 doctor.status === "APPROVED" &&
@@ -128,19 +126,48 @@ export default function DoctorSearchFilters({
         const newMatchedDoctorsIncludingDistance: Doctor[] = newMatchedDoctorsIgnoringDistance
             .filter((doctor: Doctor) => {
                 const doctorDistance =
-                    distance === undefined || addressLocation === undefined
+                    filterDistance === undefined || addressLocation === undefined
                         ? undefined
                         : getDoctorMinimalDistance(doctor, addressLocation, distanceUnit);
                 return (
-                    distance === undefined ||
+                    filterDistance === undefined ||
                     addressLocation === undefined ||
-                    (doctorDistance && doctorDistance <= distance)
+                    (doctorDistance && doctorDistance <= filterDistance)
                 );
             })
             .sort(sortOptions.get(sortKey));
-
         setMatchedDoctorsIncludingDistance(newMatchedDoctorsIncludingDistance);
-    }, [doctors, addressLocation, distance, categoryFilter, specialitiesFilter, listFilter, sortKey, userInfo]);
+        return newMatchedDoctorsIncludingDistance;
+    };
+
+    useEffect(() => {
+        setStartWithMyListParamWasUsed(false);
+        setShouldClearFilters(true);
+        setShouldClearAddress(true);
+    }, [startWithMyList]);
+
+    useEffect(() => {
+        refilterDoctors(distance);
+    }, [doctors, categoryFilter, specialitiesFilter, listFilter, sortKey, userInfo]);
+
+    useEffect(() => {
+        if (ignoreNextDistanceChange) {
+            setIgnoreNextDistanceChange(false);
+        } else {
+            refilterDoctors(distance);
+        }
+    }, [distance]);
+
+    useEffect(() => {
+        let filterDistance = config.app.distanceDefault;
+        let matchedDoctors = refilterDoctors(filterDistance);
+        while (matchedDoctors.length < config.app.minimumDoctorsInResults) {
+            filterDistance += 10;
+            matchedDoctors = refilterDoctors(filterDistance);
+        }
+        setIgnoreNextDistanceChange(true);
+        setDistance(filterDistance);
+    }, [addressLocation]);
 
     useEffect(() => {
         if (shouldClearFilters) {
@@ -211,7 +238,16 @@ export default function DoctorSearchFilters({
                             }}
                         />
                     </Col>
-                    <Col xs={5} lg={3} className="d-flex align-items-center justify-content-end ps-0 pe-1">
+                    <Col xs={5} lg={3} className="d-flex align-items-center justify-content-between px-0">
+                        <Col className="d-flex text-nowrap flex-grow-0">
+                            {filtered && <a onClick={() => {
+                                setShouldClearFilters(true);
+                                setShouldClearAddress(true);
+                            }} className="sm-font">
+                                <Icon icon="fa-close" className="ps-0" />
+                                Clear all
+                            </a>}
+                        </Col>
                         <Col className="d-flex justify-content-end icon-select flex-grow-0">
                             <Select
                                 values={Array.from(sortOptions.keys())}
@@ -222,12 +258,6 @@ export default function DoctorSearchFilters({
                                 currentValue={sortKey}
                                 icon="fa-arrow-down-wide-short"
                             />
-                        </Col>
-                        <Col className="d-flex justify-content-end text-nowrap flex-grow-0">
-                            <a onClick={() => setShouldClearFilters(true)} className="sm-font">
-                                <Icon icon="fa-close" />
-                                Clear all
-                            </a>
                         </Col>
                     </Col>
                 </Row>

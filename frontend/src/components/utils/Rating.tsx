@@ -12,7 +12,7 @@ function Rating({ averageRating, totalReviews }: RatingProps) {
             <Col className="d-flex flex-nowrap p-0 pe-3">
                 {StarRating({ rating: averageRating })} {averageRating}
             </Col>
-            <Col className="d-flex flex-nowrap text-nowrap p-0 flex-grow-0">{totalReviews} Reviews</Col>
+            <Col className="d-flex flex-nowrap text-nowrap p-0 flex-grow-0 pe-3">{totalReviews} Reviews</Col>
         </Row>
     );
 }

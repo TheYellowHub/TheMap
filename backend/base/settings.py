@@ -162,9 +162,9 @@ JWT_AUTH = {
     "JWT_PAYLOAD_GET_USERNAME_HANDLER": "users.auth.jwt_get_username_from_payload_handler",
     "JWT_DECODE_HANDLER": "users.auth.jwt_decode_token",
     "JWT_ALGORITHM": "RS256",
-    "JWT_AUDIENCE": os.environ.get("JWT_AUDIENCE"),
-    "JWT_DOMAIN": os.environ.get("JWT_DOMAIN"),
-    "JWT_ISSUER": f"https://{os.environ.get('JWT_DOMAIN')}/",
+    "JWT_AUDIENCE": os.environ.get("REACT_APP_AUTH0_AUDIENCE"),
+    "JWT_DOMAIN": os.environ.get("REACT_APP_AUTH0_DOMAIN"),
+    "JWT_ISSUER": f"https://{os.environ.get('REACT_APP_AUTH0_DOMAIN')}/",
     "JWT_AUTH_HEADER_PREFIX": "Bearer",
 }
 
@@ -265,10 +265,10 @@ LOGGING = {
             "level": "DEBUG",
             "handlers": ["file", "stream"],
         },
-        "django.db.backends": {
-            "level": "DEBUG" if DEBUG else "INFO",
-            "handlers": ["file", "stream"],
-        },
+        # "django.db.backends": {
+        #     "level": "DEBUG" if DEBUG else "INFO",
+        #     "handlers": ["file", "stream"],
+        # },
     },
     "formatters": {
         "simple": {

@@ -39,21 +39,26 @@ export default function DoctorSearchResuls({
     const readjustPageSize = () => {
         if (pagination) {
             const rem = 16;
+            const paddingBetween = 1.5 * rem;
+
+            const cardsDivWidth = 0.7 * window.innerWidth;
+            const cardsDivHeight = window.innerHeight - 400;
+            const doctorCards = Array.from(document.getElementsByClassName(doctorSmallCardClassName));
+            const cardWidth = 0 < doctorCards.length ? doctorCards[0].clientWidth : 26 * rem;
+            const cardHeight = 0 < doctorCards.length ? doctorCards[0].clientHeight : 9 * rem;
+            // cardsDivWidth = cols * cardWidth + (cols - 1) * paddingBetween
+            const cols = Math.max(1200 < window.innerWidth ? 2 : 1, Math.floor((cardsDivWidth + paddingBetween) / (cardWidth + paddingBetween)));
+            const rows = Math.max(1, Math.floor(cardsDivHeight / (cardHeight + 2 * rem)));
+            
+            const newPageSize = cols * rows;
+            if (pageSize !== newPageSize) {
+                setPageSize(newPageSize);
+            }
+                
             const cardsDiv = document.getElementById(doctorCardsContainerId);
             if (cardsDiv !== null) {
-                const cardsDivWidth = cardsDiv.clientWidth;
-                const cardsDivHeight = window.innerHeight - 300;
-
-                const doctorCards = Array.from(document.getElementsByClassName(doctorSmallCardClassName));
-                const cardWidth = 0 < doctorCards.length ? doctorCards[0].clientWidth : 26 * rem;
-                const cardHeight = 0 < doctorCards.length ? doctorCards[0].clientHeight : 9 * rem;
-
-                const cols = Math.max(1, Math.floor(cardsDivWidth / (cardWidth + 1 * rem)));
-                const rows = Math.max(1, Math.floor(cardsDivHeight / (cardHeight + 2 * rem)));
-                const newPageSize = cols * rows;
-                if (pageSize !== newPageSize) {
-                    setPageSize(newPageSize);
-                }
+                const width = (cols * cardWidth + (cols - 1) * paddingBetween).toString() + "px";
+                cardsDiv.style.minWidth = width;
             }
         }
     };
@@ -82,7 +87,7 @@ export default function DoctorSearchResuls({
             <Row className="px-0 mx-0 py-2 my-2">
                 <Container
                     id={doctorCardsContainerId}
-                    className="d-flex flex-wrap gap-4 justify-content-between px-0 mx-0"
+                    className="d-flex flex-wrap gap-4 px-0 mx-0"
                 >
                     {currentDoctor === null ? (
                         doctorsInPage.map((doctor: Doctor) => (

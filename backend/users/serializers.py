@@ -16,9 +16,9 @@ class UserSerializer(WritableNestedModelSerializer):
         fields = "__all__"
 
 
-class UserNameSerializer(serializers.ModelSerializer):
-    """Basic user serializer to shows only its remote ID"""
+class UserBasicSerializer(serializers.ModelSerializer):
+    """Basic user serializer to shows only its remote ID and username"""
 
     class Meta:
         model = User
-        fields = ["id", "remote_id"]
+        fields = ["id", "remote_id", "username"]

@@ -4,7 +4,7 @@ import { Container } from "react-bootstrap";
 import { Doctor, DoctorLocation } from "../../../types/doctors/doctor";
 import useGoogleMaps, { Location } from "../../../utils/googleMaps/useGoogleMaps";
 import GoogleMap, { Marker } from "../../map/GoogleMap";
-import getMarkerIcon from "../../map/markerIcon";
+import { getDoctorMarkerIcon, getGroupMarkerIcon } from "../../map/markerIcon";
 import Button from "../../utils/Button";
 
 interface DoctorSearchMapProps {
@@ -49,11 +49,11 @@ export default function DoctorSearchMap({
                         title: doctor.fullName,
                         location: doctorLocation,
                         inBounds:
-                            boundsDistanceFromCenter === undefined ||
-                            centerLocation === undefined ||
-                            getDistance(centerLocation, doctorLocation) <= boundsDistanceFromCenter ||
-                            doctorLocationObj === currentDoctorLocation,
-                        icon: getMarkerIcon(
+                            boundsDistanceFromCenter === undefined
+                            || centerLocation === undefined 
+                            || getDistance(centerLocation, doctorLocation) <= boundsDistanceFromCenter
+                            || doctorLocationObj === currentDoctorLocation,
+                        icon: getDoctorMarkerIcon(
                             doctor,
                             doctor === currentDoctor,
                             doctorLocationObj === currentDoctorLocation
@@ -71,7 +71,7 @@ export default function DoctorSearchMap({
 
     return (
         <Container fluid className="map px-0 mx-0">
-            <GoogleMap center={centerLocation} markers={markers} resetClicks={() => {
+            <GoogleMap center={centerLocation} markers={markers} getGroupIcon={getGroupMarkerIcon} resetClicks={() => {
                 setCurrentDoctor(null);
                 setCurrentDoctorLocation(null);
             }} />

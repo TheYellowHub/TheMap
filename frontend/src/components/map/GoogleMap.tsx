@@ -14,16 +14,18 @@ export interface Marker {
 interface GoogleMapProps {
     center: Location | undefined;
     markers?: Marker[];
+    getGroupIcon?: (selected: boolean) => string;
     resetClicks?: () => void;
 }
 
 const emptyMarkersArray: Marker[] = [];
 
-function GoogleMap({ center, markers = emptyMarkersArray as Marker[], resetClicks }: GoogleMapProps) {
+function GoogleMap({ center, markers = emptyMarkersArray as Marker[], getGroupIcon, resetClicks }: GoogleMapProps) {
     const minimalZoom = 13;
     const mapRef = useRef<google.maps.Map | null>(null);
     const [markersMap, setMarkersMap] = useState(new Map<string, Marker[]>());
     const [currentLocationStr, setCurrentLocationStr] = useState<string | null>();
+    const [fitBoundsDone, setFitBoundsDone] = useState(false);
 
     const locationToStr = (location: Location) => `location-${location.lat}/${location.lng}`;
 
@@ -38,17 +40,16 @@ function GoogleMap({ center, markers = emptyMarkersArray as Marker[], resetClick
             if (!newMarkersMap.has(locationStr)) {
                 newMarkersMap.set(locationStr, []);
             }
-
             newMarkersMap.get(locationStr)!.push(marker);
         });
         setMarkersMap(newMarkersMap);
-
     };
 
     const fitBounds = () => {
         if (mapRef.current !== null) {
             const bounds = new window.google.maps.LatLngBounds();
-            markers.filter((marker) => marker.inBounds).map((marker) => bounds.extend(marker.location));
+            const markersInBounds = markers.filter((marker) => marker.inBounds);
+            markersInBounds.forEach((marker) => bounds.extend(marker.location));
             if (center !== undefined) {
                 bounds.extend(center);
             }
@@ -58,6 +59,7 @@ function GoogleMap({ center, markers = emptyMarkersArray as Marker[], resetClick
             if (newZoom) {
                 mapRef.current.setZoom(newZoom);
             }
+            setFitBoundsDone(true);
         }
     };
 
@@ -66,8 +68,14 @@ function GoogleMap({ center, markers = emptyMarkersArray as Marker[], resetClick
     }, [markers]);
 
     useEffect(() => {
-        fitBounds();
-    }, [markers, center, mapRef]);
+        if (!fitBoundsDone) {
+            fitBounds();
+        }
+    }, [markers, mapRef, fitBoundsDone]);
+
+    useEffect(() => {
+        setFitBoundsDone(false);
+    }, [center]);
 
     return (
         <div id="map" key={`${center && locationToStr(center)}`}>
@@ -103,15 +111,11 @@ function GoogleMap({ center, markers = emptyMarkersArray as Marker[], resetClick
                         </Fragment>);
                     } else {
                         const location = markers![0].location;
-                        return (<Fragment key={`location-${index}-${locationToStr(location)}-group`}>
+                        const icon = getGroupIcon && getGroupIcon(currentLocationStr === locationToStr(location));
+                        return (<Fragment key={`location-${index}-${locationToStr(location)}-${icon}`}>
                             <MarkerF
                                 key={`marker-${index}-${locationToStr(location)}`}
-                                // TODO: 
-                                // icon={
-                                //     marker.icon && {
-                                //         url: marker.icon,
-                                //     }
-                                // }
+                                icon={icon}
                                 position={location}
                                 onClick={() => {
                                     resetClicks && resetClicks();

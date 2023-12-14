@@ -9,6 +9,7 @@ class User(models.Model):
     """
 
     remote_id = models.CharField(max_length=200, unique=True)
+    username = models.CharField(max_length=50, unique=True, blank=True, null=True)
     saved_doctors = models.ManyToManyField(Doctor, blank=True)
 
     def __str__(self) -> str:

@@ -1,6 +1,6 @@
 import { ReactElement, createContext, useEffect, useMemo, useState } from "react";
 import { Libraries, LoadScriptNext } from "@react-google-maps/api";
-import config from "../../config.json";
+
 import logError from "../log";
 
 export const GoogleMapsLoaderContext = createContext(false);
@@ -18,7 +18,7 @@ interface GoogleMapsLoaderProps {
 function GoogleMapsLoader({ children }: GoogleMapsLoaderProps) {
     const [googleMapsIsLoaded, setGoogleMapsIsLoaded] = useState(false);
 
-    const apiKey = config.maps.googleMapsApiKey;
+    const apiKey = process.env.REACT_APP_GMAPS_API_KEY;
     const libraries = useMemo<Libraries>(() => ["places", "geometry"], []);
 
     const [wasLoaded, setWasLoaded] = useState(false);

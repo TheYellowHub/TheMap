@@ -3,7 +3,6 @@ import { Image, Nav, NavDropdown, Navbar } from "react-bootstrap";
 import { EventKey, SelectCallback } from "@restart/ui/esm/types";
 
 import useAuth from "../../auth/useAuth";
-import config from "../../config.json";
 import Icon from "./Icon";
 import { Link } from "react-router-dom";
 
@@ -132,7 +131,7 @@ function Header() {
             if (isAdmin) {
                 newLinks.push(adminMenu);
             }
-        } else if (config.auth0.enabled) {
+        } else {
             newLinks.push({
                 to: "/user/login",
                 onClick: login,
@@ -144,12 +143,13 @@ function Header() {
 
     return (
         <Navbar expand="lg" className="aboveAll header" collapseOnSelect>
-            <Navbar.Toggle aria-controls="navbarCollapse" />
             <Nav.Link as={Link} to="http://theyellowhub.org/" target="_blank" className="no-padding">
                 <Navbar.Brand>
                     <Image src={"/images/logo.svg"} className="logo" />
                 </Navbar.Brand>
             </Nav.Link>
+            
+            <Navbar.Toggle aria-controls="navbarCollapse" />
 
             <Navbar.Collapse id="navbarCollapse">
                 <Nav activeKey={selectedPage as EventKey} onSelect={setSelectedPage as SelectCallback}>

@@ -1,22 +1,9 @@
 version: '3.9'
 
+include:
+  - docker-compose-db.yaml
+
 services:
-
-  db:
-    image: postgres
-    environment:
-      POSTGRES_PASSWORD: postgres
-    env_file:
-      - ./docker/server/envkey.env
-    healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - ./htmlcov:/app/htmlcov # TODO: save it in the host automatically somehow
-
   server:
     restart: unless-stopped
     build:
@@ -27,6 +14,7 @@ services:
     volumes:
       - static_volume:/app/static
       - media:/app/media
+      - ./htmlcov:/app/htmlcov # TODO: save it in the host automatically somehow
     ports:
       - 8000:8000
     healthcheck:
@@ -41,4 +29,3 @@ services:
 volumes:
   static_volume: {}
   media: {}
-  postgres_data: {}

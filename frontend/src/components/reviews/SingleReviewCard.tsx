@@ -22,25 +22,23 @@ function SingleReviewCard({ review }: ReviewProps) {
 
     return (
         <Container className="p-0 m-0">
-            <Row className="d-flex p-0 m-0 pb-2 align-items-center flex-nowrap">
-                <Col className="m-0 p-0 flex-grow-0 flex-shrink-2 text-break" xs={7}>
-                    <strong>{review.anonymous ? "Anonymous" : review.addedBy.remoteId}</strong>
+            <Row className="d-flex p-0 m-0 pb-2 align-items-center flex-nowrap justify-content-between">
+                <Col className="m-0 p-0 flex-grow-0">
+                    <strong>{review.anonymous ? "Anonymous" : review.addedBy.username}</strong>
                 </Col>
-                {review.pastOperation || review.futureOperation ? (
+                {(review.pastOperation || review.futureOperation) && (
                     surgeryElementWrapper(
-                        <Col className="m-0 p-0 flex-grow-0" xs={2}>
+                        <Col className="m-0 p-0 flex-grow-0">
                             <Icon icon="fa-scalpel" />
                         </Col>
                     )
-                ) : (
-                    <Col xs={2}></Col>
                 )}
-                <Col className="m-0 p-0 d-flex justify-content-end" xs={3}>
+                <Col className="m-0 p-0 d-flex justify-content-end">
                     {review.rating && <StarRating rating={review.rating} color={true} />}
                 </Col>
             </Row>
             <Row className="p-0 m-0">
-                <ExpandableText text={review.description || ""} initialLength={300} className="med-dark-grey" />
+                <ExpandableText text={review.description || ""} initialLength={300} className="med-dark-grey white-space-pre-line" />
             </Row>
         </Container>
     );

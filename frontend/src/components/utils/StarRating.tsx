@@ -27,9 +27,9 @@ function StarRating({ rating, setRating, color = false }: StarRatingProps) {
                     padding={false}
                     key={`star-${i}`}
                     className={color ? "star-yellow" : ""}
-                    onClick={() => setRating && setRating(i)}
-                    onMouseEnter={() => setRating && setTempRating(i)}
-                    onMouseLeave={() => setRating && setTempRating(rating)}
+                    onClick={setRating ? () => setRating(i) : undefined}
+                    onMouseEnter={setRating ? () => setTempRating(i) : undefined}
+                    onMouseLeave={setRating ? () => setTempRating(rating) : undefined}
                 />
             );
         }
