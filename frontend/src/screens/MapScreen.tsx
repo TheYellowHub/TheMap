@@ -60,6 +60,17 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
         setCurrentDoctorLocation={setCurrentDoctorLocation}
     />);
 
+    const useCurrenetLocation = () => {
+        setCurrentLocation((location) => {
+            setAddressLocation(location);
+            getAddress(location).then((address) => {
+                if (address !== undefined) {
+                    setAddress(address);
+                }
+            });
+        });
+    };
+
     const handleResize = () => {
         const mapColumn = document.getElementById(doctorsMapColumnId);
         const newPagination = mapColumn !== null && window.getComputedStyle(mapColumn, null).display.toLowerCase() !== "none";
@@ -75,17 +86,6 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
     useEffect(() => {
         handleResize();
     });
-
-    const useCurrenetLocation = () => {
-        setCurrentLocation((location) => {
-            setAddressLocation(location);
-            getAddress(location).then((address) => {
-                if (address !== undefined) {
-                    setAddress(address);
-                }
-            });
-        });
-    };
 
     useEffect(() => {
         if (shouldClearFilters) {
@@ -126,7 +126,7 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
                     setCurrentDoctorLocation(currentDoctor.locations[0]);
                 }
             }
-            document.getElementById(doctorsSearchResultsId)?.scrollIntoView();
+            // document.getElementById(doctorsSearchResultsId)?.scrollIntoView();
         }
         window.history.replaceState(null, "", `#/${currentDoctor?.id || ""}`);
     }, [currentDoctor]);
@@ -177,6 +177,7 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
                                 shouldClearAddress={shouldClearAddress}
                                 setShouldClearAddress={setShouldClearAddress}
                                 setValueChange={setFilterChangeSinceLastDoctorPick}
+                                className={currentDoctor ? "only-desktop" : ""}
                             />
 
                             {config.app.forceAddressInput && address === undefined && currentDoctor === null && !startWithMyList && (
@@ -246,17 +247,17 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
                     </Col>
                 </Row>
 
-                {currentDoctor === null && <Container className={`mx-0 px-0 only-mobile doctors-map-below-results-${mapIsOpen ? "open" : "closed"}`} fluid>
-                    <Row className="mx-0 px-0 only-mobile">
+                {<Container className={`mx-0 px-0 only-mobile doctors-map-below-results`} fluid>
+                    <Row className={`mx-0 px-0 ${currentDoctor === null ? "" : "d-none"}`}>
                         <Col className="mx-0 px-0 d-flex justify-content-end">
                             <Button onClick={() => setMapIsOpen(!mapIsOpen)} label={`${mapIsOpen ? "Hide" : "Show"} Map`} icon="fa-location-dot" className="btn-map" />
                         </Col>
                     </Row>
-                    {mapIsOpen && <Row className="mx-0 px-0">
+                    <Row className={`mx-0 px-0 ${mapIsOpen === true && currentDoctor === null ? "" : "d-none"}`}>
                         <Col className="mx-0 px-0">
                             {mapNode}
                         </Col>
-                    </Row>}
+                    </Row>
                 </Container>}
             </Container>
 

@@ -1,4 +1,6 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import ReactGA from "react-ga4";
 
 import MapScreen from "./screens/MapScreen";
 import DoctorCategoriesScreen from "./screens/doctors/DoctorCategoriesScreen";
@@ -9,10 +11,16 @@ import Login from "./auth/Login";
 import UserReviewsForm from "./components/reviews/UserReviewsForm";
 import useAuth from "./auth/useAuth";
 import useUser from "./hooks/auth/useUsers";
+import { getCurrentUrl } from "./utils/utils";
 
 function AppRouter() {
     const { user } = useAuth();
     const { userInfo } = useUser(user);
+    const location = useLocation();
+
+    useEffect(() => {
+      ReactGA.send({ hitType: "pageview", title: getCurrentUrl(false)});
+    }, []);
 
     return (
         <Routes>

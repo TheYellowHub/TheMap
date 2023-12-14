@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-app=/app/manage.py
+app=/app/backend/manage.py
 
 echo "Apply database migrations"
 python $app migrate

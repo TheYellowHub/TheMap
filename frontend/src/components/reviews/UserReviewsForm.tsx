@@ -5,7 +5,7 @@ import { useUserReviews } from "../../hooks/doctors/useReviews";
 import { UserInfo } from "../../auth/userInfo";
 import { Doctor } from "../../types/doctors/doctor";
 import { getNewReview, reviewEditableStatuses } from "../../types/doctors/review";
-import { useState } from "react";
+import React, { useState } from "react";
 import { ID } from "../../types/utils/id";
 
 interface UserReviewsFormPropsWithoutAddingOption {
@@ -72,7 +72,7 @@ function UserReviewsForm({
                         )
                         .sort((a, b) => ((a.id ? a.id : 0) < (b.id ? b.id : 0) ? 1 : -1))
                         .map((review) => (
-                            <>
+                            <React.Fragment key={`review-${review.id}`}>
                                 {showDoctorName && (
                                     <Row key={`review-${review.id}-doctor`} className="m-0 p-0 pt-4">
                                         <Col className="p-0 m-0">
@@ -85,7 +85,7 @@ function UserReviewsForm({
                                 <Row key={`review-${review.id}`} className={`m-0 p-0 ${showDoctorName || "pt-4"}`}>
                                     <SingleReviewForm key={`review-${review.id}`} originalReview={review} />
                                 </Row>
-                            </>
+                            </React.Fragment>
                         ))}
                 </Row>
             )}

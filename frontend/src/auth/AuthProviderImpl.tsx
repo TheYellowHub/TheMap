@@ -4,6 +4,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 import AuthContext from "./AuthContext";
 import { AuthState } from "./authState";
+import { getCurrentUrl } from "../utils/utils";
 
 export default function AuthProvider({ children }: React.PropsWithChildren) {
     const {
@@ -19,12 +20,18 @@ export default function AuthProvider({ children }: React.PropsWithChildren) {
     const [isAdmin, setIsAdmin] = useState(false);
 
     const login = useCallback(async () => {
-        await auth0login();
+        console.log(getCurrentUrl())
+        await auth0login({
+            appState: {
+                returnTo: getCurrentUrl()
+            }
+        });
     }, [auth0login]);
 
     const logout = useCallback(async () => {
+        console.log(getCurrentUrl())
         await auth0logout({
-            logoutParams: { returnTo: window.location.origin },
+            logoutParams: { returnTo: getCurrentUrl() },
         });
     }, [auth0logout]);
 

@@ -12,3 +12,7 @@ export function objectsDiff<T>(previousObject: T, currentObject: T): T {
 export function capitalizeFirstLetter(text: string): string {
     return text[0].toUpperCase() + text.slice(1);
 }
+
+export function getCurrentUrl(withOrigin = true): string {
+    return (withOrigin ? window.location.origin : "") + window.location.pathname + window.location.hash; //  + window.location.search ?
+}

@@ -35,14 +35,32 @@ function GoogleMap({ center, markers = emptyMarkersArray as Marker[], getGroupIc
 
     const mapMarkers = () => {
         const newMarkersMap = new Map<string, Marker[]>();
+        let newLocations = false;
+
+        // New list
         markers.forEach((marker: Marker) => {
             const locationStr = locationToStr(marker.location);
             if (!newMarkersMap.has(locationStr)) {
                 newMarkersMap.set(locationStr, []);
             }
             newMarkersMap.get(locationStr)!.push(marker);
+
+            if (!markersMap.has(locationStr)) {
+                newLocations = true;
+            }
         });
+
+        // Previous list
+        Array.from(markersMap.keys()).forEach((locationStr: string) => {
+            if (!newMarkersMap.has(locationStr)) {
+                newLocations = true;
+            }
+        });
+
         setMarkersMap(newMarkersMap);
+        if (newLocations) {
+            setFitBoundsDone(false);
+        }
     };
 
     const fitBounds = () => {
@@ -68,14 +86,14 @@ function GoogleMap({ center, markers = emptyMarkersArray as Marker[], getGroupIc
     }, [markers]);
 
     useEffect(() => {
+        setFitBoundsDone(false);
+    }, [center]);
+
+    useEffect(() => {
         if (!fitBoundsDone) {
             fitBounds();
         }
     }, [markers, mapRef, fitBoundsDone]);
-
-    useEffect(() => {
-        setFitBoundsDone(false);
-    }, [center]);
 
     return (
         <div id="map" key={`${center && locationToStr(center)}`}>

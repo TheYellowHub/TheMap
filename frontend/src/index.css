@@ -19,12 +19,15 @@
 }
 
 :root {
+    --is-mobile-bp: 768;
     --logo-height: 4rem;
     --logo-max-height: 4rem;
     --header-height: calc(var(--logo-height) + var(--layout-padding));
     --footer-height: 4rem;
+    --footer-height-mobile: 4rem;
+    --footer-height-desktop: 2.5rem;
     --layout-padding: 1.3rem;
-    --main-height: calc(100vh - var(--footer-height));
+    --main-height: calc(100vh - var(--footer-height-desktop));
     --main-padding-top: calc(var(--header-height) + var(--layout-padding));
     --dark-grey: #333;
     --med-dark-grey: #6a6a6a;
@@ -39,6 +42,13 @@
     --light-yellow: #fcefca;
     --dark-blue: #035763;
     --med-blue: #137c8a;
+}
+
+
+@media (max-width: 768px)  { 
+    :root {
+        --main-height: calc(100vh); 
+    }
 }
 
 /* Colors */ 
@@ -147,6 +157,10 @@
 
 .w-fit-content {
     width: fit-content;
+}
+
+.w-min-content {
+    width: min-content;
 }
 
 .w-max-content {
@@ -269,6 +283,10 @@ a.a-no-decoration-line:hover {
     height: 2rem;
 }
 
+.d-none {
+    display: none;
+}
+
 /* Header & footer */
 
 header {
@@ -290,9 +308,9 @@ main {
 
 .footer {
     align-items: center;
-    height: var(--footer-height);
-    min-height: var(--footer-height);
     background-color: var(--med-yellow);
+    height: var(--footer-height-desktop);
+    min-height: var(--footer-height-desktop);
 }
 
 .footer-content,
@@ -594,7 +612,6 @@ td {
     border: 1px 1px 0px 1px !important; 
     border-bottom: 0 !important;
 }
-
 
 /* Forms */
 
@@ -913,16 +930,13 @@ div:has(.small-address-filter) {
 
 /* Google map */ 
 
-.doctors-map-below-results-closed,
-.doctors-map-below-results-open {
+.doctors-map-below-results {
     position: fixed;
-    position: -webkit-sticky; /* Safari */  
-    position: sticky;
     width: 100%;
     bottom: var(--footer-height);
 }
 
-.doctors-map-below-results-open .map {
+.doctors-map-below-results .map {
     padding: 0;
     position: relative;
     min-height: 50vh;
@@ -1172,6 +1186,10 @@ div:has(.small-address-filter) {
     .only-mobile {
         display: none;
     }
+    
+    .only-mobile * {
+        display: none;
+    }
 
     .doctorSmallCard:hover,
     .doctorBigCard {
@@ -1182,7 +1200,21 @@ div:has(.small-address-filter) {
 /* Mobile & tablets */
 
 @media (max-width: 768px)  { 
+    :root {
+        --logo-height: 2rem;
+        --logo-max-height: 2rem;
+    }
+
+    .footer {
+        height: var(--footer-height-mobile);
+        min-height: var(--footer-height-mobile);
+    }
+
     .only-desktop {
+        display: none;
+    }
+
+    .only-desktop * {
         display: none;
     }
 
@@ -1215,6 +1247,8 @@ div:has(.small-address-filter) {
     }
 
     .doctorBigCard {
+        position: absolute;
+        top: var(--header-height);
         width: 100%;
         padding: 0.5rem !important;
     }

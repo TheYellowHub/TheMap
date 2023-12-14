@@ -67,7 +67,7 @@ export default function DoctorSearchMap({
             }
             setMarkers(matchedDoctorsMarkers);
         }
-    }, [doctors, currentDoctor, currentDoctorLocation]);
+    }, [doctors, currentDoctor, currentDoctorLocation, centerLocation, boundsDistanceFromCenter]);
 
     return (
         <Container fluid className="map px-0 mx-0">
