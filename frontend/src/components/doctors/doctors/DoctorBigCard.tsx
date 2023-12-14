@@ -27,7 +27,7 @@ interface DoctorBigCardProps {
 function DoctorBigCard({ doctor, locationForDistanceCalculation, distanceUnit = "mi", onClose }: DoctorBigCardProps) {
     const allReviews = getDoctorReviews(doctor);
 
-    const { user, isAuthenticated } = useAuth();
+    const { user, isAuthenticated, login } = useAuth();
     const { userInfo, mutateSavedDoctors } = useUser(user); // TODO: handle mutation errors?
 
     const { data: userReviews } = (userInfo && useUserReviews(userInfo, doctor)) || { data: [] };
@@ -59,28 +59,30 @@ function DoctorBigCard({ doctor, locationForDistanceCalculation, distanceUnit = 
                                     </a>
                                 </Col>
                             </OverlayTrigger>
-                            {user && isAuthenticated && (
-                                <OverlayTrigger
-                                    placement="bottom"
-                                    overlay={
-                                        <Tooltip className="tooltip">
-                                            {userInfo?.savedDoctors?.includes(doctor.id!)
-                                                ? "Remove from my list"
-                                                : "Add to my list"}
-                                        </Tooltip>
-                                    }
-                                >
-                                    <Col className="px-0 doctorBigCardButtons d-flex justify-content-end" sm="auto">
-                                        <Icon
-                                            icon="fa-bookmark fa-sm"
-                                            solid={userInfo?.savedDoctors?.includes(doctor.id!) === true}
-                                            onClick={() => {
+                            <OverlayTrigger
+                                placement="bottom"
+                                overlay={
+                                    <Tooltip className="tooltip">
+                                        {userInfo?.savedDoctors?.includes(doctor.id!)
+                                            ? "Remove from my list"
+                                            : "Add to my list"}
+                                    </Tooltip>
+                                }
+                            >
+                                <Col className="px-0 doctorBigCardButtons d-flex justify-content-end" sm="auto">
+                                    <Icon
+                                        icon="fa-bookmark fa-sm"
+                                        solid={userInfo?.savedDoctors?.includes(doctor.id!) === true}
+                                        onClick={() => {
+                                            if (user && isAuthenticated) {
                                                 mutateSavedDoctors(doctor.id!);
-                                            }}
-                                        />
-                                    </Col>
-                                </OverlayTrigger>
-                            )}
+                                            } else {
+                                                login();
+                                            }
+                                        }}
+                                    />
+                                </Col>
+                            </OverlayTrigger>
                             <OverlayTrigger placement="bottom" overlay={<Tooltip className="tooltip">Close</Tooltip>}>
                                 <Col className="px-0 doctorBigCardButtons d-flex justify-content-end" sm="auto">
                                     <Icon icon="fa-minus fa-sm" onClick={onClose} className="only-desktop" />
