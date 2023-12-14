@@ -36,6 +36,7 @@ interface DoctorSearchFiltersProps {
     shouldClearAddress: boolean;
     setShouldClearAddress: (shouldClearAddress: boolean) => void;
     setValueChange: (filterChange: boolean) => void;
+    className?: string;
 }
 
 export default function DoctorSearchFilters({
@@ -61,6 +62,7 @@ export default function DoctorSearchFilters({
     shouldClearAddress,
     setShouldClearAddress,
     setValueChange,
+    className
 }: DoctorSearchFiltersProps) {
     const { data: categories } = useDoctorCategories();
     const { data: specialities } = useDoctorSpecialities();
@@ -185,7 +187,7 @@ export default function DoctorSearchFilters({
     }, [shouldClearFilters]);
 
     return (
-        <Form ref={formRef} className="px-0 mx-0">
+        <Form ref={formRef} className={`px-0 mx-0 ${className}`}>
             <Container className="d-grid gap-3" fluid>
                 <Row className="d-flex">
                     <Col className="small-address-filter">
