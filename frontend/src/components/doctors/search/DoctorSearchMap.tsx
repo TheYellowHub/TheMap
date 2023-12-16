@@ -70,11 +70,11 @@ export default function DoctorSearchMap({
     }, [doctors, currentDoctor, currentDoctorLocation, centerLocation, boundsDistanceFromCenter]);
 
     return (
-        <Container fluid className="map px-0 mx-0">
+        <Container fluid className="map px-0 mx-0" key={`search-map-distance=${boundsDistanceFromCenter}`}>
             <GoogleMap center={centerLocation} markers={markers} getGroupIcon={getGroupMarkerIcon} resetClicks={() => {
                 setCurrentDoctor(null);
                 setCurrentDoctorLocation(null);
-            }} />
+            }}/>
             <div className="aboveMap">
                 <a href="https://urlzs.com/bVdAh" target="_blank" rel="noreferrer">
                     <Button variant="primary" label="Recommend a doctor"></Button>
