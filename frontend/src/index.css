@@ -155,19 +155,23 @@
     white-space: pre-line;
 }
 
-.w-fit-content {
+.w-fit-content,
+.w-fit-content div {
     width: fit-content;
 }
 
-.w-min-content {
+.w-min-content,
+.w-min-content div {
     width: min-content;
 }
 
-.w-max-content {
-    width: max-content;
+.w-max-content,
+.w-max-contemt div {
+    width: max-content !important;
 }
 
-.w-min-100-max-content {
+.w-min-100-max-content,
+.w-min-100-max-content div {
     width: max-content;
     min-width: 100%;
 }
@@ -281,6 +285,10 @@ a.a-no-decoration-line:hover {
 
 .h-2 {
     height: 2rem;
+}
+
+.h-3 {
+    height: 3rem;
 }
 
 .d-none {
@@ -1247,9 +1255,6 @@ div:has(.small-address-filter) {
     }
 
     .doctorBigCard {
-        position: absolute;
-        top: var(--header-height);
-        width: 100%;
         padding: 0.5rem !important;
     }
 

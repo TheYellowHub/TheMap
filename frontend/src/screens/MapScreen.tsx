@@ -155,7 +155,7 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
             <Container fluid>
                 <Row className="d-flex mt-2 mb-0 flex-md-nowrap">
                     <Col className="mx-3 px-3" id={doctorsSearchColumnId}>
-                        <Row className="pb-2 mb-2">
+                        <Row className={`pb-2 mb-2 ${currentDoctor ? "only-desktop" : ""}`}>
                             <DoctorSearchFilters
                                 address={address}
                                 setAddress={setAddress}
@@ -177,7 +177,6 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
                                 shouldClearAddress={shouldClearAddress}
                                 setShouldClearAddress={setShouldClearAddress}
                                 setValueChange={setFilterChangeSinceLastDoctorPick}
-                                className={currentDoctor ? "only-desktop" : ""}
                             />
 
                             {config.app.forceAddressInput && address === undefined && currentDoctor === null && !startWithMyList && (

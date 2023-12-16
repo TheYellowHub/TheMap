@@ -96,7 +96,7 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
     ]);
 
     useEffect(() => {    
-        if (originalUserInfo?.username) {
+        if (originalUserInfo?.username && usernameFieldOptions.filter((option) => option.value == CURRENT_USERNAME).length == 0) {
             setUsernameFieldOptions([{ value: CURRENT_USERNAME, label: originalUserInfo.username! }, ...usernameFieldOptions]);
             setChangingUsername(false);
         }
@@ -199,8 +199,8 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
     return (
         <Form className="p-0 m-0" ref={formRef}>
             <fieldset disabled={disabled}>
-                <Form.Group as={Row} className="p-0 m-0 pb-2 gap-3  align-items-center">
-                    <Col className="m-0 p-0">
+                <Form.Group as={Row} className="p-0 m-0 pb-2 gap-3 d-flex flex-row align-items-center">
+                    <Col className="m-0 p-0" xs={6} xl={3}>
                         <SingleSelectFormField<DoctorReview>
                             field={{
                                 type: "singleSelect",
@@ -226,10 +226,10 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
                             }}
                             object={review}
                             onChange={setReview}
-                            className="select-no-border d-inline-block"
+                            className="select-no-border w-100 h-3"
                         />
                     </Col>
-                    <Col className="m-0 p-0" xs="auto">
+                    <Col className="m-0 p-0 d-flex">
                         {
                             userInfo && changingUsername && 
                             <InputFormField<UserInfo>
@@ -240,8 +240,8 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
                             />
                         }
                     </Col>
-                    <Col className="m-0 p-0 d-flex justify-content-end">{review.status !== "DRAFT" && reviewStatusToString(review.status)}</Col>
-                    <Col className="m-0 p-0 d-flex justify-content-end" xxl="auto">
+                    <Col className="m-0 p-0 d-flex flex-grow-0 justify-content-xl-end" xs={6} xl={3}>{review.status !== "DRAFT" && reviewStatusToString(review.status)}</Col>
+                    <Col className="m-0 p-0 d-flex justify-content-end">
                         {
                             <StarRating
                                 rating={review.rating || 0}
@@ -282,7 +282,7 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
                     <Col className="px-0 py-1 m-0 d-flex gap-2 h-2">{review.pastOperation && dateFields}</Col>
                 </Form.Group>
                 {!review.pastOperation && (
-                    <Form.Group as={Row} className="p-0 m-0 pb-2 d-flex flex-row align-items-center ">
+                    <Form.Group as={Row} className="p-0 m-0 pb-2 d-flex flex-row align-items-center">
                         <Col className="p-0 m-0 py-1 pe-2" sm={"auto"}>
                             <BooleanFormField<DoctorReview>
                                 field={reviewFieldsMap.get("futureOperation") as BooleanField<DoctorReview>}
@@ -334,7 +334,7 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
                     </Col>
                 </OverlayTrigger>
                 <Col></Col>
-                <Col className="m-0 p-0 d-flex flex-grow-0 justify-content-end" xs={12} sm="auto">
+                <Col className="m-0 p-0 d-flex flex-grow-0 justify-content-center">
                     <Button
                         variant="secondary"
                         label="Save for later"
@@ -343,10 +343,10 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
                             submitReview(review, "DRAFT", "SAVED");
                         }}
                         disabled={disabled}
-                        className="w-100"
+                        className="w-max-content"
                     />
                 </Col>
-                <Col className="m-0 p-0 d-flex flex-grow-0 justify-content-end" xs={12} sm="auto">
+                <Col className="m-0 p-0 d-flex flex-grow-0 justify-content-center">
                     <Button
                         variant="primary"
                         label="Submit"
@@ -355,7 +355,7 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
                             submitReview(review, "PENDING_APPROVAL", "SUBMITTED");
                         }}
                         disabled={disabled}
-                        className="w-100"
+                        className="w-max-content"
                     />
                 </Col>
             </Form.Group>

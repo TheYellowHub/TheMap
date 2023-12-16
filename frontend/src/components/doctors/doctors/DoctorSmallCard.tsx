@@ -28,7 +28,7 @@ function DoctorSmallCard({
     onClick,
 }: DoctorSmallCardProps) {
     const closestLocation =
-        locationForDistanceCalculation && getDoctorNearestLocation(doctor, locationForDistanceCalculation);
+        locationForDistanceCalculation ? getDoctorNearestLocation(doctor, locationForDistanceCalculation) : (doctor.locations && doctor.locations[0]);
 
     const { user } = useAuth();
     const { userInfo } = useUser(user);
