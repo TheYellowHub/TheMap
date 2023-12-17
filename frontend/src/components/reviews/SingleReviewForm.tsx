@@ -1,4 +1,4 @@
-import { Col, Row, Form, OverlayTrigger, Tooltip, Modal } from "react-bootstrap";
+import { Col, Row, Form, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { useEffect, useRef, useState } from "react";
 
 import {
@@ -189,8 +189,8 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
     return (
         <Form className="p-0 m-0" ref={formRef}>
             <fieldset disabled={disabled}>
-                <Form.Group as={Row} className="p-0 m-0 pb-2 gap-3 d-flex flex-row align-items-center">
-                    <Col className="m-0 p-0" xs={6} xl={3}>
+                <Form.Group as={Row} className="p-0 m-0 pb-2 gap-3 d-flex flex-row flex-nowrap align-items-center">
+                    <Col className="m-0 p-0" xs={4} xl={3}>
                         <SingleSelectFormField<DoctorReview>
                             field={{
                                 type: "singleSelect",
@@ -216,12 +216,12 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
                             }}
                             object={review}
                             onChange={setReview}
-                            className="select-no-border w-100 h-3"
+                            className="select-no-border h-3"
                         />
                     </Col>
                     {user && <SetUsernameModal user={user} show={user !== undefined && changingUsername} onHide={() => setChangingUsername(false)}/>}
-                    <Col className="m-0 p-0 d-flex flex-grow-0 justify-content-xl-end" xs={6} xl={3}>{review.status !== "DRAFT" && reviewStatusToString(review.status)}</Col>
-                    <Col className="m-0 p-0 d-flex justify-content-end">
+                    <Col className="m-0 p-0 d-flex justify-content-center text-center">{review.status !== "DRAFT" && reviewStatusToString(review.status)}</Col>
+                    <Col className="m-0 p-0 d-flex flex-grow-0 justify-content-end">
                         {
                             <StarRating
                                 rating={review.rating || 0}
