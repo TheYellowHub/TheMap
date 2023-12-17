@@ -198,7 +198,7 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
                         </Row>
 
                         {!currentDoctor && <Row className="d-flex py-2 my-2 gap-3">
-                            <Col className=" p-0">
+                            <Col className="p-0">
                                 <div className="med-dark-grey sm-font fst-italic d-inline">
                                     {matchedDoctorsIncludingDistance.length} results
                                     {address && distance && (
@@ -217,7 +217,7 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
                             </Col>
                         </Row>}
 
-                        <Row className="py-2 my-2" id={doctorsSearchResultsId}>
+                        <Row className="py-md-2 my-md-2" id={doctorsSearchResultsId}>
                             {currentDoctor !== null || matchedDoctorsIncludingDistance.length > 0 ? (
                                 <DoctorSearchResults
                                     key={`DoctorSearchResults-Pagination:${pagination.toString()}`}

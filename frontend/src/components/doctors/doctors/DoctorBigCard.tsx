@@ -35,7 +35,7 @@ function DoctorBigCard({ doctor, locationForDistanceCalculation, distanceUnit = 
     const [addingReview, setAddingReview] = useState(false);
 
     return (
-        <Container className={`doctorBigCard mx-0 ps-0 pe-3 w-100`}>
+        <Container className={`doctorBigCard`}>
             <Row className="mb-3">
                 <a onClick={onClose} className="a-no-decoration-line">
                     <Col className="only-mobile med-dark-grey sm-font">
@@ -98,9 +98,9 @@ function DoctorBigCard({ doctor, locationForDistanceCalculation, distanceUnit = 
                             <DoctorVerification doctor={doctor} />
                         </Col>
                     </Row>
-                    <Row className="w-100 m-0 gap-3 py-1">
+                    <Row className="m-0 p-0 gap-3 py-1">
                         {doctor.specialities.map((speciality: string) => (
-                            <Col className="p-0" sm="auto" key={speciality}>
+                            <Col className="p-0 flex-grow-0" key={speciality}>
                                 <DoctorSpecialityRibbon speciality={speciality} />
                             </Col>
                         ))}

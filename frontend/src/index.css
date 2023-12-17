@@ -1255,7 +1255,7 @@ div:has(.small-address-filter) {
     }
 
     .doctorBigCard {
-        padding: 0.5rem !important;
+        padding: 0rem !important;
     }
 
     .doctorBigCardName {
