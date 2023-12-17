@@ -1,4 +1,4 @@
-import { Col, Row, Form, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Col, Row, Form, OverlayTrigger, Tooltip, Modal } from "react-bootstrap";
 import { useEffect, useRef, useState } from "react";
 
 import {
@@ -25,7 +25,7 @@ import { MonthName, monthNames } from "../../types/utils/dateTime";
 import { ID } from "../../types/utils/id";
 import useUser from "../../hooks/auth/useUsers";
 import useAuth from "../../auth/useAuth";
-import { UserInfo, userInfoFieldsMap } from "../../auth/userInfo";
+import SetUsernameModal from "./SetUsernameModal";
 
 interface SingleReviewFormProps {
     originalReview: DoctorReview;
@@ -37,14 +37,7 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
     const [review, setReview] = useState(originalReview);
 
     const { user } = useAuth();
-    const { 
-        userInfo: originalUserInfo, 
-        mutateUsername, 
-        isUsernameMutationLoading,
-        isUsernameMutationSuccess,
-        isUsernameMutationError,
-        usernameMutationError, 
-    } = useUser(user);
+    const { userInfo } = useUser(user);
     const { 
         mutateItem, 
         mutateResult, 
@@ -56,7 +49,6 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
         review.addedBy,
         review.doctor
     );
-    const [userInfo, setUserInfo] = useState<UserInfo | undefined>();
 
     const disabled = !reviewEditableStatuses.includes(review.status);
 
@@ -74,10 +66,6 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
             setReview(newReview);
             mutateItem(newReview);
             setEditStatus(newEditStatus);
-
-            if (changingUsername && userInfo?.username !== originalUserInfo?.username) {
-                mutateUsername(userInfo!.username!);
-            }
         }
     };
 
@@ -96,15 +84,17 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
     ]);
 
     useEffect(() => {    
-        if (originalUserInfo?.username && usernameFieldOptions.filter((option) => option.value == CURRENT_USERNAME).length == 0) {
-            setUsernameFieldOptions([{ value: CURRENT_USERNAME, label: originalUserInfo.username! }, ...usernameFieldOptions]);
+        const currentUsernameOptions = usernameFieldOptions.filter((option) => option.value === CURRENT_USERNAME);
+        if (userInfo?.username && 
+            (currentUsernameOptions.length == 0 
+                || (currentUsernameOptions.length === 1 && currentUsernameOptions[0].value !== userInfo.username!))) {
+            setUsernameFieldOptions([
+                { value: CURRENT_USERNAME, label: userInfo.username! }, 
+                ...usernameFieldOptions.filter((option) => option.value !== CURRENT_USERNAME)
+            ]);
             setChangingUsername(false);
         }
-        setUserInfo({
-            ...originalUserInfo, 
-            username: originalUserInfo?.username ? originalUserInfo?.username : user?.nickname
-        } as UserInfo);
-    }, [originalUserInfo]);
+    }, [userInfo, userInfo?.username]);
 
     useEffect(() => {
         const inputs = formRef.current?.querySelectorAll("input, textarea");
@@ -116,12 +106,12 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
     }, [formRef]);
 
     useEffect(() => {
-        if (isMutateSuccess && isUsernameMutationSuccess) {
+        if (isMutateSuccess) {
             if (review.status === "DELETED") {
                 setDeleted && setDeleted();
             }
         }
-    }, [isMutateSuccess, isUsernameMutationSuccess]);
+    }, [isMutateSuccess]);
 
     useEffect(() => {
         if (isMutateSuccess) {
@@ -229,17 +219,7 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
                             className="select-no-border w-100 h-3"
                         />
                     </Col>
-                    <Col className="m-0 p-0 d-flex">
-                        {
-                            userInfo && changingUsername && 
-                            <InputFormField<UserInfo>
-                                field={userInfoFieldsMap.get("username") as TextField<UserInfo>}
-                                object={userInfo}
-                                onChange={setUserInfo}
-                                placeHolder="Username"
-                            />
-                        }
-                    </Col>
+                    {user && <SetUsernameModal user={user} show={user !== undefined && changingUsername} onHide={() => setChangingUsername(false)}/>}
                     <Col className="m-0 p-0 d-flex flex-grow-0 justify-content-xl-end" xs={6} xl={3}>{review.status !== "DRAFT" && reviewStatusToString(review.status)}</Col>
                     <Col className="m-0 p-0 d-flex justify-content-end">
                         {
@@ -360,9 +340,9 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
                 </Col>
             </Form.Group>
             <LoadingWrapper
-                isLoading={isMutateLoading || isUsernameMutationLoading}
-                isError={isMutateError || isUsernameMutationError}
-                error={mutateError as ResponseError || usernameMutationError as ResponseError}
+                isLoading={isMutateLoading}
+                isError={isMutateError}
+                error={mutateError as ResponseError}
                 loaderSize={20}
                 loaderText="Submitting..."
             >

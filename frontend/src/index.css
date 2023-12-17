@@ -40,6 +40,7 @@
     --med-yellow: #f2c94c;
     --med-light-yellow: #f6db87;
     --light-yellow: #fcefca;
+    --very-light-yellow: #fff9e7;
     --dark-blue: #035763;
     --med-blue: #137c8a;
 }
@@ -52,6 +53,10 @@
 }
 
 /* Colors */ 
+
+.black {
+    color: black !important;
+}
 
 .dark-grey {
     color: var(--dark-grey) !important;
@@ -154,6 +159,10 @@
 
 .white-space-pre-line {
     white-space: pre-line;
+}
+
+.w-70 {
+    width: 70% !important;
 }
 
 .w-fit-content,
@@ -487,19 +496,25 @@ td {
 
 .modal-backdrop {
     z-index: 10;
+    --bs-backdrop-bg: none;
 }
 
 *:has(.modal.show) main {
-    filter: blur(3px);
-}
-
-*:has(.doctorBigCard) main {
-    filter: none !important;
+    filter: blur(2px);
 }
 
 .col-sm-9 {
     display: flex;
     vertical-align: middle;
+}
+
+.user-modal .modal-content {
+    padding: 1rem;
+    padding-bottom: 0.5rem;
+    border-radius: 10px;
+    border: 1px solid var(--dark-grey);
+    background: var(--very-light-yellow);
+    box-shadow: 1px 4px 20px 5px rgba(0, 0, 0, 0.10);
 }
 
 /* pagination */
@@ -725,9 +740,13 @@ input[type="checkbox"] {
 }
 
 .textarea {
+    height: 7rem;
+}
+
+.textarea,
+.blue-border {
     border-radius: 0.625rem !important;
     border: 1px solid var(--med-blue) !important;
-    height: 7rem;
 }
 
 /* react-datetime */
@@ -1200,6 +1219,10 @@ div:has(.small-address-filter) {
         display: none;
     }
 
+    .user-modal .modal-dialog {
+        max-width: 50%;
+    }
+
     .doctorSmallCard:hover,
     .doctorBigCard {
         box-shadow: 5px 5px 12px 2px rgba(120, 120, 120, 0.25), 0px 4px 20px 3px rgba(65, 65, 65, 0.25);
@@ -1253,6 +1276,10 @@ div:has(.small-address-filter) {
 
     .py-3, .pb-3 {
         padding-bottom: 0.5rem !important;
+    }    
+
+    .user-modal .modal-dialog {
+        max-width: 100%;
     }
 
     .doctorBigCard {
