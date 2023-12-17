@@ -35,6 +35,7 @@
     --light-grey: #d6d6d6;
     --very-light-grey: #f8f9fa;
     --dark-yellow: #97750b;
+    --med-dark-yellow-2: #c39b1d;
     --med-dark-yellow: #fabc05;
     --star-yellow: #e3bb40;
     --med-yellow: #f2c94c;
@@ -596,7 +597,7 @@ td {
 
 .btn-secondary {
     background: white;
-    border-color: var(--med-yellow);
+    border-color: var(--med-dark-yellow-2);
 }
 
 .btn-primary:hover,
