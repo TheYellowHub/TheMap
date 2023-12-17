@@ -153,7 +153,7 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
     return (
         <LoadingWrapper isLoading={isListLoading} isError={isListError} error={listError as ResponseError}>
             <Container fluid>
-                <Row className="d-flex mt-2 mb-0 flex-md-nowrap">
+                <Row className="d-flex mt-2 mb-0 flex-md-nowrap gap-md-3">
                     <Col className="mx-3 px-3" id={doctorsSearchColumnId}>
                         <Row className={`pb-2 mb-2 ${currentDoctor ? "only-desktop" : ""}`}>
                             <DoctorSearchFilters
