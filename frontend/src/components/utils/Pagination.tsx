@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 
 import Icon from "./Icon";
@@ -20,10 +20,11 @@ function Pagination({ rowsCount, pageIndex, pageSize, setPageIndex, setPageSize 
     pagesToSelectSet.add(pageIndex);
     pagesToSelectSet.add(pageIndex + 1);
     pagesToSelectSet.add(pagesCount - 1);
+    console.log(pagesToSelectSet);
 
     const pagesToSelectList = Array.from(pagesToSelectSet)
         .filter((newPageIndex: number) => 0 <= newPageIndex && newPageIndex < pagesCount)
-        .sort();
+        .sort((a, b) => a < b ? -1 : 1);
 
     return (
         <Container>
