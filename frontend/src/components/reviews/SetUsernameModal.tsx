@@ -1,32 +1,15 @@
-import { Col, Row, Form, OverlayTrigger, Tooltip, Modal, Container } from "react-bootstrap";
+import { Col, Row, Modal, Form } from "react-bootstrap";
 import { useEffect, useRef, useState } from "react";
 
-import {
-    DoctorReview,
-    ReviewStatus,
-    reviewFieldsMap,
-    getOperationMonthName,
-    getOperationYear,
-    setOperationMonthAndYear,
-    reviewStatusToString,
-    reviewEditableStatuses,
-} from "../../types/doctors/review";
-import { useUserReviews } from "../../hooks/doctors/useReviews";
 import LoadingWrapper from "../utils/LoadingWrapper";
 import { ResponseError } from "../../hooks/useApiRequest";
-import Icon from "../utils/Icon";
-import Button from "../utils/Button";
-import StarRating from "../utils/StarRating";
-import InputFormField from "../utils/form/inputField";
-import SingleSelectFormField from "../utils/form/singleSelectField";
-import BooleanFormField from "../utils/form/booleanField";
-import { BooleanField, TextField } from "../../utils/fields";
-import { MonthName, monthNames } from "../../types/utils/dateTime";
-import { ID } from "../../types/utils/id";
+import { TextField } from "../../utils/fields";
 import useUser from "../../hooks/auth/useUsers";
-import useAuth from "../../auth/useAuth";
 import { UserInfo, userInfoFieldsMap } from "../../auth/userInfo";
 import { User } from "@auth0/auth0-react";
+import Button from "../utils/Button";
+import InputFormField from "../utils/form/inputField";
+import useFormValidation from "../../hooks/useFormValidation";
 
 interface SingleReviewFormProps {
     user: User;
@@ -46,6 +29,9 @@ function SetUsernameModal({ user, show, onHide }: SingleReviewFormProps) {
     
     const [userInfo, setUserInfo] = useState<UserInfo | undefined>();
 
+    const formRef = useRef<HTMLFormElement>(null);
+    const { reportValidity, isFormValid } = useFormValidation(formRef);
+
     useEffect(() => {
         setUserInfo({
             ...originalUserInfo, 
@@ -59,7 +45,8 @@ function SetUsernameModal({ user, show, onHide }: SingleReviewFormProps) {
 
     return (        
         <Modal show={show} backdrop="static" onHide={onHide} className="user-modal" centered>
-                <Modal.Body>
+            <Modal.Body>
+                <Form className="p-0 m-0" ref={formRef}>
                     <Row><Col className="text-center my-2"><strong>Set a public username</strong></Col></Row>
                     <Row><Col className="text-center my-2">This will be the default name for your reviews and public comments</Col></Row>
                     <Row>
@@ -70,6 +57,7 @@ function SetUsernameModal({ user, show, onHide }: SingleReviewFormProps) {
                                 onChange={setUserInfo}
                                 placeHolder="Username"
                                 className="blue-border w-70"
+                                required={true}
                             />}
                         </Col>
                     </Row>
@@ -89,7 +77,8 @@ function SetUsernameModal({ user, show, onHide }: SingleReviewFormProps) {
                                 label="Save"
                                 type="button"
                                 onClick={() => {
-                                    if (userInfo?.username !== originalUserInfo?.username) {
+                                    reportValidity();
+                                    if (isFormValid() && userInfo?.username !== originalUserInfo?.username) {
                                         mutateUsername(userInfo!.username!);
                                     }
                                 }}
@@ -106,7 +95,8 @@ function SetUsernameModal({ user, show, onHide }: SingleReviewFormProps) {
                             loaderText="Submitting..."
                         />
                     </Row>
-                </Modal.Body>
+                </Form>
+            </Modal.Body>
         </Modal>
     );
 }

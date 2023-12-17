@@ -26,6 +26,7 @@ import { ID } from "../../types/utils/id";
 import useUser from "../../hooks/auth/useUsers";
 import useAuth from "../../auth/useAuth";
 import SetUsernameModal from "./SetUsernameModal";
+import useFormValidation from "../../hooks/useFormValidation";
 
 interface SingleReviewFormProps {
     originalReview: DoctorReview;
@@ -56,12 +57,12 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
     const [editStatus, setEditStatus] = useState<EditStatus>("EDITING");
 
     const formRef = useRef<HTMLFormElement>(null);
+    const { reportValidity, isFormValid } = useFormValidation(formRef);
 
     const submitReview = (review: DoctorReview, newReviewStatue: ReviewStatus, newEditStatus: EditStatus) => {
-        const inputs: NodeListOf<HTMLInputElement> | undefined = formRef.current?.querySelectorAll("input, textarea");
-        inputs?.forEach((input) => input?.reportValidity());
+        reportValidity();
 
-        if (formRef?.current?.checkValidity() === true) {
+        if (isFormValid() === true) {
             const newReview = { ...review, status: newReviewStatue };
             setReview(newReview);
             mutateItem(newReview);
@@ -85,25 +86,21 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
 
     useEffect(() => {    
         const currentUsernameOptions = usernameFieldOptions.filter((option) => option.value === CURRENT_USERNAME);
-        if (userInfo?.username && 
-            (currentUsernameOptions.length == 0 
-                || (currentUsernameOptions.length === 1 && currentUsernameOptions[0].value !== userInfo.username!))) {
-            setUsernameFieldOptions([
-                { value: CURRENT_USERNAME, label: userInfo.username! }, 
-                ...usernameFieldOptions.filter((option) => option.value !== CURRENT_USERNAME)
-            ]);
-            setChangingUsername(false);
+        if (userInfo?.username) { 
+                if (currentUsernameOptions.length == 0 
+                    || (currentUsernameOptions.length === 1 && currentUsernameOptions[0].value !== userInfo.username!)) {
+                setUsernameFieldOptions([
+                    { value: CURRENT_USERNAME, label: userInfo.username! }, 
+                    ...usernameFieldOptions.filter((option) => option.value !== CURRENT_USERNAME)
+                ]);
+                setChangingUsername(false);
+            }
+        } else {
+            if (!review?.anonymous) {
+                setChangingUsername(true);
+            }
         }
     }, [userInfo, userInfo?.username]);
-
-    useEffect(() => {
-        const inputs = formRef.current?.querySelectorAll("input, textarea");
-        inputs?.forEach((input) =>
-            input.addEventListener("input", (e) => {
-                (e.target as HTMLInputElement).reportValidity();
-            })
-        );
-    }, [formRef]);
 
     useEffect(() => {
         if (isMutateSuccess) {
@@ -186,7 +183,13 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
         </>
     );
 
-    return (
+    return (<>
+        {user && <SetUsernameModal user={user} show={user !== undefined && changingUsername} onHide={() => {
+            setChangingUsername(false);
+            if (!userInfo?.username) {
+                setReview({...review, anonymous: true});
+            }
+        }}/>}
         <Form className="p-0 m-0" ref={formRef}>
             <fieldset disabled={disabled}>
                 <Form.Group as={Row} className="p-0 m-0 pb-2 gap-3 d-flex flex-row flex-nowrap align-items-center">
@@ -219,7 +222,6 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
                             className="select-no-border h-3"
                         />
                     </Col>
-                    {user && <SetUsernameModal user={user} show={user !== undefined && changingUsername} onHide={() => setChangingUsername(false)}/>}
                     <Col className="m-0 p-0 d-flex justify-content-center text-center">{review.status !== "DRAFT" && reviewStatusToString(review.status)}</Col>
                     <Col className="m-0 p-0 d-flex flex-grow-0 justify-content-end">
                         {
@@ -364,7 +366,7 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
                 )}
             </LoadingWrapper>
         </Form>
-    );
+    </>);
 }
 
 export default SingleReviewForm;

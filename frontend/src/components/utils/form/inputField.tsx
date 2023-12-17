@@ -20,6 +20,7 @@ export interface TextInputFormFieldProps<T> {
     isInvalid?: boolean;
     placeHolder?: string;
     className?: string;
+    required?: boolean;
 }
 
 export interface NumberInputFormFieldProps<T> {
@@ -29,6 +30,7 @@ export interface NumberInputFormFieldProps<T> {
     isInvalid?: boolean;
     placeHolder?: string;
     className?: string;
+    required?: boolean;
 }
 
 export default function InputFormField<T>({
@@ -38,6 +40,7 @@ export default function InputFormField<T>({
     isInvalid = false,
     placeHolder,
     className,
+    required = false
 }: TextInputFormFieldProps<T> | NumberInputFormFieldProps<T>) {
     const pattern = new Map([
         ["text", undefined],
@@ -75,7 +78,7 @@ export default function InputFormField<T>({
                     defaultValue={field.getter(object)}
                     readOnly={field.setter === undefined}
                     onBlur={onBlur}
-                    required={field.required}
+                    required={field.required || required}
                     isInvalid={isInvalid}
                     autoComplete="off"
                     placeholder={placeHolder}
@@ -90,7 +93,7 @@ export default function InputFormField<T>({
                     defaultValue={field.getter(object)}
                     readOnly={field.setter === undefined}
                     onBlur={onBlur}
-                    required={field.required}
+                    required={field.required || required}
                     pattern={pattern}
                     isInvalid={isInvalid}
                     autoComplete="off"
