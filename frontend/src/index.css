@@ -149,6 +149,7 @@
     line-height: 1.25rem;
     box-sizing: border-box !important;
     scroll-margin-top: var(--header-height);
+    scroll-behavior: auto !important;
 }
 
 .white-space-pre-line {

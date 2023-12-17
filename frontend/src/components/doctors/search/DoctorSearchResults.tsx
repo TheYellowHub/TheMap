@@ -28,6 +28,7 @@ export default function DoctorSearchResuls({
     const [doctorsInPage, setDoctorsInPage] = useState<Doctor[]>([]);
     const [pageIndex, setPageIndex] = useState(0);
     const [pageSize, setPageSize] = useState(10);
+    const [pageYOffset, setPageYOffset] = useState<number | undefined>(undefined);
 
     const [dimensions, setDimensions] = useState({
         width: window.innerWidth,
@@ -74,6 +75,14 @@ export default function DoctorSearchResuls({
     };
 
     useEffect(() => {
+        if (pageYOffset !== undefined && currentDoctor === null) {
+            window.scrollTo(0, pageYOffset);
+            setPageYOffset(undefined);
+        }
+        console.log("......")
+    })
+
+    useEffect(() => {
         window.addEventListener("resize", handleResize, false);
         readjustPageSize();
     }, []);
@@ -97,6 +106,7 @@ export default function DoctorSearchResuls({
                                 locationForDistanceCalculation={locationForDistanceCalculation}
                                 distanceUnit={distanceUnit}
                                 onClick={() => {
+                                    setPageYOffset(window.scrollY);
                                     setCurrentDoctor(doctor);
                                 }}
                             />
