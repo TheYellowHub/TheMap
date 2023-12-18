@@ -102,6 +102,12 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
         }
     }, [userInfo, userInfo?.username]);
 
+    useEffect(() => {    
+        if (!changingUsername && !review.anonymous && userInfo?.username === undefined) {
+            setReview({...review, anonymous: true});
+        }
+    }, [changingUsername]);
+
     useEffect(() => {
         if (isMutateSuccess) {
             if (review.status === "DELETED") {

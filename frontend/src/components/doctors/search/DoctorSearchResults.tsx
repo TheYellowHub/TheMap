@@ -79,7 +79,6 @@ export default function DoctorSearchResuls({
             window.scrollTo(0, pageYOffset);
             setPageYOffset(undefined);
         }
-        console.log("......")
     })
 
     useEffect(() => {
