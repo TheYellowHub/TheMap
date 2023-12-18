@@ -19,7 +19,7 @@
 }
 
 :root {
-    --is-mobile-bp: 768;
+    --is-mobile-bp: 1023;
     --logo-height: 4rem;
     --logo-max-height: 4rem;
     --header-height: calc(var(--logo-height) + var(--layout-padding));
@@ -339,13 +339,13 @@ main {
     color: var(--dark-blue) !important;
     font-family: "Poppins";
     font-weight: 500;
-    font-size: 1rem;
+    font-size: 0.9rem;
     line-height: 1.25rem;
 }
 
 .footer-content-smaller,
 .footer-content-smaller a {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
 }
 
 .footer i {
@@ -1211,7 +1211,7 @@ div:has(.small-address-filter) {
 
 /* Desktop */
 
-@media (min-width: 769px)  { 
+@media (min-width: 1024px)  { 
     .only-mobile {
         display: none;
     }
@@ -1232,7 +1232,7 @@ div:has(.small-address-filter) {
 
 /* Mobile & tablets */
 
-@media (max-width: 768px)  { 
+@media (max-width: 1023px)  { 
     :root {
         --logo-height: 2rem;
         --logo-max-height: 2rem;
