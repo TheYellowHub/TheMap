@@ -27,12 +27,13 @@ function DoctorLocations({ doctor, locationForDistanceCalculation, distanceUnit 
             <Row className="w-100 m-0 gap-0 py-1 doctor-location">
                 {doctor.locations.map((location, index) => (
                     <Button
-                        label={location?.hospitalName || `Office ${index + 1}`}
-                        className={location === selectedLocation ? "doctorLocationBtnSelected" : "doctorLocationBtn"}
+                        label=""
+                        className={`${location === selectedLocation ? "doctorLocationBtnSelected" : "doctorLocationBtn"}`}
                         icon={location === selectedLocation ? "fa-hospital" : ""}
                         key={`${location?.hospitalName || location?.address}-btn`}
                         onClick={() => setSelectedLocation && setSelectedLocation(location)}
                     >
+                        <div className="one-line-text">{location?.hospitalName || `Office ${index + 1}`}</div>
                         {location.privateOnly && (
                             <p className="doctorLocationPrivateLabel p-0 m-0">
                                 {location === selectedLocation ? "private" : "p"}

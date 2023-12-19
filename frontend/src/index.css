@@ -331,6 +331,19 @@ a.a-no-decoration-line:hover {
     display: none;
 }
 
+.one-line-text {
+    overflow: hidden;
+    display: -webkit-box;
+    line-clamp: 1;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+
+.one-line-text:hover {
+    overflow: visible;
+    display: inline-block;
+}
+
 /* Header & footer */
 
 header {
@@ -1073,7 +1086,7 @@ div:has(.small-address-filter) {
 .doctorBigCardImg {
     width: 7.125rem;
     height: 100%;
-    border-radius: 0.25rem 0 0 0.25rem;
+    border-radius: 0.25rem;
     object-fit: cover;
     padding: 0;
 }
@@ -1185,7 +1198,7 @@ div:has(.small-address-filter) {
 }
 
 .doctorBigCard .doctor-address * {
-    font-size: 1rem;
+    font-size: 0.875rem;
 }
 
 .doctor-address *,
