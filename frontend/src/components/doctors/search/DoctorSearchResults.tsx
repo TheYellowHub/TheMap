@@ -49,7 +49,7 @@ export default function DoctorSearchResuls({
             const cardHeight = 0 < doctorCards.length ? doctorCards[0].clientHeight : 9 * rem;
             // cardsDivWidth = cols * cardWidth + (cols - 1) * paddingBetween
             const cols = Math.max(1200 < window.innerWidth ? 2 : 1, Math.floor((cardsDivWidth + paddingBetween) / (cardWidth + paddingBetween)));
-            const rows = Math.max(1, Math.floor(cardsDivHeight / (cardHeight + 2 * rem)));
+            const rows = Math.max(1, Math.floor((cardsDivHeight + paddingBetween) / (cardHeight + paddingBetween)));
             
             const newPageSize = cols * rows;
             if (pageSize !== newPageSize) {
