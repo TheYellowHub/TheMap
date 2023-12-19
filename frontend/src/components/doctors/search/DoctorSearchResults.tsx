@@ -7,6 +7,8 @@ import Pagination from "../../utils/Pagination";
 import { DistanceUnit } from "../../utils/DistanceUnit";
 import { Location } from "../../../utils/googleMaps/useGoogleMaps";
 import DoctorBigCard from "../doctors/DoctorBigCard";
+import { getProperty } from "../../../utils/css";
+import { footerHeightCssVariable } from "../../utils/Footer";
 
 interface DoctorSearchResultsProps {
     doctors: Doctor[];
@@ -14,7 +16,8 @@ interface DoctorSearchResultsProps {
     setCurrentDoctor: (currentDoctor: Doctor | null) => void;
     locationForDistanceCalculation: Location | undefined;
     distanceUnit: DistanceUnit;
-    pagination: boolean
+    isMapBelowRsults: () => boolean;
+    pagination?: boolean;
 }
 
 export default function DoctorSearchResuls({
@@ -23,12 +26,14 @@ export default function DoctorSearchResuls({
     setCurrentDoctor,
     locationForDistanceCalculation,
     distanceUnit,
-    pagination
+    isMapBelowRsults,
+    pagination = false,
 }: DoctorSearchResultsProps) {
     const [doctorsInPage, setDoctorsInPage] = useState<Doctor[]>([]);
     const [pageIndex, setPageIndex] = useState(0);
     const [pageSize, setPageSize] = useState(10);
     const [pageYOffset, setPageYOffset] = useState<number | undefined>(undefined);
+    const [onlyDivScroll, setOnlyDivScroll] = useState(false);
 
     const [dimensions, setDimensions] = useState({
         width: window.innerWidth,
@@ -38,28 +43,37 @@ export default function DoctorSearchResuls({
     const doctorCardsContainerId = "doctorSmallCards";
 
     const readjustPageSize = () => {
-        if (pagination) {
-            const rem = 16;
-            const paddingBetween = 1.5 * rem;
+        const cardsDiv = document.getElementById(doctorCardsContainerId);
+        const footer = document.getElementsByName("footer");
+        const isMapBelowRsultsNow = isMapBelowRsults();
+        const newOnlyDivScroll = !pagination && !isMapBelowRsultsNow;
+        setOnlyDivScroll(newOnlyDivScroll);
 
-            const cardsDivWidth = 0.7 * window.innerWidth;
-            const cardsDivHeight = window.innerHeight - 400;
-            const doctorCards = Array.from(document.getElementsByClassName(doctorSmallCardClassName));
-            const cardWidth = 0 < doctorCards.length ? doctorCards[0].clientWidth : 26 * rem;
-            const cardHeight = 0 < doctorCards.length ? doctorCards[0].clientHeight : 9 * rem;
-            // cardsDivWidth = cols * cardWidth + (cols - 1) * paddingBetween
-            const cols = Math.max(1200 < window.innerWidth ? 2 : 1, Math.floor((cardsDivWidth + paddingBetween) / (cardWidth + paddingBetween)));
-            const rows = Math.max(1, Math.floor((cardsDivHeight + paddingBetween) / (cardHeight + paddingBetween)));
-            
-            const newPageSize = cols * rows;
-            if (pageSize !== newPageSize) {
-                setPageSize(newPageSize);
-            }
-                
-            const cardsDiv = document.getElementById(doctorCardsContainerId);
-            if (cardsDiv !== null) {
-                const width = (cols * cardWidth + (cols - 1) * paddingBetween).toString() + "px";
+        if (cardsDiv !== null) {
+            const cardsDivHeight = window.innerHeight - (0 < footer.length ? footer[0].getBoundingClientRect().top : 0) - cardsDiv.getBoundingClientRect().top - 60;
+            cardsDiv.style.maxHeight = newOnlyDivScroll ? (cardsDivHeight.toString() + "px") : "none";
+
+            if (!isMapBelowRsultsNow) {
+                const scrollerWidth = 30;
+                const cardsDivWidth = 0.70 * window.innerWidth - scrollerWidth;
+                const rem = 16;
+                const paddingBetween = 1.5 * rem;
+                const doctorCards = Array.from(document.getElementsByClassName(doctorSmallCardClassName));
+                const cardWidth = 0 < doctorCards.length ? doctorCards[0].clientWidth : 26 * rem;
+                const cardHeight = 0 < doctorCards.length ? doctorCards[0].clientHeight : 9 * rem;
+                // cardsDivWidth = cols * cardWidth + (cols - 1) * paddingBetween
+                const cols = Math.max(2, Math.floor((cardsDivWidth + paddingBetween) / (cardWidth + paddingBetween)));
+                const rows = Math.max(1, Math.floor((cardsDivHeight + paddingBetween) / (cardHeight + paddingBetween)));
+
+                const width = (cols * cardWidth + (cols - 1) * paddingBetween + scrollerWidth).toString() + "px";
                 cardsDiv.style.minWidth = width;
+
+                if (pagination) {
+                    const newPageSize = cols * rows;
+                    if (pageSize !== newPageSize) {
+                        setPageSize(newPageSize);
+                    }
+                }
             }
         }
     };
@@ -76,7 +90,7 @@ export default function DoctorSearchResuls({
 
     useEffect(() => {
         if (pageYOffset !== undefined && currentDoctor === null) {
-            window.scrollTo(0, pageYOffset);
+            (onlyDivScroll ? document.getElementById(doctorCardsContainerId)! : window).scrollTo(0, pageYOffset);
             setPageYOffset(undefined);
         }
     })
@@ -95,7 +109,7 @@ export default function DoctorSearchResuls({
             <Row className="px-0 mx-0">
                 <Container
                     id={doctorCardsContainerId}
-                    className="d-flex flex-wrap gap-4 px-0 mx-0"
+                    className={`d-flex flex-wrap gap-4 px-0 mx-0 ${onlyDivScroll ? "overflow-y-auto-hover py-3" : ""}`}
                 >
                     {currentDoctor === null ? (
                         doctorsInPage.map((doctor: Doctor) => (
@@ -105,7 +119,7 @@ export default function DoctorSearchResuls({
                                 locationForDistanceCalculation={locationForDistanceCalculation}
                                 distanceUnit={distanceUnit}
                                 onClick={() => {
-                                    setPageYOffset(window.scrollY);
+                                    setPageYOffset(onlyDivScroll ? document.getElementById(doctorCardsContainerId)?.scrollTop : window.scrollY);
                                     setCurrentDoctor(doctor);
                                 }}
                             />

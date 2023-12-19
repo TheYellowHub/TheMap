@@ -4,7 +4,10 @@ import useDetectScroll from '@smakss/react-scroll-direction';
 
 import Icon from "./Icon";
 import { useEffect, useState } from "react";
-import { MAP_CONTAINER_ID } from "../../screens/MapScreen";
+import { MAP_CONTAINER_ID as mapContainerId } from "../../screens/MapScreen";
+import { getProperty, setProperty } from "../../utils/css";
+
+export const footerHeightCssVariable = "--footer-height";
 
 function Footer() {
     const scrollDir = useDetectScroll();
@@ -14,13 +17,9 @@ function Footer() {
     const [footerHeightDesktop, setFooterHeightDesktop] = useState<string>();
     const [footerHeightMobile, setFooterHeightMobile] = useState<string>();
     const mobileBreakingpointCssVariable = "--is-mobile-bp";
-    const footerHeightCssVariable = "--footer-height";
     const footerHeightDesktopCssVariable = "--footer-height-desktop";
     const footerHeightMobileCssVariable = "--footer-height-mobile";
 
-    const getRoot = () => (document.querySelector(':root')! as HTMLElement);
-    const getProperty = (property: string) => getComputedStyle(getRoot()).getPropertyValue(property);
-    const setProperty = (property: string, value: string) => getRoot().style.setProperty(property, value);
     const setFooterCurrentHeight = (value: string) => setProperty(footerHeightCssVariable, value);
     const zeroHeight = "0";
 
@@ -43,7 +42,7 @@ function Footer() {
     }, []);
 
     useEffect(() => {
-        const mapElement = document.getElementById(MAP_CONTAINER_ID);
+        const mapElement = document.getElementById(mapContainerId);
         if (mapElement) {
             mapResizeObserver.observe(mapElement);
         }

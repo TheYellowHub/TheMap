@@ -48,10 +48,8 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
     const doctorsSearchColumnId = "doctors-search-column";
     const doctorsMapColumnId = "doctors-map-column";
     const [mapIsOpen, setMapIsOpen] = useState(false);
-    const [pagination, setPagination] = useState(true);
 
     const mapNode = (<DoctorSearchMap
-        key={`DoctorSearchMap-Pagination:${pagination.toString()}`}
         doctors={matchedDoctorsIgnoringDistance}
         centerLocation={addressLocation}
         boundsDistanceFromCenter={distance}
@@ -72,21 +70,10 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
         });
     };
 
-    const handleResize = () => {
+    const isMapBelowRsults = () => {
         const mapColumn = document.getElementById(doctorsMapColumnId);
-        const newPagination = mapColumn !== null && window.getComputedStyle(mapColumn, null).display.toLowerCase() !== "none";
-        if (newPagination !== pagination) {
-            setPagination(newPagination);
-        }
+        return mapColumn !== null && window.getComputedStyle(mapColumn, null).display.toLowerCase() === "none";
     };
-
-    useEffect(() => {
-        window.addEventListener("resize", handleResize);
-    }, []);
-
-    useEffect(() => {
-        handleResize();
-    });
 
     useEffect(() => {
         if (shouldClearFilters) {
@@ -112,10 +99,9 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
         }
     }, [filterChangeSinceLastDoctorPick]);
 
-    // TODO
     useEffect(() => {
         setCurrentDoctor(null);
-    }, [onlyMyList])
+    }, [onlyMyList]);
 
     useEffect(() => {
         if (currentDoctor === null) {
@@ -224,13 +210,12 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
                         <Row className="py-md-2 my-md-2" id={doctorsSearchResultsId}>
                             {currentDoctor !== null || matchedDoctorsIncludingDistance.length > 0 ? (
                                 <DoctorSearchResults
-                                    key={`DoctorSearchResults-Pagination:${pagination.toString()}`}
                                     doctors={matchedDoctorsIncludingDistance}
                                     currentDoctor={currentDoctor}
                                     setCurrentDoctor={setCurrentDoctor}
                                     locationForDistanceCalculation={addressLocation}
                                     distanceUnit={distanceUnit}
-                                    pagination={pagination}
+                                    isMapBelowRsults={isMapBelowRsults}
                                 />
                             ) : (
                                 <DoctorSearchNoResuls
