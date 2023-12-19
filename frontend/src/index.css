@@ -141,6 +141,10 @@
     font-weight: 400;
     color: var(--dark-grey);
 }
+.fa-filter::before {
+    content: "\f0b0";
+    font-family: "Font Awesome 6 Pro";
+}
 
 /* General */
 
@@ -512,7 +516,7 @@ td {
 .user-modal .modal-content {
     padding: 1rem;
     padding-bottom: 0.5rem;
-    border-radius: 10px;
+    border-radius: 0.625rem;
     border: 1px solid var(--dark-grey);
     background: var(--very-light-yellow);
     box-shadow: 1px 4px 20px 5px rgba(0, 0, 0, 0.10);
@@ -746,8 +750,15 @@ input[type="checkbox"] {
 
 .textarea,
 .blue-border {
-    border-radius: 0.625rem !important;
     border: 1px solid var(--med-blue) !important;
+}
+
+.grey-border {
+    border: 1px solid var(--med-dark-grey) !important;
+}
+
+.round-border {
+    border-radius: 0.625rem !important;
 }
 
 /* react-datetime */

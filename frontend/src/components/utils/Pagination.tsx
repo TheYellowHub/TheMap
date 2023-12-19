@@ -20,7 +20,6 @@ function Pagination({ rowsCount, pageIndex, pageSize, setPageIndex, setPageSize 
     pagesToSelectSet.add(pageIndex);
     pagesToSelectSet.add(pageIndex + 1);
     pagesToSelectSet.add(pagesCount - 1);
-    console.log(pagesToSelectSet);
 
     const pagesToSelectList = Array.from(pagesToSelectSet)
         .filter((newPageIndex: number) => 0 <= newPageIndex && newPageIndex < pagesCount)

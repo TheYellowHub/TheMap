@@ -56,7 +56,7 @@ function SetUsernameModal({ user, show, onHide }: SingleReviewFormProps) {
                                 object={userInfo}
                                 onChange={setUserInfo}
                                 placeHolder="Username"
-                                className="blue-border w-70"
+                                className="blue-border round-border w-70"
                                 required={true}
                             />}
                         </Col>

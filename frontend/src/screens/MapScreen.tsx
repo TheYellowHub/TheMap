@@ -192,7 +192,7 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
                             )}
                         </Row>
 
-                        {!currentDoctor && <Row className="d-flex py-2 my-2 gap-3">
+                        {!currentDoctor && !onlyMyList && <Row className="d-flex py-2 my-2 gap-3">
                             <Col className="p-0">
                                 <div className="med-dark-grey sm-font fst-italic d-inline">
                                     {matchedDoctorsIncludingDistance.length} results

@@ -66,9 +66,11 @@ export default function DoctorSearchFilters({
 
     const formRef = useRef<HTMLFormElement>(null);
 
+    const [nameFilter, setNameFilter] = useState<string>("");
     const [categoriesFilter, setCategoriesFilter] = useState<string[]>([]);
     const [specialitiesFilter, setSpecialitiesFilter] = useState<string[]>([]);
     const [listFilter, setListFilter] = useState<string[]>([]);
+    const [showFilters, setShowFilters] = useState(true);
 
     const defaultSortKey = "Closest first";
     const [sortKey, setSortKey] = useState<string>(defaultSortKey);
@@ -109,7 +111,8 @@ export default function DoctorSearchFilters({
                 (categoriesFilter.length === 0 || categoriesFilter.some((category) => category === doctor.category)) &&
                 (specialitiesFilter.length === 0 || specialitiesFilter.some((speciality) => doctor.specialities.includes(speciality))) &&
                 (listFilter.length === 0 || listFilter.some((listOption) => listOptions.get(listOption)!(doctor))) &&
-                (!onlyMyList || userInfo?.savedDoctors?.includes(doctor.id!) === true)
+                (!onlyMyList || userInfo?.savedDoctors?.includes(doctor.id!) === true) && 
+                (doctor.fullName.toLowerCase().includes(nameFilter.toLowerCase()))
         );
         setMatchedDoctorsIgnoringDistance(newMatchedDoctorsIgnoringDistance);
 
@@ -132,7 +135,7 @@ export default function DoctorSearchFilters({
 
     useEffect(() => {
         refilterDoctors(distance);
-    }, [doctors, categoriesFilter, specialitiesFilter, listFilter, sortKey, userInfo, onlyMyList]);
+    }, [doctors, nameFilter, categoriesFilter, specialitiesFilter, listFilter, sortKey, userInfo, onlyMyList]);
 
     useEffect(() => {
         if (ignoreNextDistanceChange) {
@@ -143,29 +146,33 @@ export default function DoctorSearchFilters({
     }, [distance]);
 
     useEffect(() => {
-        let filterDistance = config.app.distanceDefault;
-        let matchedDoctors = refilterDoctors(filterDistance);
-        while (matchedDoctors.length < config.app.minimumDoctorsInResults) {
-            filterDistance += 10;
-            matchedDoctors = refilterDoctors(filterDistance);
-        }
-        setIgnoreNextDistanceChange(true);
-        setDistance(filterDistance);
+        if (addressLocation !== undefined) {
+            let filterDistance = config.app.distanceDefault;
+            let matchedDoctors = refilterDoctors(filterDistance);
+            while (matchedDoctors.length < config.app.minimumDoctorsInResults) {
+                filterDistance += 10;
+                matchedDoctors = refilterDoctors(filterDistance);
+            }
+            setIgnoreNextDistanceChange(true);
+            setDistance(filterDistance);
+        }  
     }, [addressLocation]);
 
     useEffect(() => {
         if (shouldClearFilters) {
             formRef?.current?.reset();
+            setNameFilter("")
             setCategoriesFilter([]);
             setSpecialitiesFilter([]);
+            setListFilter([]);
             setShouldClearFilters(false);
         }
     }, [shouldClearFilters]);
 
     return (
         <Form ref={formRef} className={`px-0 mx-0 ${className}`}>
-            <Container className="d-grid gap-3" fluid>
-                <Row className="d-flex">
+            <Container className={`d-grid gap-3`} fluid>
+                {!onlyMyList && <Row className="d-flex">
                     <Col className="small-address-filter">
                         <DoctorSearchAddressFilter
                             address={address}
@@ -176,8 +183,26 @@ export default function DoctorSearchFilters({
                             setValueChange={setValueChange}
                         />
                     </Col>
-                </Row>
-                <Row className="d-flex gap-3 justify-content-between flex-lg-nowrap">
+                </Row>}
+                {onlyMyList && <Row className="d-flex gap-3">
+                    <Col className="px-0">
+                        <Form.Control
+                            type="text"
+                            value={nameFilter}
+                            onChange={(e) => {
+                                setNameFilter(e.target.value);
+                                setValueChange(true);
+                            }}
+                            // autoComplete="off"
+                            placeholder="Search saved providers"
+                            className="round-border grey-border"
+                        />
+                    </Col>
+                    <Col className="d-flex justify-content-end align-items-center flex-grow-0 px-0">
+                        <Icon icon="fa-filter" solid={showFilters} onClick={() => setShowFilters(!showFilters)} />
+                    </Col>
+                </Row>}
+                {showFilters && (<Row className="d-flex gap-3 justify-content-between flex-lg-nowrap">
                     <Col xs={6} lg={3} className="px-0">
                         <Select
                             values={categories.map((category: DoctorCategory) => category.name)}
@@ -242,7 +267,7 @@ export default function DoctorSearchFilters({
                             />
                         </Col>
                     </Col>
-                </Row>
+                </Row>)}
             </Container>
         </Form>
     );
