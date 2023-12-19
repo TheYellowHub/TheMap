@@ -1,16 +1,15 @@
 import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import useDetectScroll, {
-    Axis,
-    Direction
-} from '@smakss/react-scroll-direction'; 
+import useDetectScroll from '@smakss/react-scroll-direction'; 
 
 import Icon from "./Icon";
 import { useEffect, useState } from "react";
+import { MAP_CONTAINER_ID } from "../../screens/MapScreen";
 
 function Footer() {
     const scrollDir = useDetectScroll();
     const [isMobile, setIsMobile] = useState(false);
+    const [isMapOpen, setIsMapOpen] = useState(false);
     const [displayFooterOnMobile, setDisplayFooterOnMobile] = useState(false);
     const [footerHeightDesktop, setFooterHeightDesktop] = useState<string>();
     const [footerHeightMobile, setFooterHeightMobile] = useState<string>();
@@ -35,11 +34,20 @@ function Footer() {
         setIsMobile(isMobileNow);
     }
 
+    const mapResizeObserver = new ResizeObserver((entries) => setIsMapOpen(entries[0].contentRect.height !== 0));
+
     useEffect(() => {
         saveOriginalFooterHeight();
         checkIfMobile();
         window.addEventListener("resize", checkIfMobile, false);
     }, []);
+
+    useEffect(() => {
+        const mapElement = document.getElementById(MAP_CONTAINER_ID);
+        if (mapElement) {
+            mapResizeObserver.observe(mapElement);
+        }
+    });
 
     useEffect(() => {
         if (isMobile) {
@@ -51,7 +59,14 @@ function Footer() {
     }, [isMobile]);
 
     useEffect(() => {
-        if (scrollDir === "down") {
+        if (isMobile && isMapOpen) {
+            setFooterCurrentHeight(zeroHeight);
+            setDisplayFooterOnMobile(false);
+        }
+    }, [isMapOpen]);
+
+    useEffect(() => {
+        if (scrollDir === "down" && !isMapOpen) {
             setDisplayFooterOnMobile(true);
             setFooterCurrentHeight(footerHeightMobile!);
         } else if (scrollDir === "up") {

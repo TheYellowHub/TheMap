@@ -21,6 +21,8 @@ interface MapScreenProps {
     onlyMyList?: boolean;
 }
 
+export const MAP_CONTAINER_ID = "map-container";
+
 function MapScreen({ onlyMyList = false }: MapScreenProps) {
     const { data: doctors, isListLoading, isListError, listError } = useDoctors();
     const { id: doctorIdParam } = useParams();
@@ -253,7 +255,7 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
                             <Button onClick={() => setMapIsOpen(!mapIsOpen)} label={`${mapIsOpen ? "Hide" : "Show"} Map`} icon="fa-location-dot" className="btn-map" />
                         </Col>
                     </Row>
-                    <Row className={`mx-0 px-0 ${mapIsOpen === true && currentDoctor === null ? "" : "d-none"}`}>
+                    <Row id={MAP_CONTAINER_ID} className={`mx-0 px-0 ${mapIsOpen === true && currentDoctor === null ? "" : "d-none"}`}>
                         <Col className="mx-0 px-0">
                             {mapNode}
                         </Col>
