@@ -15,6 +15,7 @@ import useGoogleMaps, { Location } from "../utils/googleMaps/useGoogleMaps";
 import DoctorSearchAddressFilter from "../components/doctors/search/DoctorSearchAddressFilter";
 import { useParams } from "react-router-dom";
 import Button from "../components/utils/Button";
+import BackButton from "../components/utils/BackButton";
 
 interface MapScreenProps {
     onlyMyList?: boolean;
@@ -109,6 +110,11 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
         }
     }, [filterChangeSinceLastDoctorPick]);
 
+    // TODO
+    useEffect(() => {
+        setCurrentDoctor(null);
+    }, [onlyMyList])
+
     useEffect(() => {
         if (currentDoctor === null) {
             setCurrentDoctorLocation(null);
@@ -151,6 +157,7 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
     return (
         <LoadingWrapper isLoading={isListLoading} isError={isListError} error={listError as ResponseError}>
             <Container fluid>
+                {onlyMyList && currentDoctor === null && <BackButton onClick={() => history.back()} className="mx-0" />}
                 <Row className="d-flex mt-2 mb-0 flex-md-nowrap gap-md-3">
                     <Col className="mx-3 px-3" id={doctorsSearchColumnId}>
                         <Row className={`pb-2 mb-2 ${currentDoctor ? "only-desktop" : ""}`}>

@@ -17,6 +17,7 @@ import { useUserReviews } from "../../../hooks/doctors/useReviews";
 import UserReviewsForm from "../../reviews/UserReviewsForm";
 import DoctorLocations from "./DoctorLocations";
 import SaveDoctorIcon from "./SaveDoctorIcon";
+import BackButton from "../../utils/BackButton";
 
 interface DoctorBigCardProps {
     doctor: Doctor;
@@ -37,14 +38,7 @@ function DoctorBigCard({ doctor, locationForDistanceCalculation, distanceUnit = 
 
     return (
         <Container className={`doctorBigCard`}>
-            <Row className="mb-3">
-                <a onClick={onClose} className="a-no-decoration-line">
-                    <Col className="only-mobile med-dark-grey sm-font">
-                        <Icon icon="fa-arrow-left fa-sm" className="ps-0" />
-                        Back
-                    </Col>
-                </a>
-            </Row>
+            {onClose && <BackButton onClick={onClose} />}
             <Row className="flex-nowrap p-0">
                 <Col className="flex-grow-0 pe-1">
                     <DoctorImage doctor={doctor} big={true} />
