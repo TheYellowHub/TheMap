@@ -24,10 +24,7 @@ interface DoctorSearchFiltersProps {
     distance: number | undefined;
     setDistance: (distance: number | undefined) => void;
     distanceUnit: DistanceUnit;
-    startWithMyList: boolean;
-    listFilter: string | undefined;
-    setListFilter: (listFilter: string | undefined) => void;
-    myListFilterName: string;
+    onlyMyList: boolean;
     doctors: Doctor[];
     setMatchedDoctorsIgnoringDistance: (doctors: Doctor[]) => void;
     setMatchedDoctorsIncludingDistance: (doctors: Doctor[]) => void;
@@ -50,10 +47,7 @@ export default function DoctorSearchFilters({
     setDistance,
     distanceUnit,
     doctors,
-    startWithMyList,
-    listFilter,
-    setListFilter,
-    myListFilterName,
+    onlyMyList, // TODO
     setMatchedDoctorsIgnoringDistance,
     setMatchedDoctorsIncludingDistance,
     shouldClearFilters,
@@ -72,21 +66,18 @@ export default function DoctorSearchFilters({
 
     const formRef = useRef<HTMLFormElement>(null);
 
-    const [categoryFilter, setCategoryFilter] = useState<string | undefined>();
+    const [categoriesFilter, setCategoriesFilter] = useState<string[]>([]);
     const [specialitiesFilter, setSpecialitiesFilter] = useState<string[]>([]);
+    const [listFilter, setListFilter] = useState<string[]>([]);
 
     const defaultSortKey = "Closest first";
     const [sortKey, setSortKey] = useState<string>(defaultSortKey);
 
-    const [startWithMyListParamWasUsed, setStartWithMyListParamWasUsed] = useState(false);
-
     const listOptions: ReadonlyMap<string, (doctor: Doctor) => boolean> = new Map([
-        ["icarebetter.com", (doctor: Doctor) => Boolean(doctor.iCareBetter)],
-        ["Nancy’s Nook", (doctor: Doctor) => doctor.nancysNook === true],
-        [myListFilterName, (doctor: Doctor) => userInfo?.savedDoctors?.includes(doctor.id!) === true],
+        ["icarebetter.com", (doctor: Doctor) => Boolean(doctor.iCareBetter)],        ["Nancy’s Nook", (doctor: Doctor) => doctor.nancysNook === true],
     ]);
 
-    const filtered = (address !== undefined || categoryFilter !== undefined || 0 < specialitiesFilter.length || listFilter !== undefined);
+    const filtered = (address !== undefined || 0 < categoriesFilter.length || 0 < specialitiesFilter.length || 0 < listFilter.length);
     const [ignoreNextDistanceChange, setIgnoreNextDistanceChange] = useState(false);
 
     const sortByName = (a: Doctor, b: Doctor) => {
@@ -113,16 +104,13 @@ export default function DoctorSearchFilters({
     ]);
 
     const refilterDoctors = (filterDistance: number | undefined) => {
-        const newMatchedDoctorsIgnoringDistance: Doctor[] = doctors.filter((doctor: Doctor) => {
-            return (
+        const newMatchedDoctorsIgnoringDistance: Doctor[] = doctors.filter((doctor: Doctor) => 
                 doctor.status === "APPROVED" &&
-                (categoryFilter === undefined || categoryFilter === doctor.category) &&
-                specialitiesFilter.every((speciality) => doctor.specialities.includes(speciality)) &&
-                (listFilter === undefined ||
-                    listOptions.get(listFilter) === undefined ||
-                    listOptions.get(listFilter)!(doctor))
-            );
-        });
+                (categoriesFilter.length === 0 || categoriesFilter.some((category) => category === doctor.category)) &&
+                (specialitiesFilter.length === 0 || specialitiesFilter.some((speciality) => doctor.specialities.includes(speciality))) &&
+                (listFilter.length === 0 || listFilter.some((listOption) => listOptions.get(listOption)!(doctor))) &&
+                (!onlyMyList || userInfo?.savedDoctors?.includes(doctor.id!) === true)
+        );
         setMatchedDoctorsIgnoringDistance(newMatchedDoctorsIgnoringDistance);
 
         const newMatchedDoctorsIncludingDistance: Doctor[] = newMatchedDoctorsIgnoringDistance
@@ -143,14 +131,8 @@ export default function DoctorSearchFilters({
     };
 
     useEffect(() => {
-        setStartWithMyListParamWasUsed(false);
-        setShouldClearFilters(true);
-        setShouldClearAddress(true);
-    }, [startWithMyList]);
-
-    useEffect(() => {
         refilterDoctors(distance);
-    }, [doctors, categoryFilter, specialitiesFilter, listFilter, sortKey, userInfo]);
+    }, [doctors, categoriesFilter, specialitiesFilter, listFilter, sortKey, userInfo, onlyMyList]);
 
     useEffect(() => {
         if (ignoreNextDistanceChange) {
@@ -174,14 +156,8 @@ export default function DoctorSearchFilters({
     useEffect(() => {
         if (shouldClearFilters) {
             formRef?.current?.reset();
-            setCategoryFilter(undefined);
+            setCategoriesFilter([]);
             setSpecialitiesFilter([]);
-            if (startWithMyListParamWasUsed) {
-                setListFilter(undefined);
-            } else {
-                setListFilter(startWithMyList ? myListFilterName : undefined);
-                setStartWithMyListParamWasUsed(true);
-            }
             setShouldClearFilters(false);
         }
     }, [shouldClearFilters]);
@@ -205,13 +181,15 @@ export default function DoctorSearchFilters({
                     <Col xs={6} lg={3} className="px-0">
                         <Select
                             values={categories.map((category: DoctorCategory) => category.name)}
-                            currentValue={categoryFilter}
+                            currentValue={categoriesFilter}
                             allowEmptySelection={true}
                             placeHolder="All Categories"
-                            onChange={(newValue: string | undefined) => {
-                                setCategoryFilter(newValue);
+                            title="Categories"
+                            onChange={(newValue: string[]) => {
+                                setCategoriesFilter(newValue);
                                 setValueChange(true);
                             }}
+                            isMulti={true}
                         />
                     </Col>
                     <Col xs={5} lg={3} className="px-0">
@@ -228,19 +206,21 @@ export default function DoctorSearchFilters({
                             isMulti={true}
                         />
                     </Col>
-                    <Col xs={6} lg={2} className="px-0">
+                    <Col xs={6} lg={3} className="px-0">
                         <Select
                             values={Array.from(listOptions.keys())}
                             currentValue={listFilter}
                             allowEmptySelection={true}
                             placeHolder="All Lists"
-                            onChange={(newValue: string | undefined) => {
+                            title="Lists"
+                            onChange={(newValue: string[]) => {
                                 setListFilter(newValue);
                                 setValueChange(true);
                             }}
+                            isMulti={true}
                         />
                     </Col>
-                    <Col xs={5} lg={3} className="d-flex align-items-center justify-content-between px-0">
+                    <Col xs={5} lg={2} className="d-flex align-items-center justify-content-between px-0">
                         <Col className="d-flex text-nowrap flex-grow-0">
                             {filtered && <a onClick={() => {
                                 setShouldClearFilters(true);

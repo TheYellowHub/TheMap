@@ -17,10 +17,10 @@ import { useParams } from "react-router-dom";
 import Button from "../components/utils/Button";
 
 interface MapScreenProps {
-    startWithMyList?: boolean;
+    onlyMyList?: boolean;
 }
 
-function MapScreen({ startWithMyList = false }: MapScreenProps) {
+function MapScreen({ onlyMyList = false }: MapScreenProps) {
     const { data: doctors, isListLoading, isListError, listError } = useDoctors();
     const { id: doctorIdParam } = useParams();
     const [doctorIdParamWasUsed, setDoctorIdParamWasUsed] = useState(false);
@@ -30,9 +30,6 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
     const [matchedDoctorsIncludingDistance, setMatchedDoctorsIncludingDistance] = useState<Doctor[]>([]);
     const [currentDoctor, setCurrentDoctor] = useState<Doctor | null>(null);
     const [currentDoctorLocation, setCurrentDoctorLocation] = useState<DoctorLocation | null>(null);
-
-    const myListFilterName = "My list";
-    const [listFilter, setListFilter] = useState<string | undefined>();
 
     const { setCurrentLocation, getAddress } = useGoogleMaps();
     const [address, setAddress] = useState<string | undefined>(undefined);
@@ -49,6 +46,7 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
     const doctorsMapColumnId = "doctors-map-column";
     const [mapIsOpen, setMapIsOpen] = useState(false);
     const [pagination, setPagination] = useState(true);
+
     const mapNode = (<DoctorSearchMap
         key={`DoctorSearchMap-Pagination:${pagination.toString()}`}
         doctors={matchedDoctorsIgnoringDistance}
@@ -165,10 +163,7 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
                                 distance={distance}
                                 setDistance={setDistance}
                                 distanceUnit={distanceUnit}
-                                startWithMyList={startWithMyList}
-                                myListFilterName={myListFilterName}
-                                listFilter={listFilter}
-                                setListFilter={setListFilter}
+                                onlyMyList={onlyMyList}
                                 doctors={doctors}
                                 setMatchedDoctorsIgnoringDistance={setMatchedDoctorsIgnoringDistance}
                                 setMatchedDoctorsIncludingDistance={setMatchedDoctorsIncludingDistance}
@@ -179,7 +174,7 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
                                 setValueChange={setFilterChangeSinceLastDoctorPick}
                             />
 
-                            {config.app.forceAddressInput && address === undefined && currentDoctor === null && !startWithMyList && (
+                            {config.app.forceAddressInput && address === undefined && currentDoctor === null && !onlyMyList && (
                                 <ReactModal
                                     className="transparent d-flex justify-content-center big-address-filter"
                                     show={true}
@@ -235,7 +230,6 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
                                     setDistance={setDistance}
                                     setShouldClearFilters={setShouldClearFilters}
                                     setShouldClearAddress={setShouldClearAddress}
-                                    myList={listFilter === myListFilterName}
                                 />
                             )}
                         </Row>

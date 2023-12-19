@@ -9,7 +9,6 @@ interface DoctorSearchNoResultsProps {
     setDistance: (distance: number | undefined) => void;
     setShouldClearFilters: (shouldClearFilters: boolean) => void;
     setShouldClearAddress: (shouldClearFilters: boolean) => void;
-    myList: boolean;
 }
 
 export default function DoctorSearchNoResuls({
@@ -18,7 +17,6 @@ export default function DoctorSearchNoResuls({
     setDistance,
     setShouldClearFilters,
     setShouldClearAddress,
-    myList,
 }: DoctorSearchNoResultsProps) {
     const { user } = useAuth();
 
@@ -34,22 +32,8 @@ export default function DoctorSearchNoResuls({
                     setShouldClearAddress(true);
                 }} className="inherit-font-style">
                     Clear filters
-                </a>{" "}
-                {myList ? (
-                    <>
-                        <br />
-                        or{" "}
-                        {user ? (
-                            <>add doctors to your list</>
-                        ) : (
-                            <a href="#/user/login" className="inherit-font-style">
-                                login in order to create your own list
-                            </a>
-                        )}
-                    </>
-                ) : (
-                    address &&
-                    distance && (
+                </a>
+                {address && distance && (
                         <>
                             <br />
                             or{" "}
@@ -58,7 +42,7 @@ export default function DoctorSearchNoResuls({
                             </a>
                         </>
                     )
-                )}
+                }
             </div>
         </Container>
     );

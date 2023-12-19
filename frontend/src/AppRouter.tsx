@@ -24,13 +24,13 @@ function AppRouter() {
 
     return (
         <Routes>
-            <Route path="/:id?" element={<MapScreen startWithMyList={false} />} />
+            <Route path="/:id?" element={<MapScreen onlyMyList={false} />} />
             <Route path="/admin/doctors" element={<DoctorsScreen />} />
             <Route path="/admin/categories" element={<DoctorCategoriesScreen />} />
             <Route path="/admin/specialities" element={<DoctorSpecialitiesScreen />} />
             <Route path="/admin/reviews" element={<ReviewsScreen />} />
             <Route path="/user/login" element={<Login redirectTo={<MapScreen />} />} />
-            <Route path="/user/saved" element={<MapScreen startWithMyList={true} />} />
+            <Route path="/user/saved" element={<MapScreen onlyMyList={true} />} />
             <Route path="/user/reviews" element={<UserReviewsForm userInfo={userInfo!} />} />
         </Routes>
     );
