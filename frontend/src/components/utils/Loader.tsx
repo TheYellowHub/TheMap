@@ -4,12 +4,13 @@ interface LoaderProps {
     size?: number;
     text?: string;
     center?: boolean;
+    className?: string;
 }
 
-function Loader({ size = 100, text = "Loading...", center = false }: LoaderProps) {
+function Loader({ size = 100, text = "Loading...", center = false, className = "" }: LoaderProps) {
     return (
         <>
-            <Container className={`d-flex align-items-center mt-3 ${center ? "justify-content-center h-main" : ""}`}>
+            <Container className={`d-flex align-items-center mt-3 ${center ? "justify-content-center h-main" : ""} ${className}`}>
                 <Row className="gap-3">
                     <Col xs="auto">
                         <Spinner

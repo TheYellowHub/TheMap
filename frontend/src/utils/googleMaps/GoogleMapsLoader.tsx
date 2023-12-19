@@ -45,7 +45,7 @@ function GoogleMapsLoader({ children }: GoogleMapsLoaderProps) {
             libraries={libraries}
             onError={(error: Error) => handleLoadingError(error)}
             onLoad={() => setWasLoaded(true)}
-            loadingElement={<Loader center={true} />}
+            loadingElement={<Loader center={true} className="padding-header" />}
         >
             <GoogleMapsLoaderContext.Provider value={googleMapsIsLoaded}>
                 <>{children}</>

@@ -311,6 +311,11 @@ a.a-no-decoration-line:hover {
     height: var(--main-part-height);
 }
 
+.padding-header {
+    padding-top: var(--main-padding-top) !important;
+    box-sizing: content-box !important; 
+}
+
 .d-none {
     display: none;
 }
