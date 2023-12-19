@@ -155,7 +155,7 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
     }, [doctors, matchedDoctorsIncludingDistance, doctorIdParam, doctorIdParamWasUsed]);
 
     return (
-        <LoadingWrapper isLoading={isListLoading} isError={isListError} error={listError as ResponseError}>
+        <LoadingWrapper isLoading={isListLoading} isError={isListError} error={listError as ResponseError} center={true}>
             <Container fluid>
                 {onlyMyList && currentDoctor === null && <BackButton onClick={() => history.back()} className="mx-0" />}
                 <Row className="d-flex mt-2 mb-0 flex-md-nowrap gap-md-3">

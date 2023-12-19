@@ -3,12 +3,13 @@ import { Container, Row, Col, Spinner } from "react-bootstrap";
 interface LoaderProps {
     size?: number;
     text?: string;
+    center?: boolean;
 }
 
-function Loader({ size = 100, text = "Loading..." }: LoaderProps) {
+function Loader({ size = 100, text = "Loading...", center = false }: LoaderProps) {
     return (
         <>
-            <Container className="d-flex align-items-center mt-3">
+            <Container className={`d-flex align-items-center mt-3 ${center ? "justify-content-center h-main" : ""}`}>
                 <Row className="gap-3">
                     <Col xs="auto">
                         <Spinner

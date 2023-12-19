@@ -1,3 +1,4 @@
+import { Container } from "react-bootstrap";
 import { ResponseError } from "../../hooks/useApiRequest";
 import Loader from "./Loader";
 import Message from "./Message";
@@ -9,6 +10,7 @@ interface LoadingWrapperProps extends React.PropsWithChildren {
     errorClassName?: string;
     loaderSize?: number;
     loaderText?: string;
+    center?: boolean
 }
 
 function LoadingWrapper({
@@ -18,12 +20,13 @@ function LoadingWrapper({
     errorClassName = "alert-padding alert-margin",
     loaderSize = 100,
     loaderText = "Loading...",
+    center = false,
     children,
 }: LoadingWrapperProps) {
     return (
         <>
             {isLoading ? (
-                <Loader size={loaderSize} text={loaderText} />
+                <Loader size={loaderSize} text={loaderText} center={center} />
             ) : isError && error ? (
                 <Message variant="danger" className={errorClassName}>
                     {error.message || ""}
