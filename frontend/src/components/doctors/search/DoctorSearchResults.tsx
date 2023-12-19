@@ -109,7 +109,7 @@ export default function DoctorSearchResuls({
             <Row className="px-0 mx-0">
                 <Container
                     id={doctorCardsContainerId}
-                    className={`d-flex flex-wrap gap-4 px-0 mx-0 ${onlyDivScroll ? "overflow-y-auto-hover py-3" : ""}`}
+                    className={`d-flex flex-wrap gap-4 px-0 mx-0 ${onlyDivScroll ? "overflow-y-auto-hover" : ""}`}
                 >
                     {currentDoctor === null ? (
                         doctorsInPage.map((doctor: Doctor) => (

@@ -1198,7 +1198,7 @@ div:has(.small-address-filter) {
 }
 
 .doctorBigCard .doctor-address * {
-    font-size: 0.875rem;
+    font-size: 1rem;
 }
 
 .doctor-address *,
@@ -1272,6 +1272,10 @@ div:has(.small-address-filter) {
     .doctorSmallCard:hover,
     .doctorBigCard {
         box-shadow: 5px 5px 12px 2px rgba(120, 120, 120, 0.25), 0px 4px 20px 3px rgba(65, 65, 65, 0.25);
+    }
+
+    .h-doctorBigCardImg {
+        height: 11.0625rem;
     }
 }
 
