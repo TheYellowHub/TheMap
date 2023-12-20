@@ -7,6 +7,7 @@ import { Doctor } from "../../types/doctors/doctor";
 import { getNewReview, reviewEditableStatuses } from "../../types/doctors/review";
 import React, { useState } from "react";
 import { ID } from "../../types/utils/id";
+import NoResults from "../doctors/search/NoResults";
 
 interface UserReviewsFormPropsWithoutAddingOption {
     userInfo: UserInfo;
@@ -49,8 +50,8 @@ function UserReviewsForm({
 
     return (
         <Container className={`${containerClassName}`}>
-            {userReviews && (
-                <Row className="m-0">
+            {0 < userReviews?.length  || allowAddingReview
+            ? (<Row className="m-0">
                     {allowAddingReview && newReview && addingReview && (
                         <Row key={newReview.id!} className="m-0 p-0 pt-4">
                             <SingleReviewForm
@@ -88,7 +89,17 @@ function UserReviewsForm({
                             </React.Fragment>
                         ))}
                 </Row>
-            )}
+            )
+            : <NoResults
+                title="My Reviews"
+                icon="fa-star" 
+                subtitle="No Reviews"
+                message="Review providers to help others reach the right care."
+                linkTitle="Find providers now"
+                linkTo="#"
+                className="m-3 w-100"
+            />
+            }
         </Container>
     );
 }

@@ -16,6 +16,7 @@ import DoctorSearchAddressFilter from "../components/doctors/search/DoctorSearch
 import { useParams } from "react-router-dom";
 import Button from "../components/utils/Button";
 import BackButton from "../components/utils/BackButton";
+import NoResults from "../components/doctors/search/NoResults";
 
 interface MapScreenProps {
     onlyMyList?: boolean;
@@ -147,7 +148,17 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
             <Container fluid>
                 {onlyMyList && currentDoctor === null && <BackButton onClick={() => history.back()} className="only-mobile mx-0" />}
                 <Row className="d-flex mt-2 mb-0 flex-md-nowrap gap-md-3">
-                    <Col className="mx-3 px-3" id={doctorsSearchColumnId}>
+                    {onlyMyList && matchedDoctorsIncludingDistance.length === 0 
+                    ? <NoResults 
+                        title="Saved providers"
+                        icon="fa-user-doctor" 
+                        subtitle="No Providers Saved"
+                        message="Save providers to your account for easy access while evaluating your care team."
+                        linkTitle="Find providers now"
+                        linkTo="#"
+                        className="m-3 w-50-desktop"
+                      />
+                    : (<Col className="mx-3 px-3" id={doctorsSearchColumnId}>
                         <Row className={`pb-2 mb-2 ${currentDoctor ? "only-desktop" : ""}`}>
                             <DoctorSearchFilters
                                 address={address}
@@ -227,7 +238,7 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
                                 />
                             )}
                         </Row>
-                    </Col>
+                    </Col>)}
 
                     <Col className="mx-0 px-0 only-desktop doctors-map-next-to-results" id={doctorsMapColumnId}>
                         {mapNode}

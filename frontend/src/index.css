@@ -112,6 +112,10 @@
 
 /* Font size */
 
+.xl-font {
+    font-size: 1.375rem;
+}
+
 .lg-font {
     font-size: 1.25rem;
 }
@@ -128,6 +132,12 @@
     font-size: 0.625rem;
 }
 
+/* Font weight */
+
+.w-700 {
+    font-weight: 700;
+}
+
 /* Icons */
 
 .fa-scalpel::before {
@@ -142,9 +152,25 @@
     font-weight: 400;
     color: var(--dark-grey);
 }
+
 .fa-filter::before {
     content: "\f0b0";
     font-family: "Font Awesome 6 Pro";
+}
+
+.fa-user-doctor::before {
+    content: "\f0f0";
+    font-family: "Font Awesome 6 Pro";
+    font-weight: 100;
+}
+
+.fa-star {
+    font-family: "Font Awesome 6 Pro";
+    font-weight: 100;
+}
+
+.huge-icon {
+    font-size: 64px !important;
 }
 
 /* General */
@@ -320,6 +346,7 @@ a.a-no-decoration-line:hover {
 .h-main {
     height: var(--main-part-height);
     max-height: var(--main-part-height);
+    box-sizing: border-box !important; 
 }
 
 .padding-header {
@@ -1269,6 +1296,10 @@ div:has(.small-address-filter) {
     
     .only-mobile * {
         display: none;
+    }
+
+    .w-50-desktop {
+        width: 50% !important;
     }
 
     .user-modal .modal-dialog {
