@@ -44,7 +44,7 @@ function Header() {
             <>
                 {link.icon && (
                     <div className="navbar-icon-border">
-                        <Icon icon={link.icon} padding={false} />
+                        <Icon icon={link.icon} padding={false} solid={false} />
                     </div>
                 )}
                 {link.title}
@@ -76,7 +76,7 @@ function Header() {
         title: "My account",
         links: [
             {
-                title: `${user?.email}`,
+                title: `${user?.email || user?.nickname}`,
                 to: undefined,
             },
             {
@@ -86,8 +86,8 @@ function Header() {
             },
             {
                 to: "/user/reviews",
-                title: `My reviews ${userReviews ? "(" + userReviews.length + ")" : ""}`,
-                icon: "fa-star-half-stroke",
+                title: `My reviews ${userReviews !== undefined ? "(" + userReviews.length + ")" : ""}`,
+                icon: "fa-star",
             },
             {
                 to: "/",

@@ -442,8 +442,8 @@ footer {
 
 .dropdown-title,
 .dropdown-item {
-    font-family: "Poppins";
-    font-weight: 500;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
     font-size: 0.875rem;
     line-height: 1.25rem;
     padding: 6px 12px;
@@ -452,7 +452,7 @@ footer {
 
 
 .dropdown-item {
-    color: var(--dark-blue) !important;
+    color: var(--dark-grey) !important;
 }
 
 .dropdown-item:hover {
