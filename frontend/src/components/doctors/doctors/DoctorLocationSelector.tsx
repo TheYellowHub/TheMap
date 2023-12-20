@@ -23,26 +23,24 @@ function DoctorLocationSelector({ doctor, selectedLocation, setSelectedLocation,
     }, [doctor]);
 
     return (
-        <Container className="p-0 m-0">
-            <Row className="w-100 m-0 gap-0 py-1 doctor-location">
-                {doctor.locations.map((location, index) => (
-                    <Button
-                        label=""
-                        className={`${location === selectedLocation ? "doctorLocationBtnSelected" : "doctorLocationBtn"}`}
-                        icon={location === selectedLocation ? "fa-hospital" : ""}
-                        key={`${location?.hospitalName || location?.address}-btn`}
-                        onClick={() => setSelectedLocation && setSelectedLocation(location)}
-                    >
-                        <div className="one-line-text">{location?.hospitalName || `Office ${index + 1}`}</div>
-                        {location.privateOnly && (
-                            <p className="doctorLocationPrivateLabel p-0 m-0">
-                                {location === selectedLocation ? "private" : "p"}
-                            </p>
-                        )}
-                    </Button>
-                ))}
-            </Row>
-        </Container>
+        <Row className="m-0 gap-0 py-1 doctor-location">
+            {doctor.locations.map((location, index) => (
+                <Button
+                    label=""
+                    className={`${location === selectedLocation ? "doctorLocationBtnSelected" : "doctorLocationBtn"}`}
+                    icon={location === selectedLocation ? "fa-hospital" : ""}
+                    key={`${location?.hospitalName || location?.address}-btn`}
+                    onClick={() => setSelectedLocation && setSelectedLocation(location)}
+                >
+                    <div className="one-line-text">{location?.hospitalName || `Office ${index + 1}`}</div>
+                    {location.privateOnly && (
+                        <p className="doctorLocationPrivateLabel p-0 m-0">
+                            {location === selectedLocation ? "private" : "p"}
+                        </p>
+                    )}
+                </Button>
+            ))}
+        </Row>
     );
 }
 

@@ -44,7 +44,7 @@ function DoctorBigCard({ doctor, locationForDistanceCalculation, distanceUnit = 
                     <DoctorImage doctor={doctor} big={true} />
                 </Col>
                 <Col className="d-grid px-2 py-1 gap-2 align-content-between">
-                    <Container className="d-grid p-0 gap-2 align-content-between h-doctorBigCardImg">
+                    <Row className="d-flex p-0 align-content-between h-doctorBigCardImg">
                         <Row className="w-100 m-0 pb-1">
                             <Col className="px-0 doctorBigCardName font-assistant lg-font">{doctor.fullName}</Col>
                             <Col className="px-0 d-flex flex-grow-0 flex-nowrap">
@@ -71,9 +71,9 @@ function DoctorBigCard({ doctor, locationForDistanceCalculation, distanceUnit = 
                                 <DoctorVerification doctor={doctor} />
                             </Col>
                         </Row>
-                        <Row className="m-0 p-0 gap-3 py-1">
+                        <Row className="m-0 gap-3 py-1">
                             {doctor.specialities.map((speciality: string) => (
-                                <Col className="p-0 flex-grow-0" key={speciality}>
+                                <Col className="p-0 m-0 flex-grow-0" key={speciality}>
                                     <DoctorSpecialityRibbon speciality={speciality} />
                                 </Col>
                             ))}
@@ -87,7 +87,7 @@ function DoctorBigCard({ doctor, locationForDistanceCalculation, distanceUnit = 
                                 distanceUnit={distanceUnit}
                             />
                         </Row>
-                    </Container>
+                    </Row>
                     <Row className="only-desktop p-0 m-0">
                         {selectedLocation && <DoctorLocationCard 
                             doctorLocation={selectedLocation} 
