@@ -1008,6 +1008,7 @@ div:has(.small-address-filter) {
     position: fixed;
     width: 100%;
     bottom: var(--footer-height);
+    right: 0;
 }
 
 .doctors-map-below-results .map {
