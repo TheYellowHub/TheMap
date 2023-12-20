@@ -16,7 +16,6 @@ import { getCurrentUrl } from "./utils/utils";
 function AppRouter() {
     const { user } = useAuth();
     const { userInfo } = useUser(user);
-    const location = useLocation();
 
     useEffect(() => {
       ReactGA.send({ hitType: "pageview", title: getCurrentUrl(false)});

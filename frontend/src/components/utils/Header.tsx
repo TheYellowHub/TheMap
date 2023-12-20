@@ -5,12 +5,16 @@ import { EventKey, SelectCallback } from "@restart/ui/esm/types";
 import useAuth from "../../auth/useAuth";
 import Icon from "./Icon";
 import { Link } from "react-router-dom";
+import useUser from "../../hooks/auth/useUsers";
+import { useUserReviews } from "../../hooks/doctors/useReviews";
 
 function Header() {
-    const { user, isAuthenticated, isAdmin, login, logout } = useAuth();
-
     const [selectedPage, setSelectedPage] = useState<EventKey>("");
     const [selectedSubMenu, setSelectedSubMenu] = useState<EventKey | null>(null);
+
+    const { user, isAuthenticated, isAdmin, login, logout, deleteAccount } = useAuth();
+    const { userInfo } = useUser(user);
+    const userReviews = userInfo && useUserReviews(userInfo).data;
 
     type Link = {
         title: string;
@@ -20,9 +24,16 @@ function Header() {
         icon?: string;
     };
 
+    type Title = {
+        title: string;
+        to: undefined;
+    };
+
+    type Separator = "Separator";
+
     type LinksGroup = {
         title: string;
-        links: Link[];
+        links: (Link | Title | Separator)[];
         icon?: string;
     };
 
@@ -33,7 +44,7 @@ function Header() {
             <>
                 {link.icon && (
                     <div className="navbar-icon-border">
-                        <Icon icon={link.icon} />
+                        <Icon icon={link.icon} padding={false} />
                     </div>
                 )}
                 {link.title}
@@ -64,20 +75,18 @@ function Header() {
     const userMenu = {
         title: "My account",
         links: [
-            // TODO
-            // {
-            //     to: "/user/profile",
-            //     title: (user?.nickname && capitalizeFirstLetter(user.nickname)) || "My account",
-            //     icon: "fa-user",
-            // },
+            {
+                title: `${user?.email}`,
+                to: undefined,
+            },
             {
                 to: "/user/saved",
-                title: "Saved",
+                title: `Saved Providers ${userInfo?.savedDoctors ? "(" + userInfo.savedDoctors?.length + ")" : ""}`,
                 icon: "fa-bookmark",
             },
             {
                 to: "/user/reviews",
-                title: "My reviews",
+                title: `My reviews ${userReviews ? "(" + userReviews.length + ")" : ""}`,
                 icon: "fa-star-half-stroke",
             },
             {
@@ -86,14 +95,12 @@ function Header() {
                 title: "Log out",
                 icon: "fa-power-off",
             },
-            // {
-            //     to: "/user/notifications",
-            //     title: "Notifications",
-            // },
-            // {
-            //     to: "/user/addeddoctors",
-            //     title: "Doctors I added",
-            // },
+            "Separator" as Separator,
+            {
+                to: "/",
+                onClick: deleteAccount,
+                title: "Delete account",
+            },
         ],
     };
 
@@ -116,11 +123,6 @@ function Header() {
                 to: "/admin/reviews",
                 title: "Reviews",
             },
-            // TODO
-            // {
-            //     to: "/usage",
-            //     title: "Usage statictics",
-            // },
         ],
     };
 
@@ -167,8 +169,12 @@ function Header() {
                                         </>
                                     }
                                 >
-                                    {dropdown.links.map((link) => (
-                                        <NavDropdown.Item
+                                    {dropdown.links.map((link, index) => 
+                                        link === "Separator" 
+                                        ? <div  key={`Separator-${index}`} className="d-flex justify-content-center"><img src="images/line.png" width="90%"/></div>
+                                        : link.to === undefined
+                                        ? <div className="dropdown-title med-grey">{link.title}</div>
+                                        : (<NavDropdown.Item
                                             className="d-flex"
                                             key={link.to}
                                             as={Link}

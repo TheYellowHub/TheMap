@@ -440,14 +440,19 @@ footer {
     box-shadow: 4px 8px 12px 6px rgba(120, 120, 120, 0.15);
 }
 
+.dropdown-title,
 .dropdown-item {
-    color: var(--dark-blue) !important;
     font-family: "Poppins";
     font-weight: 500;
     font-size: 0.875rem;
     line-height: 1.25rem;
     padding: 6px 12px;
     align-items: center;
+}
+
+
+.dropdown-item {
+    color: var(--dark-blue) !important;
 }
 
 .dropdown-item:hover {
@@ -479,7 +484,7 @@ footer {
 .navbar-icon-border {
     color: inherit;
     display: flex;
-    width: 1.5rem;
+    width: 1.0rem;
     height: 1.5rem;
     padding: 0.125rem 0.5rem;
     padding-left: 0;

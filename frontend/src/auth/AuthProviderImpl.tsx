@@ -33,6 +33,8 @@ export default function AuthProvider({ children }: React.PropsWithChildren) {
         });
     }, [auth0logout]);
 
+    const deleteAccount = async () => {}; // TODO
+
     const checkIfAdmin = useCallback(async () => {
         const accessToken = await getAccessToken();
         const decodedToken: { permissions: string[] } = jwt(accessToken);
@@ -58,6 +60,7 @@ export default function AuthProvider({ children }: React.PropsWithChildren) {
         // Auth methods
         login,
         logout,
+        deleteAccount,
         getAccessToken,
     } as AuthState;
 
