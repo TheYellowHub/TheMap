@@ -145,7 +145,7 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
     return (
         <LoadingWrapper isLoading={isListLoading} isError={isListError} error={listError as ResponseError} center={true}>
             <Container fluid>
-                {onlyMyList && currentDoctor === null && <BackButton onClick={() => history.back()} className="mx-0" />}
+                {onlyMyList && currentDoctor === null && <BackButton onClick={() => history.back()} className="only-mobile mx-0" />}
                 <Row className="d-flex mt-2 mb-0 flex-md-nowrap gap-md-3">
                     <Col className="mx-3 px-3" id={doctorsSearchColumnId}>
                         <Row className={`pb-2 mb-2 ${currentDoctor ? "only-desktop" : ""}`}>

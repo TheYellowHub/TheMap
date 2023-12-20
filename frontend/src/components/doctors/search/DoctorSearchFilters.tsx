@@ -133,6 +133,8 @@ export default function DoctorSearchFilters({
         return newMatchedDoctorsIncludingDistance;
     };
 
+    useEffect(() => setShowFilters(!onlyMyList), [onlyMyList]);
+
     useEffect(() => {
         refilterDoctors(distance);
     }, [doctors, nameFilter, categoriesFilter, specialitiesFilter, listFilter, sortKey, userInfo, onlyMyList]);
