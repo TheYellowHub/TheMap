@@ -192,7 +192,7 @@
 }
 
 .w-max-content,
-.w-max-contemt div {
+.w-max-content div {
     width: max-content !important;
 }
 
@@ -301,7 +301,7 @@ a.a-no-decoration-line:hover {
     background-color: inherit;
 }
 
-.w-max-contemt {
+.w-max-content {
     width: max-content;
 }
 
