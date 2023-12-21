@@ -14,7 +14,7 @@ function Header() {
 
     const { user, isAuthenticated, isAdmin, login, logout, deleteAccount } = useAuth();
     const { userInfo } = useUser(user);
-    const userReviews = userInfo && useUserReviews(userInfo).data;
+    // const userReviews = userInfo && useUserReviews(userInfo).data;
 
     type Link = {
         title: string;
@@ -79,16 +79,16 @@ function Header() {
                 title: `${user?.email || user?.nickname}`,
                 to: undefined,
             },
-            {
-                to: "/user/saved",
-                title: `Saved Providers ${userInfo?.savedDoctors ? "(" + userInfo.savedDoctors?.length + ")" : ""}`,
-                icon: "fa-bookmark",
-            },
-            {
-                to: "/user/reviews",
-                title: `My reviews ${userReviews !== undefined ? "(" + userReviews.length + ")" : ""}`,
-                icon: "fa-star",
-            },
+            // {
+            //     to: "/user/saved",
+            //     title: `Saved Providers ${userInfo?.savedDoctors ? "(" + userInfo.savedDoctors?.length + ")" : ""}`,
+            //     icon: "fa-bookmark",
+            // },
+            // {
+            //     to: "/user/reviews",
+            //     title: `My reviews ${userReviews !== undefined ? "(" + userReviews.length + ")" : ""}`,
+            //     icon: "fa-star",
+            // },
             {
                 to: "/",
                 onClick: logout,

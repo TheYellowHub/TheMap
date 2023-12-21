@@ -22,14 +22,14 @@ import DoctorLocationCard from "./DoctorLocationCard";
 
 interface DoctorBigCardProps {
     doctor: Doctor;
+    currentDoctorLocation: DoctorLocation | null;
+    setCurrentDoctorLocation: (currentDoctorLocation: DoctorLocation | null) => void;
     locationForDistanceCalculation?: Location;
     distanceUnit?: DistanceUnit;
     onClose?: () => void;
 }
 
-function DoctorBigCard({ doctor, locationForDistanceCalculation, distanceUnit = "mi", onClose }: DoctorBigCardProps) {
-    const [selectedLocation, setSelectedLocation] = useState<DoctorLocation>();
-
+function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation, locationForDistanceCalculation, distanceUnit = "mi", onClose }: DoctorBigCardProps) {
     const allReviews = getDoctorReviews(doctor);
     const { user, login } = useAuth();
     const { userInfo } = useUser(user);
@@ -81,16 +81,16 @@ function DoctorBigCard({ doctor, locationForDistanceCalculation, distanceUnit = 
                         <Row className="only-desktop p-0 m-0">
                             <DoctorLocationSelector
                                 doctor={doctor}
-                                selectedLocation={selectedLocation}
-                                setSelectedLocation={setSelectedLocation}
+                                currentDoctorLocation={currentDoctorLocation}
+                                setCurrentDoctorLocation={setCurrentDoctorLocation}
                                 locationForDistanceCalculation={locationForDistanceCalculation}
                                 distanceUnit={distanceUnit}
                             />
                         </Row>
                     </Row>
                     <Row className="only-desktop p-0 m-0">
-                        {selectedLocation && <DoctorLocationCard 
-                            doctorLocation={selectedLocation} 
+                        {currentDoctorLocation && <DoctorLocationCard 
+                            doctorLocation={currentDoctorLocation} 
                             locationForDistanceCalculation={locationForDistanceCalculation}
                             distanceUnit={distanceUnit}
                         />}
@@ -101,13 +101,13 @@ function DoctorBigCard({ doctor, locationForDistanceCalculation, distanceUnit = 
             <Row className="only-mobile m-0 p-0 pt-3">
                 <DoctorLocationSelector
                     doctor={doctor}
-                    selectedLocation={selectedLocation}
-                    setSelectedLocation={setSelectedLocation}
+                    currentDoctorLocation={currentDoctorLocation}
+                    setCurrentDoctorLocation={setCurrentDoctorLocation}
                     locationForDistanceCalculation={locationForDistanceCalculation}
                     distanceUnit={distanceUnit}
                 />
-                {selectedLocation && <DoctorLocationCard 
-                    doctorLocation={selectedLocation} 
+                {currentDoctorLocation && <DoctorLocationCard 
+                    doctorLocation={currentDoctorLocation} 
                     locationForDistanceCalculation={locationForDistanceCalculation}
                     distanceUnit={distanceUnit}
                 />}

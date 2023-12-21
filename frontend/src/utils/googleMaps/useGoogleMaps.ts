@@ -7,6 +7,10 @@ export type Location = {
     country?: string;
 };
 
+export const locationToStr = (location: Location) => `location-${Number(location.lat).toFixed(7)}/${Number(location.lng).toFixed(7)}`;
+
+export const sameLocation = (a: Location, b: Location) => locationToStr(a) === locationToStr(b)
+
 const locationPerAddressCache = new Map<string, Location>();
 
 const addressPerlocationCache = new Map<Location, string>();

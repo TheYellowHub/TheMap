@@ -1,25 +1,25 @@
-import { useEffect, useState } from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import { useEffect } from "react";
+import { Row } from "react-bootstrap";
 
-import { Doctor, DoctorLocation, getDoctorNearestLocation } from "../../../types/doctors/doctor";
+import { Doctor, DoctorLocation, getDoctorNearestLocation, sameLocation } from "../../../types/doctors/doctor";
 import { Location } from "../../../utils/googleMaps/useGoogleMaps";
 import { DistanceUnit } from "../../utils/DistanceUnit";
-import DoctorLocationAddress from "./DoctorLocationAddress";
 import Button from "../../utils/Button";
 
 interface DoctorLocationSelectorProps {
     doctor: Doctor;
-    selectedLocation: DoctorLocation | undefined;
-    setSelectedLocation: (doctorLocation: DoctorLocation) => void;
+    currentDoctorLocation: DoctorLocation | null;
+    setCurrentDoctorLocation: (currentDoctorLocation: DoctorLocation | null) => void;
     locationForDistanceCalculation?: Location;
     distanceUnit?: DistanceUnit;
 }
 
-function DoctorLocationSelector({ doctor, selectedLocation, setSelectedLocation, locationForDistanceCalculation, distanceUnit = "mi" }: DoctorLocationSelectorProps) {
+function DoctorLocationSelector({ doctor, currentDoctorLocation, setCurrentDoctorLocation, locationForDistanceCalculation, distanceUnit = "mi" }: DoctorLocationSelectorProps) {
     useEffect(() => {
-        const closestLocation =
-            locationForDistanceCalculation && getDoctorNearestLocation(doctor, locationForDistanceCalculation);
-        setSelectedLocation(closestLocation || doctor.locations[0]);
+        if (currentDoctorLocation === null) {
+            const closestLocation = locationForDistanceCalculation && getDoctorNearestLocation(doctor, locationForDistanceCalculation);
+            setCurrentDoctorLocation(closestLocation || doctor.locations[0]);
+        }
     }, [doctor]);
 
     return (
@@ -27,15 +27,15 @@ function DoctorLocationSelector({ doctor, selectedLocation, setSelectedLocation,
             {doctor.locations.map((location, index) => (
                 <Button
                     label=""
-                    className={`${location === selectedLocation ? "doctorLocationBtnSelected" : "doctorLocationBtn"}`}
-                    icon={location === selectedLocation ? "fa-hospital" : ""}
+                    className={`${currentDoctorLocation && sameLocation(location, currentDoctorLocation) ? "doctorLocationBtnSelected" : "doctorLocationBtn"}`}
+                    icon={location === currentDoctorLocation ? "fa-hospital" : ""}
                     key={`${location?.hospitalName || location?.address}-btn`}
-                    onClick={() => setSelectedLocation && setSelectedLocation(location)}
+                    onClick={() => setCurrentDoctorLocation(location)}
                 >
                     <div className="one-line-text">{location?.hospitalName || `Office ${index + 1}`}</div>
                     {location.privateOnly && (
                         <p className="doctorLocationPrivateLabel p-0 m-0">
-                            {location === selectedLocation ? "private" : "p"}
+                            {currentDoctorLocation && sameLocation(location, currentDoctorLocation) ? "private" : "p"}
                         </p>
                     )}
                 </Button>

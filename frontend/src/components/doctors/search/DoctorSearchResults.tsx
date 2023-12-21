@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 
-import { Doctor } from "../../../types/doctors/doctor";
+import { Doctor, DoctorLocation } from "../../../types/doctors/doctor";
 import DoctorSmallCard, { doctorSmallCardClassName } from "../doctors/DoctorSmallCard";
 import Pagination from "../../utils/Pagination";
 import { DistanceUnit } from "../../utils/DistanceUnit";
@@ -14,6 +14,8 @@ interface DoctorSearchResultsProps {
     doctors: Doctor[];
     currentDoctor: Doctor | null;
     setCurrentDoctor: (currentDoctor: Doctor | null) => void;
+    currentDoctorLocation: DoctorLocation | null;
+    setCurrentDoctorLocation: (currentDoctorLocation: DoctorLocation | null) => void;
     locationForDistanceCalculation: Location | undefined;
     distanceUnit: DistanceUnit;
     isMapBelowRsults: () => boolean;
@@ -24,6 +26,8 @@ export default function DoctorSearchResuls({
     doctors,
     currentDoctor,
     setCurrentDoctor,
+    currentDoctorLocation,
+    setCurrentDoctorLocation,
     locationForDistanceCalculation,
     distanceUnit,
     isMapBelowRsults,
@@ -127,6 +131,8 @@ export default function DoctorSearchResuls({
                     ) : (
                         <DoctorBigCard
                             doctor={currentDoctor}
+                            currentDoctorLocation={currentDoctorLocation}
+                            setCurrentDoctorLocation={setCurrentDoctorLocation}
                             locationForDistanceCalculation={locationForDistanceCalculation}
                             distanceUnit={distanceUnit}
                             onClose={() => {

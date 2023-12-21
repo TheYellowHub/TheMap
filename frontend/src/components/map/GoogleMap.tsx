@@ -2,6 +2,7 @@ import { GoogleMap as GoogleMapBase, MarkerF, InfoWindowF } from "@react-google-
 
 import { Location } from "../../utils/googleMaps/useGoogleMaps";
 import { Fragment, useEffect, useRef, useState } from "react";
+import { locationToStr } from "../../types/doctors/doctor";
 
 export interface Marker {
     title: string;
@@ -13,6 +14,7 @@ export interface Marker {
 
 interface GoogleMapProps {
     center: Location | undefined;
+    currentLocation: Location | undefined;
     markers?: Marker[];
     getGroupIcon?: (selected: boolean) => string;
     resetClicks?: () => void;
@@ -20,14 +22,12 @@ interface GoogleMapProps {
 
 const emptyMarkersArray: Marker[] = [];
 
-function GoogleMap({ center, markers = emptyMarkersArray as Marker[], getGroupIcon, resetClicks }: GoogleMapProps) {
+function GoogleMap({ center, currentLocation, markers = emptyMarkersArray as Marker[], getGroupIcon, resetClicks }: GoogleMapProps) {
     const minimalZoom = 13;
     const mapRef = useRef<google.maps.Map | null>(null);
     const [markersMap, setMarkersMap] = useState(new Map<string, Marker[]>());
     const [currentLocationStr, setCurrentLocationStr] = useState<string | null>();
     const [fitBoundsDone, setFitBoundsDone] = useState(false);
-
-    const locationToStr = (location: Location) => `location-${location.lat}/${location.lng}`;
 
     const handleMapLoad = (map: google.maps.Map) => {
         mapRef.current = map;
@@ -88,6 +88,13 @@ function GoogleMap({ center, markers = emptyMarkersArray as Marker[], getGroupIc
     useEffect(() => {
         setFitBoundsDone(false);
     }, [center]);
+
+    useEffect(() => {
+        if (currentLocation) {
+            setCurrentLocationStr(locationToStr(currentLocation));
+            mapMarkers();
+        }
+    }, [currentLocation]);
 
     useEffect(() => {
         if (!fitBoundsDone) {
