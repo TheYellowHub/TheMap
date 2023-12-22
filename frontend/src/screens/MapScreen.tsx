@@ -142,6 +142,12 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
         }
     }, [doctors, matchedDoctorsIncludingDistance, doctorIdParam, doctorIdParamWasUsed]);
 
+    useEffect(() => {
+        if (0 < matchedDoctorsIncludingDistance.length && !mapIsOpen) {
+            setMapIsOpen(true);
+        }
+    }, [matchedDoctorsIncludingDistance]);
+
     return (
         <LoadingWrapper isLoading={isListLoading} isError={isListError} error={listError as ResponseError} center={true}>
             <Container fluid>
