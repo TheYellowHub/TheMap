@@ -63,12 +63,12 @@ export default function ReportIssueModal({ doctor, show, onHide }: ReportIssueMo
                     <Row>
                         <Col className="d-flex justify-content-center my-3">
                             <Form.Control
-                                type="textarea"
+                                as={"textarea"}
                                 value={issueDescription}
                                 onChange={(e) => setIssueDescription(e.target.value)}
                                 required={true}
                                 autoComplete="off"
-                                // placeholder={placeHolder}
+                                placeholder={`Address change? Provider retired? Should this provider be removed?\nLet us know in detail`}
                                 className="blue-border round-border textarea"
                             />
                         </Col>
