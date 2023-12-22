@@ -5,6 +5,6 @@
         "forceAddressInput": false,
         "minimumDoctorsInResults": 4,
         "distanceDefault": 100,
-        "distanceJumps": 10
+        "distanceJumps": 50
     }
 }
