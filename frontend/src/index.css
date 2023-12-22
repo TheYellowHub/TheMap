@@ -189,11 +189,6 @@
     scroll-behavior: auto !important;
 }
 
-.overflow-y-auto-hover {
-    overflow-y: auto;
-    visibility: hidden;
-}
-
 .overflow-y-auto-hover *,
 .overflow-y-auto-hover:hover {
     visibility: visible;
@@ -369,6 +364,27 @@ a.a-no-decoration-line:hover {
 .one-line-text:hover {
     overflow: visible;
     display: inline-block;
+}
+
+/* Scrollbar */
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: white;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--light-grey);
+    border-radius: 50px;
+    height: 50%;
+}
+
+.overflow-y-auto-hover {
+    overflow-y: auto;
+    visibility: hidden;
 }
 
 /* Header & footer */
