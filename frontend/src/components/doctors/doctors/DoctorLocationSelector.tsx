@@ -10,9 +10,10 @@ interface DoctorLocationSelectorProps {
     currentDoctorLocation: DoctorLocation | null;
     setCurrentDoctorLocation: (currentDoctorLocation: DoctorLocation | null) => void;
     locationForDistanceCalculation?: Location;
+    className?: string;
 }
 
-function DoctorLocationSelector({ doctor, currentDoctorLocation, setCurrentDoctorLocation, locationForDistanceCalculation }: DoctorLocationSelectorProps) {
+function DoctorLocationSelector({ doctor, currentDoctorLocation, setCurrentDoctorLocation, locationForDistanceCalculation, className }: DoctorLocationSelectorProps) {
     useEffect(() => {
         if (currentDoctorLocation === null) {
             const closestLocation = locationForDistanceCalculation && getDoctorNearestLocation(doctor, locationForDistanceCalculation);
@@ -21,7 +22,7 @@ function DoctorLocationSelector({ doctor, currentDoctorLocation, setCurrentDocto
     }, [doctor]);
 
     return (
-        <Row className="m-0 gap-0 py-1 doctor-location">
+        <Row className={`m-0 gap-0 py-1 doctor-location ${className}`}>
             {doctor.locations.map((location, index) => (
                 <Button
                     label=""

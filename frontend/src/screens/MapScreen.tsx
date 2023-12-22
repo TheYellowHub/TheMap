@@ -118,7 +118,6 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
                     setCurrentDoctorLocation(currentDoctor.locations[0]);
                 }
             }
-            // document.getElementById(doctorsSearchResultsId)?.scrollIntoView();
         }
         window.history.replaceState(null, "", `#/${currentDoctor?.id || ""}`);
     }, [currentDoctor]);

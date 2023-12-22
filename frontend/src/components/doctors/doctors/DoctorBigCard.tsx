@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Col, Container, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
 
 import { Doctor, DoctorLocation, getDoctorReviews } from "../../../types/doctors/doctor";
@@ -35,6 +35,11 @@ function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation
     const { userInfo } = useUser(user);
     const { data: userReviews } = (userInfo && useUserReviews(userInfo, doctor)) || { data: [] };
     const [addingReview, setAddingReview] = useState(false);
+    const addingReviewContainerId = "adding-review-container";
+
+    useEffect(() => {
+        document.getElementById(addingReviewContainerId)?.scrollIntoView()
+    }, [addingReview]);
 
     return (
         <Container className={`doctorBigCard`}>
@@ -103,6 +108,7 @@ function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation
                     currentDoctorLocation={currentDoctorLocation}
                     setCurrentDoctorLocation={setCurrentDoctorLocation}
                     locationForDistanceCalculation={locationForDistanceCalculation}
+                    className="px-0"
                 />
                 {currentDoctorLocation && <DoctorLocationCard 
                     doctorLocation={currentDoctorLocation} 
@@ -135,7 +141,7 @@ function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation
                     </Row>
 
                     {userInfo && (
-                        <Row className="mx-0 px-0">
+                        <Row className="mx-0 px-0" id={addingReviewContainerId}>
                             <UserReviewsForm
                                 userInfo={userInfo}
                                 doctor={doctor}
