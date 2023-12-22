@@ -214,7 +214,7 @@ export default function DoctorSearchFilters({
                 {showFilters && (<Row className="d-flex gap-3 justify-content-between flex-lg-nowrap">
                     <Col xs={6} lg={3} className="px-0">
                         <Select
-                            values={categories.map((category: DoctorCategory) => category.name)}
+                            values={categories.filter((category) => 0 < doctors.filter((doctor) => doctor.category === category.name).length).map((category: DoctorCategory) => category.name)}
                             currentValue={categoriesFilter}
                             allowEmptySelection={true}
                             placeHolder="All Categories"
@@ -228,7 +228,7 @@ export default function DoctorSearchFilters({
                     </Col>
                     <Col xs={5} lg={3} className="px-0">
                         <Select
-                            values={specialities.map((speciality: DoctorSpeciality) => speciality.name)}
+                            values={specialities.filter((speciality) => 0 < doctors.filter((doctor) => doctor.specialities.includes(speciality.name)).length).map((speciality: DoctorSpeciality) => speciality.name)}
                             currentValue={specialitiesFilter}
                             allowEmptySelection={true}
                             placeHolder="All specialities"
