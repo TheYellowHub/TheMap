@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from "react";
+import { Fragment } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 
 import Icon from "./Icon";

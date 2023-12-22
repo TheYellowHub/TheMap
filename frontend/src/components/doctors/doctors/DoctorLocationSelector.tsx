@@ -3,7 +3,6 @@ import { Row } from "react-bootstrap";
 
 import { Doctor, DoctorLocation, getDoctorNearestLocation, sameLocation } from "../../../types/doctors/doctor";
 import { Location } from "../../../utils/googleMaps/useGoogleMaps";
-import { DistanceUnit } from "../../utils/DistanceUnit";
 import Button from "../../utils/Button";
 
 interface DoctorLocationSelectorProps {
@@ -11,10 +10,9 @@ interface DoctorLocationSelectorProps {
     currentDoctorLocation: DoctorLocation | null;
     setCurrentDoctorLocation: (currentDoctorLocation: DoctorLocation | null) => void;
     locationForDistanceCalculation?: Location;
-    distanceUnit?: DistanceUnit;
 }
 
-function DoctorLocationSelector({ doctor, currentDoctorLocation, setCurrentDoctorLocation, locationForDistanceCalculation, distanceUnit = "mi" }: DoctorLocationSelectorProps) {
+function DoctorLocationSelector({ doctor, currentDoctorLocation, setCurrentDoctorLocation, locationForDistanceCalculation }: DoctorLocationSelectorProps) {
     useEffect(() => {
         if (currentDoctorLocation === null) {
             const closestLocation = locationForDistanceCalculation && getDoctorNearestLocation(doctor, locationForDistanceCalculation);

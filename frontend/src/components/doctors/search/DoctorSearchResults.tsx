@@ -7,8 +7,6 @@ import Pagination from "../../utils/Pagination";
 import { DistanceUnit } from "../../utils/DistanceUnit";
 import { Location } from "../../../utils/googleMaps/useGoogleMaps";
 import DoctorBigCard from "../doctors/DoctorBigCard";
-import { getProperty } from "../../../utils/css";
-import { footerHeightCssVariable } from "../../utils/Footer";
 
 interface DoctorSearchResultsProps {
     doctors: Doctor[];
@@ -97,7 +95,7 @@ export default function DoctorSearchResuls({
             (onlyDivScroll ? document.getElementById(doctorCardsContainerId)! : window).scrollTo(0, pageYOffset);
             setPageYOffset(undefined);
         }
-    })
+    });
 
     useEffect(() => {
         window.addEventListener("resize", handleResize, false);

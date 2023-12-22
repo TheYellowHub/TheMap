@@ -84,7 +84,6 @@ function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation
                                 currentDoctorLocation={currentDoctorLocation}
                                 setCurrentDoctorLocation={setCurrentDoctorLocation}
                                 locationForDistanceCalculation={locationForDistanceCalculation}
-                                distanceUnit={distanceUnit}
                             />
                         </Row>
                     </Row>
@@ -104,7 +103,6 @@ function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation
                     currentDoctorLocation={currentDoctorLocation}
                     setCurrentDoctorLocation={setCurrentDoctorLocation}
                     locationForDistanceCalculation={locationForDistanceCalculation}
-                    distanceUnit={distanceUnit}
                 />
                 {currentDoctorLocation && <DoctorLocationCard 
                     doctorLocation={currentDoctorLocation} 

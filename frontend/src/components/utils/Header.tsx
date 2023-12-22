@@ -81,7 +81,7 @@ function Header() {
             },
             {
                 to: "/user/saved",
-                title: `Saved Providers ${userInfo?.savedDoctors ? "(" + userInfo.savedDoctors?.length + ")" : ""}`,
+                title: `Saved Providers (${userInfo?.savedDoctors?.length || "0"})`,
                 icon: "fa-bookmark",
             },
             {
@@ -176,7 +176,7 @@ function Header() {
                                         ? <div className="dropdown-title med-grey">{link.title}</div>
                                         : (<NavDropdown.Item
                                             className="d-flex"
-                                            key={link.to}
+                                            key={link.title}
                                             as={Link}
                                             to={link.to}
                                             target={isExternalLink(link) ? "_blank" : "_self"}
@@ -194,7 +194,7 @@ function Header() {
                         } else {
                             return (
                                 <Nav.Link
-                                    key={link.to}
+                                    key={link.title}
                                     as={Link}
                                     to={link.to}
                                     target={isExternalLink(link) ? "_blank" : "_self"}

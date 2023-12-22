@@ -78,7 +78,6 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
 
     useEffect(() => {
         if (shouldClearFilters) {
-            setShouldClearFilters(false);
             if (currentDoctor !== null) {
                 setCurrentDoctor(null);
             }
@@ -148,8 +147,7 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
             <Container fluid>
                 {onlyMyList && currentDoctor === null && <BackButton onClick={() => history.back()} className="only-mobile mx-0" />}
                 <Row className="d-flex mt-2 mb-0 flex-md-nowrap gap-md-3">
-                    {onlyMyList && matchedDoctorsIncludingDistance.length === 0 
-                    ? <NoResults 
+                    {onlyMyList && matchedDoctorsIncludingDistance.length === 0 && <NoResults 
                         title="Saved providers"
                         icon="fa-user-doctor" 
                         subtitle="No Providers Saved"
@@ -157,8 +155,9 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
                         linkTitle="Find providers now"
                         linkTo="#"
                         className="m-3 w-50-desktop"
-                      />
-                    : (<Col className="mx-3 px-3" id={doctorsSearchColumnId}>
+                    />}
+                    
+                    <Col className={`mx-3 px-3 ${onlyMyList && matchedDoctorsIncludingDistance.length === 0 ? "d-none" : ""}`} id={doctorsSearchColumnId}>
                         <Row className={`pb-2 mb-2 ${currentDoctor ? "only-desktop" : ""}`}>
                             <DoctorSearchFilters
                                 address={address}
@@ -240,7 +239,7 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
                                 />
                             )}
                         </Row>
-                    </Col>)}
+                    </Col>
 
                     <Col className="mx-0 px-0 only-desktop doctors-map-next-to-results" id={doctorsMapColumnId}>
                         {mapNode}

@@ -47,7 +47,7 @@ export default function DoctorSearchFilters({
     setDistance,
     distanceUnit,
     doctors,
-    onlyMyList, // TODO
+    onlyMyList,
     setMatchedDoctorsIgnoringDistance,
     setMatchedDoctorsIncludingDistance,
     shouldClearFilters,
@@ -106,6 +106,7 @@ export default function DoctorSearchFilters({
     ]);
 
     const refilterDoctors = (filterDistance: number | undefined) => {
+        
         const newMatchedDoctorsIgnoringDistance: Doctor[] = doctors.filter((doctor: Doctor) => 
                 doctor.status === "APPROVED" &&
                 (categoriesFilter.length === 0 || categoriesFilter.some((category) => category === doctor.category)) &&
@@ -114,6 +115,7 @@ export default function DoctorSearchFilters({
                 (!onlyMyList || userInfo?.savedDoctors?.includes(doctor.id!) === true) && 
                 (doctor.fullName.toLowerCase().includes(nameFilter.toLowerCase()))
         );
+
         setMatchedDoctorsIgnoringDistance(newMatchedDoctorsIgnoringDistance);
 
         const newMatchedDoctorsIncludingDistance: Doctor[] = newMatchedDoctorsIgnoringDistance
@@ -129,11 +131,16 @@ export default function DoctorSearchFilters({
                 );
             })
             .sort(sortOptions.get(sortKey));
+
         setMatchedDoctorsIncludingDistance(newMatchedDoctorsIncludingDistance);
         return newMatchedDoctorsIncludingDistance;
     };
 
-    useEffect(() => setShowFilters(!onlyMyList), [onlyMyList]);
+    useEffect(() => {
+        setShowFilters(!onlyMyList);
+        setShouldClearFilters(true);
+        setShouldClearAddress(true);
+    }, [onlyMyList]);
 
     useEffect(() => {
         refilterDoctors(distance);
@@ -163,7 +170,7 @@ export default function DoctorSearchFilters({
     useEffect(() => {
         if (shouldClearFilters) {
             formRef?.current?.reset();
-            setNameFilter("")
+            setNameFilter("");
             setCategoriesFilter([]);
             setSpecialitiesFilter([]);
             setListFilter([]);
@@ -172,7 +179,7 @@ export default function DoctorSearchFilters({
     }, [shouldClearFilters]);
 
     return (
-        <Form ref={formRef} className={`px-0 mx-0 ${className}`}>
+        <Form ref={formRef} key={`filter-${onlyMyList ? "onlyMyList" : "all"}`} className={`px-0 mx-0 ${className}`}>
             <Container className={`d-grid gap-3`} fluid>
                 {!onlyMyList && <Row className="d-flex">
                     <Col className="small-address-filter">

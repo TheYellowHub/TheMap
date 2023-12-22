@@ -1,6 +1,6 @@
 import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import useDetectScroll from '@smakss/react-scroll-direction'; 
+import useDetectScroll from "@smakss/react-scroll-direction"; 
 
 import Icon from "./Icon";
 import { useEffect, useState } from "react";
@@ -26,12 +26,12 @@ function Footer() {
     const saveOriginalFooterHeight = () => {
         setFooterHeightDesktop(getProperty(footerHeightDesktopCssVariable));
         setFooterHeightMobile(getProperty(footerHeightMobileCssVariable));
-    }
+    };
 
     const checkIfMobile = () => {
         const isMobileNow = window.innerWidth <= Number(getProperty(mobileBreakingpointCssVariable));
         setIsMobile(isMobileNow);
-    }
+    };
 
     const mapResizeObserver = new ResizeObserver((entries) => setIsMapOpen(entries[0].contentRect.height !== 0));
 
@@ -86,7 +86,7 @@ function Footer() {
         <a href="mailto:hana.benami@gmail.com" target="_blank" rel="noreferrer">
             Hana Oliver
         </a>
-    </div>)
+    </div>);
 
     return (
         <Container fluid>

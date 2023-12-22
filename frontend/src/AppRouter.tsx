@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { useEffect } from "react";
 import ReactGA from "react-ga4";
 
@@ -23,7 +23,7 @@ function AppRouter() {
 
     return (
         <Routes>
-            <Route path="/:id?" element={<MapScreen onlyMyList={false} />} />
+            <Route path="/:id?" element={<MapScreen />} />
             <Route path="/admin/doctors" element={<DoctorsScreen />} />
             <Route path="/admin/categories" element={<DoctorCategoriesScreen />} />
             <Route path="/admin/specialities" element={<DoctorSpecialitiesScreen />} />

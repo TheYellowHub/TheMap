@@ -1,7 +1,5 @@
 import { Col, Container, Row } from "react-bootstrap";
 
-import config from "../../../config.json";
-import useAuth from "../../../auth/useAuth";
 import Icon from "../../utils/Icon";
 
 interface NoResultsProps {
@@ -25,8 +23,6 @@ export default function NoResults({
     onClick,
     className
 }: NoResultsProps) {
-    const { user } = useAuth();
-
     return (
         <Container className={`${className} mt-3 h-main`}>
             {title && <Row className="xl-font w-700">{title}</Row>}
