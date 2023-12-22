@@ -160,7 +160,7 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
                 }}
                 object={review}
                 onChange={setReview}
-                className="d-inline-block w-fit-content" // select-min-height ?
+                className="d-inline-block" // select-min-height ?
                 allowEmptySelection={review.futureOperation}
             />
             <SingleSelectFormField<DoctorReview>
@@ -185,7 +185,7 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
                 }}
                 object={review}
                 onChange={setReview}
-                className="d-inline-block w-fit-content" // select-min-height ?
+                className="d-inline-block" // select-min-height ?
                 allowEmptySelection={review.futureOperation}
             />
         </>
@@ -269,7 +269,7 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
                             className="h-2"
                         />
                     </Col>
-                    <Col className="px-0 py-1 m-0 d-flex gap-2 h-2">{review.pastOperation && dateFields}</Col>
+                    <Col className="px-0 py-1 m-0 d-flex flex-start gap-2 h-2">{review.pastOperation && dateFields}</Col>
                 </Form.Group>
                 {!review.pastOperation && (
                     <Form.Group as={Row} className="p-0 m-0 pb-2 d-flex flex-row align-items-center">
