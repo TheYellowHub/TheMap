@@ -84,6 +84,8 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
         { value: ANONYMOUS, label: "Anonymous" },
     ]);
 
+    const hisOrHer = review.doctor.gender === "F" ? "Her" : "His";
+
     useEffect(() => {    
         const currentUsernameOptions = usernameFieldOptions.filter((option) => option.value === CURRENT_USERNAME);
         if (userInfo?.username) { 
@@ -244,7 +246,7 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
                         field={reviewFieldsMap.get("description") as TextField<DoctorReview>}
                         object={review}
                         onChange={setReview}
-                        placeHolder="Her knowledge of endometriosis...&#13;Her listening...&#13;Her explanation before procedures...&#13;Outcomes are...&#13;"
+                        placeHolder={`${hisOrHer} knowledge of endometriosis...\n${hisOrHer} listening...\n${hisOrHer} explanation before procedures...\nOutcomes are...\n`}
                         className="textarea"
                     />
                 </Form.Group>

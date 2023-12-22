@@ -798,6 +798,12 @@ input[type="checkbox"] {
 .switch-off input[type="checkbox"] + label:before {
     font-family: "Font Awesome 6 Pro";
     font-weight: 400;
+    cursor: pointer;
+}
+
+.switch-on input[type="checkbox"]:disabled + label:before,
+.switch-off input[type="checkbox"]:disabled + label:before {
+    cursor: inherit;
 }
 
 .switch-on input[type="checkbox"] + label:before{
@@ -1269,7 +1275,7 @@ div:has(.small-address-filter) {
 .doctorLocationBtnSelected {
     border: 1px solid #2BC2CC;
     background-color: #F2FEFF;
-    box-shadow: 4px 8px 12px 6px rgba(120, 120, 120, 0.15);
+    box-shadow: 4px 2px 8px 6px rgba(120, 120, 120, 0.15);
 }
 
 .doctorLocationBtn:hover,

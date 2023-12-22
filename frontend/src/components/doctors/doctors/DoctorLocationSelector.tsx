@@ -25,7 +25,7 @@ function DoctorLocationSelector({ doctor, currentDoctorLocation, setCurrentDocto
             {doctor.locations.map((location, index) => (
                 <Button
                     label=""
-                    className={`${currentDoctorLocation && sameLocation(location, currentDoctorLocation) ? "doctorLocationBtnSelected" : "doctorLocationBtn"}`}
+                    className={`${currentDoctorLocation && sameLocation(location, currentDoctorLocation) && 1 < doctor.locations.length ? "doctorLocationBtnSelected" : "doctorLocationBtn"}`}
                     icon={location === currentDoctorLocation ? "fa-hospital" : ""}
                     key={`${location?.hospitalName || location?.address}-btn`}
                     onClick={() => setCurrentDoctorLocation(location)}
