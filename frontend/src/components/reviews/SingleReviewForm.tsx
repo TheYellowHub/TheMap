@@ -251,7 +251,7 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
                     />
                 </Form.Group>
                 <Form.Group as={Row} className="p-0 m-0 pb-2 d-flex flex-row align-items-center ">
-                    <Col className="px-0 py-1 m-0 py-1 pe-2 h-2" sm={"auto"}>
+                    <Col className="px-0 py-1 m-0 pe-2 h-2" sm={"auto"}>
                         <BooleanFormField<DoctorReview>
                             field={reviewFieldsMap.get("pastOperation") as BooleanField<DoctorReview>}
                             withLabel={true}
@@ -269,11 +269,11 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
                             className="h-2"
                         />
                     </Col>
-                    <Col className="px-0 py-1 m-0 d-flex flex-start gap-2 h-2">{review.pastOperation && dateFields}</Col>
+                    <Col className="p-0 m-0 d-flex gap-2 h-2">{review.pastOperation && dateFields}</Col>
                 </Form.Group>
                 {!review.pastOperation && (
-                    <Form.Group as={Row} className="p-0 m-0 pb-2 d-flex flex-row align-items-center">
-                        <Col className="p-0 m-0 py-1 pe-2" sm={"auto"}>
+                    <Form.Group as={Row} className="p-0 m-0 pb-1 d-flex flex-row align-items-center">
+                        <Col className="px-0 py-1 m-0 pe-2" sm={"auto"}>
                             <BooleanFormField<DoctorReview>
                                 field={reviewFieldsMap.get("futureOperation") as BooleanField<DoctorReview>}
                                 withLabel={true}
@@ -297,7 +297,7 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
                     </Form.Group>
                 )}
             </fieldset>
-            <Form.Group as={Row} className="p-0 m-0 pt-2 pb-3 w-100 gap-3">
+            <Form.Group as={Row} className="p-0 m-0 py-3 w-100 gap-3">
                 <OverlayTrigger
                     placement="bottom"
                     overlay={<Tooltip className="tooltip">{review.id === undefined ? "Cancel" : "Delete"}</Tooltip>}
