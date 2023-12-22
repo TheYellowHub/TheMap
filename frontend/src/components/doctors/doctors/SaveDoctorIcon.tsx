@@ -18,7 +18,7 @@ export default function SaveDoctorIcon({doctor, colClassName, iconClassName} : S
     return (
         
         <OverlayTrigger
-            placement="bottom"
+            placement="top-end"
             overlay={
                 <Tooltip className="tooltip">
                     {userInfo?.savedDoctors?.includes(doctor.id!)
