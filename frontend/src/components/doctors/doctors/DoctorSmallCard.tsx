@@ -1,41 +1,32 @@
-import { Col, Container, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 
 import { Doctor, getDoctorNearestLocation } from "../../../types/doctors/doctor";
 import { Location } from "../../../utils/googleMaps/useGoogleMaps";
-import { DistanceUnit } from "../../utils/DistanceUnit";
 import DoctorImage from "./DoctorImage";
 import DoctorVerification from "./DoctorVerification";
 import Rating from "../../utils/Rating";
 import DoctorCategory from "./DoctorCategory";
 import DoctorLocationAddress from "./DoctorLocationAddress";
-import Icon from "../../utils/Icon";
-import useAuth from "../../../auth/useAuth";
-import useUser from "../../../hooks/auth/useUsers";
 import SaveDoctorIcon from "./SaveDoctorIcon";
 
 interface DoctorSmallCardProps {
     doctor: Doctor;
     locationForDistanceCalculation?: Location;
-    distanceUnit?: DistanceUnit;
-    onClick: () => void;
+    onClick: (() => void) | undefined;
 }
 
 export const doctorSmallCardClassName = "doctorSmallCard";
 
-function DoctorSmallCard({
+export default function DoctorSmallCard({
     doctor,
     locationForDistanceCalculation,
-    distanceUnit = "mi",
     onClick,
 }: DoctorSmallCardProps) {
     const closestLocation =
         locationForDistanceCalculation ? getDoctorNearestLocation(doctor, locationForDistanceCalculation) : (doctor.locations && doctor.locations[0]);
 
-    const { user } = useAuth();
-    const { userInfo } = useUser(user);
-
     return (
-        <Container className={`${doctorSmallCardClassName} mx-0 px-0`} onClick={onClick} fluid>
+        <Container className={`${doctorSmallCardClassName} mx-0 px-0 ${onClick && "pointer"}`} onClick={onClick} fluid>
             <Row className="flex-nowrap">
                 <Col className="flex-grow-0 pe-1">
                     <DoctorImage doctor={doctor} big={false} />
@@ -71,4 +62,3 @@ function DoctorSmallCard({
     );
 }
 
-export default DoctorSmallCard;

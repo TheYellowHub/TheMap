@@ -11,13 +11,13 @@ import Button from "../utils/Button";
 import InputFormField from "../utils/form/inputField";
 import useFormValidation from "../../hooks/useFormValidation";
 
-interface SingleReviewFormProps {
+interface SetUsernameModalProps {
     user: User;
     show: boolean;
     onHide: () => void;
 }
 
-function SetUsernameModal({ user, show, onHide }: SingleReviewFormProps) {
+function SetUsernameModal({ user, show, onHide }: SetUsernameModalProps) {
     const { 
         userInfo: originalUserInfo, 
         mutateUsername, 
@@ -41,7 +41,7 @@ function SetUsernameModal({ user, show, onHide }: SingleReviewFormProps) {
 
     useEffect(() => {
         onHide();
-    }, [isUsernameMutationSuccess])
+    }, [isUsernameMutationSuccess]);
 
     return (        
         <Modal show={show} backdrop="static" onHide={onHide} className="user-modal" centered>

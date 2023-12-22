@@ -119,7 +119,6 @@ export default function DoctorSearchResuls({
                                 key={doctor.id}
                                 doctor={doctor}
                                 locationForDistanceCalculation={locationForDistanceCalculation}
-                                distanceUnit={distanceUnit}
                                 onClick={() => {
                                     setPageYOffset(onlyDivScroll ? document.getElementById(doctorCardsContainerId)?.scrollTop : window.scrollY);
                                     setCurrentDoctor(doctor);

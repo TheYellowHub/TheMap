@@ -19,6 +19,7 @@ import DoctorLocationSelector from "./DoctorLocationSelector";
 import SaveDoctorIcon from "./SaveDoctorIcon";
 import BackButton from "../../utils/BackButton";
 import DoctorLocationCard from "./DoctorLocationCard";
+import ReportIssueModal from "../ReportIssueModal";
 
 interface DoctorBigCardProps {
     doctor: Doctor;
@@ -34,11 +35,12 @@ function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation
     const { user, login } = useAuth();
     const { userInfo } = useUser(user);
     const { data: userReviews } = (userInfo && useUserReviews(userInfo, doctor)) || { data: [] };
+    const [reportingIssue, setReportingIssue] = useState(false);
     const [addingReview, setAddingReview] = useState(false);
     const addingReviewContainerId = "adding-review-container";
 
     useEffect(() => {
-        document.getElementById(addingReviewContainerId)?.scrollIntoView()
+        document.getElementById(addingReviewContainerId)?.scrollIntoView();
     }, [addingReview]);
 
     return (
@@ -53,11 +55,10 @@ function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation
                         <Row className="w-100 m-0 pb-1">
                             <Col className="px-0 doctorBigCardName font-assistant lg-font">{doctor.fullName}</Col>
                             <Col className="px-0 d-flex flex-grow-0 flex-nowrap">
-                                <OverlayTrigger placement="top-end" overlay={<Tooltip className="tooltip">Report an issue</Tooltip>}>
+                                <OverlayTrigger placement="top-end" overlay={reportingIssue ? <></> : <Tooltip className="tooltip">Report an issue</Tooltip>}>
                                     <Col className="px-0 doctorBigCardButtons d-flex justify-content-end" sm="auto">
-                                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfgarB_r-MfCtZpnq95XXr-2ZgSNUW92Dbts39Hm9NdGx6P6g/viewform?usp=sf_link" target="_blank" rel="noreferrer">
-                                            <Icon icon="fa-circle-info fa-sm " />
-                                        </a>
+                                        <Icon icon="fa-circle-info fa-sm " onClick={() => setReportingIssue(true)} />
+                                        <ReportIssueModal doctor={doctor} show={reportingIssue} onHide={() => setReportingIssue(false)} />
                                     </Col>
                                 </OverlayTrigger>
                                 <SaveDoctorIcon doctor={doctor} colClassName="px-0 doctorBigCardButtons d-flex justify-content-end" />

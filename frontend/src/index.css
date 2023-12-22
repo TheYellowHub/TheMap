@@ -112,6 +112,10 @@
 
 /* Font size */
 
+.xxl-font {
+    font-size: 1.375rem;
+}
+
 .xl-font {
     font-size: 1.375rem;
 }
@@ -601,6 +605,10 @@ td {
     border: 1px solid var(--dark-grey);
     background: var(--very-light-yellow);
     box-shadow: 1px 4px 20px 5px rgba(0, 0, 0, 0.10);
+}
+
+.user-modal.modal-white .modal-content {
+    background: white;
 }
 
 /* pagination */
@@ -1133,7 +1141,6 @@ div:has(.small-address-filter) {
 
 .doctorSmallCard {
     max-width: 22rem;
-    cursor: pointer;
 }
 
 .doctorBigCard {
