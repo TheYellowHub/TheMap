@@ -23,7 +23,7 @@ function AppRouter() {
 
     return (
         <Routes>
-            <Route path="/:id?" element={<MapScreen />} />
+            <Route path="/:id?/:name?" element={<MapScreen />} />
             <Route path="/admin/doctors" element={<DoctorsScreen />} />
             <Route path="/admin/categories" element={<DoctorCategoriesScreen />} />
             <Route path="/admin/specialities" element={<DoctorSpecialitiesScreen />} />

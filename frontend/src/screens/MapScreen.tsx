@@ -119,7 +119,7 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
                 }
             }
         }
-        window.history.replaceState(null, "", `#/${currentDoctor?.id || ""}`);
+        window.history.replaceState(null, "", currentDoctor ? `#/${currentDoctor.id}/${currentDoctor.fullName.replaceAll(" ", "-")}/` : "#");
     }, [currentDoctor]);
 
     useEffect(() => {
