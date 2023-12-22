@@ -302,7 +302,7 @@ a.a-no-decoration-line:hover {
 
 .tooltip {
     z-index: 99999 !important;
-    background-color: #035763;
+    background-color: var(--dark-blue);
     position: absolute;
 }
 
@@ -367,6 +367,10 @@ a.a-no-decoration-line:hover {
 .one-line-text:hover {
     overflow: visible;
     display: inline-block;
+}
+
+.column-gap-10p {
+    column-gap: 10%;
 }
 
 /* Scrollbar */
@@ -1339,9 +1343,17 @@ div:has(.small-address-filter) {
         max-width: 50%;
     }
 
-    .doctorSmallCard:hover,
     .doctorBigCard {
         box-shadow: 5px 5px 12px 2px rgba(120, 120, 120, 0.25), 0px 4px 20px 3px rgba(65, 65, 65, 0.25);
+    }
+
+    .doctorSmallCard {
+        border: 1.5px solid transparent;
+    }
+
+    .doctorSmallCard:hover {
+        border-radius: 4px;
+        border: 1.5px solid var(--dark-blue);
     }
 
     .h-doctorBigCardImg {

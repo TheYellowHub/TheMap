@@ -59,7 +59,7 @@ export default function DoctorSearchResuls({
                 const scrollerWidth = 30;
                 const cardsDivWidth = Math.min(0.70 * window.innerWidth - scrollerWidth, window.innerWidth - 300);
                 const rem = 16;
-                const paddingBetween = 1.5 * rem;
+                const paddingBetween = window.innerWidth * 0.1;
                 const doctorCards = Array.from(document.getElementsByClassName(doctorSmallCardClassName));
                 const cardWidth = 0 < doctorCards.length ? doctorCards[0].clientWidth : 26 * rem;
                 const cardHeight = 0 < doctorCards.length ? doctorCards[0].clientHeight : 9 * rem;
@@ -111,7 +111,7 @@ export default function DoctorSearchResuls({
             <Row className="px-0 mx-0">
                 <Container
                     id={doctorCardsContainerId}
-                    className={`d-flex flex-wrap gap-4 px-0 mx-0 ${onlyDivScroll ? "overflow-y-auto-hover" : ""}`}
+                    className={`d-flex flex-wrap row-gap-4 column-gap-10p px-0 mx-0 ${onlyDivScroll ? "overflow-y-auto-hover" : ""}`}
                 >
                     {currentDoctor === null ? (
                         doctorsInPage.map((doctor: Doctor) => (
