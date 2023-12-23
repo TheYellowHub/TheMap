@@ -1304,6 +1304,7 @@ div:has(.small-address-filter) {
     border-radius: 0.25rem 0.25rem 0rem 0rem;
     border: 0.75px solid #95E0E5;
     border-bottom: 1px solid #2BC2CC;
+    height: auto;
 }
 
 .doctorLocationBtn *,
