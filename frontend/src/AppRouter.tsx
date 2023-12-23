@@ -11,6 +11,7 @@ import Login from "./auth/Login";
 import UserReviews from "./components/reviews/UserReviews";
 import { getCurrentUrl } from "./utils/utils";
 import IssuesScreen from "./screens/IssuesScreen";
+import DeleteAccountModal from "./auth/DeleteAccountModal";
 
 function AppRouter() {
     useEffect(() => {
@@ -28,6 +29,7 @@ function AppRouter() {
             <Route path="/user/login" element={<Login />} />
             <Route path="/user/saved" element={<MapScreen onlyMyList={true} />} />
             <Route path="/user/reviews" element={<UserReviews />} />
+            <Route path="/user/delete" element={<DeleteAccountModal show={true} onHide={() => {}} />} />
         </Routes>
     );
 }
