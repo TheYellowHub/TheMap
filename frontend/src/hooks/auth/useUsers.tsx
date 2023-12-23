@@ -3,9 +3,10 @@ import { User } from "@auth0/auth0-react";
 
 import useApiRequests from "../useApiRequest";
 import { UserInfo } from "../../auth/userInfo";
+import useAuth from "../../auth/useAuth";
 
 export default function useUser(user?: User) {
-    const userRemoteId = user?.sub;
+    const userRemoteId = (user || useAuth().user)?.sub;
     const queryClient = useQueryClient();
     const { get, patch } = useApiRequests();
     const url = `/api/users/user/${userRemoteId}`;
@@ -19,7 +20,6 @@ export default function useUser(user?: User) {
                 if (error?.response?.status === 404) {
                     return {
                         remoteId: userRemoteId,
-
                         savedDoctors: [],
                     } as unknown as UserInfo;
                 } else {

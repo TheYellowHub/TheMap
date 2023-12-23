@@ -6,15 +6,17 @@ import useAuth from "../../auth/useAuth";
 import Icon from "./Icon";
 import { Link } from "react-router-dom";
 import useUser from "../../hooks/auth/useUsers";
-import { useUserReviews } from "../../hooks/doctors/useReviews";
+import { useAllReviews, useUserReviews } from "../../hooks/doctors/useReviews";
+import { DoctorReview } from "../../types/doctors/review";
 
 function Header() {
     const [selectedPage, setSelectedPage] = useState<EventKey>("");
     const [selectedSubMenu, setSelectedSubMenu] = useState<EventKey | null>(null);
 
     const { user, isAuthenticated, isAdmin, login, logout, deleteAccount } = useAuth();
-    const { userInfo } = useUser(user);
-    const userReviews = useUserReviews(userInfo!).data;
+    const { userInfo } = useUser();
+    const { data: allReviews } = useAllReviews();
+    const userReviews = allReviews.filter((review: DoctorReview) => review.addedBy.remoteId === userInfo?.remoteId);
 
     type Link = {
         title: string;
@@ -86,7 +88,7 @@ function Header() {
             },
             {
                 to: "/user/reviews",
-                title: `My reviews ${userReviews !== undefined ? "(" + userReviews.length + ")" : ""}`,
+                title: `My reviews (${userReviews.length || "0"})`,
                 icon: "fa-star",
             },
             {
@@ -141,7 +143,7 @@ function Header() {
             });
         }
         setLinks(newLinks);
-    }, [user, isAuthenticated, isAdmin]);
+    }, [user, isAuthenticated, isAdmin, userInfo]);
 
     return (
         <Navbar expand="lg" className="aboveAll header" collapseOnSelect>
@@ -153,14 +155,14 @@ function Header() {
             
             <Navbar.Toggle aria-controls="navbarCollapse" />
 
-            <Navbar.Collapse id="navbarCollapse">
+            <Navbar.Collapse id="navbarCollapse" key={`${user?.sub}-menu`}>
                 <Nav activeKey={selectedPage as EventKey} onSelect={setSelectedPage as SelectCallback}>
-                    {links.map((link: LinksGroup | Link) => {
+                    {links.map((link: LinksGroup | Link, index) => {
                         if (isGroup(link)) {
                             const dropdown = link;
                             return (
                                 <NavDropdown
-                                    key={dropdown.title}
+                                    key={`${index}-${dropdown.title}`}
                                     active={selectedSubMenu === dropdown.title}
                                     title={
                                         <>
@@ -171,12 +173,12 @@ function Header() {
                                 >
                                     {dropdown.links.map((link, index) => 
                                         link === "Separator" 
-                                        ? <div key={`Separator-${index}`} className="d-flex justify-content-center py-1"><img src="images/line.png" width="90%"/></div>
+                                        ? <div key={`${index}-Separator`} className="d-flex justify-content-center py-1"><img src="images/line.png" width="90%"/></div>
                                         : link.to === undefined
-                                        ? <div className="dropdown-title med-grey pb-2">{link.title}</div>
+                                        ? <div key={`${index}-${dropdown.title}`} className="dropdown-title med-grey pb-2">{link.title}</div>
                                         : (<NavDropdown.Item
                                             className="d-flex"
-                                            key={link.title}
+                                            key={`${index}-${dropdown.title}`}
                                             as={Link}
                                             to={link.to}
                                             target={isExternalLink(link) ? "_blank" : "_self"}
@@ -194,7 +196,7 @@ function Header() {
                         } else {
                             return (
                                 <Nav.Link
-                                    key={link.title}
+                                    key={`${index}-${link.title}`}
                                     as={Link}
                                     to={link.to}
                                     target={isExternalLink(link) ? "_blank" : "_self"}
