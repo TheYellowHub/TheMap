@@ -17,6 +17,7 @@ import { useParams } from "react-router-dom";
 import Button from "../components/utils/Button";
 import BackButton from "../components/utils/BackButton";
 import NoResults from "../components/doctors/search/NoResults";
+import { getCurrentUrl } from "../utils/utils";
 
 interface MapScreenProps {
     onlyMyList?: boolean;
@@ -119,7 +120,7 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
                 }
             }
         }
-        window.history.replaceState(null, "", currentDoctor ? `#/${currentDoctor.id}/${currentDoctor.fullName.replaceAll(" ", "-")}/` : "#");
+        window.history.replaceState(null, "", currentDoctor ? `/${currentDoctor.id}/${currentDoctor.fullName.replaceAll(" ", "-")}/` : "/");
     }, [currentDoctor]);
 
     useEffect(() => {

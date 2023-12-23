@@ -14,7 +14,7 @@ import IssuesScreen from "./screens/IssuesScreen";
 
 function AppRouter() {
     useEffect(() => {
-      ReactGA.send({ hitType: "pageview", title: getCurrentUrl(false)});
+        ReactGA.send({ hitType: "pageview", title: getCurrentUrl(false)});
     });
 
     return (
@@ -25,7 +25,7 @@ function AppRouter() {
             <Route path="/admin/specialities" element={<DoctorSpecialitiesScreen />} />
             <Route path="/admin/reviews" element={<ReviewsScreen />} />
             <Route path="/admin/issues" element={<IssuesScreen />} />
-            <Route path="/user/login" element={<Login redirectTo={<MapScreen />} />} />
+            <Route path="/user/login" element={<Login />} />
             <Route path="/user/saved" element={<MapScreen onlyMyList={true} />} />
             <Route path="/user/reviews" element={<UserReviews />} />
         </Routes>

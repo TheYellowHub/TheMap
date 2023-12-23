@@ -8,16 +8,18 @@ import { Link } from "react-router-dom";
 import useUser from "../../hooks/auth/useUsers";
 import { useUserReviews } from "../../hooks/doctors/useReviews";
 import { DoctorReview } from "../../types/doctors/review";
+import DeleteAccountModal from "../../auth/DeleteAccountModal";
 
 function Header() {
     const [selectedPage, setSelectedPage] = useState<EventKey>("");
     const [selectedSubMenu, setSelectedSubMenu] = useState<EventKey | null>(null);
 
-    const { user, isAuthenticated, isAdmin, login, logout, deleteAccount } = useAuth();
+    const { user, isAuthenticated, isAdmin, login, logout } = useAuth();
     const { userInfo } = useUser();
     const userReviews = useUserReviews(userInfo!).data.filter((review: DoctorReview) => review.status !== "DELETED");
-    // const { data: allReviews } = useAllReviews();
-    // const userReviews = allReviews.filter((review: DoctorReview) => review.addedBy.remoteId === userInfo?.remoteId && review.status !== "DELETED");
+    const [deletingAccount, setDeletingAccount] = useState(false);
+
+    const dontHandleEventKey = "dontHandleEventKey";
 
     type Link = {
         title: string;
@@ -25,6 +27,7 @@ function Header() {
         onClick?: React.MouseEventHandler;
         newWindow?: boolean;
         icon?: string;
+        eventKey?: string;
     };
 
     type Title = {
@@ -97,12 +100,14 @@ function Header() {
                 onClick: logout,
                 title: "Log out",
                 icon: "fa-power-off",
+                eventKey: dontHandleEventKey
             },
             "Separator" as Separator,
             {
                 to: "/",
-                onClick: deleteAccount,
+                onClick: () => setDeletingAccount(true),
                 title: "Delete account",
+                eventKey: dontHandleEventKey
             },
         ],
     };
@@ -150,7 +155,10 @@ function Header() {
         setLinks(newLinks);
     }, [user, isAuthenticated, isAdmin, userInfo?.savedDoctors?.length, userReviews.length]);
 
-    return (
+    return (<>
+
+        <DeleteAccountModal show={deletingAccount} onHide={() => setDeletingAccount(false)} />
+
         <Navbar expand="lg" className="aboveAll header" collapseOnSelect>
             <Nav.Link as={Link} to="http://theyellowhub.org/" target="_blank" className="no-padding">
                 <Navbar.Brand>
@@ -161,7 +169,9 @@ function Header() {
             <Navbar.Toggle aria-controls="navbarCollapse" />
 
             <Navbar.Collapse id="navbarCollapse" key={`${user?.sub}-menu`}>
-                <Nav activeKey={selectedPage as EventKey} onSelect={setSelectedPage as SelectCallback}>
+                <Nav activeKey={selectedPage as EventKey} onSelect={
+                    ((eventKey: string) => eventKey !== dontHandleEventKey && setSelectedPage(eventKey)) as SelectCallback
+                }>
                     {links.map((link: LinksGroup | Link, index) => {
                         if (isGroup(link)) {
                             const dropdown = link;
@@ -188,10 +198,10 @@ function Header() {
                                             to={link.to}
                                             target={isExternalLink(link) ? "_blank" : "_self"}
                                             onClick={(e) => {
-                                                setSelectedSubMenu(dropdown.title);
+                                                link.eventKey !== dontHandleEventKey && setSelectedSubMenu(dropdown.title);
                                                 link.onClick && link.onClick(e);
                                             }}
-                                            eventKey={link.to}
+                                            eventKey={link.eventKey || link.to}
                                         >
                                             {getMenuItemContent(link)}
                                         </NavDropdown.Item>
@@ -219,7 +229,7 @@ function Header() {
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
-    );
+    </>);
 }
 
 export default Header;

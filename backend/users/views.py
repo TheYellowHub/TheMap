@@ -42,6 +42,24 @@ class UserRetrieveUpdateView(generics.RetrieveUpdateAPIView):
 
     def patch(self, request, *args, **kwargs):
         logger.debug(
-            f"User's saved doctors update - patch request data: {request.data}"
+            f"User update - patch request data: {request.data}"
         )
         return super().patch(request, *args, **kwargs)
+
+
+@permission_classes([permissions.IsAuthenticated & IsCurrentUser])
+class UserDeleteView(generics.DestroyAPIView):
+    """
+    Delete a user.
+    Usage: /api/users/user/<remote_id>/delete
+    """
+
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    lookup_field = "remote_id"
+
+    def delete(self, request, *args, **kwargs):
+        logger.debug(
+            f"User delete request - {self.get_object()}"
+        )
+        return super().delete(request, *args, **kwargs)

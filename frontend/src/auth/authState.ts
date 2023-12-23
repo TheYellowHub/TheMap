@@ -10,6 +10,5 @@ export type AuthState = {
     // Auth methods:
     login: () => Promise<void>;
     logout: () => Promise<void>;
-    deleteAccount: () => Promise<void>;
     getAccessToken: () => Promise<string | null>;
 };

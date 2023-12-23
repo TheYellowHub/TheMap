@@ -8,7 +8,7 @@ import useAuth from "../../auth/useAuth";
 export default function useUser(user?: User) {
     const userRemoteId = (user || useAuth().user)?.sub;
     const queryClient = useQueryClient();
-    const { get, patch } = useApiRequests();
+    const { get, patch, deleteItem } = useApiRequests();
     const url = `/api/users/user/${userRemoteId}`;
 
     const getUserInfo = async (): Promise<UserInfo | undefined> => {
@@ -101,6 +101,34 @@ export default function useUser(user?: User) {
         error: savedDoctorsMutationError,
     } = savedDoctorsMutation;
 
+    // Delete user 
+
+    const deleteUserFn = async () => {
+        if (userInfo === undefined) {
+            return undefined;
+        } else {
+            const response = await deleteItem(`${url}/delete`);
+            return response?.data;
+        }
+    };
+
+    const deleteUserMutation = useMutation({
+        mutationFn: deleteUserFn,
+        onSuccess: () => queryClient.invalidateQueries({ queryKey: userInfoQueryKey }),
+    });
+
+    const {
+        mutate: deleteUser,
+        reset: resetDeleteUserMutation,
+        isLoading: isDeleteUserMutationLoading,
+        isSuccess: isDeleteUsersMutationSuccess,
+        isError: isDeleteUserMutationError,
+        error: deleteUserMutationError,
+    } = deleteUserMutation;
+
+
+    // Return
+
     return {
         userInfo,
         isUserInfoLoading,
@@ -120,5 +148,12 @@ export default function useUser(user?: User) {
         isSavedDoctorsMutationSuccess,
         isSavedDoctorsMutationError,
         savedDoctorsMutationError,
+        // Delete user
+        deleteUser,
+        resetDeleteUserMutation,
+        isDeleteUserMutationLoading,
+        isDeleteUsersMutationSuccess,
+        isDeleteUserMutationError,
+        deleteUserMutationError,
     };
 }

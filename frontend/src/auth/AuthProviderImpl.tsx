@@ -20,9 +20,10 @@ export default function AuthProvider({ children }: React.PropsWithChildren) {
     const [isAdmin, setIsAdmin] = useState(false);
 
     const login = useCallback(async () => {
+        const url = getCurrentUrl();
         await auth0login({
             appState: {
-                returnTo: getCurrentUrl()
+                returnTo: url
             }
         });
     }, [auth0login]);
@@ -33,8 +34,6 @@ export default function AuthProvider({ children }: React.PropsWithChildren) {
 
         });
     }, [auth0logout]);
-
-    const deleteAccount = async () => {}; // TODO
 
     const checkIfAdmin = useCallback(async () => {
         const accessToken = await getAccessToken();
@@ -61,7 +60,6 @@ export default function AuthProvider({ children }: React.PropsWithChildren) {
         // Auth methods
         login,
         logout,
-        deleteAccount,
         getAccessToken,
     } as AuthState;
 

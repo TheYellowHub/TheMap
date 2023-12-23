@@ -2,18 +2,15 @@ import { ReactNode, useEffect } from "react";
 
 import useAuth from "./useAuth";
 
-type LoginProps = {
-    redirectTo: ReactNode;
-};
-
-function Login({ redirectTo }: LoginProps) {
+function Login() {
     const { login } = useAuth();
 
     useEffect(() => {
         login();
+        window.history.replaceState(null, "", "/");
     });
 
-    return <>{redirectTo}</>;
+    return <></>;
 }
 
 export default Login;

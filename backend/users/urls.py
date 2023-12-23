@@ -13,4 +13,9 @@ urlpatterns = [
         UserRetrieveUpdateView.as_view(),
         name="retrieve-update-user",
     ),
+    path(
+        "user/<str:remote_id>/delete",
+        UserDeleteView.as_view(),
+        name="delete-user",
+    ),
 ]
