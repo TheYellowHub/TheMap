@@ -6,7 +6,7 @@ import useAuth from "../../auth/useAuth";
 import Icon from "./Icon";
 import { Link } from "react-router-dom";
 import useUser from "../../hooks/auth/useUsers";
-import { useAllReviews } from "../../hooks/doctors/useReviews";
+import { useUserReviews } from "../../hooks/doctors/useReviews";
 import { DoctorReview } from "../../types/doctors/review";
 
 function Header() {
@@ -15,8 +15,9 @@ function Header() {
 
     const { user, isAuthenticated, isAdmin, login, logout, deleteAccount } = useAuth();
     const { userInfo } = useUser();
-    const { data: allReviews } = useAllReviews();
-    const userReviews = allReviews.filter((review: DoctorReview) => review.addedBy.remoteId === userInfo?.remoteId);
+    const userReviews = useUserReviews(userInfo!).data.filter((review: DoctorReview) => review.status !== "DELETED");
+    // const { data: allReviews } = useAllReviews();
+    // const userReviews = allReviews.filter((review: DoctorReview) => review.addedBy.remoteId === userInfo?.remoteId && review.status !== "DELETED");
 
     type Link = {
         title: string;
@@ -147,7 +148,7 @@ function Header() {
             });
         }
         setLinks(newLinks);
-    }, [user, isAuthenticated, isAdmin, userInfo]);
+    }, [user, isAuthenticated, isAdmin, userInfo?.savedDoctors?.length, userReviews.length]);
 
     return (
         <Navbar expand="lg" className="aboveAll header" collapseOnSelect>

@@ -939,6 +939,7 @@ input[type="checkbox"] {
 
 .react-select__option--is-focused {
     background-color: var(--light-yellow) !important;
+    cursor: pointer !important;
 }
 
 .react-select__option--is-selected {

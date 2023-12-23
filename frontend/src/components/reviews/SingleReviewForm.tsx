@@ -194,7 +194,7 @@ function SingleReviewForm({ originalReview, onCancel, setId }: SingleReviewFormP
             }
         }}/>}
 
-        {editStatus === "SAVED" 
+        {editStatus === "SAVED" && isMutateSuccess
         ? (
             <Row className="p-0 m-0 pb-2 w-100 gap-3 text-center">
                 <Col className="m-0 p-0">
@@ -204,7 +204,7 @@ function SingleReviewForm({ originalReview, onCancel, setId }: SingleReviewFormP
                 </Col>
             </Row>
         )
-        : editStatus === "SUBMITTED"
+        : editStatus === "SUBMITTED" && isMutateSuccess
         ? (
             <Row className="p-0 m-0 w-100 gap-3 text-center">
                 <Col className="m-0 p-0">

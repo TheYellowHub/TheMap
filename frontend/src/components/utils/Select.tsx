@@ -66,6 +66,7 @@ export default function Select({
             ? currentValue.map(valueToSelectOption)
             : valueToSelectOption(currentValue as string);
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const multiValueContainer = (props: any) => {
         const length = props.getValue().length;
 
@@ -96,13 +97,14 @@ export default function Select({
             menuIsOpen={dropdownOpen}
             classNamePrefix="react-select"
             className={`multi-select ${className}`}
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             onChange={(newValues) => onChange && onChange(newValues.map((newValue) => newValue!.value) as any)}
             isClearable={allowEmptySelection}
             isDisabled={disabled}
             isMulti={true}
             hideSelectedOptions={false}
             components={{ ValueContainer: multiValueContainer }}
-            menuPosition={"fixed"}
+            menuPosition={iconComponent ? "absolute" : "fixed"}
         />
     ) : (
         <ReactSelect
@@ -113,10 +115,11 @@ export default function Select({
             menuIsOpen={dropdownOpen}
             classNamePrefix="react-select"
             className={`single-select ${className}`}
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             onChange={(newValue) => onChange && onChange(newValue === null ? undefined : (newValue!.value as any))}
             isClearable={allowEmptySelection}
             isDisabled={disabled}
-            menuPosition={"fixed"}
+            menuPosition={iconComponent ? "absolute" : "fixed"}
         />
     );
 

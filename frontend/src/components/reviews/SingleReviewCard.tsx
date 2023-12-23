@@ -9,6 +9,10 @@ import useUser from "../../hooks/auth/useUsers";
 import { sameUser } from "../../auth/userInfo";
 import SingleReviewForm, { getGuidelinesLink } from "./SingleReviewForm";
 import Button from "../utils/Button";
+import Select from "../utils/Select";
+import { useUserReviews } from "../../hooks/doctors/useReviews";
+import LoadingWrapper from "../utils/LoadingWrapper";
+import { ResponseError } from "../../hooks/useApiRequest";
 
 interface ReviewProps {
     review: DoctorReview;
@@ -16,6 +20,13 @@ interface ReviewProps {
 
 function SingleReviewCard({ review }: ReviewProps) {
     const { userInfo } = useUser();
+    const { 
+        mutateItem, 
+        isMutateLoading, 
+        isMutateError, 
+        mutateError 
+    } = useUserReviews(userInfo!);
+
     const [editingMode, setEditingMode] = useState(false);
 
     const currentUser = sameUser(review.addedBy, userInfo);
@@ -25,8 +36,13 @@ function SingleReviewCard({ review }: ReviewProps) {
             case "DRAFT":
                 return "Edit and submit your draft to publish.";
             case "REJECTED":
-                return <>All reviews must follow {getGuidelinesLink("our guidelines", "")} to be published.<br />{review.rejectionReason}</>
+                return (<>All reviews must follow {getGuidelinesLink("our guidelines", "")} to be published.<br />{review.rejectionReason}</>);
     }};
+
+    const editMenuOptions: ReadonlyMap<string, () => void> = new Map([
+        ["Edit", () => setEditingMode(true)],
+        ["Delete", () => mutateItem({...review, status: "DELETED"})]
+    ]);
 
     const surgeryElementWrapper = (element: ReactElement) =>
         review.operationMonth ? (
@@ -49,10 +65,22 @@ function SingleReviewCard({ review }: ReviewProps) {
                         surgeryElementWrapper(<Icon icon="fa-scalpel" />)
                     )}
                 </Col>
-                {currentUser && <Col className="m-0 p-0 ps-1">
-                    <span className="align-middle med-dark-grey fst-italic sm-font lh-normal">{review.status !== "APPROVED" && reviewStatusToString(review.status)}</span>
-                </Col>}
-                <Col className="m-0 p-0 d-flex justify-content-end">
+                <Col className="m-0 p-0 ps-1">
+                    {currentUser && <span className="align-middle med-dark-grey fst-italic sm-font lh-normal">
+                        {review.status !== "APPROVED" && reviewStatusToString(review.status)}
+                    </span>}
+                </Col>
+                <Col className="d-flex justify-content-end icon-select flex-grow-0">
+                    {currentUser && <Select
+                                values={Array.from(editMenuOptions.keys())}
+                                onChange={(selectedOptionKey: string | undefined) => {
+                                    editMenuOptions.get(selectedOptionKey!)!();
+                                }}
+                                currentValue={undefined}
+                                icon="fa-ellipsis"
+                    />}
+                </Col>
+                <Col className="m-0 p-0 d-flex flex-grow-0 justify-content-end">
                     {review.rating && <StarRating rating={review.rating} color={true} />}
                 </Col>
             </Row>
@@ -75,6 +103,7 @@ function SingleReviewCard({ review }: ReviewProps) {
                     </>
                 }
             </Row>
+            <LoadingWrapper isLoading={isMutateLoading} isError={isMutateError} error={mutateError as ResponseError} loaderText="Deleting..."/>
         </Container>);
 }
 

@@ -1,17 +1,17 @@
+import React, { useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 
-import SingleReviewForm from "./SingleReviewForm";
-import { useUserReviews } from "../../hooks/doctors/useReviews";
-import { UserInfo } from "../../auth/userInfo";
-import { Doctor } from "../../types/doctors/doctor";
-import { getNewReview, reviewEditableStatuses } from "../../types/doctors/review";
-import React, { useState } from "react";
-import { ID } from "../../types/utils/id";
-import NoResults from "../doctors/search/NoResults";
-import SingleReviewCard from "./SingleReviewCard";
 
-interface UserReviewsFormPropsWithoutAddingOption {
-    userInfo: UserInfo;
+import { ID } from "../../types/utils/id";
+import { Doctor } from "../../types/doctors/doctor";
+import { useUserReviews } from "../../hooks/doctors/useReviews";
+import { getNewReview, reviewEditableStatuses } from "../../types/doctors/review";
+import SingleReviewForm from "./SingleReviewForm";
+import SingleReviewCard from "./SingleReviewCard";
+import NoResults from "../doctors/search/NoResults";
+import useUser from "../../hooks/auth/useUsers";
+
+interface UserReviewsPropsWithoutAddingOption {
     doctor?: never;
     addingReview?: never;
     setAddingReview?: never;
@@ -21,8 +21,7 @@ interface UserReviewsFormPropsWithoutAddingOption {
     containerClassName?: string;
 }
 
-interface UserReviewsFormPropsWithAddingOption {
-    userInfo: UserInfo;
+interface UserReviewsPropsWithAddingOption {
     doctor: Doctor;
     addingReview: boolean;
     setAddingReview: (addingReview: boolean) => void;
@@ -32,10 +31,9 @@ interface UserReviewsFormPropsWithAddingOption {
     containerClassName?: string;
 }
 
-type UserReviewsFormProps = UserReviewsFormPropsWithoutAddingOption | UserReviewsFormPropsWithAddingOption;
+type UserReviewsProps = UserReviewsPropsWithoutAddingOption | UserReviewsPropsWithAddingOption;
 
 function UserReviews({
-    userInfo,
     doctor,
     addingReview,
     setAddingReview,
@@ -43,15 +41,17 @@ function UserReviews({
     showOnlyEditableReviews = false,
     showDoctorName = true,
     containerClassName = "",
-}: UserReviewsFormProps) {
-    const { data: userReviews } = useUserReviews(userInfo, doctor);
+}: UserReviewsProps) {
+    const { userInfo } = useUser();
+    const { data: userReviews } = useUserReviews(userInfo!, doctor);
+    const notDeletedReviews = userReviews.filter((review) => review.status !== "DELETED");
 
-    const newReview = allowAddingReview && doctor && getNewReview(doctor, userInfo);
+    const newReview = allowAddingReview && doctor && getNewReview(doctor, userInfo!);
     const [newReviewId, setNewReviewId] = useState<ID>();
 
     return (
         <Container className={`${containerClassName}`}>
-            {0 < userReviews?.length  || allowAddingReview
+            {userInfo && (0 < notDeletedReviews.length  || allowAddingReview)
             ? (<Row className="m-0">
                     {allowAddingReview && newReview && addingReview && (
                         <Row key={newReview.id!} className="m-0 p-0 pt-4">
@@ -63,14 +63,14 @@ function UserReviews({
                             />
                         </Row>
                     )}
-                    {userReviews
+                    {notDeletedReviews
                         .filter(
                             (review) =>
                                 (showOnlyEditableReviews
                                     ? (review.status && (reviewEditableStatuses as unknown as string[])).includes(
                                           review.status
                                       )
-                                    : (review.status !== "DELETED")) && review.id !== newReviewId
+                                    : true) && review.id !== newReviewId
                         )
                         .sort((a, b) => ((a.id ? a.id : 0) < (b.id ? b.id : 0) ? 1 : -1))
                         .map((review) => (

@@ -30,6 +30,7 @@ export default function AuthProvider({ children }: React.PropsWithChildren) {
     const logout = useCallback(async () => {
         await auth0logout({
             logoutParams: { returnTo: getCurrentUrl() },
+
         });
     }, [auth0logout]);
 

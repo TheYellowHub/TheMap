@@ -14,7 +14,7 @@ import useAuth from "../../../auth/useAuth";
 import useUser from "../../../hooks/auth/useUsers";
 import SingleReviewCard from "../../reviews/SingleReviewCard";
 import { useUserReviews } from "../../../hooks/doctors/useReviews";
-import UserReviews from "../../reviews/UserReviewsForm";
+import UserReviews from "../../reviews/UserReviews";
 import DoctorLocationSelector from "./DoctorLocationSelector";
 import SaveDoctorIcon from "./SaveDoctorIcon";
 import BackButton from "../../utils/BackButton";
@@ -145,7 +145,6 @@ function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation
                     {userInfo && (
                         <Row className="mx-0 px-0" id={addingReviewContainerId}>
                             <UserReviews
-                                userInfo={userInfo}
                                 doctor={doctor}
                                 addingReview={addingReview}
                                 setAddingReview={setAddingReview}
