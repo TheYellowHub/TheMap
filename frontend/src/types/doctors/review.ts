@@ -7,7 +7,7 @@ import { Doctor } from "./doctor";
 export const reviewStatuses = ["DRAFT", "PENDING_APPROVAL", "APPROVED", "REJECTED", "DELETED"] as const;
 export type ReviewStatus = (typeof reviewStatuses)[number];
 export const reviewEditableStatuses: Readonly<ReviewStatus[]> = ["DRAFT", "PENDING_APPROVAL", "APPROVED", "REJECTED"] as const;
-export const reviewStatusToString = (status: ReviewStatus) => status.replaceAll("_", " ");
+export const reviewStatusToString = (status: ReviewStatus) => (status === "REJECTED" ? "REVISION NEEDED" : status.replaceAll("_", " "));
 
 export type DoctorReview = {
     id?: ID;

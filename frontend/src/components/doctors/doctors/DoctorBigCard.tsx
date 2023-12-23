@@ -14,12 +14,13 @@ import useAuth from "../../../auth/useAuth";
 import useUser from "../../../hooks/auth/useUsers";
 import SingleReviewCard from "../../reviews/SingleReviewCard";
 import { useUserReviews } from "../../../hooks/doctors/useReviews";
-import UserReviewsForm from "../../reviews/UserReviewsForm";
+import UserReviews from "../../reviews/UserReviewsForm";
 import DoctorLocationSelector from "./DoctorLocationSelector";
 import SaveDoctorIcon from "./SaveDoctorIcon";
 import BackButton from "../../utils/BackButton";
 import DoctorLocationCard from "./DoctorLocationCard";
 import ReportIssueModal from "../../issues/ReportIssueModal";
+import { sameUser } from "../../../auth/userInfo";
 
 interface DoctorBigCardProps {
     doctor: Doctor;
@@ -143,7 +144,7 @@ function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation
 
                     {userInfo && (
                         <Row className="mx-0 px-0" id={addingReviewContainerId}>
-                            <UserReviewsForm
+                            <UserReviews
                                 userInfo={userInfo}
                                 doctor={doctor}
                                 addingReview={addingReview}
@@ -158,7 +159,7 @@ function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation
 
                     <Row className="m-0">
                         {allReviews
-                            .filter((review) => review.status == "APPROVED")
+                            .filter((review) => review.status === "APPROVED" && !sameUser(review.addedBy, userInfo))
                             .map((review) => (
                                 <Row key={review.id!} className="m-0 p-0 pt-4">
                                     <SingleReviewCard review={review} />

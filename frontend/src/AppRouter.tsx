@@ -8,7 +8,7 @@ import DoctorSpecialitiesScreen from "./screens/doctors/DoctorSpecialitiesScreen
 import ReviewsScreen from "./screens/ReviewsScreen";
 import DoctorsScreen from "./screens/doctors/DoctorsScreen";
 import Login from "./auth/Login";
-import UserReviewsForm from "./components/reviews/UserReviewsForm";
+import UserReviews from "./components/reviews/UserReviewsForm";
 import useUser from "./hooks/auth/useUsers";
 import { getCurrentUrl } from "./utils/utils";
 import IssuesScreen from "./screens/IssuesScreen";
@@ -30,7 +30,7 @@ function AppRouter() {
             <Route path="/admin/issues" element={<IssuesScreen />} />
             <Route path="/user/login" element={<Login redirectTo={<MapScreen />} />} />
             <Route path="/user/saved" element={<MapScreen onlyMyList={true} />} />
-            <Route path="/user/reviews" element={<UserReviewsForm userInfo={userInfo!} />} />
+            <Route path="/user/reviews" element={<UserReviews userInfo={userInfo!} />} />
         </Routes>
     );
 }

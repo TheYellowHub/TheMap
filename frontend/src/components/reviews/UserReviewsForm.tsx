@@ -8,6 +8,7 @@ import { getNewReview, reviewEditableStatuses } from "../../types/doctors/review
 import React, { useState } from "react";
 import { ID } from "../../types/utils/id";
 import NoResults from "../doctors/search/NoResults";
+import SingleReviewCard from "./SingleReviewCard";
 
 interface UserReviewsFormPropsWithoutAddingOption {
     userInfo: UserInfo;
@@ -33,7 +34,7 @@ interface UserReviewsFormPropsWithAddingOption {
 
 type UserReviewsFormProps = UserReviewsFormPropsWithoutAddingOption | UserReviewsFormPropsWithAddingOption;
 
-function UserReviewsForm({
+function UserReviews({
     userInfo,
     doctor,
     addingReview,
@@ -57,7 +58,7 @@ function UserReviewsForm({
                             <SingleReviewForm
                                 key={`review-${newReview.id}`}
                                 originalReview={newReview}
-                                setDeleted={() => setAddingReview(false)}
+                                onCancel={() => setAddingReview(false)}
                                 setId={setNewReviewId}
                             />
                         </Row>
@@ -69,13 +70,13 @@ function UserReviewsForm({
                                     ? (review.status && (reviewEditableStatuses as unknown as string[])).includes(
                                           review.status
                                       )
-                                    : true) && review.id !== newReviewId
+                                    : (review.status !== "DELETED")) && review.id !== newReviewId
                         )
                         .sort((a, b) => ((a.id ? a.id : 0) < (b.id ? b.id : 0) ? 1 : -1))
                         .map((review) => (
                             <React.Fragment key={`review-${review.id}`}>
                                 {showDoctorName && (
-                                    <Row key={`review-${review.id}-doctor`} className="m-0 p-0 pt-4">
+                                    <Row key={`review-${review.id}-doctor`} className="m-0 p-0 pt-4 pb-1">
                                         <Col className="p-0 m-0">
                                             <a href={`#/${review.doctor.id}`} className="strong">
                                                 {review.doctor.fullName}
@@ -84,7 +85,7 @@ function UserReviewsForm({
                                     </Row>
                                 )}
                                 <Row key={`review-${review.id}`} className={`m-0 p-0 ${showDoctorName || "pt-4"}`}>
-                                    <SingleReviewForm key={`review-${review.id}`} originalReview={review} />
+                                    <SingleReviewCard review={review} key={`review-${review.id}`} /> 
                                 </Row>
                             </React.Fragment>
                         ))}
@@ -104,4 +105,4 @@ function UserReviewsForm({
     );
 }
 
-export default UserReviewsForm;
+export default UserReviews;
