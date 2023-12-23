@@ -1,6 +1,6 @@
-import { Router, useLocation } from "react-router-dom";
+import { Router } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { BrowserHistory, createBrowserHistory } from "history";
+import { createBrowserHistory } from "history";
 import ReactGA from "react-ga4";
 
 import AppRouter from "./AppRouter";

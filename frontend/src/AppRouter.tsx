@@ -15,7 +15,7 @@ import IssuesScreen from "./screens/IssuesScreen";
 function AppRouter() {
     useEffect(() => {
       ReactGA.send({ hitType: "pageview", title: getCurrentUrl(false)});
-    }, []);
+    });
 
     return (
         <Routes>
