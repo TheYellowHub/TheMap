@@ -6,7 +6,7 @@ import useAuth from "../../auth/useAuth";
 import Icon from "./Icon";
 import { Link } from "react-router-dom";
 import useUser from "../../hooks/auth/useUsers";
-import { useAllReviews, useUserReviews } from "../../hooks/doctors/useReviews";
+import { useAllReviews } from "../../hooks/doctors/useReviews";
 import { DoctorReview } from "../../types/doctors/review";
 
 function Header() {
@@ -124,6 +124,10 @@ function Header() {
             {
                 to: "/admin/reviews",
                 title: "Reviews",
+            },
+            {
+                to: "/admin/issues",
+                title: "Issues",
             },
         ],
     };

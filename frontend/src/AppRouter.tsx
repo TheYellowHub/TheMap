@@ -9,13 +9,12 @@ import ReviewsScreen from "./screens/ReviewsScreen";
 import DoctorsScreen from "./screens/doctors/DoctorsScreen";
 import Login from "./auth/Login";
 import UserReviewsForm from "./components/reviews/UserReviewsForm";
-import useAuth from "./auth/useAuth";
 import useUser from "./hooks/auth/useUsers";
 import { getCurrentUrl } from "./utils/utils";
+import IssuesScreen from "./screens/IssuesScreen";
 
 function AppRouter() {
-    const { user } = useAuth();
-    const { userInfo } = useUser(user);
+    const { userInfo } = useUser();
 
     useEffect(() => {
       ReactGA.send({ hitType: "pageview", title: getCurrentUrl(false)});
@@ -28,6 +27,7 @@ function AppRouter() {
             <Route path="/admin/categories" element={<DoctorCategoriesScreen />} />
             <Route path="/admin/specialities" element={<DoctorSpecialitiesScreen />} />
             <Route path="/admin/reviews" element={<ReviewsScreen />} />
+            <Route path="/admin/issues" element={<IssuesScreen />} />
             <Route path="/user/login" element={<Login redirectTo={<MapScreen />} />} />
             <Route path="/user/saved" element={<MapScreen onlyMyList={true} />} />
             <Route path="/user/reviews" element={<UserReviewsForm userInfo={userInfo!} />} />

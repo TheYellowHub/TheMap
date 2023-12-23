@@ -17,6 +17,7 @@ function ReviewModal({ review, showModal, onCancel, onSave, isSaving, isSavingEr
     const fields = [
         reviewFieldsMap.get("status")!,
         reviewFieldsMap.get("rejectionReason")!,
+        reviewFieldsMap.get("internalNotes")!,
         reviewFieldsMap.get("addedAt")!,
         reviewFieldsMap.get("approvedAt")!,
         reviewFieldsMap.get("rejectedAt")!,

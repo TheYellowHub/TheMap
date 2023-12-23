@@ -53,4 +53,6 @@ class DoctorReviewUpdateSerializer(serializers.ModelSerializer):
             "future_operation",
             "operation_month",
             "status",
+            "rejection_reason",
+            "internal_notes"
         ]

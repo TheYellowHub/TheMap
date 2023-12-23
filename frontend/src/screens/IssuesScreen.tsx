@@ -4,12 +4,12 @@ import LoadingWrapper from "../components/utils/LoadingWrapper";
 import Title from "../components/utils/Title";
 import { objectsDiff } from "../utils/utils";
 import { ResponseError } from "../hooks/useApiRequest";
-import { useAllReviews } from "../hooks/doctors/useReviews";
-import { DoctorReview } from "../types/doctors/review";
-import ReviewsTable from "../components/reviews/ReviewsTable";
-import ReviewModal from "../components/reviews/ReviewModal";
+import { useIssues } from "../hooks/doctors/useIssues";
+import { DoctorIssue } from "../types/doctors/issue";
+import IssuesTable from "../components/issues/IssuesTable";
+import IssueModal from "../components/issues/IssueModal";
 
-function ReviewsScreen() {
+function IssuesScreen() {
     const {
         data,
         isListLoading,
@@ -21,34 +21,34 @@ function ReviewsScreen() {
         isMutateSuccess,
         isMutateError,
         mutateError,
-    } = useAllReviews();
+    } = useIssues();
 
-    const [currentReview, setCurrentReview] = useState<DoctorReview | null>(null);
+    const [currentIssue, setCurrentIssue] = useState<DoctorIssue | null>(null);
 
     useEffect(() => {
         if (isMutateSuccess) {
-            setCurrentReview(null);
+            setCurrentIssue(null);
         }
     }, [isMutateSuccess]);
 
     return (
         <>
-            <Title>Reviews</Title>
+            <Title>Issues</Title>
             <LoadingWrapper isLoading={isListLoading} isError={isListError} error={listError as ResponseError}>
-                <ReviewsTable
-                    reviews={data}
-                    setCurrentReview={(review: DoctorReview | null) => {
+                <IssuesTable
+                    issues={data}
+                    setCurrentIssue={(issue: DoctorIssue | null) => {
                         resetMutation();
-                        setCurrentReview(review);
+                        setCurrentIssue(issue);
                     }}
                 />
-                {currentReview && (
-                    <ReviewModal
-                        review={currentReview}
-                        showModal={currentReview !== null}
-                        onCancel={() => setCurrentReview(null)}
+                {currentIssue && (
+                    <IssueModal
+                        issue={currentIssue}
+                        showModal={currentIssue !== null}
+                        onCancel={() => setCurrentIssue(null)}
                         onSave={(updatedDoctor) => {
-                            const dataToPost = { id: updatedDoctor.id, ...objectsDiff(currentReview, updatedDoctor) };
+                            const dataToPost = { id: updatedDoctor.id, ...objectsDiff(currentIssue, updatedDoctor) };
                             mutateItem(dataToPost);
                         }}
                         isSaving={isMutateLoading}
@@ -61,4 +61,4 @@ function ReviewsScreen() {
     );
 }
 
-export default ReviewsScreen;
+export default IssuesScreen;

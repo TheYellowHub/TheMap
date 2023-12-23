@@ -16,8 +16,8 @@ export default function useUser(user?: User) {
             try {
                 const response = await get(url);
                 return response?.data;
-            } catch (error: any) {
-                if (error?.response?.status === 404) {
+            } catch (error) {
+                if ((error as {response?: {status?: number}})?.response?.status === 404) {
                     return {
                         remoteId: userRemoteId,
                         savedDoctors: [],

@@ -7,7 +7,6 @@ from rest_framework.decorators import permission_classes
 from django_filters import MultipleChoiceFilter, rest_framework as filters
 import logging
 
-from users.models import User
 from users.auth import IsAdmin
 from ..models.review import DoctorReview
 from ..serializers.review import (
@@ -18,48 +17,6 @@ from ..serializers.review import (
 
 
 logger = logging.getLogger(__name__)
-
-
-class IsStatusAllowed(permissions.BasePermission):
-    """
-    Allow user to use only specific statuses.
-    """
-
-    def has_permission(self, request, view):
-        new_status = request.data.get("status")
-        permission = not new_status or new_status in DoctorReview.USER_ALLOWED_STATUSES
-        print("IsStatusAllowed", "has_permission", permission)
-        return permission
-
-    def has_object_permission(self, request, view, review_object: DoctorReview):
-        new_status = request.data.get("status")
-        current_status = review_object.status
-        permission = (
-            not new_status and current_status in DoctorReview.USER_ALLOWED_STATUSES
-        ) or (new_status and new_status in DoctorReview.USER_ALLOWED_STATUSES)
-        print("IsStatusAllowed", "has_object_permission", permission)
-        return permission
-
-
-class IsCurrentUser(permissions.BasePermission):
-    """
-    Object-level permission to only allow only the relevant user to edit its details.
-    """
-
-    def has_permission(self, request, view):
-        new_user_id = request.data.get("added_by")
-        new_user = User.objects.filter(id=new_user_id).first()
-        permission = new_user == request.user
-        print(
-            "IsCurrentUser", "has_permission", permission, new_user, str(request.user)
-        )
-        return permission
-
-    def has_object_permission(self, request, view, review_object: DoctorReview):
-        review_user: User = review_object.added_by
-        permission = review_user == request.user
-        print("IsCurrentUser", "has_object_permission", permission)
-        return permission
 
 
 class DoctorReviewFilter(filters.FilterSet):
@@ -84,9 +41,9 @@ class DoctorReviewListView(generics.ListAPIView):
     Get list of doctors with thies basic info, matching the search criteria.
     Usage:
         /api/doctors/review/list
-        /api/doctors/doctor/list?doctor__id=11
-        /api/doctors/doctor/list?added_by__remote_id=username
-        /api/doctors/doctor/list?&status=pending_approval
+        /api/doctors/review/list?doctor__id=11
+        /api/doctors/review/list?added_by__remote_id=username
+        /api/doctors/review/list?&status=pending_approval
     """
 
     queryset = DoctorReview.objects.all()
@@ -95,7 +52,7 @@ class DoctorReviewListView(generics.ListAPIView):
 
 
 PERMISSION_CLASSES = [
-    permissions.IsAuthenticated & (IsAdmin | (IsCurrentUser & IsStatusAllowed))
+    permissions.IsAuthenticated & (IsAdmin | (DoctorReview.getPermissionClasses().IsCurrentUser & DoctorReview.getPermissionClasses().IsStatusAllowed))
 ]
 
 

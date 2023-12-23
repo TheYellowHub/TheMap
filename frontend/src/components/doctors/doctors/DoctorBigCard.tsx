@@ -19,7 +19,7 @@ import DoctorLocationSelector from "./DoctorLocationSelector";
 import SaveDoctorIcon from "./SaveDoctorIcon";
 import BackButton from "../../utils/BackButton";
 import DoctorLocationCard from "./DoctorLocationCard";
-import ReportIssueModal from "../ReportIssueModal";
+import ReportIssueModal from "../../issues/ReportIssueModal";
 
 interface DoctorBigCardProps {
     doctor: Doctor;
@@ -57,7 +57,7 @@ function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation
                             <Col className="px-0 d-flex flex-grow-0 flex-nowrap">
                                 <OverlayTrigger placement="top-end" overlay={reportingIssue ? <></> : <Tooltip className="tooltip">Report an issue</Tooltip>}>
                                     <Col className="px-0 doctorBigCardButtons d-flex justify-content-end" sm="auto">
-                                        <Icon icon="fa-circle-info fa-sm " onClick={() => setReportingIssue(true)} />
+                                        <Icon icon="fa-circle-info fa-sm " onClick={() => user ? setReportingIssue(true) : login()} />
                                         <ReportIssueModal doctor={doctor} show={reportingIssue} onHide={() => setReportingIssue(false)} />
                                     </Col>
                                 </OverlayTrigger>
