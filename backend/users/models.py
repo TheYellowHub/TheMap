@@ -2,6 +2,8 @@ from django.db import models
 from django.db.models.signals import pre_delete
 from django.dispatch import receiver
 
+from . import auth0
+
 
 class User(models.Model):
     """
@@ -22,7 +24,7 @@ class User(models.Model):
         return str(self) == str(__value)
         
     def delete_remote_user(self):
-        print("delete_remote_user...")
+        auth0.delete(self)
 
 
 @receiver(pre_delete, sender=User)
