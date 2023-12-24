@@ -8,7 +8,7 @@ on:
         branches: ["ecr"] # ["main"]
 
 env:
-    AWS_REGION: us-east-1 # TODO: change?
+    AWS_REGION: us-east-1
     ECR_REPOSITORY: theyellowhub
 
 permissions:

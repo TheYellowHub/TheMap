@@ -10,7 +10,6 @@ interface SaveDoctorIconProps {
     iconClassName?: string;
 }
 
-
 export default function SaveDoctorIcon({doctor, colClassName, iconClassName} : SaveDoctorIconProps) {
     const { user, isAuthenticated, login } = useAuth();
     const { userInfo, mutateSavedDoctors } = useUser(user); // TODO: handle mutation errors?
