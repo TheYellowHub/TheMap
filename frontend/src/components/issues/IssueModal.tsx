@@ -39,6 +39,7 @@ function IssueModal({ issue, showModal, onCancel, onSave, isSaving, isSavingErro
             savingError={savingError}
         >
             {<strong>{issue.addedBy.remoteId}</strong>}
+            <br />
             {issue.description}
         </Modal>
     );
