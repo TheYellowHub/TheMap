@@ -993,17 +993,17 @@ input[type="checkbox"] {
 }
 
 .icon-select .react-select__menu {
-    position: absolute !important;
-    top: 0.6rem;
-    right: 0;
+    top: -2rem;
+    right: -2rem;
 }
 
-.icon-select .react-select__control {
-    display: none !important;
-}
-
-.icon-select .react-select__menu {
-    width: max-content !important;
+.icon-select .single-select,
+.icon-select .react-select__control,
+.icon-select .react-select__control * {
+    width: 0 !important;
+    height: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
 }
 
 /* Address field */

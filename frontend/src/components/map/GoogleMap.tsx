@@ -156,7 +156,7 @@ function GoogleMap({ center, currentLocation, markers = emptyMarkersArray as Mar
                                                         marker.onClick();
                                                     }
                                                 }}>
-                                                    <img src={marker.icon}/>{marker.title}
+                                                    <img src={marker.icon} className="pe-1"/>{marker.title}
                                                 </a>
                                             </div>
                                         ))}

@@ -119,7 +119,7 @@ export default function Select({
             onChange={(newValue) => onChange && onChange(newValue === null ? undefined : (newValue!.value as any))}
             isClearable={allowEmptySelection}
             isDisabled={disabled}
-            menuPosition={iconComponent ? "absolute" : "fixed"}
+            menuPosition={ "fixed"}
         />
     );
 

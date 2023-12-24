@@ -267,7 +267,7 @@ function SingleReviewForm({ originalReview, onCancel, setId }: SingleReviewFormP
                     />
                 </Form.Group>
                 <Form.Group as={Row} className="p-0 m-0 pb-2 d-flex flex-row align-items-center ">
-                    <Col className="px-0 py-1 m-0 pe-2 h-2" sm={"auto"}>
+                    <Col className="px-0 py-1 m-0 pe-2 h-2"  xs={11} xl={"auto"}>
                         <BooleanFormField<DoctorReview>
                             field={reviewFieldsMap.get("pastOperation") as BooleanField<DoctorReview>}
                             withLabel={true}
@@ -289,7 +289,7 @@ function SingleReviewForm({ originalReview, onCancel, setId }: SingleReviewFormP
                 </Form.Group>
                 {!review.pastOperation && (
                     <Form.Group as={Row} className="p-0 m-0 pb-1 d-flex flex-row align-items-center">
-                        <Col className="px-0 py-1 m-0 pe-2" sm={"auto"}>
+                        <Col className="px-0 py-1 m-0 pe-2" xs={11} xxl={"auto"}>
                             <BooleanFormField<DoctorReview>
                                 field={reviewFieldsMap.get("futureOperation") as BooleanField<DoctorReview>}
                                 withLabel={true}
