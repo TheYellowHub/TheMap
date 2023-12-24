@@ -18,6 +18,7 @@ import Button from "../components/utils/Button";
 import BackButton from "../components/utils/BackButton";
 import NoResults from "../components/doctors/search/NoResults";
 import { getCurrentUrl } from "../utils/utils";
+import { logPageView } from "../utils/log";
 
 interface MapScreenProps {
     onlyMyList?: boolean;
@@ -121,6 +122,7 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
             }
         }
         window.history.replaceState(null, "", currentDoctor ? `/${currentDoctor.id}/${currentDoctor.fullName.replaceAll(" ", "-")}/` : "/");
+        logPageView();
     }, [currentDoctor]);
 
     useEffect(() => {

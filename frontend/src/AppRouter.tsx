@@ -1,6 +1,5 @@
 import { Route, Routes } from "react-router-dom";
 import { useEffect } from "react";
-import ReactGA from "react-ga4";
 
 import MapScreen from "./screens/MapScreen";
 import DoctorCategoriesScreen from "./screens/doctors/DoctorCategoriesScreen";
@@ -9,13 +8,13 @@ import ReviewsScreen from "./screens/ReviewsScreen";
 import DoctorsScreen from "./screens/doctors/DoctorsScreen";
 import Login from "./auth/Login";
 import UserReviews from "./components/reviews/UserReviews";
-import { getCurrentUrl } from "./utils/utils";
 import IssuesScreen from "./screens/IssuesScreen";
 import DeleteAccountModal from "./auth/DeleteAccountModal";
+import { logPageView } from "./utils/log";
 
 function AppRouter() {
     useEffect(() => {
-        ReactGA.send({ hitType: "pageview", title: getCurrentUrl(false)});
+        logPageView();
     });
 
     return (
