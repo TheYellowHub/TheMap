@@ -19,7 +19,7 @@ export default function logError(error: Error) {
 export function logPageView() {
     const currentUrl = getCurrentUrl(false);
     if (isProductionEnv) {
-        ReactGA.send({ hitType: "pageview", page: currentUrl});
+        ReactGA.send({ hitType: "pageview", title: currentUrl, screen: currentUrl});
     } else {
         console.log("Page view", currentUrl);
     }
