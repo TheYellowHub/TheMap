@@ -73,7 +73,7 @@ export default function ReportIssueModal({ doctor, show, onHide }: ReportIssueMo
                         <Col className="m-0 p-0 d-flex flex-grow-0 justify-content-center">
                             <Button
                                 variant="primary"
-                                label="Save"
+                                label="Send"
                                 type="button"
                                 onClick={() => {
                                     reportValidity();
