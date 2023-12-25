@@ -33,7 +33,7 @@ export const newDoctorLocation = (): DoctorLocation => {
     return { privateOnly: false };
 };
 
-export const doctorStatuses = ["PENDING_APPROVAL", "APPROVED", "REJECTED"] as const;
+export const doctorStatuses = ["PENDING_APPROVAL", "APPROVED", "REJECTED", "RETIRED", "PASSED AWAY"] as const;
 export type DoctorStatus = (typeof doctorStatuses)[number];
 export const doctorStatusToString = (status: DoctorStatus) => status.replaceAll("_", " ");
 
