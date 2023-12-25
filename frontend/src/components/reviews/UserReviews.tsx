@@ -78,7 +78,7 @@ function UserReviews({
                                 {showDoctorName && (
                                     <Row key={`review-${review.id}-doctor`} className="m-0 p-0 pt-4 pb-1">
                                         <Col className="p-0 m-0">
-                                            <a href={`#/${review.doctor.id}`} className="strong">
+                                            <a href={`/${review.doctor.id}`} className="strong">
                                                 {review.doctor.fullName}
                                             </a>
                                         </Col>

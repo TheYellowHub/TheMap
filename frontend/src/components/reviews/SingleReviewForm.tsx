@@ -86,7 +86,7 @@ function SingleReviewForm({ originalReview, onCancel, setId }: SingleReviewFormP
     ]);
 
     const hisOrHer = review.doctor.gender === "F" ? "Her" : "His";
-    const myReviewsLink = <a href="#/user/reviews" onClick={onCancel} className="strong">My Reviews</a>;
+    const myReviewsLink = <a href="/user/reviews" onClick={onCancel} className="strong">My Reviews</a>;
     const guidelinesLink = getGuidelinesLink();
 
     useEffect(() => {    
