@@ -102,6 +102,9 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
 
     useEffect(() => {
         setCurrentDoctor(null);
+        if (onlyMyList) {
+            setMapIsOpen(false);
+        }
     }, [onlyMyList]);
 
     useEffect(() => {
@@ -144,7 +147,7 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
     }, [doctors, matchedDoctorsIncludingDistance, doctorIdParam, doctorIdParamWasUsed]);
 
     useEffect(() => {
-        if (0 < matchedDoctorsIncludingDistance.length && !mapIsOpen) {
+        if (0 < matchedDoctorsIncludingDistance.length && !mapIsOpen && !onlyMyList) {
             setMapIsOpen(true);
         }
     }, [matchedDoctorsIncludingDistance]);
@@ -154,18 +157,19 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
             <Container fluid>
                 {onlyMyList && currentDoctor === null && <BackButton onClick={() => history.back()} className="only-mobile mx-0" />}
                 <Row className="d-flex mt-2 mb-0 flex-md-nowrap gap-md-3">
-                    {onlyMyList && matchedDoctorsIncludingDistance.length === 0 && <NoResults 
-                        title="Saved providers"
-                        icon="fa-user-doctor" 
-                        subtitle="No Providers Saved"
-                        message="Save providers to your account for easy access while evaluating your care team."
-                        linkTitle="Find providers now"
-                        linkTo="#"
-                        className="m-3 w-50-desktop"
-                    />}
+                    {onlyMyList && <Col className={`mx-3 px-3`}>
+                        <Row className="xl-font w-700 mb-3">Saved providers</Row>
+                        {matchedDoctorsIncludingDistance.length === 0 && <NoResults 
+                            icon="fa-user-doctor" 
+                            subtitle="No Providers Saved"
+                            message="Save providers to your account for easy access while evaluating your care team."
+                            linkTitle="Find providers now"
+                            linkTo="#"
+                            className="my-3 w-50-desktop"
+                        />}
+                    </Col>}
                     
                     <Col className={`mx-3 px-3 ${onlyMyList && matchedDoctorsIncludingDistance.length === 0 ? "d-none" : ""}`} id={doctorsSearchColumnId}>
-                        {onlyMyList && <Row className="xl-font w-700 mb-3">Saved providers</Row>}
                         <Row className={`pb-2 mb-2 ${currentDoctor ? "only-desktop" : ""}`}>
                             <DoctorSearchFilters
                                 address={address}

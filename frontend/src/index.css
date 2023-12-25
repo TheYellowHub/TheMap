@@ -209,6 +209,10 @@
     width: 70% !important;
 }
 
+.w-80 {
+    width: 80% !important;
+}
+
 .w-fit-content,
 .w-fit-content div {
     width: fit-content;
@@ -316,6 +320,10 @@ a.a-no-decoration-line:hover {
 
 .pointer {
     cursor: pointer;
+}
+
+.cursor-inherit {
+    cursor: inherit !important;
 }
 
 .select-min-height .react-select__control {

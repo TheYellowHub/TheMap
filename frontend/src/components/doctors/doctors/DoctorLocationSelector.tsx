@@ -29,7 +29,10 @@ function DoctorLocationSelector({ doctor, currentDoctorLocation, setCurrentDocto
                     className={`${currentDoctorLocation && sameLocation(location, currentDoctorLocation) && 1 < doctor.locations.length ? "doctorLocationBtnSelected" : "doctorLocationBtn"}`}
                     icon={location === currentDoctorLocation ? "fa-hospital" : ""}
                     key={`${location?.hospitalName || location?.address}-btn`}
-                    onClick={() => setCurrentDoctorLocation(location)}
+                    onClick={(currentDoctorLocation && sameLocation(location, currentDoctorLocation))
+                        ? undefined 
+                        : () => setCurrentDoctorLocation(location)
+                    }
                 >
                     <div className="one-line-text">{location?.hospitalName || `Office ${index + 1}`}</div>
                     {location.privateOnly && (

@@ -51,7 +51,7 @@ function UserReviews({
 
     return (
         <Container className={`${containerClassName}`}>
-            <Row className="xl-font w-700 mb-3">My Reviews</Row>
+            {doctor === undefined && <Row className="xl-font w-700 mx-0 p-0 mb-3">My Reviews</Row>}
 
             {userInfo && (0 < notDeletedReviews.length  || allowAddingReview)
             ? (<Row className="m-0">

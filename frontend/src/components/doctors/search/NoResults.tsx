@@ -32,7 +32,7 @@ export default function NoResults({
                     {icon && <Row className="pb-4"><Col><Icon icon={`${icon} huge-icon`}/></Col></Row>}
                     {subtitle && <Row><Col className="med-dark-grey">{subtitle}</Col></Row>}
                 </Container>}
-                {(message || linkTitle) && <Container className="w-70">
+                {(message || linkTitle) && <Container className="w-80">
                     {message && <Row><Col>{message}</Col></Row>}
                     {linkTitle && <Row><Col><a className="a-only-hover-decoration text-decoration-underline" href={linkTo} onClick={onClick}>{linkTitle}</a></Col></Row>}
                 </Container>}
