@@ -310,6 +310,10 @@ a.a-no-decoration-line:hover {
     position: absolute;
 }
 
+[class*="tooltip"] {
+    border-radius: 6px !important;
+}
+
 .pointer {
     cursor: pointer;
 }

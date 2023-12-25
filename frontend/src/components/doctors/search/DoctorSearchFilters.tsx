@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Col, Container, Form, Row } from "react-bootstrap";
+import { Container, Row, Col, Form } from "react-bootstrap";
 
 import config from "../../../config.json";
 import { Location } from "../../../utils/googleMaps/useGoogleMaps";
@@ -14,6 +14,7 @@ import Select from "../../utils/Select";
 import { DoctorCategory } from "../../../types/doctors/doctorCategory";
 import useAuth from "../../../auth/useAuth";
 import useUser from "../../../hooks/auth/useUsers";
+import Tooltip from "../../utils/Tooltip";
 
 interface DoctorSearchFiltersProps {
     address: string | undefined;
@@ -226,20 +227,22 @@ export default function DoctorSearchFilters({
                             isMulti={true}
                         />
                     </Col>
-                    <Col xs={5} lg={3} className="px-0">
-                        <Select
-                            values={specialities.filter((speciality) => 0 < doctors.filter((doctor) => doctor.specialities.includes(speciality.name)).length).map((speciality: DoctorSpeciality) => speciality.name)}
-                            currentValue={specialitiesFilter}
-                            allowEmptySelection={true}
-                            placeHolder="All specialities"
-                            title="Specialities"
-                            onChange={(newValue: string[]) => {
-                                setSpecialitiesFilter(newValue);
-                                setValueChange(true);
-                            }}
-                            isMulti={true}
-                        />
-                    </Col>
+                    <Tooltip text={"Many providers haven’t disclosed specialties yet"}>
+                        <Col xs={5} lg={3} className="px-0">
+                            <Select
+                                values={specialities.filter((speciality) => 0 < doctors.filter((doctor) => doctor.specialities.includes(speciality.name)).length).map((speciality: DoctorSpeciality) => speciality.name)}
+                                currentValue={specialitiesFilter}
+                                allowEmptySelection={true}
+                                placeHolder="All specialities"
+                                title="Specialities"
+                                onChange={(newValue: string[]) => {
+                                    setSpecialitiesFilter(newValue);
+                                    setValueChange(true);
+                                }}
+                                isMulti={true}
+                            />
+                        </Col>
+                    </Tooltip>
                     <Col xs={6} lg={3} className="px-0">
                         <Select
                             values={Array.from(listOptions.keys())}

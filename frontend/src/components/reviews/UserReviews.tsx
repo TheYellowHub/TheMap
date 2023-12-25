@@ -51,6 +51,8 @@ function UserReviews({
 
     return (
         <Container className={`${containerClassName}`}>
+            <Row className="xl-font w-700 mb-3">My Reviews</Row>
+
             {userInfo && (0 < notDeletedReviews.length  || allowAddingReview)
             ? (<Row className="m-0">
                     {allowAddingReview && newReview && addingReview && (
@@ -92,7 +94,6 @@ function UserReviews({
                 </Row>
             )
             : <NoResults
-                title="My Reviews"
                 icon="fa-star" 
                 subtitle="No Reviews"
                 message="Review providers to help others reach the right care."
