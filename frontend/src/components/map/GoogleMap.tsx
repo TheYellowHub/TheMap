@@ -71,12 +71,11 @@ function GoogleMap({ center, currentLocation, markers = emptyMarkersArray as Mar
             if (center !== undefined) {
                 bounds.extend(center);
             }
+            
+            const originalMaxZoom = (mapRef.current as any).maxZoom;
+            mapRef.current.setOptions({maxZoom: minimalZoom});
             mapRef.current.fitBounds(bounds);
-
-            const newZoom = Math.min(minimalZoom, mapRef.current.getZoom()!);
-            if (newZoom) {
-                mapRef.current.setZoom(newZoom);
-            }
+            mapRef.current.setOptions({maxZoom: originalMaxZoom});
             setFitBoundsDone(true);
         }
     };
