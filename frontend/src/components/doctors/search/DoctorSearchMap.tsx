@@ -65,16 +65,23 @@ export default function DoctorSearchMap({
                     });
                 }
             }
+            
             setMarkers(matchedDoctorsMarkers);
         }
     }, [doctors, currentDoctor, currentDoctorLocation, centerLocation, boundsDistanceFromCenter]);
 
     return (
-        <Container fluid className="map px-0 mx-0">
-            <GoogleMap center={centerLocation} markers={markers} getGroupIcon={getGroupMarkerIcon} resetClicks={() => {
-                setCurrentDoctor(null);
-                setCurrentDoctorLocation(null);
-            }} />
+        <Container fluid className="map px-0 mx-0" key={`search-map-distance=${boundsDistanceFromCenter}`}>
+            <GoogleMap 
+                center={centerLocation} 
+                currentLocation={currentDoctorLocation?.lat && currentDoctorLocation?.lng  && {lat: currentDoctorLocation.lat, lng: currentDoctorLocation.lng} || undefined}
+                markers={markers} 
+                getGroupIcon={getGroupMarkerIcon} 
+                resetClicks={() => {
+                    setCurrentDoctor(null);
+                    setCurrentDoctorLocation(null);
+                }}
+            />
             <div className="aboveMap">
                 <a href="https://urlzs.com/bVdAh" target="_blank" rel="noreferrer">
                     <Button variant="primary" label="Recommend a doctor"></Button>

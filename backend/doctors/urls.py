@@ -23,9 +23,15 @@ from .views.doctor import (
 )
 
 from .views.review import (
-    DoctorReviewCreateView,
     DoctorReviewListView,
+    DoctorReviewCreateView,
     DoctorReviewUpdateView,
+)
+
+from .views.issue import (
+    DoctorIssueListView,
+    DoctorIssueCreateView,
+    DoctorIssueUpdateView,
 )
 
 urlpatterns = [
@@ -64,5 +70,15 @@ urlpatterns = [
         "review/<int:pk>/update",
         DoctorReviewUpdateView.as_view(),
         name="update-doctor-review",
+    ),
+    # Doctor's issues
+    path("issue/list", DoctorIssueListView.as_view(), name="list-doctors-issue"),
+    path(
+        "issue/create", DoctorIssueCreateView.as_view(), name="create-doctor-issue"
+    ),
+    path(
+        "issue/<int:pk>/update",
+        DoctorIssueUpdateView.as_view(),
+        name="update-doctor-issue",
     ),
 ]

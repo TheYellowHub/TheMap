@@ -8,7 +8,6 @@ import {
     getOperationMonthName,
     getOperationYear,
     setOperationMonthAndYear,
-    reviewStatusToString,
     reviewEditableStatuses,
 } from "../../types/doctors/review";
 import { useUserReviews } from "../../hooks/doctors/useReviews";
@@ -25,26 +24,22 @@ import { MonthName, monthNames } from "../../types/utils/dateTime";
 import { ID } from "../../types/utils/id";
 import useUser from "../../hooks/auth/useUsers";
 import useAuth from "../../auth/useAuth";
-import { UserInfo, userInfoFieldsMap } from "../../auth/userInfo";
+import SetUsernameModal from "./SetUsernameModal";
+import useFormValidation from "../../hooks/useFormValidation";
 
 interface SingleReviewFormProps {
     originalReview: DoctorReview;
-    setDeleted?: () => void;
+    onCancel: () => void;
     setId?: (id: ID) => void;
 }
 
-function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFormProps) {
+export const getGuidelinesLink = (text = "Community Guidelines", className = "strong") => <a href="https://www.theyellowhub.org/guidelines" className={className} target="_blank" rel="noreferrer">{text}</a>;
+
+function SingleReviewForm({ originalReview, onCancel, setId }: SingleReviewFormProps) {
     const [review, setReview] = useState(originalReview);
 
     const { user } = useAuth();
-    const { 
-        userInfo: originalUserInfo, 
-        mutateUsername, 
-        isUsernameMutationLoading,
-        isUsernameMutationSuccess,
-        isUsernameMutationError,
-        usernameMutationError, 
-    } = useUser(user);
+    const { userInfo } = useUser(user);
     const { 
         mutateItem, 
         mutateResult, 
@@ -56,28 +51,23 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
         review.addedBy,
         review.doctor
     );
-    const [userInfo, setUserInfo] = useState<UserInfo | undefined>();
 
     const disabled = !reviewEditableStatuses.includes(review.status);
 
-    type EditStatus = "DELETED" | "EDITING" | "SAVED" | "SUBMITTED";
+    type EditStatus = "EDITING" | "SAVED" | "SUBMITTED";
     const [editStatus, setEditStatus] = useState<EditStatus>("EDITING");
 
     const formRef = useRef<HTMLFormElement>(null);
+    const { reportValidity, isFormValid } = useFormValidation(formRef);
 
     const submitReview = (review: DoctorReview, newReviewStatue: ReviewStatus, newEditStatus: EditStatus) => {
-        const inputs: NodeListOf<HTMLInputElement> | undefined = formRef.current?.querySelectorAll("input, textarea");
-        inputs?.forEach((input) => input?.reportValidity());
+        reportValidity();
 
-        if (formRef?.current?.checkValidity() === true) {
+        if (isFormValid() === true) {
             const newReview = { ...review, status: newReviewStatue };
             setReview(newReview);
             mutateItem(newReview);
             setEditStatus(newEditStatus);
-
-            if (changingUsername && userInfo?.username !== originalUserInfo?.username) {
-                mutateUsername(userInfo!.username!);
-            }
         }
     };
 
@@ -95,33 +85,33 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
         { value: ANONYMOUS, label: "Anonymous" },
     ]);
 
+    const hisOrHer = review.doctor.gender === "F" ? "Her" : "His";
+    const myReviewsLink = <a href="/user/reviews" onClick={onCancel} className="strong">My Reviews</a>;
+    const guidelinesLink = getGuidelinesLink();
+
     useEffect(() => {    
-        if (originalUserInfo?.username) {
-            setUsernameFieldOptions([{ value: CURRENT_USERNAME, label: originalUserInfo.username! }, ...usernameFieldOptions]);
-            setChangingUsername(false);
-        }
-        setUserInfo({
-            ...originalUserInfo, 
-            username: originalUserInfo?.username ? originalUserInfo?.username : user?.nickname
-        } as UserInfo);
-    }, [originalUserInfo]);
-
-    useEffect(() => {
-        const inputs = formRef.current?.querySelectorAll("input, textarea");
-        inputs?.forEach((input) =>
-            input.addEventListener("input", (e) => {
-                (e.target as HTMLInputElement).reportValidity();
-            })
-        );
-    }, [formRef]);
-
-    useEffect(() => {
-        if (isMutateSuccess && isUsernameMutationSuccess) {
-            if (review.status === "DELETED") {
-                setDeleted && setDeleted();
+        const currentUsernameOptions = usernameFieldOptions.filter((option) => option.value === CURRENT_USERNAME);
+        if (userInfo?.username) { 
+                if (currentUsernameOptions.length == 0 
+                    || (currentUsernameOptions.length === 1 && currentUsernameOptions[0].value !== userInfo.username!)) {
+                setUsernameFieldOptions([
+                    { value: CURRENT_USERNAME, label: userInfo.username! }, 
+                    ...usernameFieldOptions.filter((option) => option.value !== CURRENT_USERNAME)
+                ]);
+                setChangingUsername(false);
+            }
+        } else {
+            if (!review?.anonymous) {
+                setChangingUsername(true);
             }
         }
-    }, [isMutateSuccess, isUsernameMutationSuccess]);
+    }, [userInfo, userInfo?.username]);
+
+    useEffect(() => {    
+        if (!changingUsername && !review.anonymous && userInfo?.username === undefined) {
+            setReview({...review, anonymous: true});
+        }
+    }, [changingUsername]);
 
     useEffect(() => {
         if (isMutateSuccess) {
@@ -165,7 +155,7 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
                 }}
                 object={review}
                 onChange={setReview}
-                className="d-inline-block w-fit-content" // select-min-height ?
+                className="d-inline-block"
                 allowEmptySelection={review.futureOperation}
             />
             <SingleSelectFormField<DoctorReview>
@@ -190,17 +180,45 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
                 }}
                 object={review}
                 onChange={setReview}
-                className="d-inline-block w-fit-content" // select-min-height ?
+                className="d-inline-block"
                 allowEmptySelection={review.futureOperation}
             />
         </>
     );
 
-    return (
-        <Form className="p-0 m-0" ref={formRef}>
+    return (<>
+        {user && <SetUsernameModal user={user} show={user !== undefined && changingUsername} onHide={() => {
+            setChangingUsername(false);
+            if (!userInfo?.username) {
+                setReview({...review, anonymous: true});
+            }
+        }}/>}
+
+        {editStatus === "SAVED" && isMutateSuccess
+        ? (
+            <Row className="p-0 m-0 pb-2 w-100 gap-3 text-center">
+                <Col className="m-0 p-0">
+                    <div className="pb-3 strong">Saved!</div>
+                    Your review is saved. 
+                    <br />You can find it under {myReviewsLink}.
+                </Col>
+            </Row>
+        )
+        : editStatus === "SUBMITTED" && isMutateSuccess
+        ? (
+            <Row className="p-0 m-0 w-100 gap-3 text-center">
+                <Col className="m-0 p-0">
+                    <div className="pb-3 strong">Thank you!</div>
+                    Your review has been submitted and will be approved shortly, 
+                    <br />as long as it complies with our {guidelinesLink}.
+                    <br />You can find it under {myReviewsLink}
+                </Col>
+            </Row>
+        )
+        : (<Form className="p-0 m-0" ref={formRef}>
             <fieldset disabled={disabled}>
-                <Form.Group as={Row} className="p-0 m-0 pb-2 gap-3  align-items-center">
-                    <Col className="m-0 p-0">
+                <Form.Group as={Row} className="p-0 m-0 pb-2 gap-3 d-flex flex-row flex-nowrap align-items-center">
+                    <Col className="m-0 p-0" xs={4} xl={3}>
                         <SingleSelectFormField<DoctorReview>
                             field={{
                                 type: "singleSelect",
@@ -226,22 +244,10 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
                             }}
                             object={review}
                             onChange={setReview}
-                            className="select-no-border d-inline-block"
+                            className="select-no-border h-3"
                         />
                     </Col>
-                    <Col className="m-0 p-0" xs="auto">
-                        {
-                            userInfo && changingUsername && 
-                            <InputFormField<UserInfo>
-                                field={userInfoFieldsMap.get("username") as TextField<UserInfo>}
-                                object={userInfo}
-                                onChange={setUserInfo}
-                                placeHolder="Username"
-                            />
-                        }
-                    </Col>
-                    <Col className="m-0 p-0 d-flex justify-content-end">{review.status !== "DRAFT" && reviewStatusToString(review.status)}</Col>
-                    <Col className="m-0 p-0 d-flex justify-content-end" xxl="auto">
+                    <Col className="m-0 p-0 d-flex justify-content-end">
                         {
                             <StarRating
                                 rating={review.rating || 0}
@@ -256,12 +262,12 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
                         field={reviewFieldsMap.get("description") as TextField<DoctorReview>}
                         object={review}
                         onChange={setReview}
-                        placeHolder="Her knowledge of endometriosis...&#13;Her listening...&#13;Her explanation before procedures...&#13;Outcomes are...&#13;"
+                        placeHolder={`${hisOrHer} knowledge of endometriosis...\n${hisOrHer} listening...\n${hisOrHer} explanation before procedures...\nOutcomes are...\n`}
                         className="textarea"
                     />
                 </Form.Group>
                 <Form.Group as={Row} className="p-0 m-0 pb-2 d-flex flex-row align-items-center ">
-                    <Col className="px-0 py-1 m-0 py-1 pe-2 h-2" sm={"auto"}>
+                    <Col className="px-0 py-1 m-0 pe-2 h-2"  xs={11} xl={"auto"}>
                         <BooleanFormField<DoctorReview>
                             field={reviewFieldsMap.get("pastOperation") as BooleanField<DoctorReview>}
                             withLabel={true}
@@ -279,11 +285,11 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
                             className="h-2"
                         />
                     </Col>
-                    <Col className="px-0 py-1 m-0 d-flex gap-2 h-2">{review.pastOperation && dateFields}</Col>
+                    <Col className="p-0 m-0 d-flex gap-2 h-2">{review.pastOperation && dateFields}</Col>
                 </Form.Group>
                 {!review.pastOperation && (
-                    <Form.Group as={Row} className="p-0 m-0 pb-2 d-flex flex-row align-items-center ">
-                        <Col className="p-0 m-0 py-1 pe-2" sm={"auto"}>
+                    <Form.Group as={Row} className="p-0 m-0 pb-1 d-flex flex-row align-items-center">
+                        <Col className="px-0 py-1 m-0 pe-2" xs={11} xxl={"auto"}>
                             <BooleanFormField<DoctorReview>
                                 field={reviewFieldsMap.get("futureOperation") as BooleanField<DoctorReview>}
                                 withLabel={true}
@@ -307,10 +313,10 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
                     </Form.Group>
                 )}
             </fieldset>
-            <Form.Group as={Row} className="p-0 m-0 pt-2 pb-3 w-100 gap-3">
+            <Form.Group as={Row} className="p-0 m-0 py-3 w-100 gap-3">
                 <OverlayTrigger
                     placement="bottom"
-                    overlay={<Tooltip className="tooltip">{review.id === undefined ? "Cancel" : "Delete"}</Tooltip>}
+                    overlay={<Tooltip className="tooltip">Cancel</Tooltip>}
                 >
                     <Col className="m-0 p-0 flex-grow-0">
                         <Button
@@ -318,23 +324,14 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
                             type="button"
                             className="p-0 m-0"
                             variant="no-colors"
-                            onClick={() => {
-                                const originalReviewWithId = {...originalReview, id: review.id}
-                                setReview(originalReviewWithId);
-                                if (originalReviewWithId.id !== undefined) {
-                                    submitReview(originalReviewWithId, "DELETED", "DELETED");
-                                } else {
-                                    setDeleted && setDeleted();
-                                }
-                            }}
-                            disabled={review.status === "DELETED"}
+                            onClick={onCancel}
                         >
                             <Icon icon="fa-close" padding={false} />
                         </Button>
                     </Col>
                 </OverlayTrigger>
                 <Col></Col>
-                <Col className="m-0 p-0 d-flex flex-grow-0 justify-content-end" xs={12} sm="auto">
+                <Col className="m-0 p-0 d-flex flex-grow-0 justify-content-center">
                     <Button
                         variant="secondary"
                         label="Save for later"
@@ -343,10 +340,10 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
                             submitReview(review, "DRAFT", "SAVED");
                         }}
                         disabled={disabled}
-                        className="w-100"
+                        className="w-max-content"
                     />
                 </Col>
-                <Col className="m-0 p-0 d-flex flex-grow-0 justify-content-end" xs={12} sm="auto">
+                <Col className="m-0 p-0 d-flex flex-grow-0 justify-content-center">
                     <Button
                         variant="primary"
                         label="Submit"
@@ -355,36 +352,19 @@ function SingleReviewForm({ originalReview, setDeleted, setId }: SingleReviewFor
                             submitReview(review, "PENDING_APPROVAL", "SUBMITTED");
                         }}
                         disabled={disabled}
-                        className="w-100"
+                        className="w-max-content"
                     />
                 </Col>
             </Form.Group>
             <LoadingWrapper
-                isLoading={isMutateLoading || isUsernameMutationLoading}
-                isError={isMutateError || isUsernameMutationError}
-                error={mutateError as ResponseError || usernameMutationError as ResponseError}
+                isLoading={isMutateLoading}
+                isError={isMutateError}
+                error={mutateError as ResponseError}
                 loaderSize={20}
                 loaderText="Submitting..."
-            >
-                {editStatus == "SAVED" && (
-                    <Row className="p-0 m-0 pb-2 w-100 gap-3">
-                        <Col className="m-0 p-0">
-                            <strong>Saved!</strong> Your review is saved. You can find it under{" "}
-                            <a href="#/user/reviews">My Reviews</a>.
-                        </Col>
-                    </Row>
-                )}
-                {editStatus == "SUBMITTED" && (
-                    <Row className="p-0 m-0 w-100 gap-3">
-                        <Col className="m-0 p-0">
-                            <strong>Thank you!</strong> Your review has been submitted and will be approved shortly, as
-                            long as it complies with our <a href="https://www.theyellowhub.org/guidelines" target="_blank" rel="noreferrer">Community Guidelines</a>.
-                        </Col>
-                    </Row>
-                )}
-            </LoadingWrapper>
-        </Form>
-    );
+            />
+        </Form>)}
+    </>);
 }
 
 export default SingleReviewForm;

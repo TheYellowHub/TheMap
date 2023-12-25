@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Icon from "./Icon";
+import Button from "./Button";
 
 interface StarRatingProps {
     rating: number;
@@ -36,7 +37,7 @@ function StarRating({ rating, setRating, color = false }: StarRatingProps) {
         return stars;
     }
 
-    return <div className="d-flex flex-nowrap m-0 p-0 pe-1">{renderStars()}</div>;
+    return <div className="d-flex flex-nowrap m-0 p-0">{renderStars()}</div>;
 }
 
 export default StarRating;

@@ -74,10 +74,15 @@ export default function useApiRequests() {
         return axios.put(url, prepareData(data, shouldExcludeId), await getConfig());
     }
 
+    async function deleteItem(url: RequestUrl) {
+        return axios.delete(url, await getConfig());
+    }
+
     return {
         get: get,
         post: post,
         put: put,
         patch: patch,
+        deleteItem: deleteItem,
     };
 }

@@ -9,6 +9,11 @@ import { ID } from "../utils/id";
 import { Phone } from "../utils/phone";
 import { Url } from "../utils/url";
 
+export type AbstractLocation = {
+    lat?: number;
+    lng?: number;
+};
+
 export type DoctorLocation = {
     hospitalName?: string;
     address?: string;
@@ -19,6 +24,10 @@ export type DoctorLocation = {
     website?: Url;
     privateOnly: boolean;
 };
+
+export const locationToStr = (location: AbstractLocation) => `location-${Number(location.lat).toFixed(7)}/${Number(location.lng).toFixed(7)}`;
+
+export const sameLocation = (a: AbstractLocation, b: AbstractLocation) => locationToStr(a) === locationToStr(b);
 
 export const newDoctorLocation = (): DoctorLocation => {
     return { privateOnly: false };

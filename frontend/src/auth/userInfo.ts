@@ -8,6 +8,8 @@ export type UserInfo = {
     savedDoctors?: ID[];
 };
 
+export const sameUser = (a?: UserInfo, b?: UserInfo) => a?.remoteId === b?.remoteId;
+
 export const userInfoFieldsMap: ReadonlyMap<string, ModalField<UserInfo>> = new Map([
     [
         "ID",

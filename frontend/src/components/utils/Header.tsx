@@ -5,12 +5,21 @@ import { EventKey, SelectCallback } from "@restart/ui/esm/types";
 import useAuth from "../../auth/useAuth";
 import Icon from "./Icon";
 import { Link } from "react-router-dom";
+import useUser from "../../hooks/auth/useUsers";
+import { useUserReviews } from "../../hooks/doctors/useReviews";
+import { DoctorReview } from "../../types/doctors/review";
+import DeleteAccountModal from "../../auth/DeleteAccountModal";
 
 function Header() {
-    const { user, isAuthenticated, isAdmin, login, logout } = useAuth();
-
     const [selectedPage, setSelectedPage] = useState<EventKey>("");
     const [selectedSubMenu, setSelectedSubMenu] = useState<EventKey | null>(null);
+
+    const { user, isAuthenticated, isAdmin, login, logout } = useAuth();
+    const { userInfo } = useUser();
+    const userReviews = useUserReviews(userInfo!).data.filter((review: DoctorReview) => review.status !== "DELETED");
+    const [deletingAccount, setDeletingAccount] = useState(false);
+
+    const dontHandleEventKey = "dontHandleEventKey";
 
     type Link = {
         title: string;
@@ -18,11 +27,19 @@ function Header() {
         onClick?: React.MouseEventHandler;
         newWindow?: boolean;
         icon?: string;
+        eventKey?: string;
     };
+
+    type Title = {
+        title: string;
+        to: undefined;
+    };
+
+    type Separator = "Separator";
 
     type LinksGroup = {
         title: string;
-        links: Link[];
+        links: (Link | Title | Separator)[];
         icon?: string;
     };
 
@@ -33,7 +50,7 @@ function Header() {
             <>
                 {link.icon && (
                     <div className="navbar-icon-border">
-                        <Icon icon={link.icon} />
+                        <Icon icon={link.icon} padding={false} solid={false} />
                     </div>
                 )}
                 {link.title}
@@ -64,36 +81,34 @@ function Header() {
     const userMenu = {
         title: "My account",
         links: [
-            // TODO
-            // {
-            //     to: "/user/profile",
-            //     title: (user?.nickname && capitalizeFirstLetter(user.nickname)) || "My account",
-            //     icon: "fa-user",
-            // },
+            {
+                title: `${user?.email || user?.nickname}`,
+                to: undefined,
+            },
             {
                 to: "/user/saved",
-                title: "Saved",
+                title: `Saved Providers (${userInfo?.savedDoctors?.length || "0"})`,
                 icon: "fa-bookmark",
             },
             {
                 to: "/user/reviews",
-                title: "My reviews",
-                icon: "fa-star-half-stroke",
+                title: `My reviews (${userReviews.length || "0"})`,
+                icon: "fa-star",
             },
             {
                 to: "/",
                 onClick: logout,
                 title: "Log out",
                 icon: "fa-power-off",
+                eventKey: dontHandleEventKey
             },
-            // {
-            //     to: "/user/notifications",
-            //     title: "Notifications",
-            // },
-            // {
-            //     to: "/user/addeddoctors",
-            //     title: "Doctors I added",
-            // },
+            "Separator" as Separator,
+            {
+                to: "/",
+                onClick: () => setDeletingAccount(true),
+                title: "Delete account",
+                eventKey: dontHandleEventKey
+            },
         ],
     };
 
@@ -116,11 +131,10 @@ function Header() {
                 to: "/admin/reviews",
                 title: "Reviews",
             },
-            // TODO
-            // {
-            //     to: "/usage",
-            //     title: "Usage statictics",
-            // },
+            {
+                to: "/admin/issues",
+                title: "Issues",
+            },
         ],
     };
 
@@ -139,9 +153,12 @@ function Header() {
             });
         }
         setLinks(newLinks);
-    }, [user, isAuthenticated, isAdmin]);
+    }, [user, isAuthenticated, isAdmin, userInfo?.savedDoctors?.length, userReviews.length]);
 
-    return (
+    return (<>
+
+        <DeleteAccountModal show={deletingAccount} onHide={() => setDeletingAccount(false)} />
+
         <Navbar expand="lg" className="aboveAll header" collapseOnSelect>
             <Nav.Link as={Link} to="http://theyellowhub.org/" target="_blank" className="no-padding">
                 <Navbar.Brand>
@@ -151,14 +168,16 @@ function Header() {
             
             <Navbar.Toggle aria-controls="navbarCollapse" />
 
-            <Navbar.Collapse id="navbarCollapse">
-                <Nav activeKey={selectedPage as EventKey} onSelect={setSelectedPage as SelectCallback}>
-                    {links.map((link: LinksGroup | Link) => {
+            <Navbar.Collapse id="navbarCollapse" key={`${user?.sub}-menu`}>
+                <Nav activeKey={selectedPage as EventKey} onSelect={
+                    ((eventKey: string) => eventKey !== dontHandleEventKey && setSelectedPage(eventKey)) as SelectCallback
+                }>
+                    {links.map((link: LinksGroup | Link, index) => {
                         if (isGroup(link)) {
                             const dropdown = link;
                             return (
                                 <NavDropdown
-                                    key={dropdown.title}
+                                    key={`${index}-${dropdown.title}`}
                                     active={selectedSubMenu === dropdown.title}
                                     title={
                                         <>
@@ -167,18 +186,22 @@ function Header() {
                                         </>
                                     }
                                 >
-                                    {dropdown.links.map((link) => (
-                                        <NavDropdown.Item
+                                    {dropdown.links.map((link, index) => 
+                                        link === "Separator" 
+                                        ? <div key={`${index}-Separator`} className="d-flex justify-content-center py-1"><img src="/images/line.png" width="90%"/></div>
+                                        : link.to === undefined
+                                        ? <div key={`${index}-${dropdown.title}`} className="dropdown-title med-grey pb-2">{link.title}</div>
+                                        : (<NavDropdown.Item
                                             className="d-flex"
-                                            key={link.to}
+                                            key={`${index}-${dropdown.title}`}
                                             as={Link}
                                             to={link.to}
                                             target={isExternalLink(link) ? "_blank" : "_self"}
                                             onClick={(e) => {
-                                                setSelectedSubMenu(dropdown.title);
+                                                link.eventKey !== dontHandleEventKey && setSelectedSubMenu(dropdown.title);
                                                 link.onClick && link.onClick(e);
                                             }}
-                                            eventKey={link.to}
+                                            eventKey={link.eventKey || link.to}
                                         >
                                             {getMenuItemContent(link)}
                                         </NavDropdown.Item>
@@ -188,7 +211,7 @@ function Header() {
                         } else {
                             return (
                                 <Nav.Link
-                                    key={link.to}
+                                    key={`${index}-${link.title}`}
                                     as={Link}
                                     to={link.to}
                                     target={isExternalLink(link) ? "_blank" : "_self"}
@@ -206,7 +229,7 @@ function Header() {
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
-    );
+    </>);
 }
 
 export default Header;

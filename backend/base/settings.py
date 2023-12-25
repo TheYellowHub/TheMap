@@ -166,6 +166,8 @@ JWT_AUTH = {
     "JWT_DOMAIN": os.environ.get("REACT_APP_AUTH0_DOMAIN"),
     "JWT_ISSUER": f"https://{os.environ.get('REACT_APP_AUTH0_DOMAIN')}/",
     "JWT_AUTH_HEADER_PREFIX": "Bearer",
+    "JWT_MANAGMENT_API_CLIENT_ID": os.environ.get("AUTH0_MANAGMENT_API_CLIENT_ID"),
+    "JWT_MANAGMENT_API_CLIENT_SECRET": os.environ.get("AUTH0_MANAGMENT_API_CLIENT_SECRET")
 }
 
 

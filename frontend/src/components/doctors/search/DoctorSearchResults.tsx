@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 
-import { Doctor } from "../../../types/doctors/doctor";
+import { Doctor, DoctorLocation } from "../../../types/doctors/doctor";
 import DoctorSmallCard, { doctorSmallCardClassName } from "../doctors/DoctorSmallCard";
 import Pagination from "../../utils/Pagination";
 import { DistanceUnit } from "../../utils/DistanceUnit";
@@ -12,22 +12,30 @@ interface DoctorSearchResultsProps {
     doctors: Doctor[];
     currentDoctor: Doctor | null;
     setCurrentDoctor: (currentDoctor: Doctor | null) => void;
+    currentDoctorLocation: DoctorLocation | null;
+    setCurrentDoctorLocation: (currentDoctorLocation: DoctorLocation | null) => void;
     locationForDistanceCalculation: Location | undefined;
     distanceUnit: DistanceUnit;
-    pagination: boolean
+    isMapBelowRsults: () => boolean;
+    pagination?: boolean;
 }
 
 export default function DoctorSearchResuls({
     doctors,
     currentDoctor,
     setCurrentDoctor,
+    currentDoctorLocation,
+    setCurrentDoctorLocation,
     locationForDistanceCalculation,
     distanceUnit,
-    pagination
+    isMapBelowRsults,
+    pagination = false,
 }: DoctorSearchResultsProps) {
     const [doctorsInPage, setDoctorsInPage] = useState<Doctor[]>([]);
     const [pageIndex, setPageIndex] = useState(0);
     const [pageSize, setPageSize] = useState(10);
+    const [pageYOffset, setPageYOffset] = useState<number | undefined>(undefined);
+    const [onlyDivScroll, setOnlyDivScroll] = useState(false);
 
     const [dimensions, setDimensions] = useState({
         width: window.innerWidth,
@@ -37,28 +45,37 @@ export default function DoctorSearchResuls({
     const doctorCardsContainerId = "doctorSmallCards";
 
     const readjustPageSize = () => {
-        if (pagination) {
-            const rem = 16;
-            const paddingBetween = 1.5 * rem;
+        const cardsDiv = document.getElementById(doctorCardsContainerId);
+        const footer = document.getElementsByName("footer");
+        const isMapBelowRsultsNow = isMapBelowRsults();
+        const newOnlyDivScroll = !pagination && !isMapBelowRsultsNow;
+        setOnlyDivScroll(newOnlyDivScroll);
 
-            const cardsDivWidth = 0.7 * window.innerWidth;
-            const cardsDivHeight = window.innerHeight - 400;
-            const doctorCards = Array.from(document.getElementsByClassName(doctorSmallCardClassName));
-            const cardWidth = 0 < doctorCards.length ? doctorCards[0].clientWidth : 26 * rem;
-            const cardHeight = 0 < doctorCards.length ? doctorCards[0].clientHeight : 9 * rem;
-            // cardsDivWidth = cols * cardWidth + (cols - 1) * paddingBetween
-            const cols = Math.max(1200 < window.innerWidth ? 2 : 1, Math.floor((cardsDivWidth + paddingBetween) / (cardWidth + paddingBetween)));
-            const rows = Math.max(1, Math.floor(cardsDivHeight / (cardHeight + 2 * rem)));
-            
-            const newPageSize = cols * rows;
-            if (pageSize !== newPageSize) {
-                setPageSize(newPageSize);
-            }
-                
-            const cardsDiv = document.getElementById(doctorCardsContainerId);
-            if (cardsDiv !== null) {
-                const width = (cols * cardWidth + (cols - 1) * paddingBetween).toString() + "px";
+        if (cardsDiv !== null) {
+            const cardsDivHeight = window.innerHeight - (0 < footer.length ? footer[0].getBoundingClientRect().top : 0) - cardsDiv.getBoundingClientRect().top - 60;
+            cardsDiv.style.maxHeight = newOnlyDivScroll ? (cardsDivHeight.toString() + "px") : "none";
+
+            if (!isMapBelowRsultsNow) {
+                const scrollerWidth = 30;
+                const cardsDivWidth = Math.min(0.70 * window.innerWidth - scrollerWidth, window.innerWidth - 300);
+                const rem = 16;
+                const paddingBetween = window.innerWidth * 0.1;
+                const doctorCards = Array.from(document.getElementsByClassName(doctorSmallCardClassName));
+                const cardWidth = 0 < doctorCards.length ? doctorCards[0].clientWidth : 26 * rem;
+                const cardHeight = 0 < doctorCards.length ? doctorCards[0].clientHeight : 9 * rem;
+                // cardsDivWidth = cols * cardWidth + (cols - 1) * paddingBetween
+                const cols = Math.max(1, Math.floor((cardsDivWidth + paddingBetween) / (cardWidth + paddingBetween)));
+                const rows = Math.max(1, Math.floor((cardsDivHeight + paddingBetween) / (cardHeight + paddingBetween)));
+
+                const width = (cols * cardWidth + (cols - 1) * paddingBetween + scrollerWidth).toString() + "px";
                 cardsDiv.style.minWidth = width;
+
+                if (pagination) {
+                    const newPageSize = cols * rows;
+                    if (pageSize !== newPageSize) {
+                        setPageSize(newPageSize);
+                    }
+                }
             }
         }
     };
@@ -74,6 +91,13 @@ export default function DoctorSearchResuls({
     };
 
     useEffect(() => {
+        if (pageYOffset !== undefined && currentDoctor === null) {
+            (onlyDivScroll ? document.getElementById(doctorCardsContainerId)! : window).scrollTo(0, pageYOffset);
+            setPageYOffset(undefined);
+        }
+    });
+
+    useEffect(() => {
         window.addEventListener("resize", handleResize, false);
         readjustPageSize();
     }, []);
@@ -84,10 +108,10 @@ export default function DoctorSearchResuls({
 
     return (
         <>
-            <Row className="px-0 mx-0 py-2 my-2">
+            <Row className="px-0 mx-0">
                 <Container
                     id={doctorCardsContainerId}
-                    className="d-flex flex-wrap gap-4 px-0 mx-0"
+                    className={`d-flex flex-wrap row-gap-4 column-gap-10p px-0 mx-0 ${onlyDivScroll ? "overflow-y-auto-hover" : ""}`}
                 >
                     {currentDoctor === null ? (
                         doctorsInPage.map((doctor: Doctor) => (
@@ -95,8 +119,8 @@ export default function DoctorSearchResuls({
                                 key={doctor.id}
                                 doctor={doctor}
                                 locationForDistanceCalculation={locationForDistanceCalculation}
-                                distanceUnit={distanceUnit}
                                 onClick={() => {
+                                    setPageYOffset(onlyDivScroll ? document.getElementById(doctorCardsContainerId)?.scrollTop : window.scrollY);
                                     setCurrentDoctor(doctor);
                                 }}
                             />
@@ -104,6 +128,8 @@ export default function DoctorSearchResuls({
                     ) : (
                         <DoctorBigCard
                             doctor={currentDoctor}
+                            currentDoctorLocation={currentDoctorLocation}
+                            setCurrentDoctorLocation={setCurrentDoctorLocation}
                             locationForDistanceCalculation={locationForDistanceCalculation}
                             distanceUnit={distanceUnit}
                             onClose={() => {

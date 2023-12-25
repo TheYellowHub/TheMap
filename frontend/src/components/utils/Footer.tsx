@@ -1,45 +1,52 @@
 import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import useDetectScroll, {
-    Axis,
-    Direction
-} from '@smakss/react-scroll-direction'; 
+import useDetectScroll from "@smakss/react-scroll-direction"; 
 
 import Icon from "./Icon";
 import { useEffect, useState } from "react";
+import { MAP_CONTAINER_ID as mapContainerId } from "../../screens/MapScreen";
+import { getProperty, setProperty } from "../../utils/css";
+
+export const footerHeightCssVariable = "--footer-height";
 
 function Footer() {
     const scrollDir = useDetectScroll();
     const [isMobile, setIsMobile] = useState(false);
+    const [isMapOpen, setIsMapOpen] = useState(false);
     const [displayFooterOnMobile, setDisplayFooterOnMobile] = useState(false);
     const [footerHeightDesktop, setFooterHeightDesktop] = useState<string>();
     const [footerHeightMobile, setFooterHeightMobile] = useState<string>();
     const mobileBreakingpointCssVariable = "--is-mobile-bp";
-    const footerHeightCssVariable = "--footer-height";
     const footerHeightDesktopCssVariable = "--footer-height-desktop";
     const footerHeightMobileCssVariable = "--footer-height-mobile";
 
-    const getRoot = () => (document.querySelector(':root')! as HTMLElement);
-    const getProperty = (property: string) => getComputedStyle(getRoot()).getPropertyValue(property);
-    const setProperty = (property: string, value: string) => getRoot().style.setProperty(property, value);
     const setFooterCurrentHeight = (value: string) => setProperty(footerHeightCssVariable, value);
     const zeroHeight = "0";
 
     const saveOriginalFooterHeight = () => {
         setFooterHeightDesktop(getProperty(footerHeightDesktopCssVariable));
         setFooterHeightMobile(getProperty(footerHeightMobileCssVariable));
-    }
+    };
 
     const checkIfMobile = () => {
         const isMobileNow = window.innerWidth <= Number(getProperty(mobileBreakingpointCssVariable));
         setIsMobile(isMobileNow);
-    }
+    };
+
+    const mapResizeObserver = new ResizeObserver((entries) => setIsMapOpen(entries[0].contentRect.height !== 0));
 
     useEffect(() => {
         saveOriginalFooterHeight();
         checkIfMobile();
         window.addEventListener("resize", checkIfMobile, false);
     }, []);
+
+    useEffect(() => {
+        const mapElement = document.getElementById(mapContainerId);
+        if (mapElement) {
+            mapResizeObserver.observe(mapElement);
+        }
+    });
 
     useEffect(() => {
         if (isMobile) {
@@ -51,7 +58,14 @@ function Footer() {
     }, [isMobile]);
 
     useEffect(() => {
-        if (scrollDir === "down") {
+        if (isMobile && isMapOpen) {
+            setFooterCurrentHeight(zeroHeight);
+            setDisplayFooterOnMobile(false);
+        }
+    }, [isMapOpen]);
+
+    useEffect(() => {
+        if (scrollDir === "down" && !isMapOpen) {
             setDisplayFooterOnMobile(true);
             setFooterCurrentHeight(footerHeightMobile!);
         } else if (scrollDir === "up") {
@@ -72,7 +86,7 @@ function Footer() {
         <a href="mailto:hana.benami@gmail.com" target="_blank" rel="noreferrer">
             Hana Oliver
         </a>
-    </div>)
+    </div>);
 
     return (
         <Container fluid>

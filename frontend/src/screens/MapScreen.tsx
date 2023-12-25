@@ -15,12 +15,17 @@ import useGoogleMaps, { Location } from "../utils/googleMaps/useGoogleMaps";
 import DoctorSearchAddressFilter from "../components/doctors/search/DoctorSearchAddressFilter";
 import { useParams } from "react-router-dom";
 import Button from "../components/utils/Button";
+import BackButton from "../components/utils/BackButton";
+import NoResults from "../components/doctors/search/NoResults";
+import { logPageView } from "../utils/log";
 
 interface MapScreenProps {
-    startWithMyList?: boolean;
+    onlyMyList?: boolean;
 }
 
-function MapScreen({ startWithMyList = false }: MapScreenProps) {
+export const MAP_CONTAINER_ID = "map-container";
+
+function MapScreen({ onlyMyList = false }: MapScreenProps) {
     const { data: doctors, isListLoading, isListError, listError } = useDoctors();
     const { id: doctorIdParam } = useParams();
     const [doctorIdParamWasUsed, setDoctorIdParamWasUsed] = useState(false);
@@ -30,9 +35,6 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
     const [matchedDoctorsIncludingDistance, setMatchedDoctorsIncludingDistance] = useState<Doctor[]>([]);
     const [currentDoctor, setCurrentDoctor] = useState<Doctor | null>(null);
     const [currentDoctorLocation, setCurrentDoctorLocation] = useState<DoctorLocation | null>(null);
-
-    const myListFilterName = "My list";
-    const [listFilter, setListFilter] = useState<string | undefined>();
 
     const { setCurrentLocation, getAddress } = useGoogleMaps();
     const [address, setAddress] = useState<string | undefined>(undefined);
@@ -48,9 +50,8 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
     const doctorsSearchColumnId = "doctors-search-column";
     const doctorsMapColumnId = "doctors-map-column";
     const [mapIsOpen, setMapIsOpen] = useState(false);
-    const [pagination, setPagination] = useState(true);
+
     const mapNode = (<DoctorSearchMap
-        key={`DoctorSearchMap-Pagination:${pagination.toString()}`}
         doctors={matchedDoctorsIgnoringDistance}
         centerLocation={addressLocation}
         boundsDistanceFromCenter={distance}
@@ -71,25 +72,13 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
         });
     };
 
-    const handleResize = () => {
+    const isMapBelowRsults = () => {
         const mapColumn = document.getElementById(doctorsMapColumnId);
-        const newPagination = mapColumn !== null && window.getComputedStyle(mapColumn, null).display.toLowerCase() !== "none";
-        if (newPagination !== pagination) {
-            setPagination(newPagination);
-        }
+        return mapColumn !== null && window.getComputedStyle(mapColumn, null).display.toLowerCase() === "none";
     };
 
     useEffect(() => {
-        window.addEventListener("resize", handleResize);
-    }, []);
-
-    useEffect(() => {
-        handleResize();
-    });
-
-    useEffect(() => {
         if (shouldClearFilters) {
-            setShouldClearFilters(false);
             if (currentDoctor !== null) {
                 setCurrentDoctor(null);
             }
@@ -112,6 +101,10 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
     }, [filterChangeSinceLastDoctorPick]);
 
     useEffect(() => {
+        setCurrentDoctor(null);
+    }, [onlyMyList]);
+
+    useEffect(() => {
         if (currentDoctor === null) {
             setCurrentDoctorLocation(null);
         } else if (currentDoctor !== null) {
@@ -126,9 +119,9 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
                     setCurrentDoctorLocation(currentDoctor.locations[0]);
                 }
             }
-            // document.getElementById(doctorsSearchResultsId)?.scrollIntoView();
         }
-        window.history.replaceState(null, "", `#/${currentDoctor?.id || ""}`);
+        window.history.replaceState(null, "", currentDoctor ? `/${currentDoctor.id}/${currentDoctor.fullName.replaceAll(" ", "-")}/` : "/");
+        logPageView();
     }, [currentDoctor]);
 
     useEffect(() => {
@@ -150,12 +143,29 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
         }
     }, [doctors, matchedDoctorsIncludingDistance, doctorIdParam, doctorIdParamWasUsed]);
 
+    useEffect(() => {
+        if (0 < matchedDoctorsIncludingDistance.length && !mapIsOpen) {
+            setMapIsOpen(true);
+        }
+    }, [matchedDoctorsIncludingDistance]);
+
     return (
-        <LoadingWrapper isLoading={isListLoading} isError={isListError} error={listError as ResponseError}>
+        <LoadingWrapper isLoading={isListLoading} isError={isListError} error={listError as ResponseError} center={true}>
             <Container fluid>
-                <Row className="d-flex mt-2 mb-0 flex-md-nowrap">
-                    <Col className="mx-3 px-3" id={doctorsSearchColumnId}>
-                        <Row className="pb-2 mb-2">
+                {onlyMyList && currentDoctor === null && <BackButton onClick={() => history.back()} className="only-mobile mx-0" />}
+                <Row className="d-flex mt-2 mb-0 flex-md-nowrap gap-md-3">
+                    {onlyMyList && matchedDoctorsIncludingDistance.length === 0 && <NoResults 
+                        title="Saved providers"
+                        icon="fa-user-doctor" 
+                        subtitle="No Providers Saved"
+                        message="Save providers to your account for easy access while evaluating your care team."
+                        linkTitle="Find providers now"
+                        linkTo="#"
+                        className="m-3 w-50-desktop"
+                    />}
+                    
+                    <Col className={`mx-3 px-3 ${onlyMyList && matchedDoctorsIncludingDistance.length === 0 ? "d-none" : ""}`} id={doctorsSearchColumnId}>
+                        <Row className={`pb-2 mb-2 ${currentDoctor ? "only-desktop" : ""}`}>
                             <DoctorSearchFilters
                                 address={address}
                                 setAddress={setAddress}
@@ -165,10 +175,7 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
                                 distance={distance}
                                 setDistance={setDistance}
                                 distanceUnit={distanceUnit}
-                                startWithMyList={startWithMyList}
-                                myListFilterName={myListFilterName}
-                                listFilter={listFilter}
-                                setListFilter={setListFilter}
+                                onlyMyList={onlyMyList}
                                 doctors={doctors}
                                 setMatchedDoctorsIgnoringDistance={setMatchedDoctorsIgnoringDistance}
                                 setMatchedDoctorsIncludingDistance={setMatchedDoctorsIncludingDistance}
@@ -177,10 +184,9 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
                                 shouldClearAddress={shouldClearAddress}
                                 setShouldClearAddress={setShouldClearAddress}
                                 setValueChange={setFilterChangeSinceLastDoctorPick}
-                                className={currentDoctor ? "only-desktop" : ""}
                             />
 
-                            {config.app.forceAddressInput && address === undefined && currentDoctor === null && !startWithMyList && (
+                            {config.app.forceAddressInput && address === undefined && currentDoctor === null && !onlyMyList && (
                                 <ReactModal
                                     className="transparent d-flex justify-content-center big-address-filter"
                                     show={true}
@@ -198,8 +204,8 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
                             )}
                         </Row>
 
-                        {!currentDoctor && <Row className="d-flex py-2 my-2 gap-3">
-                            <Col className=" p-0">
+                        {!currentDoctor && !onlyMyList && <Row className="d-flex pb-2 mb-2 gap-3">
+                            <Col className="p-0">
                                 <div className="med-dark-grey sm-font fst-italic d-inline">
                                     {matchedDoctorsIncludingDistance.length} results
                                     {address && distance && (
@@ -218,16 +224,17 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
                             </Col>
                         </Row>}
 
-                        <Row className="py-2 my-2" id={doctorsSearchResultsId}>
+                        <Row className="py-md-2 my-md-2" id={doctorsSearchResultsId}>
                             {currentDoctor !== null || matchedDoctorsIncludingDistance.length > 0 ? (
                                 <DoctorSearchResults
-                                    key={`DoctorSearchResults-Pagination:${pagination.toString()}`}
                                     doctors={matchedDoctorsIncludingDistance}
                                     currentDoctor={currentDoctor}
                                     setCurrentDoctor={setCurrentDoctor}
+                                    currentDoctorLocation={currentDoctorLocation}
+                                    setCurrentDoctorLocation={setCurrentDoctorLocation}
                                     locationForDistanceCalculation={addressLocation}
                                     distanceUnit={distanceUnit}
-                                    pagination={pagination}
+                                    isMapBelowRsults={isMapBelowRsults}
                                 />
                             ) : (
                                 <DoctorSearchNoResuls
@@ -236,7 +243,6 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
                                     setDistance={setDistance}
                                     setShouldClearFilters={setShouldClearFilters}
                                     setShouldClearAddress={setShouldClearAddress}
-                                    myList={listFilter === myListFilterName}
                                 />
                             )}
                         </Row>
@@ -253,7 +259,7 @@ function MapScreen({ startWithMyList = false }: MapScreenProps) {
                             <Button onClick={() => setMapIsOpen(!mapIsOpen)} label={`${mapIsOpen ? "Hide" : "Show"} Map`} icon="fa-location-dot" className="btn-map" />
                         </Col>
                     </Row>
-                    <Row className={`mx-0 px-0 ${mapIsOpen === true && currentDoctor === null ? "" : "d-none"}`}>
+                    <Row id={MAP_CONTAINER_ID} className={`mx-0 px-0 ${mapIsOpen === true && currentDoctor === null ? "" : "d-none"}`}>
                         <Col className="mx-0 px-0">
                             {mapNode}
                         </Col>

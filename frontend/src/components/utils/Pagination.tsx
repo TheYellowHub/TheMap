@@ -23,11 +23,11 @@ function Pagination({ rowsCount, pageIndex, pageSize, setPageIndex, setPageSize 
 
     const pagesToSelectList = Array.from(pagesToSelectSet)
         .filter((newPageIndex: number) => 0 <= newPageIndex && newPageIndex < pagesCount)
-        .sort();
+        .sort((a, b) => a < b ? -1 : 1);
 
     return (
         <Container>
-            <Row className="d-flex gap-3">
+            <Row className="d-flex gap-3 mt-2">
                 <Col className={`d-flex ${setPageSize ? "justify-content-end" : "justify-content-center"} align-items-center gap-2 flex-no-wrap`}>
                     {1 < pagesCount && (
                         <>

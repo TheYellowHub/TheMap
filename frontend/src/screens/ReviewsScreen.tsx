@@ -33,7 +33,7 @@ function ReviewsScreen() {
 
     return (
         <>
-            <Title>Doctors</Title>
+            <Title>Reviews</Title>
             <LoadingWrapper isLoading={isListLoading} isError={isListError} error={listError as ResponseError}>
                 <ReviewsTable
                     reviews={data}

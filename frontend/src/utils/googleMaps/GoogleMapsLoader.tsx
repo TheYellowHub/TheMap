@@ -2,6 +2,7 @@ import { ReactElement, createContext, useEffect, useMemo, useState } from "react
 import { Libraries, LoadScriptNext } from "@react-google-maps/api";
 
 import logError from "../log";
+import Loader from "../../components/utils/Loader";
 
 export const GoogleMapsLoaderContext = createContext(false);
 
@@ -44,6 +45,7 @@ function GoogleMapsLoader({ children }: GoogleMapsLoaderProps) {
             libraries={libraries}
             onError={(error: Error) => handleLoadingError(error)}
             onLoad={() => setWasLoaded(true)}
+            loadingElement={<Loader center={true} className="padding-header" />}
         >
             <GoogleMapsLoaderContext.Provider value={googleMapsIsLoaded}>
                 <>{children}</>

@@ -6,8 +6,8 @@ import { Doctor } from "./doctor";
 
 export const reviewStatuses = ["DRAFT", "PENDING_APPROVAL", "APPROVED", "REJECTED", "DELETED"] as const;
 export type ReviewStatus = (typeof reviewStatuses)[number];
-export const reviewEditableStatuses: Readonly<ReviewStatus[]> = ["DRAFT", "PENDING_APPROVAL", "REJECTED"] as const;
-export const reviewStatusToString = (status: ReviewStatus) => status.replaceAll("_", " ");
+export const reviewEditableStatuses: Readonly<ReviewStatus[]> = ["DRAFT", "PENDING_APPROVAL", "APPROVED", "REJECTED"] as const;
+export const reviewStatusToString = (status: ReviewStatus) => (status === "REJECTED" ? "REVISION NEEDED" : status.replaceAll("_", " "));
 
 export type DoctorReview = {
     id?: ID;
@@ -26,6 +26,7 @@ export type DoctorReview = {
     deletedAt?: DateTime;
     updatedAt?: DateTime;
     rejectionReason?: string;
+    internalNotes?: string;
 };
 
 export function getOperationMonthAndYear(review: DoctorReview) {
@@ -205,6 +206,18 @@ export const reviewFieldsMap: ReadonlyMap<string, ModalField<DoctorReview>> = ne
             getter: (review: DoctorReview) => review.rejectionReason,
             setter: (review: DoctorReview, newValue: string) => {
                 return { ...review, rejectionReason: newValue };
+            },
+        },
+    ],
+    [
+        "internalNotes",
+        {
+            type: "text",
+            label: "Internal notes",
+            required: false,
+            getter: (review: DoctorReview) => review.internalNotes,
+            setter: (review: DoctorReview, newValue: string) => {
+                return { ...review, internalNotes: newValue };
             },
         },
     ],

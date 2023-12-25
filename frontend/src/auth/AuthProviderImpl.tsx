@@ -20,18 +20,18 @@ export default function AuthProvider({ children }: React.PropsWithChildren) {
     const [isAdmin, setIsAdmin] = useState(false);
 
     const login = useCallback(async () => {
-        console.log(getCurrentUrl())
+        const url = getCurrentUrl();
         await auth0login({
             appState: {
-                returnTo: getCurrentUrl()
+                returnTo: url
             }
         });
     }, [auth0login]);
 
     const logout = useCallback(async () => {
-        console.log(getCurrentUrl())
         await auth0logout({
             logoutParams: { returnTo: getCurrentUrl() },
+
         });
     }, [auth0logout]);
 

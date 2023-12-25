@@ -4,7 +4,7 @@ import { Variant } from "react-bootstrap/esm/types";
 import Icon from "./Icon";
 
 interface ButtonProps extends React.PropsWithChildren {
-    label: string;
+    label?: string;
     disabled?: boolean;
     variant?: Variant;
     type?: "button" | "submit" | "reset";
@@ -16,7 +16,7 @@ interface ButtonProps extends React.PropsWithChildren {
     className?: string;
 }
 
-function Button({ label, disabled, variant, type, icon, iconClassName, onClick, href, target, className, children }: ButtonProps) {
+function Button({ label = "", disabled, variant, type, icon, iconClassName, onClick, href, target, className, children }: ButtonProps) {
     return (
         <ReactButton
             className={className}

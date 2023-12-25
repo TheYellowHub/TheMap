@@ -1,15 +1,17 @@
+import React, { useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 
-import SingleReviewForm from "./SingleReviewForm";
-import { useUserReviews } from "../../hooks/doctors/useReviews";
-import { UserInfo } from "../../auth/userInfo";
-import { Doctor } from "../../types/doctors/doctor";
-import { getNewReview, reviewEditableStatuses } from "../../types/doctors/review";
-import React, { useState } from "react";
-import { ID } from "../../types/utils/id";
 
-interface UserReviewsFormPropsWithoutAddingOption {
-    userInfo: UserInfo;
+import { ID } from "../../types/utils/id";
+import { Doctor } from "../../types/doctors/doctor";
+import { useUserReviews } from "../../hooks/doctors/useReviews";
+import { getNewReview, reviewEditableStatuses } from "../../types/doctors/review";
+import SingleReviewForm from "./SingleReviewForm";
+import SingleReviewCard from "./SingleReviewCard";
+import NoResults from "../doctors/search/NoResults";
+import useUser from "../../hooks/auth/useUsers";
+
+interface UserReviewsPropsWithoutAddingOption {
     doctor?: never;
     addingReview?: never;
     setAddingReview?: never;
@@ -19,8 +21,7 @@ interface UserReviewsFormPropsWithoutAddingOption {
     containerClassName?: string;
 }
 
-interface UserReviewsFormPropsWithAddingOption {
-    userInfo: UserInfo;
+interface UserReviewsPropsWithAddingOption {
     doctor: Doctor;
     addingReview: boolean;
     setAddingReview: (addingReview: boolean) => void;
@@ -30,10 +31,9 @@ interface UserReviewsFormPropsWithAddingOption {
     containerClassName?: string;
 }
 
-type UserReviewsFormProps = UserReviewsFormPropsWithoutAddingOption | UserReviewsFormPropsWithAddingOption;
+type UserReviewsProps = UserReviewsPropsWithoutAddingOption | UserReviewsPropsWithAddingOption;
 
-function UserReviewsForm({
-    userInfo,
+function UserReviews({
     doctor,
     addingReview,
     setAddingReview,
@@ -41,27 +41,29 @@ function UserReviewsForm({
     showOnlyEditableReviews = false,
     showDoctorName = true,
     containerClassName = "",
-}: UserReviewsFormProps) {
-    const { data: userReviews } = useUserReviews(userInfo, doctor);
+}: UserReviewsProps) {
+    const { userInfo } = useUser();
+    const { data: userReviews } = useUserReviews(userInfo!, doctor);
+    const notDeletedReviews = userReviews.filter((review) => review.status !== "DELETED");
 
-    const newReview = allowAddingReview && doctor && getNewReview(doctor, userInfo);
+    const newReview = allowAddingReview && doctor && getNewReview(doctor, userInfo!);
     const [newReviewId, setNewReviewId] = useState<ID>();
 
     return (
         <Container className={`${containerClassName}`}>
-            {userReviews && (
-                <Row className="m-0">
+            {userInfo && (0 < notDeletedReviews.length  || allowAddingReview)
+            ? (<Row className="m-0">
                     {allowAddingReview && newReview && addingReview && (
                         <Row key={newReview.id!} className="m-0 p-0 pt-4">
                             <SingleReviewForm
                                 key={`review-${newReview.id}`}
                                 originalReview={newReview}
-                                setDeleted={() => setAddingReview(false)}
+                                onCancel={() => setAddingReview(false)}
                                 setId={setNewReviewId}
                             />
                         </Row>
                     )}
-                    {userReviews
+                    {notDeletedReviews
                         .filter(
                             (review) =>
                                 (showOnlyEditableReviews
@@ -74,23 +76,33 @@ function UserReviewsForm({
                         .map((review) => (
                             <React.Fragment key={`review-${review.id}`}>
                                 {showDoctorName && (
-                                    <Row key={`review-${review.id}-doctor`} className="m-0 p-0 pt-4">
+                                    <Row key={`review-${review.id}-doctor`} className="m-0 p-0 pt-4 pb-1">
                                         <Col className="p-0 m-0">
-                                            <a href={`#/${review.doctor.id}`} className="strong">
+                                            <a href={`/${review.doctor.id}`} className="strong">
                                                 {review.doctor.fullName}
                                             </a>
                                         </Col>
                                     </Row>
                                 )}
                                 <Row key={`review-${review.id}`} className={`m-0 p-0 ${showDoctorName || "pt-4"}`}>
-                                    <SingleReviewForm key={`review-${review.id}`} originalReview={review} />
+                                    <SingleReviewCard review={review} key={`review-${review.id}`} /> 
                                 </Row>
                             </React.Fragment>
                         ))}
                 </Row>
-            )}
+            )
+            : <NoResults
+                title="My Reviews"
+                icon="fa-star" 
+                subtitle="No Reviews"
+                message="Review providers to help others reach the right care."
+                linkTitle="Find providers now"
+                linkTo="#"
+                className="m-3 w-100"
+            />
+            }
         </Container>
     );
 }
 
-export default UserReviewsForm;
+export default UserReviews;
