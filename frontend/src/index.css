@@ -1104,6 +1104,7 @@ div:has(.small-address-filter) {
 }
 
 .doctors-map-below-results .map {
+    background-color: var(--very-light-grey);
     padding: 0;
     position: relative;
     min-height: 50vh;
@@ -1121,6 +1122,14 @@ div:has(.small-address-filter) {
     min-height: var(--main-part-height);
     height: var(--main-part-height);
     z-index: 1;
+}
+
+.doctors-map-below-results:has(.gm-style) .map-is-loading,
+.doctors-map-below-results:has(.gm-style) .map-is-loading *,
+.doctors-map-next-to-results .map-is-loading,
+.doctors-map-next-to-results .map-is-loading *,
+.map:not(:has(.gm-style)) .btn {
+    display: none;
 }
 
 .aboveMap {

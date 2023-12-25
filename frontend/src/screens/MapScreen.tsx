@@ -49,7 +49,7 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
     const doctorsSearchResultsId = "doctor-search-results";
     const doctorsSearchColumnId = "doctors-search-column";
     const doctorsMapColumnId = "doctors-map-column";
-    const [mapIsOpen, setMapIsOpen] = useState(false);
+    const [mapIsOpen, setMapIsOpen] = useState(true);
 
     const mapNode = (<DoctorSearchMap
         doctors={matchedDoctorsIgnoringDistance}
