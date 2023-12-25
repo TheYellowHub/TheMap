@@ -1375,8 +1375,8 @@ div:has(.small-address-filter) {
         display: none;
     }
 
-    .w-50-desktop {
-        width: 50% !important;
+    .w-70-desktop {
+        width: 70% !important;
     }
 
     .user-modal .modal-dialog {

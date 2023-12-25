@@ -51,7 +51,7 @@ function UserReviews({
 
     return (
         <Container className={`${containerClassName}`}>
-            {doctor === undefined && <Row className="xl-font w-700 mx-0 p-0 mb-3">My Reviews</Row>}
+            {doctor === undefined && <Row className="xl-font w-700 mb-3 justify-content-center">My Reviews</Row>}
 
             {userInfo && (0 < notDeletedReviews.length  || allowAddingReview)
             ? (<Row className="m-0">
@@ -94,12 +94,12 @@ function UserReviews({
                 </Row>
             )
             : <NoResults
-                icon="fa-star" 
+                icon="fa-star-half-stroke" 
                 subtitle="No Reviews"
                 message="Review providers to help others reach the right care."
                 linkTitle="Find providers now"
                 linkTo="#"
-                className="m-3 w-100"
+                className="w-100"
             />
             }
         </Container>

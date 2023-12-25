@@ -158,14 +158,14 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
                 {onlyMyList && currentDoctor === null && <BackButton onClick={() => history.back()} className="only-mobile mx-0" />}
                 <Row className="d-flex mt-2 mb-0 flex-md-nowrap gap-md-3">
                     {onlyMyList && <Col className={`mx-3 px-3`}>
-                        <Row className="xl-font w-700 mb-3">Saved providers</Row>
+                        <Row className="xl-font w-700 mb-3 justify-content-center">Saved providers</Row>
                         {matchedDoctorsIncludingDistance.length === 0 && <NoResults 
                             icon="fa-user-doctor" 
                             subtitle="No Providers Saved"
                             message="Save providers to your account for easy access while evaluating your care team."
                             linkTitle="Find providers now"
                             linkTo="#"
-                            className="my-3 w-50-desktop"
+                            className="my-3 w-70-desktop"
                         />}
                     </Col>}
                     
