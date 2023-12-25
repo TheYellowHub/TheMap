@@ -50,7 +50,7 @@ function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation
             {onClose && <BackButton onClick={onClose} />}
             <Row className="flex-nowrap p-0">
                 <Col className="flex-grow-0 pe-1">
-                    <DoctorImage doctor={doctor} big={true} />
+                    <DoctorImage doctor={doctor} />
                 </Col>
                 <Col className="d-grid px-2 py-1 gap-2 align-content-between">
                     <Row className="d-flex p-0 align-content-between h-doctorBigCardImg">

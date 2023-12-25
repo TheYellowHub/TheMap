@@ -3,19 +3,16 @@ import { Doctor } from "../../../types/doctors/doctor";
 
 interface DoctorImageProps {
     doctor: Doctor;
-    big: boolean;
 }
 
-function DoctorImage({ doctor, big = false }: DoctorImageProps) {
+function DoctorImage({ doctor }: DoctorImageProps) {
     const [error, setError] = useState(false);
 
     const image = doctor.image && !error
-        ? doctor.image.toString()   // .replaceAll("//", "/").replaceAll(":/", "://")
-        : doctor.gender === "F"
-        ? "/images/default-doctor-f.png"
-        : "/images/default-doctor-m.png";
+        ? doctor.image.toString()
+        : `/images/default-doctor-${doctor.gender === "F" ? "f" : "m"}.png`
     return (
-        <img onError={() => setError(true)} className={big === true ? "doctorBigCardImg" : "doctorSmallCardImg"} src={image} alt={doctor.fullName} />
+        <img onError={() => setError(true)} className="doctor-image" src={image} alt={doctor.fullName} />
     );
 }
 

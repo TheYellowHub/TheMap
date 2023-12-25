@@ -349,6 +349,10 @@ a.a-no-decoration-line:hover {
     height: max-content;
 }
 
+.mh-25vh {
+    min-height: 25vh;
+}
+
 .h-2 {
     height: 2rem;
 }
@@ -1183,8 +1187,7 @@ div:has(.small-address-filter) {
     padding: 1.8rem 1.5rem !important;
 }
 
-.doctorSmallCardImg,
-.doctorBigCardImg {
+.doctor-image {
     width: 7.125rem;
     height: 100%;
     border-radius: 0.25rem;
@@ -1192,7 +1195,11 @@ div:has(.small-address-filter) {
     padding: 0;
 }
 
-.doctorBigCardImg {
+.doctorTinyCard .doctor-image {
+    width: 3.4rem;
+}
+
+.doctorBigCard .doctor-image {
     width: 8.875rem;
     height: 11.0625rem;
 }
@@ -1282,6 +1289,7 @@ div:has(.small-address-filter) {
     filter: grayscale(0%);
 }
 
+.doctorTinyCard .verification img,
 .doctorSmallCard .verification img {
     height: 0.84156rem;
 }
@@ -1454,13 +1462,11 @@ div:has(.small-address-filter) {
         font-size: 1.2rem;
     }
     
-    .doctorSmallCardImg,
-    .doctorBigCardImg {
+    .doctor-image {
         width: 5.875rem;
     }
 
-    .doctorBigCardImg {
-        width: 5.875rem;
+    .doctorBigCard .doctor-image {
         height: 7.323rem;
     }
 

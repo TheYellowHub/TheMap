@@ -7,9 +7,9 @@ import useUser from "../../hooks/auth/useUsers";
 import Button from "../utils/Button";
 import useFormValidation from "../../hooks/useFormValidation";
 import { Doctor } from "../../types/doctors/doctor";
-import DoctorSmallCard from "../doctors/doctors/DoctorSmallCard";
 import { useIssues } from "../../hooks/doctors/useIssues";
 import { getNewIssue } from "../../types/doctors/issue";
+import DoctorTinyCard from "../doctors/doctors/DoctorTinyCard";
 
 interface ReportIssueModalProps {
     doctor: Doctor;
@@ -43,7 +43,7 @@ export default function ReportIssueModal({ doctor, show, onHide }: ReportIssueMo
                 Report an issue
             </Modal.Header>
             <Modal.Body className="pb-0 d-flex justify-content-center">
-                <DoctorSmallCard doctor={doctor} onClick={undefined} />
+                <DoctorTinyCard doctor={doctor} onClick={undefined} />
             </Modal.Body>
             <Modal.Body>
                 <Form ref={formRef}>
@@ -56,7 +56,7 @@ export default function ReportIssueModal({ doctor, show, onHide }: ReportIssueMo
                                 required={true}
                                 autoComplete="off"
                                 placeholder={`Address change? Provider retired? Should this provider be removed?\nLet us know in detail`}
-                                className="blue-border round-border textarea"
+                                className="blue-border round-border textarea mh-25vh"
                             />
                         </Col>
                     </Row>
