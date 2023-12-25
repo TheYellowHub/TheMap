@@ -100,6 +100,7 @@ function SingleReviewForm({ originalReview, onCancel, setId }: SingleReviewFormP
                     ...usernameFieldOptions.filter((option) => option.value !== CURRENT_USERNAME)
                 ]);
                 setChangingUsername(false);
+
             }
         } else {
             if (!review?.anonymous) {
@@ -109,8 +110,12 @@ function SingleReviewForm({ originalReview, onCancel, setId }: SingleReviewFormP
     }, [userInfo, userInfo?.username]);
 
     useEffect(() => {    
-        if (!changingUsername && !review.anonymous && userInfo?.username === undefined) {
-            setReview({...review, anonymous: true});
+        if (!changingUsername) {
+            if (!review.anonymous && !userInfo?.username) {
+                setReview({...review, anonymous: true});
+            } else if (review.anonymous && userInfo?.username) {
+                setReview({...review, anonymous: false});
+            }
         }
     }, [changingUsername]);
 
