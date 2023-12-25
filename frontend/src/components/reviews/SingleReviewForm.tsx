@@ -1,4 +1,4 @@
-import { Col, Row, Form, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Col, Row, Form } from "react-bootstrap";
 import { useEffect, useRef, useState } from "react";
 
 import {
@@ -26,6 +26,7 @@ import useUser from "../../hooks/auth/useUsers";
 import useAuth from "../../auth/useAuth";
 import SetUsernameModal from "./SetUsernameModal";
 import useFormValidation from "../../hooks/useFormValidation";
+import Tooltip from "../utils/Tooltip";
 
 interface SingleReviewFormProps {
     originalReview: DoctorReview;
@@ -314,10 +315,7 @@ function SingleReviewForm({ originalReview, onCancel, setId }: SingleReviewFormP
                 )}
             </fieldset>
             <Form.Group as={Row} className="p-0 m-0 py-3 w-100 gap-3">
-                <OverlayTrigger
-                    placement="bottom"
-                    overlay={<Tooltip className="tooltip">Cancel</Tooltip>}
-                >
+                <Tooltip text="Cancel">
                     <Col className="m-0 p-0 flex-grow-0">
                         <Button
                             label=""
@@ -329,7 +327,7 @@ function SingleReviewForm({ originalReview, onCancel, setId }: SingleReviewFormP
                             <Icon icon="fa-close" padding={false} />
                         </Button>
                     </Col>
-                </OverlayTrigger>
+                </Tooltip>
                 <Col></Col>
                 <Col className="m-0 p-0 d-flex flex-grow-0 justify-content-center">
                     <Button

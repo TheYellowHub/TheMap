@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Col, Container, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 
 import { Doctor, DoctorLocation, getDoctorReviews } from "../../../types/doctors/doctor";
 import { Location } from "../../../utils/googleMaps/useGoogleMaps";
@@ -21,6 +21,7 @@ import BackButton from "../../utils/BackButton";
 import DoctorLocationCard from "./DoctorLocationCard";
 import ReportIssueModal from "../../issues/ReportIssueModal";
 import { sameUser } from "../../../auth/userInfo";
+import Tooltip from "../../utils/Tooltip";
 
 interface DoctorBigCardProps {
     doctor: Doctor;
@@ -56,18 +57,18 @@ function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation
                         <Row className="w-100 m-0 pb-1">
                             <Col className="px-0 doctorBigCardName font-assistant lg-font">{doctor.fullName}</Col>
                             <Col className="px-0 d-flex flex-grow-0 flex-nowrap">
-                                <OverlayTrigger placement="top-end" overlay={reportingIssue ? <></> : <Tooltip className="tooltip">Report an issue</Tooltip>}>
+                                <Tooltip text="Report an issue">
                                     <Col className="px-0 doctorBigCardButtons d-flex justify-content-end" sm="auto">
-                                        <Icon icon="fa-circle-info fa-sm " onClick={() => user ? setReportingIssue(true) : login()} />
+                                        <Icon icon="fa-circle-info fa-sm only-desktop" onClick={() => user ? setReportingIssue(true) : login()} />
                                         <ReportIssueModal doctor={doctor} show={reportingIssue} onHide={() => setReportingIssue(false)} />
                                     </Col>
-                                </OverlayTrigger>
+                                </Tooltip>
                                 <SaveDoctorIcon doctor={doctor} colClassName="px-0 doctorBigCardButtons d-flex justify-content-end" />
-                                <OverlayTrigger placement="top-end" overlay={<Tooltip className="tooltip">Close</Tooltip>}>
+                                <Tooltip text="Close">
                                     <Col className="px-0 doctorBigCardButtons d-flex justify-content-end" sm="auto">
                                         <Icon icon="fa-minus fa-sm" onClick={onClose} className="only-desktop" />
                                     </Col>
-                                </OverlayTrigger>
+                                </Tooltip>
                             </Col>
                         </Row>
                         <Row className="w-100 m-0 gap-4 py-1">

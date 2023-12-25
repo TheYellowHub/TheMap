@@ -1411,7 +1411,7 @@ div:has(.small-address-filter) {
     }
 
     .only-desktop * {
-        display: none;
+        display: none; 
     }
 
     .gap-3 {

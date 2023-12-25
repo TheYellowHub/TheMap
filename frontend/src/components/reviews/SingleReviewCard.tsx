@@ -1,7 +1,7 @@
-import { Container, Col, Row, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Container, Col, Row } from "react-bootstrap";
 import { ReactElement, useState } from "react";
 
-import { DoctorReview, getOperationMonthAndYear, reviewEditableStatuses, reviewStatusToString } from "../../types/doctors/review";
+import { DoctorReview, reviewEditableStatuses, reviewStatusToString } from "../../types/doctors/review";
 import StarRating from "../utils/StarRating";
 import ExpandableText from "../utils/ExpandableText";
 import Icon from "../utils/Icon";
@@ -13,6 +13,7 @@ import Select from "../utils/Select";
 import { useUserReviews } from "../../hooks/doctors/useReviews";
 import LoadingWrapper from "../utils/LoadingWrapper";
 import { ResponseError } from "../../hooks/useApiRequest";
+import Tooltip from "../utils/Tooltip";
 
 interface ReviewProps {
     review: DoctorReview;
@@ -46,9 +47,9 @@ function SingleReviewCard({ review }: ReviewProps) {
 
     const surgeryElementWrapper = (element: ReactElement) =>
         review.operationMonth ? (
-            <OverlayTrigger placement="top" overlay={<Tooltip>Surgery {getOperationMonthAndYear(review)}</Tooltip>}>
+            <Tooltip text={`Surgery {getOperationMonthAndYear(review)}`}>
                 <div className="w-fit-content">{element}</div>
-            </OverlayTrigger>
+            </Tooltip>
         ) : (
             <>{element}</>
         );

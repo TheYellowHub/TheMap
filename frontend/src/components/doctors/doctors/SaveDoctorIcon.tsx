@@ -1,8 +1,9 @@
-import { Col, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Col } from "react-bootstrap";
 import useAuth from "../../../auth/useAuth";
 import useUser from "../../../hooks/auth/useUsers";
 import { Doctor } from "../../../types/doctors/doctor";
 import Icon from "../../utils/Icon";
+import Tooltip from "../../utils/Tooltip";
 
 interface SaveDoctorIconProps {
     doctor: Doctor;
@@ -13,19 +14,12 @@ interface SaveDoctorIconProps {
 export default function SaveDoctorIcon({doctor, colClassName, iconClassName} : SaveDoctorIconProps) {
     const { user, isAuthenticated, login } = useAuth();
     const { userInfo, mutateSavedDoctors } = useUser(user); // TODO: handle mutation errors?
+    const tooltip = userInfo?.savedDoctors?.includes(doctor.id!)
+        ? "Remove from my list"
+        : "Add to my list";
 
     return (
-        
-        <OverlayTrigger
-            placement="top-end"
-            overlay={
-                <Tooltip className="tooltip">
-                    {userInfo?.savedDoctors?.includes(doctor.id!)
-                        ? "Remove from my list"
-                        : "Add to my list"}
-                </Tooltip>
-            }
-        >
+        <Tooltip text={tooltip}>
             <Col className={colClassName} xs="auto">
                 <Icon
                 icon="fa-bookmark fa-sm"
@@ -40,6 +34,6 @@ export default function SaveDoctorIcon({doctor, colClassName, iconClassName} : S
                     }
                 }} />
             </Col>
-        </OverlayTrigger>
+        </Tooltip>
     )
 }
