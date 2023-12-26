@@ -1454,6 +1454,17 @@ div:has(.small-address-filter) {
         padding-bottom: 0.5rem !important;
     }    
 
+    .dropdown-menu {
+        padding-bottom: 8px;
+        box-shadow: none;
+        width: 100vh;
+    }
+
+    .dropdown-title,
+    .dropdown-item {
+        padding-left: 0;
+    }
+
     .user-modal .modal-dialog {
         max-width: 100%;
     }

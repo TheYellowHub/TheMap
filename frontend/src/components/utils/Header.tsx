@@ -188,7 +188,7 @@ function Header() {
                                 >
                                     {dropdown.links.map((link, index) => 
                                         link === "Separator" 
-                                        ? <div key={`${index}-Separator`} className="d-flex justify-content-center py-1"><img src="/images/line.png" width="90%"/></div>
+                                        ? <div key={`${index}-Separator`} className="d-flex justify-content-center py-1 only-desktop"><img src="/images/line.png" width="90%"/></div>
                                         : link.to === undefined
                                         ? <div key={`${index}-${dropdown.title}`} className="dropdown-title med-grey pb-2">{link.title}</div>
                                         : (<NavDropdown.Item
