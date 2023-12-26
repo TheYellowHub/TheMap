@@ -1467,7 +1467,7 @@ div:has(.small-address-filter) {
     }
     
     .doctor-image {
-        width: 5.875rem;
+        width: 5.875rem !important;
     }
 
     .doctorBigCard .doctor-image {
