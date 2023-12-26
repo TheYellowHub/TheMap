@@ -29,14 +29,13 @@ interface DoctorBigCardProps {
     setCurrentDoctorLocation: (currentDoctorLocation: DoctorLocation | null) => void;
     locationForDistanceCalculation?: Location;
     distanceUnit?: DistanceUnit;
-    onClose?: () => void;
 }
 
-function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation, locationForDistanceCalculation, distanceUnit = "mi", onClose }: DoctorBigCardProps) {
+function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation, locationForDistanceCalculation, distanceUnit = "mi" }: DoctorBigCardProps) {
     const allReviews = getDoctorReviews(doctor);
     const { user, login } = useAuth();
     const { userInfo } = useUser(user);
-    const { data: userReviews } = (userInfo && useUserReviews(userInfo, doctor)) || { data: [] };
+    const { data: userReviews } = (useUserReviews(userInfo!, doctor)) || { data: [] };
     const [reportingIssue, setReportingIssue] = useState(false);
     const [addingReview, setAddingReview] = useState(false);
     const addingReviewContainerId = "adding-review-container";
@@ -47,7 +46,7 @@ function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation
 
     return (
         <Container className={`doctorBigCard`}>
-            {onClose && <BackButton onClick={onClose} />}
+            <BackButton />
             <Row className="flex-nowrap p-0">
                 <Col className="flex-grow-0 pe-1">
                     <DoctorImage doctor={doctor} />
@@ -66,7 +65,7 @@ function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation
                                 <SaveDoctorIcon doctor={doctor} colClassName="px-0 doctorBigCardButtons d-flex justify-content-end" />
                                 <Tooltip text="Close">
                                     <Col className="px-0 doctorBigCardButtons d-flex justify-content-end" sm="auto">
-                                        <Icon icon="fa-minus fa-sm" onClick={onClose} className="only-desktop" />
+                                        <Icon icon="fa-minus fa-sm" onClick={() => history.back()} className="only-desktop" />
                                     </Col>
                                 </Tooltip>
                             </Col>

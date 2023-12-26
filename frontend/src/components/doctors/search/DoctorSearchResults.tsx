@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Col, Container, Row } from "react-bootstrap";
 
-import { Doctor, DoctorLocation } from "../../../types/doctors/doctor";
+import { Doctor, DoctorLocation, getDoctorUrl } from "../../../types/doctors/doctor";
 import DoctorSmallCard, { doctorSmallCardClassName } from "../doctors/DoctorSmallCard";
 import Pagination from "../../utils/Pagination";
 import { DistanceUnit } from "../../utils/DistanceUnit";
@@ -11,7 +12,6 @@ import DoctorBigCard from "../doctors/DoctorBigCard";
 interface DoctorSearchResultsProps {
     doctors: Doctor[];
     currentDoctor: Doctor | null;
-    setCurrentDoctor: (currentDoctor: Doctor | null) => void;
     currentDoctorLocation: DoctorLocation | null;
     setCurrentDoctorLocation: (currentDoctorLocation: DoctorLocation | null) => void;
     locationForDistanceCalculation: Location | undefined;
@@ -23,7 +23,6 @@ interface DoctorSearchResultsProps {
 export default function DoctorSearchResuls({
     doctors,
     currentDoctor,
-    setCurrentDoctor,
     currentDoctorLocation,
     setCurrentDoctorLocation,
     locationForDistanceCalculation,
@@ -31,6 +30,8 @@ export default function DoctorSearchResuls({
     isMapBelowRsults,
     pagination = false,
 }: DoctorSearchResultsProps) {
+    const navigate = useNavigate();
+
     const [doctorsInPage, setDoctorsInPage] = useState<Doctor[]>([]);
     const [pageIndex, setPageIndex] = useState(0);
     const [pageSize, setPageSize] = useState(10);
@@ -121,7 +122,7 @@ export default function DoctorSearchResuls({
                                 locationForDistanceCalculation={locationForDistanceCalculation}
                                 onClick={() => {
                                     setPageYOffset(onlyDivScroll ? document.getElementById(doctorCardsContainerId)?.scrollTop : window.scrollY);
-                                    setCurrentDoctor(doctor);
+                                    navigate(getDoctorUrl(doctor));
                                 }}
                             />
                         ))
@@ -132,9 +133,6 @@ export default function DoctorSearchResuls({
                             setCurrentDoctorLocation={setCurrentDoctorLocation}
                             locationForDistanceCalculation={locationForDistanceCalculation}
                             distanceUnit={distanceUnit}
-                            onClose={() => {
-                                setCurrentDoctor(null);
-                            }}
                         />
                     )}
                 </Container>

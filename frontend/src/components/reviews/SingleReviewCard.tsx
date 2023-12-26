@@ -1,7 +1,7 @@
 import { Container, Col, Row } from "react-bootstrap";
 import { ReactElement, useState } from "react";
 
-import { DoctorReview, reviewEditableStatuses, reviewStatusToString } from "../../types/doctors/review";
+import { DoctorReview, getOperationMonthAndYear, reviewEditableStatuses, reviewStatusToString } from "../../types/doctors/review";
 import StarRating from "../utils/StarRating";
 import ExpandableText from "../utils/ExpandableText";
 import Icon from "../utils/Icon";
@@ -14,12 +14,14 @@ import { useUserReviews } from "../../hooks/doctors/useReviews";
 import LoadingWrapper from "../utils/LoadingWrapper";
 import { ResponseError } from "../../hooks/useApiRequest";
 import Tooltip from "../utils/Tooltip";
+import { getDoctorUrl } from "../../types/doctors/doctor";
 
 interface ReviewProps {
     review: DoctorReview;
+    showDoctorName?: boolean;
 }
 
-function SingleReviewCard({ review }: ReviewProps) {
+function SingleReviewCard({ review, showDoctorName = false }: ReviewProps) {
     const { userInfo } = useUser();
     const { 
         mutateItem, 
@@ -47,7 +49,7 @@ function SingleReviewCard({ review }: ReviewProps) {
 
     const surgeryElementWrapper = (element: ReactElement) =>
         review.operationMonth ? (
-            <Tooltip text={`Surgery {getOperationMonthAndYear(review)}`}>
+            <Tooltip text={`Surgery ${getOperationMonthAndYear(review)}`}>
                 <div className="w-fit-content">{element}</div>
             </Tooltip>
         ) : (
@@ -56,9 +58,18 @@ function SingleReviewCard({ review }: ReviewProps) {
 
     return (editingMode 
         ? <SingleReviewForm originalReview={review} onCancel={() => setEditingMode(false)} />
-        : <Container className={`p-2 m-0 ${currentUser ? "bg-very-light-yellow rounded" : ""}`}>
+        : <Container className={`p-3 m-0 ${currentUser ? "bg-very-light-yellow rounded" : ""}`}>
+            {showDoctorName && (
+                <Row key={`review-${review.id}-doctor`} className="m-0 p-0 pb-2">
+                    <Col className="p-0 m-0">
+                        <a href={getDoctorUrl(review.doctor)} className="strong a-only-hover-decoration">
+                            {review.doctor.fullName}
+                        </a>
+                    </Col>
+                </Row>
+            )}
             <Row className="d-flex p-0 m-0 pb-2 align-items-center justify-content-between flex-nowrap">
-                <Col className="m-0 p-0 flex-grow-0 strong">
+                <Col className="m-0 p-0 flex-grow-0 strong text-nowrap">
                     {review.anonymous ? "Anonymous" : review.addedBy.username}
                 </Col>
                 <Col className="m-0 p-0 flex-grow-0" xs={1}>
@@ -66,9 +77,9 @@ function SingleReviewCard({ review }: ReviewProps) {
                         surgeryElementWrapper(<Icon icon="fa-scalpel" />)
                     )}
                 </Col>
-                <Col className="m-0 p-0 ps-1">
+                <Col className="m-0 p-0 ps-2">
                     {currentUser && <span className="align-middle med-dark-grey fst-italic sm-font lh-normal">
-                        {review.status !== "APPROVED" && reviewStatusToString(review.status)}
+                        {review.status === "APPROVED" ? review.updatedAt : reviewStatusToString(review.status)}
                     </span>}
                 </Col>
                 <Col className="d-flex justify-content-end icon-select flex-grow-0">

@@ -25,7 +25,7 @@ export default function NoResults({
 }: NoResultsProps) {
     return (
         <Container className={`${className} mt-3 h-main`}>
-            {title && <Row className="text-center xl-font w-700">{title}</Row>}
+            {title && <Row className="xl-font w-700 d-flex justify-content-center">{title}</Row>}
             <Row className="d-flex my-4 align-content-around text-center h-100">
                 <Row></Row>
                 {(icon || subtitle) && <Container>

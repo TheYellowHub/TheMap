@@ -77,17 +77,8 @@ function UserReviews({
                         .sort((a, b) => ((a.id ? a.id : 0) < (b.id ? b.id : 0) ? 1 : -1))
                         .map((review) => (
                             <React.Fragment key={`review-${review.id}`}>
-                                {showDoctorName && (
-                                    <Row key={`review-${review.id}-doctor`} className="m-0 p-0 pt-4 pb-1">
-                                        <Col className="p-0 m-0">
-                                            <a href={`/${review.doctor.id}`} className="strong">
-                                                {review.doctor.fullName}
-                                            </a>
-                                        </Col>
-                                    </Row>
-                                )}
-                                <Row key={`review-${review.id}`} className={`m-0 p-0 ${showDoctorName || "pt-4"}`}>
-                                    <SingleReviewCard review={review} key={`review-${review.id}`} /> 
+                                <Row key={`review-${review.id}`} className={`m-0 p-0 pb-4`}>
+                                    <SingleReviewCard review={review} key={`review-${review.id}`} showDoctorName={showDoctorName} /> 
                                 </Row>
                             </React.Fragment>
                         ))}

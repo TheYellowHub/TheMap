@@ -112,3 +112,7 @@ export function getDoctorReviews(doctor: Doctor) {
     const { data } = useDoctorReviews(doctor);
     return data;
 }
+
+export function getDoctorUrl(doctor: Doctor) {
+    return `/${doctor.id}/${doctor.fullName.replaceAll(" ", "-")}/`;
+}
