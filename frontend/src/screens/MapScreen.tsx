@@ -106,7 +106,9 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
     useEffect(() => {
         if (currentDoctor === null) {
             setCurrentDoctorLocation(null);
-            navigate(onlyMyList ? userSavedProvidersUrl : mainMapUrl);
+            if (doctorIdParam !== undefined && doctorIdParamWasUsed) {
+                navigate(onlyMyList ? userSavedProvidersUrl : mainMapUrl);
+            }
         } else if (currentDoctor !== null) {
             setFilterChangeSinceLastDoctorPick(false);
             if (currentDoctorLocation === null) {
@@ -185,7 +187,7 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
                     </Col>}
                     
                     <Col className={`mx-3 px-3 ${onlyMyList && matchedDoctorsIncludingDistance.length === 0 ? "d-none" : ""}`} id={doctorsSearchColumnId}>
-                        {onlyMyList && <Row className="xl-font w-700 mb-3 justify-content-center">Saved providers</Row>}
+                        {onlyMyList && <Row className={`xl-font w-700 mb-3 justify-content-center ${currentDoctor ? "only-desktop" : ""}`}>Saved providers</Row>}
                         <Row className={`pb-2 mb-2 ${currentDoctor ? "only-desktop" : ""}`}>
                             <DoctorSearchFilters
                                 address={address}

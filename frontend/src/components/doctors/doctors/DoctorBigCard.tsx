@@ -123,7 +123,7 @@ function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation
             <Row className="m-0 p-0 pt-3">
                 <Col className="m-0 p-0">
                     <img src="/images/line.png" className="only-desktop" width="100%" />
-                    <Row className="mx-0 pt-3">
+                    <Row className="mx-0 py-3">
                         <Col className="p-0 m-0" xs="auto">
                             {doctor.avgRating && doctor.numOfReviews && (
                                 <Rating averageRating={doctor.avgRating} totalReviews={doctor.numOfReviews} />
