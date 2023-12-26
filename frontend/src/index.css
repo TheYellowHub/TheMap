@@ -1460,11 +1460,6 @@ div:has(.small-address-filter) {
         width: 100vh;
     }
 
-    .dropdown-title,
-    .dropdown-item {
-        padding-left: 0;
-    }
-
     .user-modal .modal-dialog {
         max-width: 100%;
     }
