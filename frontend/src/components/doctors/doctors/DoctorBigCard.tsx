@@ -56,9 +56,9 @@ function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation
                         <Row className="w-100 m-0 pb-1">
                             <Col className="px-0 doctorBigCardName font-assistant lg-font">{doctor.fullName}</Col>
                             <Col className="px-0 d-flex flex-grow-0 flex-nowrap">
-                                <Tooltip text="Report an issue">
+                                <Tooltip text="Report an issue" className="only-desktop">
                                     <Col className="px-0 doctorBigCardButtons d-flex justify-content-end" sm="auto">
-                                        <Icon icon="fa-circle-info fa-sm only-desktop" onClick={() => user ? setReportingIssue(true) : login()} />
+                                        <Icon icon="fa-circle-info fa-sm" onClick={() => user ? setReportingIssue(true) : login()} />
                                         <ReportIssueModal doctor={doctor} show={reportingIssue} onHide={() => setReportingIssue(false)} />
                                     </Col>
                                 </Tooltip>
