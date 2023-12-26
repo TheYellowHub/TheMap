@@ -319,7 +319,7 @@ function SingleReviewForm({ originalReview, onCancel, setId }: SingleReviewFormP
                     </Form.Group>
                 )}
             </fieldset>
-            <Form.Group as={Row} className="p-0 m-0 py-3 w-100 gap-3">
+            <Form.Group as={Row} className="p-0 m-0 pb-3 pt-4 w-100 gap-3">
                 <Tooltip text="Cancel">
                     <Col className="m-0 p-0 flex-grow-0">
                         <Button

@@ -72,6 +72,10 @@
     color: var(--med-grey) !important;
 }
 
+.med-grey-border {
+    border: 0.5px solid var(--med-grey);
+}
+
 .light-grey {
     color: var(--light-grey) !important;
 }

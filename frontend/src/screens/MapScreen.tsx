@@ -152,7 +152,7 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
                             subtitle="No Providers Saved"
                             message="Save providers to your account for easy access while evaluating your care team."
                             linkTitle="Find providers now"
-                            linkTo="#"
+                            linkTo="/"
                             className="my-3 w-70-desktop"
                         />
                     </Col>}

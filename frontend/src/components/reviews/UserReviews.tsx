@@ -89,7 +89,7 @@ function UserReviews({
                 subtitle="No Reviews"
                 message="Review providers to help others reach the right care."
                 linkTitle="Find providers now"
-                linkTo="#"
+                linkTo="/"
                 className="w-100"
             />
             }
