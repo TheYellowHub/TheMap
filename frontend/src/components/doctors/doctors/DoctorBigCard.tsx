@@ -78,7 +78,7 @@ function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation
                                 <DoctorVerification doctor={doctor} />
                             </Col>
                         </Row>
-                        <Row className="m-0 gap-3 py-1">
+                        <Row className="m-0 gap-3 pb-1 pt-3 pt-md-1">
                             {doctor.specialities.map((speciality: string) => (
                                 <Col className="p-0 m-0 flex-grow-0" key={speciality}>
                                     <DoctorSpecialityRibbon speciality={speciality} />
