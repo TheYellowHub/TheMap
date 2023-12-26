@@ -1,13 +1,14 @@
-import { ReactNode, useEffect } from "react";
+import { useEffect } from "react";
 
 import useAuth from "./useAuth";
+import { mainMapUrl } from "../AppRouter";
 
 function Login() {
     const { login } = useAuth();
 
     useEffect(() => {
         login();
-        window.history.replaceState(null, "", "/");
+        window.history.replaceState(null, "", mainMapUrl);
     });
 
     return <></>;

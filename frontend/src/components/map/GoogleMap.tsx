@@ -73,6 +73,7 @@ function GoogleMap({ center, currentLocation, markers = emptyMarkersArray as Mar
                 bounds.extend(center);
             }
             
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const originalMaxZoom = (mapRef.current as any).maxZoom;
             mapRef.current.setOptions({maxZoom: minimalZoom});
             mapRef.current.fitBounds(bounds);

@@ -10,7 +10,7 @@ function DoctorImage({ doctor }: DoctorImageProps) {
 
     const image = doctor.image && !error
         ? doctor.image.toString()
-        : `/images/default-doctor-${doctor.gender === "F" ? "f" : "m"}.png`
+        : `/images/default-doctor-${doctor.gender === "F" ? "f" : "m"}.png`;
     return (
         <img onError={() => setError(true)} className="doctor-image" src={image} alt={doctor.fullName} />
     );

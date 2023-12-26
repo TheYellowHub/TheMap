@@ -1,13 +1,9 @@
 import { Col, Container, Row } from "react-bootstrap";
 
-import { Doctor, getDoctorNearestLocation } from "../../../types/doctors/doctor";
-import { Location } from "../../../utils/googleMaps/useGoogleMaps";
+import { Doctor } from "../../../types/doctors/doctor";
 import DoctorImage from "./DoctorImage";
 import DoctorVerification from "./DoctorVerification";
-import Rating from "../../utils/Rating";
 import DoctorCategory from "./DoctorCategory";
-import DoctorLocationAddress from "./DoctorLocationAddress";
-import SaveDoctorIcon from "./SaveDoctorIcon";
 
 interface DoctorTinyCardProps {
     doctor: Doctor;

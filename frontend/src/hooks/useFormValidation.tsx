@@ -4,11 +4,11 @@ export default function useFormValidation( formRef: React.RefObject<HTMLFormElem
     const reportValidity = () => {
         const inputs: NodeListOf<HTMLInputElement> | undefined = formRef.current?.querySelectorAll("input, textarea");
         inputs?.forEach((input) => input?.reportValidity());
-    }
+    };
 
     const isFormValid = () => {
         return formRef?.current?.checkValidity();
-    }
+    };
 
     useEffect(() => {
         const inputs = formRef.current?.querySelectorAll("input, textarea");
@@ -21,5 +21,5 @@ export default function useFormValidation( formRef: React.RefObject<HTMLFormElem
 
     return (
         {reportValidity, isFormValid}
-    )
+    );
 }

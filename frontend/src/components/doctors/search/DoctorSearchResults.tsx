@@ -98,7 +98,6 @@ export default function DoctorSearchResuls({
     useEffect(() => {
         if (pageYOffset !== undefined && currentDoctor === null) {
             (onlyDivScroll ? document.getElementById(doctorCardsContainerId)! : window).scrollTo(0, pageYOffset);
-            setPageYOffset(undefined);
         }
     });
 

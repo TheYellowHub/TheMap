@@ -1,3 +1,4 @@
+import { userSavedProvidersUrl } from "../../AppRouter";
 import { UserInfo } from "../../auth/userInfo";
 import { DistanceUnit } from "../../components/utils/DistanceUnit";
 import { useDoctorReviews } from "../../hooks/doctors/useReviews";
@@ -115,5 +116,5 @@ export function getDoctorReviews(doctor: Doctor) {
 }
 
 export function getDoctorUrl(doctor: Doctor, doctorLocation?: DoctorLocation, onlyMyList = false) {
-    return `${onlyMyList ? "/user/saved" : ""}/${doctor.id}/${doctor.fullName.replaceAll(" ", "-")}/${doctorLocation ? doctorLocation.id : ""}/`;
+    return `${onlyMyList ? userSavedProvidersUrl : ""}/${doctor.id}/${doctor.fullName.replaceAll(" ", "-")}/${doctorLocation ? doctorLocation.id : ""}/`;
 }

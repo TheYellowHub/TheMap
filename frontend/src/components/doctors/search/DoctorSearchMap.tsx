@@ -24,8 +24,10 @@ export default function DoctorSearchMap({
     centerLocation,
     boundsDistanceFromCenter,
     currentDoctor,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     setCurrentDoctor,
     currentDoctorLocation,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     setCurrentDoctorLocation,
     onlyMyList = false
 }: DoctorSearchMapProps) {

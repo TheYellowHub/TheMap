@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Container, Row, Col, Modal as ReactModal } from "react-bootstrap";
 
 import config from "../config.json";
@@ -17,6 +17,7 @@ import DoctorSearchAddressFilter from "../components/doctors/search/DoctorSearch
 import Button from "../components/utils/Button";
 import BackButton from "../components/utils/BackButton";
 import NoResults from "../components/doctors/search/NoResults";
+import { mainMapUrl, userSavedProvidersUrl } from "../AppRouter";
 
 interface MapScreenProps {
     onlyMyList?: boolean;
@@ -25,6 +26,8 @@ interface MapScreenProps {
 export const MAP_CONTAINER_ID = "map-container";
 
 function MapScreen({ onlyMyList = false }: MapScreenProps) {
+    const navigate = useNavigate();
+
     const { data: doctors, isListLoading, isListError, listError } = useDoctors();
     const { doctorId: doctorIdParam, locationId: locationIdParma } = useParams();
     const [doctorIdParamWasUsed, setDoctorIdParamWasUsed] = useState(false);
@@ -103,6 +106,7 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
     useEffect(() => {
         if (currentDoctor === null) {
             setCurrentDoctorLocation(null);
+            navigate(onlyMyList ? userSavedProvidersUrl : mainMapUrl);
         } else if (currentDoctor !== null) {
             setFilterChangeSinceLastDoctorPick(false);
             if (currentDoctorLocation === null) {
@@ -175,7 +179,7 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
                             subtitle="No Providers Saved"
                             message="Save providers to your account for easy access while evaluating your care team."
                             linkTitle="Find providers now"
-                            linkTo="/"
+                            linkTo={mainMapUrl}
                             className="my-3 w-70-desktop"
                         />
                     </Col>}

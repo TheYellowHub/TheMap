@@ -9,6 +9,7 @@ import useUser from "../../hooks/auth/useUsers";
 import { useUserReviews } from "../../hooks/doctors/useReviews";
 import { DoctorReview } from "../../types/doctors/review";
 import DeleteAccountModal from "../../auth/DeleteAccountModal";
+import { mainMapUrl, userSavedProvidersUrl } from "../../AppRouter";
 
 function Header() {
     const [selectedPage, setSelectedPage] = useState<EventKey>("");
@@ -86,7 +87,7 @@ function Header() {
                 to: undefined,
             },
             {
-                to: "/user/saved",
+                to: userSavedProvidersUrl,
                 title: `Saved Providers (${userInfo?.savedDoctors?.length || "0"})`,
                 icon: "fa-bookmark",
             },
@@ -96,7 +97,7 @@ function Header() {
                 icon: "fa-star",
             },
             {
-                to: "/",
+                to: mainMapUrl,
                 onClick: logout,
                 title: "Log out",
                 icon: "fa-power-off",
@@ -104,7 +105,7 @@ function Header() {
             },
             "Separator" as Separator,
             {
-                to: "/",
+                to: mainMapUrl,
                 onClick: () => setDeletingAccount(true),
                 title: "Delete account",
                 eventKey: dontHandleEventKey

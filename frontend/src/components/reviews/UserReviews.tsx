@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import { Container, Row } from "react-bootstrap";
 
 
 import { ID } from "../../types/utils/id";
@@ -10,6 +10,7 @@ import SingleReviewForm from "./SingleReviewForm";
 import SingleReviewCard from "./SingleReviewCard";
 import NoResults from "../doctors/search/NoResults";
 import useUser from "../../hooks/auth/useUsers";
+import { mainMapUrl } from "../../AppRouter";
 
 interface UserReviewsPropsWithoutAddingOption {
     doctor?: never;
@@ -89,7 +90,7 @@ function UserReviews({
                 subtitle="No Reviews"
                 message="Review providers to help others reach the right care."
                 linkTitle="Find providers now"
-                linkTo="/"
+                linkTo={mainMapUrl}
                 className="w-100"
             />
             }

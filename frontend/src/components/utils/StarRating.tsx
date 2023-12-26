@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Icon from "./Icon";
-import Button from "./Button";
 
 interface StarRatingProps {
     rating: number;

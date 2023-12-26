@@ -35,5 +35,5 @@ export default function SaveDoctorIcon({doctor, colClassName, iconClassName} : S
                 }} />
             </Col>
         </Tooltip>
-    )
+    );
 }
