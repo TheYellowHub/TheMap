@@ -19,7 +19,7 @@ function AppRouter() {
 
     return (
         <Routes>
-            <Route path="/:id?/:name?" element={<MapScreen />} />
+            <Route path="/:doctorId?/:name?/:locationId?" element={<MapScreen />} />
             <Route path="/admin/doctors" element={<DoctorsScreen />} />
             <Route path="/admin/categories" element={<DoctorCategoriesScreen />} />
             <Route path="/admin/specialities" element={<DoctorSpecialitiesScreen />} />
@@ -27,6 +27,7 @@ function AppRouter() {
             <Route path="/admin/issues" element={<IssuesScreen />} />
             <Route path="/user/login" element={<Login />} />
             <Route path="/user/saved" element={<MapScreen onlyMyList={true} />} />
+            <Route path="/user/saved/:doctorId?/:name?/:locationId?" element={<MapScreen onlyMyList={true} />} />
             <Route path="/user/reviews" element={<UserReviews />} />
             <Route path="/user/delete" element={<DeleteAccountModal show={true} onHide={() => {}} />} />
         </Routes>

@@ -15,6 +15,7 @@ export type AbstractLocation = {
 };
 
 export type DoctorLocation = {
+    id?: ID;
     hospitalName?: string;
     address?: string;
     lat?: number;
@@ -113,6 +114,6 @@ export function getDoctorReviews(doctor: Doctor) {
     return data;
 }
 
-export function getDoctorUrl(doctor: Doctor) {
-    return `/${doctor.id}/${doctor.fullName.replaceAll(" ", "-")}/`;
+export function getDoctorUrl(doctor: Doctor, doctorLocation?: DoctorLocation, onlyMyList = false) {
+    return `${onlyMyList ? "/user/saved" : ""}/${doctor.id}/${doctor.fullName.replaceAll(" ", "-")}/${doctorLocation ? doctorLocation.id : ""}/`;
 }

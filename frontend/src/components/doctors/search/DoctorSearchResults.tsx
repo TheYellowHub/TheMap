@@ -12,23 +12,27 @@ import DoctorBigCard from "../doctors/DoctorBigCard";
 interface DoctorSearchResultsProps {
     doctors: Doctor[];
     currentDoctor: Doctor | null;
+    setCurrentDoctor: (currentDoctor: Doctor | null) => void;
     currentDoctorLocation: DoctorLocation | null;
     setCurrentDoctorLocation: (currentDoctorLocation: DoctorLocation | null) => void;
     locationForDistanceCalculation: Location | undefined;
     distanceUnit: DistanceUnit;
     isMapBelowRsults: () => boolean;
     pagination?: boolean;
+    onlyMyList?: boolean;
 }
 
 export default function DoctorSearchResuls({
     doctors,
     currentDoctor,
+    setCurrentDoctor,
     currentDoctorLocation,
     setCurrentDoctorLocation,
     locationForDistanceCalculation,
     distanceUnit,
     isMapBelowRsults,
     pagination = false,
+    onlyMyList = false
 }: DoctorSearchResultsProps) {
     const navigate = useNavigate();
 
@@ -122,7 +126,7 @@ export default function DoctorSearchResuls({
                                 locationForDistanceCalculation={locationForDistanceCalculation}
                                 onClick={() => {
                                     setPageYOffset(onlyDivScroll ? document.getElementById(doctorCardsContainerId)?.scrollTop : window.scrollY);
-                                    navigate(getDoctorUrl(doctor));
+                                    navigate(getDoctorUrl(doctor, undefined, onlyMyList));
                                 }}
                             />
                         ))
@@ -133,6 +137,10 @@ export default function DoctorSearchResuls({
                             setCurrentDoctorLocation={setCurrentDoctorLocation}
                             locationForDistanceCalculation={locationForDistanceCalculation}
                             distanceUnit={distanceUnit}
+                            onClose={() => {
+                                setCurrentDoctor(null);
+                                setCurrentDoctorLocation(null);
+                            }}
                         />
                     )}
                 </Container>

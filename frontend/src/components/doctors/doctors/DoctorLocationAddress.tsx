@@ -8,12 +8,14 @@ interface DoctorLocationAddressProps {
     doctorLocation: DoctorLocation;
     locationForDistanceCalculation?: Location;
     distanceUnit?: DistanceUnit;
+    showDistanceAndNavigator?: boolean;
 }
 
 function DoctorLocationAddress({
     doctorLocation,
     locationForDistanceCalculation,
     distanceUnit,
+    showDistanceAndNavigator = true
 }: DoctorLocationAddressProps) {
     return (
         <Row className="d-flex p-0 m-0 gap-0 justify-content-between doctor-address">
@@ -21,11 +23,11 @@ function DoctorLocationAddress({
                 <p className="p-0 m-0 med-dark-grey sm-font">{doctorLocation?.address || ""}</p>
             </Col>
             <Col className="d-flex flex-grow-0 text-nowrap flex-nowrap p-0">
-                <DoctorLocationDistance
+                {showDistanceAndNavigator && <DoctorLocationDistance
                     doctorLocation={doctorLocation}
                     locationForDistanceCalculation={locationForDistanceCalculation}
                     distanceUnit={distanceUnit}
-                />
+                />}
             </Col>
         </Row>
     );

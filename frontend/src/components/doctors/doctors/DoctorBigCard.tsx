@@ -29,9 +29,10 @@ interface DoctorBigCardProps {
     setCurrentDoctorLocation: (currentDoctorLocation: DoctorLocation | null) => void;
     locationForDistanceCalculation?: Location;
     distanceUnit?: DistanceUnit;
+    onClose?: () => void;
 }
 
-function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation, locationForDistanceCalculation, distanceUnit = "mi" }: DoctorBigCardProps) {
+function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation, locationForDistanceCalculation, distanceUnit = "mi", onClose }: DoctorBigCardProps) {
     const allReviews = getDoctorReviews(doctor);
     const { user, login } = useAuth();
     const { userInfo } = useUser(user);
@@ -65,7 +66,7 @@ function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation
                                 <SaveDoctorIcon doctor={doctor} colClassName="px-0 doctorBigCardButtons d-flex justify-content-end" />
                                 <Tooltip text="Close">
                                     <Col className="px-0 doctorBigCardButtons d-flex justify-content-end" sm="auto">
-                                        <Icon icon="fa-minus fa-sm" onClick={() => history.back()} className="only-desktop" />
+                                        <Icon icon="fa-minus fa-sm" onClick={onClose} className="only-desktop" />
                                     </Col>
                                 </Tooltip>
                             </Col>

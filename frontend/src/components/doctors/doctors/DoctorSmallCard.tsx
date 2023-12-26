@@ -48,6 +48,7 @@ export default function DoctorSmallCard({
                         {closestLocation && (
                             <DoctorLocationAddress
                                 doctorLocation={closestLocation}
+                                showDistanceAndNavigator={false}
                             />
                         )}
                     </Row>
