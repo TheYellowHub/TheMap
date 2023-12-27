@@ -930,6 +930,7 @@ input[type="checkbox"] {
     margin: 0 !important;
     line-height: inherit !important;
     width: 100% !important;
+    cursor: pointer;
 }
 
 .react-select__value-container {
