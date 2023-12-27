@@ -176,8 +176,16 @@
     font-weight: 100;
 }
 
-.fa-star {
+.fa-star,
+.fa-star-half-alt {
     font-family: "Font Awesome 6 Pro";
+}
+
+.fa-regular .fa-star:not(.font-awesome-regular-ready .fa-star),
+.fa-regular .fa-star-half-alt:not(.font-awesome-regular-ready .fa-star-half-alt),
+.fa-solid .fa-star:not(.font-awesome-solid-ready .fa-star),
+.fa-solid .fa-star-half-alt:not(.font-awesome-solid-ready .fa-star-half-alt) {
+    display: none;
 }
 
 .huge-icon {
