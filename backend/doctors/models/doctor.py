@@ -69,8 +69,9 @@ class DoctorLocation(models.Model):
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     hospital_name = models.CharField(
         max_length=200, blank=True, null=True
-    )  # TODO: mandatory? unique? unique if not null?
-    address = models.CharField(max_length=200, blank=True)
+    )
+    long_address = models.CharField(max_length=200, blank=True)
+    short_address = models.CharField(max_length=200, blank=True)
     lat = models.DecimalField(max_digits=22, decimal_places=16, blank=True, null=True)
     lng = models.DecimalField(max_digits=22, decimal_places=16, blank=True, null=True)
     phone = PhoneNumberField(null=True, blank=True)
@@ -79,4 +80,4 @@ class DoctorLocation(models.Model):
     private_only = models.BooleanField(default=False)
 
     def __str__(self) -> str:
-        return f"{self.address} / {self.hospital_name}"
+        return f"{self.long_address} / {self.hospital_name}"
