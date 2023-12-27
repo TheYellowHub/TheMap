@@ -1477,8 +1477,9 @@ div:has(.small-address-filter) {
         font-size: 1.2rem;
     }
     
-    .doctor-image {
-        width: 5.875rem !important;
+    .doctorSmallCard .doctor-image,
+    .doctorBigCard .doctor-image {
+        width: 5.875rem;
     }
 
     .doctorBigCard .doctor-image {
