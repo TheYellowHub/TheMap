@@ -157,7 +157,9 @@ function Header() {
         } else {
             newLinks.push(loginLink);
         }
-        setLinks(newLinks);
+        if (JSON.stringify(newLinks) !== JSON.stringify(links)) {
+            setLinks(newLinks);
+        }
     }, [user, isAuthenticated, isAdmin, userInfo?.savedDoctors?.length, userReviews.length]);
 
     return (<>
