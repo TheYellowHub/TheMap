@@ -1,9 +1,8 @@
-import { OverlayTrigger, Tooltip } from "react-bootstrap";
-
 import { DoctorLocation, getDoctorLocationDistance } from "../../../types/doctors/doctor";
 import { Location } from "../../../utils/googleMaps/useGoogleMaps";
 import { DistanceUnit } from "../../utils/DistanceUnit";
 import Icon from "../../utils/Icon";
+import Tooltip from "../../utils/Tooltip";
 
 interface DoctorLocationDistanceProps {
     doctorLocation: DoctorLocation;
@@ -18,28 +17,26 @@ function DoctorLocationDistance({
 }: DoctorLocationDistanceProps) {
     const distance = locationForDistanceCalculation && getDoctorLocationDistance(doctorLocation, locationForDistanceCalculation, distanceUnit);
 
-    const tooltipMessage = doctorLocation?.address ? <></> : <Tooltip>No link to address</Tooltip>;
-
     return (
-        <OverlayTrigger placement="bottom" overlay={tooltipMessage}>
+        <Tooltip text={`${doctorLocation.address ? "Navigate" : "No link to address"}`}>
             <p className="med-grey p-0 m-0">
-                <a
-                    href={`${
-                        doctorLocation?.address
-                            ? "http://maps.google.com/maps/dir/?api=1&dir_action=navigate&destination=" +
-                            doctorLocation.address
-                            : "#"
-                    }`}
-                    target="_blank"
-                    rel="noreferrer"
-                    onClick={(e) => e.stopPropagation()}
-                    className="a-only-hover-decoration"
-                >
-                        {distance && distance !== Infinity && <>{distance.toFixed(1)} {distanceUnit}</>}
-                        <Icon icon="fas fa-location-arrow ps-1" solid={false} padding={false} />
-                </a>
+                    <a
+                        href={`${
+                            doctorLocation?.address
+                                ? "http://maps.google.com/maps/dir/?api=1&dir_action=navigate&destination=" +
+                                doctorLocation.address
+                                : "#"
+                        }`}
+                        target="_blank"
+                        rel="noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="a-only-hover-decoration"
+                    >
+                            {distance && distance !== Infinity && <>{distance.toFixed(1)} {distanceUnit}</>}
+                            <Icon icon="fas fa-location-arrow ps-1" solid={false} padding={false} />
+                    </a>
             </p>
-        </OverlayTrigger>
+        </Tooltip>
     );
 }
 
