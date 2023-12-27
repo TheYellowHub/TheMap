@@ -19,9 +19,10 @@ import { getDoctorUrl } from "../../types/doctors/doctor";
 interface ReviewProps {
     review: DoctorReview;
     showDoctorName?: boolean;
+    showEditMessageInsteadOfCOntent?: boolean;
 }
 
-function SingleReviewCard({ review, showDoctorName = false }: ReviewProps) {
+function SingleReviewCard({ review, showDoctorName = false, showEditMessageInsteadOfCOntent = true }: ReviewProps) {
     const { userInfo } = useUser();
     const { 
         mutateItem, 
@@ -34,7 +35,7 @@ function SingleReviewCard({ review, showDoctorName = false }: ReviewProps) {
 
     const currentUser = sameUser(review.addedBy, userInfo);
 
-    const showEditBtn = currentUser && review.status !== "APPROVED";
+    const showEditMessage = showEditMessageInsteadOfCOntent && currentUser && review.status !== "APPROVED";
 
     const editMessageToUser = () => {switch(review.status) {
         case "PENDING_APPROVAL":
@@ -60,7 +61,7 @@ function SingleReviewCard({ review, showDoctorName = false }: ReviewProps) {
         );
 
     return (editingMode 
-        ? <SingleReviewForm originalReview={review} onCancel={() => setEditingMode(false)} />
+        ? <SingleReviewForm originalReview={review} onCancel={() => setEditingMode(false)} onSuccess={showEditMessageInsteadOfCOntent ? undefined : (() => setEditingMode(false))} />
         : <Container className={`p-3 m-0 med-grey-border rounded ${currentUser ? "bg-very-light-yellow" : ""}`}>
             <Row className="p-0 flex-sm-nowrap ">
                 <Col className="d-flex flex-column justify-content-between">
@@ -112,22 +113,20 @@ function SingleReviewCard({ review, showDoctorName = false }: ReviewProps) {
             <Row className="flex-nowrap">
                 <Col className="d-flex flex-column justify-content-end">
                     <Row className="p-0 m-0">
-                        {showEditBtn
+                        {showEditMessage
                             ? (<Col className="p-0">{editMessageToUser()}</Col>)
                             : (<ExpandableText text={review.description || ""} maxLength={300} maxRows={5} className="med-dark-grey white-space-pre-line" />)
                         }
                     </Row>
                 </Col>
                 <Col className="d-flex flex-column justify-content-end flex-grow-0 gap-3">
-                    {/* <Row className="p-0 m-0 d-flex justify-content-end"> */}
-                        {showEditBtn && reviewEditableStatuses.includes(review.status) && <Button
-                                variant="primary"
-                                label="Edit Review"
-                                type="button"
-                                onClick={() => setEditingMode(true)}
-                                className="w-max-content"
-                        />}
-                    {/* </Row> */}
+                    {showEditMessage && reviewEditableStatuses.includes(review.status) && <Button
+                            variant="primary"
+                            label="Edit Review"
+                            type="button"
+                            onClick={() => setEditingMode(true)}
+                            className="w-max-content"
+                    />}
                 </Col>
             </Row>
             <LoadingWrapper isLoading={isMutateLoading} isError={isMutateError} error={mutateError as ResponseError} loaderText="Deleting..."/>

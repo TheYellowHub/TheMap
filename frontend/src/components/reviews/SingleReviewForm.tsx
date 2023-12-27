@@ -31,12 +31,13 @@ import Tooltip from "../utils/Tooltip";
 interface SingleReviewFormProps {
     originalReview: DoctorReview;
     onCancel: () => void;
+    onSuccess?: () => void;
     setId?: (id: ID) => void;
 }
 
 export const getGuidelinesLink = (text = "Community Guidelines", className = "strong") => <a href="https://www.theyellowhub.org/guidelines" className={className} target="_blank" rel="noreferrer">{text}</a>;
 
-function SingleReviewForm({ originalReview, onCancel, setId }: SingleReviewFormProps) {
+function SingleReviewForm({ originalReview, onCancel, onSuccess, setId }: SingleReviewFormProps) {
     const [review, setReview] = useState(originalReview);
 
     const { user } = useAuth();
@@ -126,6 +127,7 @@ function SingleReviewForm({ originalReview, onCancel, setId }: SingleReviewFormP
                 setId && setId(newId);
                 setReview({ ...review, id: newId });
             }
+            onSuccess && onSuccess();
         }
     }, [mutateResult]);
 

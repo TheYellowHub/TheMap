@@ -19,6 +19,7 @@ interface UserReviewsPropsWithoutAddingOption {
     allowAddingReview?: false;
     showOnlyEditableReviews?: boolean;
     showDoctorName?: boolean;
+    showEditMessageInsteadOfCOntent?: boolean;
     containerClassName?: string;
 }
 
@@ -29,6 +30,7 @@ interface UserReviewsPropsWithAddingOption {
     allowAddingReview?: true;
     showOnlyEditableReviews?: boolean;
     showDoctorName?: boolean;
+    showEditMessageInsteadOfCOntent?: boolean;
     containerClassName?: string;
 }
 
@@ -41,6 +43,7 @@ function UserReviews({
     allowAddingReview = false,
     showOnlyEditableReviews = false,
     showDoctorName = true,
+    showEditMessageInsteadOfCOntent = true,
     containerClassName = "",
 }: UserReviewsProps) {
     const { userInfo } = useUser();
@@ -79,7 +82,7 @@ function UserReviews({
                         .map((review) => (
                             <React.Fragment key={`review-${review.id}`}>
                                 <Row key={`review-${review.id}`} className={`m-0 p-0 pb-4`}>
-                                    <SingleReviewCard review={review} key={`review-${review.id}`} showDoctorName={showDoctorName} /> 
+                                    <SingleReviewCard review={review} key={`review-${review.id}`} showDoctorName={showDoctorName} showEditMessageInsteadOfCOntent={showEditMessageInsteadOfCOntent} /> 
                                 </Row>
                             </React.Fragment>
                         ))}
