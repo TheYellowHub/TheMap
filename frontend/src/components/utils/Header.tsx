@@ -80,6 +80,12 @@ function Header() {
         },
     ];
 
+    const loginLink = {
+        to: "/user/login",
+        onClick: login,
+        title: "Login",
+    };
+
     const userMenu = {
         title: "My account",
         links: [
@@ -149,11 +155,7 @@ function Header() {
                 newLinks.push(adminMenu);
             }
         } else {
-            newLinks.push({
-                to: "/user/login",
-                onClick: login,
-                title: "Login",
-            });
+            newLinks.push(loginLink);
         }
         setLinks(newLinks);
     }, [user, isAuthenticated, isAdmin, userInfo?.savedDoctors?.length, userReviews.length]);
