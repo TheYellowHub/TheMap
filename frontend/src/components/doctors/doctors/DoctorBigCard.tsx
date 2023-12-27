@@ -48,11 +48,11 @@ function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation
     return (
         <Container className={`doctorBigCard`}>
             <BackButton />
-            <Row className="flex-nowrap p-0">
-                <Col className="flex-grow-0 pe-1">
+            <Row className="flex-nowrap p-0 m-0">
+                <Col className="flex-grow-0 p-0 pe-1">
                     <DoctorImage doctor={doctor} />
                 </Col>
-                <Col className="d-grid px-2 py-1 gap-2 align-content-between">
+                <Col className="d-grid ps-2 pe-0 py-1 gap-2 align-content-between">
                     <Row className="d-flex p-0 align-content-between h-doctorBigCardImg">
                         <Row className="w-100 m-0 pb-1">
                             <Col className="px-0 doctorBigCardName font-assistant lg-font">{doctor.fullName}</Col>

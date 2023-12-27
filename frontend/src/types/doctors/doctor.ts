@@ -18,7 +18,8 @@ export type AbstractLocation = {
 export type DoctorLocation = {
     id?: ID;
     hospitalName?: string;
-    address?: string;
+    longAddress?: string;
+    shortAddress?: string;
     lat?: number;
     lng?: number;
     phone?: Phone;

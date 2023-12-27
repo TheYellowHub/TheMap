@@ -18,13 +18,13 @@ function DoctorLocationDistance({
     const distance = locationForDistanceCalculation && getDoctorLocationDistance(doctorLocation, locationForDistanceCalculation, distanceUnit);
 
     return (
-        <Tooltip text={`${doctorLocation.address ? "Navigate" : "No link to address"}`}>
+        <Tooltip text={`${doctorLocation.longAddress ? "Navigate" : "No link to address"}`}>
             <p className="med-grey p-0 m-0">
                     <a
                         href={`${
-                            doctorLocation?.address
+                            doctorLocation?.longAddress
                                 ? "http://maps.google.com/maps/dir/?api=1&dir_action=navigate&destination=" +
-                                doctorLocation.address
+                                doctorLocation.longAddress
                                 : "#"
                         }`}
                         target="_blank"
@@ -33,7 +33,7 @@ function DoctorLocationDistance({
                         className="a-only-hover-decoration"
                     >
                             {distance && distance !== Infinity && <>{distance.toFixed(1)} {distanceUnit}</>}
-                            <Icon icon="fas fa-location-arrow ps-1" solid={false} padding={false} />
+                            <Icon icon="fas fa-location-arrow ps-1" solid={false} />
                     </a>
             </p>
         </Tooltip>
