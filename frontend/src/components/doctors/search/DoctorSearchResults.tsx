@@ -125,7 +125,7 @@ export default function DoctorSearchResuls({
                                 locationForDistanceCalculation={locationForDistanceCalculation}
                                 onClick={() => {
                                     setPageYOffset(onlyDivScroll ? document.getElementById(doctorCardsContainerId)?.scrollTop : window.scrollY);
-                                    navigate(getDoctorUrl(doctor, undefined, onlyMyList));
+                                    navigate(getDoctorUrl(doctor, onlyMyList));
                                 }}
                             />
                         ))

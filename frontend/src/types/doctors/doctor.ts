@@ -115,6 +115,6 @@ export function getDoctorReviews(doctor: Doctor) {
     return data;
 }
 
-export function getDoctorUrl(doctor: Doctor, doctorLocation?: DoctorLocation, onlyMyList = false) {
-    return `${onlyMyList ? userSavedProvidersUrl : ""}/${doctor.id}/${doctor.fullName.replaceAll(" ", "-")}/${doctorLocation ? `${doctorLocation.id}` : ""}`;
+export function getDoctorUrl(doctor: Doctor, onlyMyList = false) {
+    return `${onlyMyList ? userSavedProvidersUrl : ""}/${doctor.id}/${doctor.fullName.replaceAll(" ", "-")}}`;
 }

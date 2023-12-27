@@ -29,9 +29,8 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
     const navigate = useNavigate();
 
     const { data: doctors, isListLoading, isListError, listError } = useDoctors();
-    const { doctorId: doctorIdParam, locationId: locationIdParma } = useParams();
+    const { doctorId: doctorIdParam } = useParams();
     const [doctorIdParamWasUsed, setDoctorIdParamWasUsed] = useState(false);
-    const [locationIdParmaWasUsed, setLocationIdParamWasUsed] = useState(false);
     const [filterChangeSinceLastDoctorPick, setFilterChangeSinceLastDoctorPick] = useState(false);
 
     const [matchedDoctorsIgnoringDistance, setMatchedDoctorsIgnoringDistance] = useState<Doctor[]>([]);
@@ -126,10 +125,6 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
     }, [doctorIdParam]);
 
     useEffect(() => {
-        setLocationIdParamWasUsed(false);
-    }, [locationIdParma]);
-
-    useEffect(() => {
         if (doctors && 0 < doctors.length) {
             if (!doctorIdParamWasUsed) {
                 if (doctorIdParam) {
@@ -145,23 +140,8 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
                     setDoctorIdParamWasUsed(true);
                 }
             }
-
-            if (!locationIdParmaWasUsed && currentDoctor !== undefined) {
-                if (locationIdParma) {
-                    const doctorLocation = currentDoctor?.locations.find((location: DoctorLocation) => location.id === Number(locationIdParma));
-                    if (doctorLocation !== undefined) {
-                        setCurrentDoctorLocation(doctorLocation);
-                        setLocationIdParamWasUsed(true);
-                    } else if (currentDoctorLocation !== null) {
-                        setCurrentDoctorLocation(null);
-                    }
-                } else {
-                    setCurrentDoctorLocation(null);
-                    setLocationIdParamWasUsed(true);
-                }
-            }
         }
-    }, [doctors, matchedDoctorsIncludingDistance, doctorIdParam, doctorIdParamWasUsed, locationIdParma, locationIdParmaWasUsed]);
+    }, [doctors, matchedDoctorsIncludingDistance, doctorIdParam, doctorIdParamWasUsed]);
 
     useEffect(() => {
         if (0 < matchedDoctorsIncludingDistance.length && !mapIsOpen && !onlyMyList) {

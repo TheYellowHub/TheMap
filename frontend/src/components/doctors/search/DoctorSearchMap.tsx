@@ -65,9 +65,10 @@ export default function DoctorSearchMap({
                             doctorLocationObj === currentDoctorLocation
                         ),
                         onClick: () => {
-                            const url = getDoctorUrl(doctor, doctorLocationObj);
+                            const url = getDoctorUrl(doctor, onlyMyList);
                             if (url !== pathname) {
-                                navigate(getDoctorUrl(doctor, doctorLocationObj, onlyMyList));
+                                navigate(url);
+                                setCurrentDoctorLocation(doctorLocationObj);
                             }
                         },
                     });
