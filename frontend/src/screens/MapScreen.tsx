@@ -153,7 +153,7 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
         <LoadingWrapper isLoading={isListLoading} isError={isListError} error={listError as ResponseError} center={true}>
             <Container fluid>
                 {onlyMyList && currentDoctor === null && <BackButton className="only-mobile mx-2" />}
-                <Row className={`d-flex mt-xs-0 mt-md-2 mb-0 flex-md-nowrap gap-md-3`}>
+                <Row className={`d-flex mt-${currentDoctor === null ? "2" : "0"} mt-md-2 mb-0 flex-md-nowrap gap-md-3`}>
                     {onlyMyList && matchedDoctorsIncludingDistance.length === 0 && <Col className={`mx-3 px-3`}>
                         <NoResults 
                             title="Saved providers"
