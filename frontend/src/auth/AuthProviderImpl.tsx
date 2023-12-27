@@ -5,7 +5,6 @@ import { useAuth0 } from "@auth0/auth0-react";
 import AuthContext from "./AuthContext";
 import { AuthState } from "./authState";
 import { getCurrentUrl } from "../utils/utils";
-import { mainMapUrl } from "../AppRouter";
 
 export default function AuthProvider({ children }: React.PropsWithChildren) {
     const {

@@ -6,10 +6,11 @@ import useAuth from "../../auth/useAuth";
 import Icon from "./Icon";
 import { Link } from "react-router-dom";
 import useUser from "../../hooks/auth/useUsers";
-import { useUserReviews } from "../../hooks/doctors/useReviews";
+import { useAllReviews } from "../../hooks/doctors/useReviews";
 import { DoctorReview } from "../../types/doctors/review";
 import DeleteAccountModal from "../../auth/DeleteAccountModal";
 import { mainMapUrl, userSavedProvidersUrl } from "../../AppRouter";
+import { sameUser } from "../../auth/userInfo";
 
 function Header() {
     const [selectedPage, setSelectedPage] = useState<EventKey>("");
@@ -17,7 +18,7 @@ function Header() {
 
     const { user, isAuthenticated, isAdmin, login, logout } = useAuth();
     const { userInfo } = useUser();
-    const userReviews = useUserReviews(userInfo!).data.filter((review: DoctorReview) => review.status !== "DELETED");
+    const userReviews = useAllReviews().data.filter((review: DoctorReview) => review.status !== "DELETED" && sameUser(review.addedBy, userInfo));
     const [deletingAccount, setDeletingAccount] = useState(false);
 
     const dontHandleEventKey = "dontHandleEventKey";
@@ -140,6 +141,7 @@ function Header() {
     };
 
     useEffect(() => {
+        console.log(user, isAuthenticated, isAdmin, userInfo?.savedDoctors?.length, userReviews.length)
         const newLinks: (Link | LinksGroup)[] = [...publicLinks];
         if (user && isAuthenticated) {
             newLinks.push(userMenu);
