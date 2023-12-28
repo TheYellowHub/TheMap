@@ -14,6 +14,7 @@ import { logPageView } from "./utils/log";
 
 export const mainMapUrl = "/";
 export const userSavedProvidersUrl = "/user/saved";
+export const loginUrl = "/user/login";
 
 function AppRouter() {
     useEffect(() => {
@@ -28,7 +29,7 @@ function AppRouter() {
             <Route path="/admin/specialities" element={<DoctorSpecialitiesScreen />} />
             <Route path="/admin/reviews" element={<ReviewsScreen />} />
             <Route path="/admin/issues" element={<IssuesScreen />} />
-            <Route path="/user/login" element={<Login />} />
+            <Route path={loginUrl} element={<Login />} />
             <Route path={userSavedProvidersUrl} element={<MapScreen onlyMyList={true} />} />
             <Route path="/user/saved/:doctorId?/:name?" element={<MapScreen onlyMyList={true} />} />
             <Route path="/user/reviews" element={<UserReviews showEditMessageInsteadOfCOntent={false} />} />

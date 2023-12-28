@@ -5,6 +5,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import AuthContext from "./AuthContext";
 import { AuthState } from "./authState";
 import { getCurrentUrl } from "../utils/utils";
+import { loginUrl } from "../AppRouter";
 
 export default function AuthProvider({ children }: React.PropsWithChildren) {
     const {
@@ -22,7 +23,7 @@ export default function AuthProvider({ children }: React.PropsWithChildren) {
     const login = useCallback(async () => {
         const url = getCurrentUrl();
         await auth0login({
-            appState: {
+            appState: url.includes(loginUrl) ? undefined : {
                 returnTo: url
             }
         });

@@ -651,6 +651,10 @@ td {
     background: white;
 }
 
+.modal-content-h-25vh-plus-300 .modal-content {
+    min-height: calc(25vh + 300px) !important;
+}
+
 /* pagination */
 
 .paginationButton,

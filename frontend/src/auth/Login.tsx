@@ -11,7 +11,7 @@ function Login() {
             login();
         }
         window.history.replaceState(null, "", mainMapUrl);
-    }, []);
+    });
 
     return <></>;
 }

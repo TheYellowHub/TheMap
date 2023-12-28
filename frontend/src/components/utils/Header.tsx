@@ -9,7 +9,7 @@ import useUser from "../../hooks/auth/useUsers";
 import { useReviews } from "../../hooks/doctors/useReviews";
 import { DoctorReview } from "../../types/doctors/review";
 import DeleteAccountModal from "../../auth/DeleteAccountModal";
-import { mainMapUrl, userSavedProvidersUrl } from "../../AppRouter";
+import { loginUrl, mainMapUrl, userSavedProvidersUrl } from "../../AppRouter";
 import { sameUser } from "../../auth/userInfo";
 import UserReviews from "../reviews/UserReviews";
 
@@ -140,7 +140,7 @@ function Header() {
     ];
 
     const loginLink = {
-        to: "/user/login",
+        to: loginUrl,
         onClick: login,
         title: "Login",
     };

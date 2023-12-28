@@ -26,6 +26,7 @@ export default function ReportIssueModal({ doctor, show, onHide }: ReportIssueMo
         isMutateSuccess,
         isMutateError,
         mutateError, 
+        resetMutation
     } = useIssues();
     
     const [issueDescription, setIssueDescription] = useState<string>();
@@ -34,12 +35,26 @@ export default function ReportIssueModal({ doctor, show, onHide }: ReportIssueMo
     const { reportValidity, isFormValid } = useFormValidation(formRef);
 
     return (        
-        <Modal show={show} backdrop="static" onHide={onHide} className="user-modal modal-white h-50" centered>
+        <Modal show={show} backdrop="static" onHide={onHide} className="user-modal modal-white modal-content-h-25vh-plus-300" centered>
             
         {isMutateSuccess 
             ? <>
                 <Modal.Body>
                     
+                    <Row className="d-flex justify-content-center gap-3 mt-3">
+                        <Col className="m-0 p-0 d-flex flex-grow-0 justify-content-center">
+                            <Button
+                                variant="primary"
+                                label="Close"
+                                type="button"
+                                onClick={() => {
+                                    resetMutation();
+                                    onHide();
+                                }}
+                                className="w-max-content"
+                            />
+                        </Col>
+                    </Row>
                 </Modal.Body>
             </>
             : <>
