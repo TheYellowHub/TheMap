@@ -27,6 +27,7 @@ import useAuth from "../../auth/useAuth";
 import SetUsernameModal from "./SetUsernameModal";
 import useFormValidation from "../../hooks/useFormValidation";
 import Tooltip from "../utils/Tooltip";
+import { range } from "../../utils/utils";
 
 interface SingleReviewFormProps {
     originalReview: DoctorReview;
@@ -73,7 +74,7 @@ function SingleReviewForm({ originalReview, onCancel, onSuccess, setId }: Single
     const currentDate = new Date();
     const currentMonthName = monthNames[currentDate.getMonth()];
     const currentYear = currentDate.getFullYear();
-    const years = [currentYear - 2, currentYear - 1, currentYear, currentYear + 1, currentYear + 2];
+    const years = range(currentYear - 15,  currentYear + 2);
 
     const CURRENT_USERNAME = "CURRENT_USERNAME";
     const NEW_USERNAME = "NEW_USERNAME";

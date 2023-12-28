@@ -16,3 +16,11 @@ export function capitalizeFirstLetter(text: string): string {
 export function getCurrentUrl(withOrigin = true): string {
     return (withOrigin ? window.location.origin : "") + window.location.pathname + window.location.hash; //  + window.location.search ?
 }
+
+export function range(start: number, end: number) {
+    const array = [];
+    for (let i = start; i <= end; i++) {
+        array.push(i);
+    }
+    return array;
+}
