@@ -1,10 +1,21 @@
-import React from "react";
-import { Auth0Provider } from "@auth0/auth0-react";
+import React, { createContext, useMemo } from "react";
+import { Auth0ContextInterface, Auth0Provider, User, initialContext, useAuth0 } from "@auth0/auth0-react";
 
 import AuthProviderImpl from "./AuthProviderImpl";
 import { getCurrentUrl } from "../utils/utils";
 
+export const Auth0ProviderWithMemo = createContext<Auth0ContextInterface>(initialContext);
+
 export default function AuthProvider({ children }: React.PropsWithChildren) {
+    const { user, ...rest } = useAuth0();
+
+    const contextValue = useMemo<Auth0ContextInterface<User>>(() => {
+        return {
+            user,
+            ...rest,
+        };
+    }, [user?.updated_at, rest.isLoading, rest.isAuthenticated]);
+
     const onRedirectCallback = (appState: any) => {
         window.location.replace(
           appState && appState.returnTo ? appState.returnTo : getCurrentUrl()
@@ -23,7 +34,9 @@ export default function AuthProvider({ children }: React.PropsWithChildren) {
             onRedirectCallback={onRedirectCallback}
             cacheLocation="localstorage"
         >
-            <AuthProviderImpl>{children}</AuthProviderImpl>
+            <Auth0ProviderWithMemo.Provider value={contextValue}>
+                <AuthProviderImpl>{children}</AuthProviderImpl>
+            </Auth0ProviderWithMemo.Provider>
         </Auth0Provider>
     );
 }

@@ -5,6 +5,7 @@
         "forceAddressInput": false,
         "minimumDoctorsInResults": 4,
         "distanceDefault": 100,
-        "distanceJumps": 50
+        "distanceJumps": 50,
+        "queryCacheMinutes": 30
     }
 }

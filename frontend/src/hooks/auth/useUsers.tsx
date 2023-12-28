@@ -4,6 +4,7 @@ import { User } from "@auth0/auth0-react";
 import useApiRequests from "../useApiRequest";
 import { UserInfo } from "../../auth/userInfo";
 import useAuth from "../../auth/useAuth";
+import config from "../../config.json";
 
 export default function useUser(user?: User) {
     const userRemoteId = (user || useAuth().user)?.sub;
@@ -41,6 +42,8 @@ export default function useUser(user?: User) {
     } = useQuery({
         queryKey: [userInfoQueryKey],
         queryFn: getUserInfo,
+        cacheTime: config.app.queryCacheMinutes * 60 * 1000,
+        staleTime: Infinity
     });
 
     // Username 
