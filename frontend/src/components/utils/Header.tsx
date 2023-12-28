@@ -178,6 +178,10 @@ function Header() {
             },
         ],
     };
+
+    // useEffect(() => {
+        // Do nothing
+    // }, [JSON.stringify(userReviews), userInfo?.savedDoctors,userInfo?.savedDoctors?.length])
     
     const adminMenu = {
         title: "Admin",
