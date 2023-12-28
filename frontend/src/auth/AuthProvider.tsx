@@ -32,9 +32,9 @@ export default function AuthProvider({ children }: React.PropsWithChildren) {
                 audience: process.env.REACT_APP_AUTH0_AUDIENCE,
             }}
             onRedirectCallback={onRedirectCallback}
-            cacheLocation="localstorage"
-            useRefreshTokens
-            useRefreshTokensFallback
+            // cacheLocation="localstorage"
+            // useRefreshTokens
+            // useRefreshTokensFallback
         >
             <Auth0ProviderWithMemo.Provider value={contextValue}>
                 <AuthProviderImpl>{children}</AuthProviderImpl>
