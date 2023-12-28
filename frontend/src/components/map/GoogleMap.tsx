@@ -3,6 +3,7 @@ import { GoogleMap as GoogleMapBase, MarkerF, InfoWindowF } from "@react-google-
 import { Location } from "../../utils/googleMaps/useGoogleMaps";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { locationToStr } from "../../types/doctors/doctor";
+import Loader from "../utils/Loader";
 
 export interface Marker {
     title: string;
@@ -71,12 +72,12 @@ function GoogleMap({ center, currentLocation, markers = emptyMarkersArray as Mar
             if (center !== undefined) {
                 bounds.extend(center);
             }
+            
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const originalMaxZoom = (mapRef.current as any).maxZoom;
+            mapRef.current.setOptions({maxZoom: minimalZoom});
             mapRef.current.fitBounds(bounds);
-
-            const newZoom = Math.min(minimalZoom, mapRef.current.getZoom()!);
-            if (newZoom) {
-                mapRef.current.setZoom(newZoom);
-            }
+            mapRef.current.setOptions({maxZoom: originalMaxZoom});
             setFitBoundsDone(true);
         }
     };
@@ -104,6 +105,7 @@ function GoogleMap({ center, currentLocation, markers = emptyMarkersArray as Mar
 
     return (
         <div id="map" key={`${center && locationToStr(center)}`}>
+            <div className="map-is-loading"><br /><br /><Loader size={20} text="Loading map..." center={true} fullHeight={false} marginTop={false} /></div>
             <GoogleMapBase
                 key={`${center && locationToStr(center)}`}
                 mapContainerClassName="map"

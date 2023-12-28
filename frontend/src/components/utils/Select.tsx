@@ -105,6 +105,7 @@ export default function Select({
             hideSelectedOptions={false}
             components={{ ValueContainer: multiValueContainer }}
             menuPosition={iconComponent ? "absolute" : "fixed"}
+            isSearchable={false}
         />
     ) : (
         <ReactSelect
@@ -120,6 +121,7 @@ export default function Select({
             isClearable={allowEmptySelection}
             isDisabled={disabled}
             menuPosition={ "fixed"}
+            isSearchable={false}
         />
     );
 

@@ -29,12 +29,12 @@ export default function DoctorSmallCard({
         <Container className={`${doctorSmallCardClassName} mx-0 px-0 ${onClick && "pointer"}`} onClick={onClick} fluid>
             <Row className="flex-nowrap">
                 <Col className="flex-grow-0 pe-1">
-                    <DoctorImage doctor={doctor} big={false} />
+                    <DoctorImage doctor={doctor} />
                 </Col>
                 <Col className="d-grid px-2 py-2 gap-2 align-content-between">
-                    <Row className="w-100 m-0">
+                    <Row className="w-100 m-0 pe-1">
                         <Col className="px-0 doctorSmallCardName font-assistant lg-font">{doctor.fullName}</Col>
-                        <SaveDoctorIcon doctor={doctor} colClassName="ps-0 pe-3 flex-grow-0" iconClassName="px-1" />
+                        <SaveDoctorIcon doctor={doctor} colClassName="flex-grow-0" iconClassName="px-1" />
                     </Row>
                     <Row className="w-100 m-0 gap-1">
                         <Col className="px-0 flex-grow-0">
@@ -48,6 +48,8 @@ export default function DoctorSmallCard({
                         {closestLocation && (
                             <DoctorLocationAddress
                                 doctorLocation={closestLocation}
+                                showDistanceAndNavigator={false}
+                                useShortAddress={true}
                             />
                         )}
                     </Row>

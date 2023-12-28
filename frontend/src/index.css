@@ -72,6 +72,10 @@
     color: var(--med-grey) !important;
 }
 
+.med-grey-border {
+    border: 0.5px solid var(--med-grey);
+}
+
 .light-grey {
     color: var(--light-grey) !important;
 }
@@ -172,8 +176,16 @@
     font-weight: 100;
 }
 
-.fa-star {
+.fa-star,
+.fa-star-half-alt {
     font-family: "Font Awesome 6 Pro";
+}
+
+.fa-regular .fa-star:not(.font-awesome-regular-ready .fa-star),
+.fa-regular .fa-star-half-alt:not(.font-awesome-regular-ready .fa-star-half-alt),
+.fa-solid .fa-star:not(.font-awesome-solid-ready .fa-star),
+.fa-solid .fa-star-half-alt:not(.font-awesome-solid-ready .fa-star-half-alt) {
+    display: none;
 }
 
 .huge-icon {
@@ -207,6 +219,10 @@
 
 .w-70 {
     width: 70% !important;
+}
+
+.w-80 {
+    width: 80% !important;
 }
 
 .w-fit-content,
@@ -310,8 +326,16 @@ a.a-no-decoration-line:hover {
     position: absolute;
 }
 
+[class*="tooltip"] {
+    border-radius: 6px !important;
+}
+
 .pointer {
     cursor: pointer;
+}
+
+.cursor-inherit {
+    cursor: inherit !important;
 }
 
 .select-min-height .react-select__control {
@@ -335,6 +359,10 @@ a.a-no-decoration-line:hover {
 
 .h-max-content {
     height: max-content;
+}
+
+.mh-25vh {
+    min-height: 25vh;
 }
 
 .h-2 {
@@ -621,6 +649,10 @@ td {
 
 .user-modal.modal-white .modal-content {
     background: white;
+}
+
+.modal-content-h-25vh-plus-300 .modal-content {
+    min-height: calc(25vh + 300px) !important;
 }
 
 /* pagination */
@@ -910,6 +942,7 @@ input[type="checkbox"] {
     margin: 0 !important;
     line-height: inherit !important;
     width: 100% !important;
+    cursor: pointer;
 }
 
 .react-select__value-container {
@@ -1092,6 +1125,7 @@ div:has(.small-address-filter) {
 }
 
 .doctors-map-below-results .map {
+    background-color: var(--very-light-grey);
     padding: 0;
     position: relative;
     min-height: 50vh;
@@ -1109,6 +1143,14 @@ div:has(.small-address-filter) {
     min-height: var(--main-part-height);
     height: var(--main-part-height);
     z-index: 1;
+}
+
+.doctors-map-below-results:has(.gm-style) .map-is-loading,
+.doctors-map-below-results:has(.gm-style) .map-is-loading *,
+.doctors-map-next-to-results .map-is-loading,
+.doctors-map-next-to-results .map-is-loading *,
+.map:not(:has(.gm-style)) .btn {
+    display: none;
 }
 
 .aboveMap {
@@ -1162,8 +1204,7 @@ div:has(.small-address-filter) {
     padding: 1.8rem 1.5rem !important;
 }
 
-.doctorSmallCardImg,
-.doctorBigCardImg {
+.doctor-image {
     width: 7.125rem;
     height: 100%;
     border-radius: 0.25rem;
@@ -1171,7 +1212,11 @@ div:has(.small-address-filter) {
     padding: 0;
 }
 
-.doctorBigCardImg {
+.doctorTinyCard .doctor-image {
+    width: 3.4rem;
+}
+
+.doctorBigCard .doctor-image {
     width: 8.875rem;
     height: 11.0625rem;
 }
@@ -1261,6 +1306,7 @@ div:has(.small-address-filter) {
     filter: grayscale(0%);
 }
 
+.doctorTinyCard .verification img,
 .doctorSmallCard .verification img {
     height: 0.84156rem;
 }
@@ -1300,6 +1346,7 @@ div:has(.small-address-filter) {
     gap: 0.75rem;
     padding: 0.25rem 0.5rem 0.125rem 0.5rem !important;
     width: fit-content;
+    height: 40px !important;
     background-color: white;
     color: var(--dark-blue);
     border-radius: 0.25rem 0.25rem 0rem 0rem;
@@ -1346,8 +1393,8 @@ div:has(.small-address-filter) {
         display: none;
     }
 
-    .w-50-desktop {
-        width: 50% !important;
+    .w-70-desktop {
+        width: 70% !important;
     }
 
     .user-modal .modal-dialog {
@@ -1390,7 +1437,7 @@ div:has(.small-address-filter) {
     }
 
     .only-desktop * {
-        display: none;
+        display: none; 
     }
 
     .gap-3 {
@@ -1419,7 +1466,18 @@ div:has(.small-address-filter) {
 
     .py-3, .pb-3 {
         padding-bottom: 0.5rem !important;
-    }    
+    }
+
+    .navbar-collapse,
+    .navbar-nav {
+        width: 100%;
+    }
+
+    .dropdown-menu {
+        padding-bottom: 8px;
+        box-shadow: none;
+        width: 100%;
+    }
 
     .user-modal .modal-dialog {
         max-width: 100%;
@@ -1433,13 +1491,12 @@ div:has(.small-address-filter) {
         font-size: 1.2rem;
     }
     
-    .doctorSmallCardImg,
-    .doctorBigCardImg {
+    .doctorSmallCard .doctor-image,
+    .doctorBigCard .doctor-image {
         width: 5.875rem;
     }
 
-    .doctorBigCardImg {
-        width: 5.875rem;
+    .doctorBigCard .doctor-image {
         height: 7.323rem;
     }
 

@@ -1,7 +1,6 @@
 import { Container } from "react-bootstrap";
 
 import config from "../../../config.json";
-import useAuth from "../../../auth/useAuth";
 
 interface DoctorSearchNoResultsProps {
     address: string | undefined;
@@ -18,8 +17,6 @@ export default function DoctorSearchNoResuls({
     setShouldClearFilters,
     setShouldClearAddress,
 }: DoctorSearchNoResultsProps) {
-    const { user } = useAuth();
-
     return (
         <Container fluid>
             <div className="bold">

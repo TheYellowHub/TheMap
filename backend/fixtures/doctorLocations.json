@@ -5,7 +5,7 @@
         "fields": {
             "doctor": 1,
             "hospital_name": "Domus Medica",
-            "address": "Egilsgata 3, 101 Reykjav\u00edk, Iceland",
+            "long_address": "Egilsgata 3, 101 Reykjav\u00edk, Iceland",
             "lat": 64.1399443,
             "lng": -21.9213945,
             "phone": null,
@@ -20,7 +20,7 @@
         "fields": {
             "doctor": 2,
             "hospital_name": null,
-            "address": "312 Fulwood Rd, Sheffield S10 3BN, UK",
+            "long_address": "312 Fulwood Rd, Sheffield S10 3BN, UK",
             "lat": 53.374321,
             "lng": -1.517389,
             "phone": null,
@@ -35,7 +35,7 @@
         "fields": {
             "doctor": 3,
             "hospital_name": "The Bristol Women's Clinic Ltd",
-            "address": "Clifton Hill Lodge, 5 Clifton Hill, Clifton, Bristol BS8 1BN, UK",
+            "long_address": "Clifton Hill Lodge, 5 Clifton Hill, Clifton, Bristol BS8 1BN, UK",
             "lat": 51.4536526,
             "lng": -2.6159936,
             "phone": null,
@@ -50,7 +50,7 @@
         "fields": {
             "doctor": 4,
             "hospital_name": "Bud\u011bjovick\u00e1 policlinic",
-            "address": "A. Sta\u0161ka 1670/80, 140 00 Praha 4, Czechia",
+            "long_address": "A. Sta\u0161ka 1670/80, 140 00 Praha 4, Czechia",
             "lat": 50.0426804,
             "lng": 14.4497375,
             "phone": "733-676-136",
@@ -65,7 +65,7 @@
         "fields": {
             "doctor": 5,
             "hospital_name": null,
-            "address": "Koning Leopold I-straat 45, 3000 Leuven, Belgium",
+            "long_address": "Koning Leopold I-straat 45, 3000 Leuven, Belgium",
             "lat": 50.8799006,
             "lng": 4.7094084,
             "phone": null,
@@ -80,7 +80,7 @@
         "fields": {
             "doctor": 6,
             "hospital_name": "Aberdeen Royal Infirmary",
-            "address": "35 Foresterhill Rd, Aberdeen AB16 5BR, UK",
+            "long_address": "35 Foresterhill Rd, Aberdeen AB16 5BR, UK",
             "lat": 57.1540996,
             "lng": -2.1357159,
             "phone": "01224-553-471",
@@ -95,7 +95,7 @@
         "fields": {
             "doctor": 7,
             "hospital_name": "Derriford Hospital -Gynaecology",
-            "address": "06 Derriford Rd, Plymouth PL6 8DH, UK",
+            "long_address": "06 Derriford Rd, Plymouth PL6 8DH, UK",
             "lat": 50.4164515,
             "lng": -4.1142907,
             "phone": null,
@@ -110,7 +110,7 @@
         "fields": {
             "doctor": 8,
             "hospital_name": "Rotherham General Hospital",
-            "address": "Oakwood, Rotherham S60 2UD, UK",
+            "long_address": "Oakwood, Rotherham S60 2UD, UK",
             "lat": 53.4142658,
             "lng": -1.3425348,
             "phone": null,
@@ -125,7 +125,7 @@
         "fields": {
             "doctor": 9,
             "hospital_name": "Poole Hospital",
-            "address": "Poole Hospital, Poole BH15, UK",
+            "long_address": "Poole Hospital, Poole BH15, UK",
             "lat": 50.722007,
             "lng": -1.9728559,
             "phone": null,
@@ -140,7 +140,7 @@
         "fields": {
             "doctor": 10,
             "hospital_name": "Bristol Centre For Reproductive Medicine - BCRM",
-            "address": "FCW6+XM Bristol, UK",
+            "long_address": "FCW6+XM Bristol, UK",
             "lat": 51.4974934,
             "lng": -2.5882712,
             "phone": null,
@@ -155,7 +155,7 @@
         "fields": {
             "doctor": 11,
             "hospital_name": null,
-            "address": "Strada 1 Decembrie 1918 11, Br\u0103ila, Romania",
+            "long_address": "Strada 1 Decembrie 1918 11, Br\u0103ila, Romania",
             "lat": 45.2714353,
             "lng": 27.9618877,
             "phone": null,
@@ -170,7 +170,7 @@
         "fields": {
             "doctor": 12,
             "hospital_name": "Cork Women's Clinic",
-            "address": "Suite 24 Cork Clinic, Western Rd, Mardyke, Cork, Co. Cork City, T12 A0PX, Ireland",
+            "long_address": "Suite 24 Cork Clinic, Western Rd, Mardyke, Cork, Co. Cork City, T12 A0PX, Ireland",
             "lat": 51.8937254,
             "lng": -8.4986629,
             "phone": null,
@@ -185,7 +185,7 @@
         "fields": {
             "doctor": 13,
             "hospital_name": null,
-            "address": "235 Euston Rd., London NW1 2BU, UK",
+            "long_address": "235 Euston Rd., London NW1 2BU, UK",
             "lat": 51.5249936,
             "lng": -0.1357478,
             "phone": null,
@@ -200,7 +200,7 @@
         "fields": {
             "doctor": 14,
             "hospital_name": "Academic Hospital Maastricht",
-            "address": "P. Debyelaan 25, 6229 HX Maastricht, Netherlands",
+            "long_address": "P. Debyelaan 25, 6229 HX Maastricht, Netherlands",
             "lat": 50.8352778,
             "lng": 5.7147222,
             "phone": null,
@@ -215,7 +215,7 @@
         "fields": {
             "doctor": 15,
             "hospital_name": null,
-            "address": "Geissbergstrasse 81, 8208 Schaffhausen, Switzerland",
+            "long_address": "Geissbergstrasse 81, 8208 Schaffhausen, Switzerland",
             "lat": 47.7113906,
             "lng": 8.6375812,
             "phone": null,
@@ -230,7 +230,7 @@
         "fields": {
             "doctor": 16,
             "hospital_name": null,
-            "address": "11 Bd L\u00e9on Malfreyt, 63000 Clermont-Ferrand, France",
+            "long_address": "11 Bd L\u00e9on Malfreyt, 63000 Clermont-Ferrand, France",
             "lat": 45.7737634,
             "lng": 3.0851695,
             "phone": null,
@@ -245,7 +245,7 @@
         "fields": {
             "doctor": 17,
             "hospital_name": null,
-            "address": "Nuffield Health Woking Hospital, Shores Road, Woking GU21 4BY, UK",
+            "long_address": "Nuffield Health Woking Hospital, Shores Road, Woking GU21 4BY, UK",
             "lat": 51.33221,
             "lng": -0.561176,
             "phone": "0800-270-0270",
@@ -260,7 +260,7 @@
         "fields": {
             "doctor": 17,
             "hospital_name": null,
-            "address": "Block, 4 Silverlands Cl, Lyne, Chertsey KT16 0RJ, UK",
+            "long_address": "Block, 4 Silverlands Cl, Lyne, Chertsey KT16 0RJ, UK",
             "lat": 51.3779572,
             "lng": -0.5248425,
             "phone": "0800-270-0270",
@@ -275,7 +275,7 @@
         "fields": {
             "doctor": 18,
             "hospital_name": "The Royal London Hospital",
-            "address": "London\u2019s Air Ambulance Helipad, Stepney Way, London E1 2DP, UK",
+            "long_address": "London\u2019s Air Ambulance Helipad, Stepney Way, London E1 2DP, UK",
             "lat": 51.5182221,
             "lng": -0.0585176,
             "phone": null,
@@ -290,7 +290,7 @@
         "fields": {
             "doctor": 20,
             "hospital_name": null,
-            "address": "Central Middlesex Hospital (Stop B), London NW10 7RB, UK",
+            "long_address": "Central Middlesex Hospital (Stop B), London NW10 7RB, UK",
             "lat": 51.5310842,
             "lng": -0.268713,
             "phone": null,
@@ -305,7 +305,7 @@
         "fields": {
             "doctor": 21,
             "hospital_name": "St Peter's Hospital",
-            "address": "Block, 4 Silverlands Cl, Lyne, Chertsey KT16 0RJ, UK",
+            "long_address": "Block, 4 Silverlands Cl, Lyne, Chertsey KT16 0RJ, UK",
             "lat": 51.377666,
             "lng": -0.5253968,
             "phone": null,
@@ -320,7 +320,7 @@
         "fields": {
             "doctor": 22,
             "hospital_name": "Charit\u00e9 \u2013 Universit\u00e4tsmedizin Berlin",
-            "address": "Charit\u00e9pl. 1, 10117 Berlin, Germany",
+            "long_address": "Charit\u00e9pl. 1, 10117 Berlin, Germany",
             "lat": 52.5264618,
             "lng": 13.3766245,
             "phone": null,
@@ -335,7 +335,7 @@
         "fields": {
             "doctor": 23,
             "hospital_name": "Dr. Geisenhoffer Frauklinik",
-            "address": "Hirschauer Str. 6, 80538 M\u00fcnchen, Germany",
+            "long_address": "Hirschauer Str. 6, 80538 M\u00fcnchen, Germany",
             "lat": 48.1516136,
             "lng": 11.5964825,
             "phone": null,
@@ -350,7 +350,7 @@
         "fields": {
             "doctor": 24,
             "hospital_name": "Casa di Cura Villa del Rosario",
-            "address": "Via Flaminia, 499, 00191 Roma RM, Italy",
+            "long_address": "Via Flaminia, 499, 00191 Roma RM, Italy",
             "lat": 41.9404145,
             "lng": 12.4693312,
             "phone": null,
@@ -365,7 +365,7 @@
         "fields": {
             "doctor": 25,
             "hospital_name": null,
-            "address": "1 Pl. de Verdun, 59000 Lille, France",
+            "long_address": "1 Pl. de Verdun, 59000 Lille, France",
             "lat": 50.6112778,
             "lng": 3.0346065,
             "phone": null,
@@ -380,7 +380,7 @@
         "fields": {
             "doctor": 26,
             "hospital_name": "Saint Marys Hospital",
-            "address": "St Marys Hospital, Hathersage Rd, Manchester M13 0JH, UK",
+            "long_address": "St Marys Hospital, Hathersage Rd, Manchester M13 0JH, UK",
             "lat": 53.4596209,
             "lng": -2.2271851,
             "phone": null,
@@ -395,7 +395,7 @@
         "fields": {
             "doctor": 27,
             "hospital_name": "Filippo Del Ponte Hospital",
-            "address": "Via Filippo del Ponte, 19, 21100 Varese VA, Italy",
+            "long_address": "Via Filippo del Ponte, 19, 21100 Varese VA, Italy",
             "lat": 45.8155206,
             "lng": 8.8345756,
             "phone": "352-621-9310",
@@ -410,7 +410,7 @@
         "fields": {
             "doctor": 28,
             "hospital_name": "Colchester Endometriosis Centre",
-            "address": "Colchester District General Hospital, Charter Way, Turner Rd, Mile End, Colchester CO4 5JL, UK",
+            "long_address": "Colchester District General Hospital, Charter Way, Turner Rd, Mile End, Colchester CO4 5JL, UK",
             "lat": 51.9098567,
             "lng": 0.8988999,
             "phone": null,
@@ -425,7 +425,7 @@
         "fields": {
             "doctor": 29,
             "hospital_name": null,
-            "address": "Calle de Juan Bravo, 39- 49, 28006 Madrid, Spain",
+            "long_address": "Calle de Juan Bravo, 39- 49, 28006 Madrid, Spain",
             "lat": 40.432733,
             "lng": -3.6776551,
             "phone": "912-00-10-26",
@@ -440,7 +440,7 @@
         "fields": {
             "doctor": 30,
             "hospital_name": null,
-            "address": "148 Harley St, London W1G 7LG, UK",
+            "long_address": "148 Harley St, London W1G 7LG, UK",
             "lat": 51.523011,
             "lng": -0.1485563,
             "phone": null,
@@ -455,7 +455,7 @@
         "fields": {
             "doctor": 31,
             "hospital_name": "Beacon Hospital",
-            "address": "57 Blackthorn Rd, Sandyford, Dublin 18, D18 T1D0, Ireland",
+            "long_address": "57 Blackthorn Rd, Sandyford, Dublin 18, D18 T1D0, Ireland",
             "lat": 53.2755572,
             "lng": -6.2190579,
             "phone": null,
@@ -470,7 +470,7 @@
         "fields": {
             "doctor": 32,
             "hospital_name": "Beacon Hospital",
-            "address": "Beacon Court, Bracken Rd, Sandyford Business Park, Sandyford, Dublin 18, Ireland",
+            "long_address": "Beacon Court, Bracken Rd, Sandyford Business Park, Sandyford, Dublin 18, Ireland",
             "lat": 53.2757368,
             "lng": -6.2194441,
             "phone": null,
@@ -485,7 +485,7 @@
         "fields": {
             "doctor": 33,
             "hospital_name": "Princess Anne Hospital",
-            "address": "Princess Anne Hospital, Coxford Rd, Southampton SO16 5YA, UK",
+            "long_address": "Princess Anne Hospital, Coxford Rd, Southampton SO16 5YA, UK",
             "lat": 50.9353552,
             "lng": -1.4348528,
             "phone": null,
@@ -500,7 +500,7 @@
         "fields": {
             "doctor": 34,
             "hospital_name": "BMI The Alexandra Hospital",
-            "address": "9QWM+RP Cheadle, UK",
+            "long_address": "9QWM+RP Cheadle, UK",
             "lat": 53.397048,
             "lng": -2.2157493,
             "phone": null,
@@ -515,7 +515,7 @@
         "fields": {
             "doctor": 34,
             "hospital_name": "Stockport Endometriosis Centre, Wirral University Teaching Hospital",
-            "address": "9VM8+VJ Stockport, UK",
+            "long_address": "9VM8+VJ Stockport, UK",
             "lat": 53.3846791,
             "lng": -2.1334589,
             "phone": null,
@@ -530,7 +530,7 @@
         "fields": {
             "doctor": 36,
             "hospital_name": "Royal Berkshire Hospital",
-            "address": "Level 2 Royal Berkshire Hospital, Royal Berkshire, Reading RG1 5LE, UK",
+            "long_address": "Level 2 Royal Berkshire Hospital, Royal Berkshire, Reading RG1 5LE, UK",
             "lat": 51.4492924,
             "lng": -0.9581844,
             "phone": null,
@@ -545,7 +545,7 @@
         "fields": {
             "doctor": 37,
             "hospital_name": "Central Middlesex Hospital",
-            "address": "Central Middlesex Hospital (Stop B), London NW10 7RB, UK",
+            "long_address": "Central Middlesex Hospital (Stop B), London NW10 7RB, UK",
             "lat": 51.5310374,
             "lng": -0.2693782,
             "phone": null,
@@ -560,7 +560,7 @@
         "fields": {
             "doctor": 38,
             "hospital_name": "Hopital lariboisiere",
-            "address": "porte 12 secteur bleu, 2 Rue Ambroise Par\u00e9, 75010 Paris, France",
+            "long_address": "porte 12 secteur bleu, 2 Rue Ambroise Par\u00e9, 75010 Paris, France",
             "lat": 48.8824675,
             "lng": 2.3528824,
             "phone": "01-49-95-62-79",
@@ -575,7 +575,7 @@
         "fields": {
             "doctor": 39,
             "hospital_name": "Hospitals Academics De Strasbourg",
-            "address": "1 Av. Moli\u00e8re, 67200 Strasbourg, France",
+            "long_address": "1 Av. Moli\u00e8re, 67200 Strasbourg, France",
             "lat": 48.5942005,
             "lng": 7.7071804,
             "phone": "899-105-110",
@@ -590,7 +590,7 @@
         "fields": {
             "doctor": 40,
             "hospital_name": "Ospedale S. Camillo",
-            "address": "Via Benedetto Giovanelli, 19, 38122 Trento TN, Italy",
+            "long_address": "Via Benedetto Giovanelli, 19, 38122 Trento TN, Italy",
             "lat": 46.0650201,
             "lng": 11.1319107,
             "phone": null,
@@ -605,7 +605,7 @@
         "fields": {
             "doctor": 41,
             "hospital_name": "Chemin du Pont des Deux Eaux",
-            "address": "95 Chem. du Pont des 2 Eaux, 84000 Avignon, France",
+            "long_address": "95 Chem. du Pont des 2 Eaux, 84000 Avignon, France",
             "lat": 43.9403228,
             "lng": 4.8420045,
             "phone": "04-90-89-84-00",
@@ -620,7 +620,7 @@
         "fields": {
             "doctor": 42,
             "hospital_name": "American medical centre",
-            "address": "Strovolou 4, Strovolos, Cyprus",
+            "long_address": "Strovolou 4, Strovolos, Cyprus",
             "lat": 35.1498693,
             "lng": 33.3468134,
             "phone": "357-22-476-754",
@@ -635,7 +635,7 @@
         "fields": {
             "doctor": 43,
             "hospital_name": "Fate Bene Fratelli Hospital",
-            "address": "Via di Ponte Quattro capi, 39, 00186 Roma RM, Italy",
+            "long_address": "Via di Ponte Quattro capi, 39, 00186 Roma RM, Italy",
             "lat": 41.8909184,
             "lng": 12.4770831,
             "phone": null,
@@ -650,7 +650,7 @@
         "fields": {
             "doctor": 44,
             "hospital_name": null,
-            "address": "Via Errico Carmelo, 2, 83100 Avellino AV, Italy",
+            "long_address": "Via Errico Carmelo, 2, 83100 Avellino AV, Italy",
             "lat": 40.9117914,
             "lng": 14.7749038,
             "phone": "0825-686686",
@@ -665,7 +665,7 @@
         "fields": {
             "doctor": 45,
             "hospital_name": "The Princess Grace Hospital",
-            "address": "The Princess Grace Hospital, 42-52 Nottingham Pl, London W1U 5NY, UK",
+            "long_address": "The Princess Grace Hospital, 42-52 Nottingham Pl, London W1U 5NY, UK",
             "lat": 51.5226412,
             "lng": -0.1530504,
             "phone": null,
@@ -680,7 +680,7 @@
         "fields": {
             "doctor": 5,
             "hospital_name": "Casa di Cura Villa del Rosario",
-            "address": "Via Flaminia, 499, 00191 Roma RM, Italy",
+            "long_address": "Via Flaminia, 499, 00191 Roma RM, Italy",
             "lat": 41.9404305,
             "lng": 12.4691542,
             "phone": null,
@@ -695,7 +695,7 @@
         "fields": {
             "doctor": 47,
             "hospital_name": "Royal Sussex County Hospital",
-            "address": "Courtyard Building, Royal Sussex County Hospital, Eastern Rd, Brighton BN2 5BE, UK",
+            "long_address": "Courtyard Building, Royal Sussex County Hospital, Eastern Rd, Brighton BN2 5BE, UK",
             "lat": 50.8193472,
             "lng": -0.1182958,
             "phone": null,
@@ -710,7 +710,7 @@
         "fields": {
             "doctor": 48,
             "hospital_name": "Countess of Chester Hospital",
-            "address": "Countess of Chester Hospital NHS Foundation Trust, Moston Lodge, Chester CH2 1UL, UK",
+            "long_address": "Countess of Chester Hospital NHS Foundation Trust, Moston Lodge, Chester CH2 1UL, UK",
             "lat": 53.2082328,
             "lng": -2.8981136,
             "phone": null,
@@ -725,7 +725,7 @@
         "fields": {
             "doctor": 49,
             "hospital_name": "King's College Hospital",
-            "address": "Hambleden Wing, London SE5, UK",
+            "long_address": "Hambleden Wing, London SE5, UK",
             "lat": 51.4680626,
             "lng": -0.0937708,
             "phone": null,
@@ -740,7 +740,7 @@
         "fields": {
             "doctor": 50,
             "hospital_name": "King's College Hospital",
-            "address": "Golden Jubilee, London SE5 9RS, UK",
+            "long_address": "Golden Jubilee, London SE5 9RS, UK",
             "lat": 51.4684502,
             "lng": -0.0930627,
             "phone": null,
@@ -755,7 +755,7 @@
         "fields": {
             "doctor": 51,
             "hospital_name": null,
-            "address": "146 Harley St, London W1G 7JZ, UK",
+            "long_address": "146 Harley St, London W1G 7JZ, UK",
             "lat": 51.5229376,
             "lng": -0.1484705,
             "phone": null,
@@ -770,7 +770,7 @@
         "fields": {
             "doctor": 52,
             "hospital_name": "University College Hospital",
-            "address": "233 Euston Rd., London NW1 3AD, UK",
+            "long_address": "233 Euston Rd., London NW1 3AD, UK",
             "lat": 51.5251538,
             "lng": -0.1361126,
             "phone": null,
@@ -785,7 +785,7 @@
         "fields": {
             "doctor": 53,
             "hospital_name": "King's College Hospital",
-            "address": "51 Bessemer Rd, London SE5 9RS, UK",
+            "long_address": "51 Bessemer Rd, London SE5 9RS, UK",
             "lat": 51.4679891,
             "lng": -0.0948008,
             "phone": null,
@@ -800,7 +800,7 @@
         "fields": {
             "doctor": 54,
             "hospital_name": "London Wellwoman Clinic",
-            "address": "60 Grove End Rd, London NW8 9NH, UK",
+            "long_address": "60 Grove End Rd, London NW8 9NH, UK",
             "lat": 51.5328274,
             "lng": -0.1747759,
             "phone": null,
@@ -815,7 +815,7 @@
         "fields": {
             "doctor": 55,
             "hospital_name": "Whipps Cross University Hospital",
-            "address": "Whipps Cross Hospital, Whipps Cross Rd, London E11 1NR, UK",
+            "long_address": "Whipps Cross Hospital, Whipps Cross Rd, London E11 1NR, UK",
             "lat": 51.5777682,
             "lng": 0.0030728,
             "phone": null,
@@ -830,7 +830,7 @@
         "fields": {
             "doctor": 56,
             "hospital_name": "Addenbrooke's Hospital",
-            "address": "54GR+27 Cambridge, UK",
+            "long_address": "54GR+27 Cambridge, UK",
             "lat": 52.1751006,
             "lng": 0.1407275,
             "phone": null,
@@ -845,7 +845,7 @@
         "fields": {
             "doctor": 57,
             "hospital_name": "MIC-Zentrum",
-            "address": "Terminalstra\u00dfe Mitte 18 MIC-Zentrum Flughafen M\u00fcnchen Center - Ebene 06, 85356 M\u00fcnchen-Flughafen, Germany",
+            "long_address": "Terminalstra\u00dfe Mitte 18 MIC-Zentrum Flughafen M\u00fcnchen Center - Ebene 06, 85356 M\u00fcnchen-Flughafen, Germany",
             "lat": 48.353217,
             "lng": 11.7880266,
             "phone": null,
@@ -860,7 +860,7 @@
         "fields": {
             "doctor": 58,
             "hospital_name": "BMI The Runnymede Hospital",
-            "address": "9FHG+5C Chertsey, UK",
+            "long_address": "9FHG+5C Chertsey, UK",
             "lat": 51.3779485,
             "lng": -0.5239585,
             "phone": "01932-722654",
@@ -875,7 +875,7 @@
         "fields": {
             "doctor": 58,
             "hospital_name": "Nuffield Health Woking Hospital",
-            "address": "1 Pentire Cl, Horsell, Woking GU21 4PZ, UK",
+            "long_address": "1 Pentire Cl, Horsell, Woking GU21 4PZ, UK",
             "lat": 51.3319449,
             "lng": -0.5612817,
             "phone": "01932-722654",
@@ -890,7 +890,7 @@
         "fields": {
             "doctor": 60,
             "hospital_name": "Whittington Health",
-            "address": "1A Gordon Cl, London N19 5NG, UK",
+            "long_address": "1A Gordon Cl, London N19 5NG, UK",
             "lat": 51.5666133,
             "lng": -0.139872,
             "phone": null,
@@ -905,7 +905,7 @@
         "fields": {
             "doctor": 61,
             "hospital_name": "Norfolk & Norwich University Hospital",
-            "address": "Norfolk & Norwich University Hospital, Colney Ln, Colney, Norwich NR4 7UY, UK",
+            "long_address": "Norfolk & Norwich University Hospital, Colney Ln, Colney, Norwich NR4 7UY, UK",
             "lat": 52.6180858,
             "lng": 1.2210669,
             "phone": null,
@@ -920,7 +920,7 @@
         "fields": {
             "doctor": 62,
             "hospital_name": "Northampton General Hospital",
-            "address": "Hospital, Cliftonville Rd, Northampton NN1 5BD, UK",
+            "long_address": "Hospital, Cliftonville Rd, Northampton NN1 5BD, UK",
             "lat": 52.2361366,
             "lng": -0.8842779,
             "phone": null,
@@ -935,7 +935,7 @@
         "fields": {
             "doctor": 63,
             "hospital_name": "Nuffield Health Derby Hospital",
-            "address": "Rykneld Lodge, Rykneld Rd, Littleover, Derby DE23 4SN, UK",
+            "long_address": "Rykneld Lodge, Rykneld Rd, Littleover, Derby DE23 4SN, UK",
             "lat": 52.893466,
             "lng": -1.530115,
             "phone": null,
@@ -950,7 +950,7 @@
         "fields": {
             "doctor": 64,
             "hospital_name": "Dorset Endometriosis Centre at Poole Hospital",
-            "address": "Poole Hospital, Longfleet Rd, Poole BH15 2JB, UK",
+            "long_address": "Poole Hospital, Longfleet Rd, Poole BH15 2JB, UK",
             "lat": 50.7216708,
             "lng": -1.9735962,
             "phone": null,
@@ -965,7 +965,7 @@
         "fields": {
             "doctor": 65,
             "hospital_name": "Croydon University Hospital",
-            "address": "530 London Rd, Thornton Heath CR7 7YE, UK",
+            "long_address": "530 London Rd, Thornton Heath CR7 7YE, UK",
             "lat": 51.3892939,
             "lng": -0.1111861,
             "phone": null,
@@ -980,7 +980,7 @@
         "fields": {
             "doctor": 66,
             "hospital_name": "NHS, Leeds",
-            "address": "Klausstrasse 4, 8008 Z\u00fcrich, Switzerland",
+            "long_address": "Klausstrasse 4, 8008 Z\u00fcrich, Switzerland",
             "lat": 52.4575358,
             "lng": -2.0770369,
             "phone": null,
@@ -995,7 +995,7 @@
         "fields": {
             "doctor": 66,
             "hospital_name": "West Midlands Private Hospital",
-            "address": "West Midlands Private Hospital, Colman Hill, Halesowen B63 2AH, UK",
+            "long_address": "West Midlands Private Hospital, Colman Hill, Halesowen B63 2AH, UK",
             "lat": 52.4575358,
             "lng": -2.0770369,
             "phone": null,
@@ -1010,7 +1010,7 @@
         "fields": {
             "doctor": 68,
             "hospital_name": null,
-            "address": "235 Euston Rd., London NW1 2BU, UK",
+            "long_address": "235 Euston Rd., London NW1 2BU, UK",
             "lat": 51.525047,
             "lng": -0.1365096,
             "phone": null,
@@ -1025,7 +1025,7 @@
         "fields": {
             "doctor": 69,
             "hospital_name": null,
-            "address": "Budapest, Vars\u00e1nyi Ir\u00e9n u. 21, 1027 Hungary",
+            "long_address": "Budapest, Vars\u00e1nyi Ir\u00e9n u. 21, 1027 Hungary",
             "lat": 47.5091611,
             "lng": 19.0304664,
             "phone": null,
@@ -1040,7 +1040,7 @@
         "fields": {
             "doctor": 70,
             "hospital_name": null,
-            "address": "R. de Santo Ildefonso 418A, 4300 Porto, Portugal",
+            "long_address": "R. de Santo Ildefonso 418A, 4300 Porto, Portugal",
             "lat": 41.1474521,
             "lng": -8.600734,
             "phone": null,
@@ -1055,7 +1055,7 @@
         "fields": {
             "doctor": 71,
             "hospital_name": "Landeskrankenhaus Villach",
-            "address": "Nikolaigasse 43, 9500 Villach, Austria",
+            "long_address": "Nikolaigasse 43, 9500 Villach, Austria",
             "lat": 46.6159321,
             "lng": 13.8577801,
             "phone": "0043-4242-25917",
@@ -1070,7 +1070,7 @@
         "fields": {
             "doctor": 72,
             "hospital_name": "Royal Cornwall Hospital",
-            "address": "2 Penventinnie Ln, Truro TR1 3LQ, UK",
+            "long_address": "2 Penventinnie Ln, Truro TR1 3LQ, UK",
             "lat": 50.2662301,
             "lng": -5.0922396,
             "phone": null,
@@ -1085,7 +1085,7 @@
         "fields": {
             "doctor": 73,
             "hospital_name": null,
-            "address": "Vico Cieco Boscarello, 13a, 37123 Verona VR, Italy",
+            "long_address": "Vico Cieco Boscarello, 13a, 37123 Verona VR, Italy",
             "lat": 45.4402393,
             "lng": 10.9823123,
             "phone": "045-601-3313",
@@ -1100,7 +1100,7 @@
         "fields": {
             "doctor": 74,
             "hospital_name": null,
-            "address": "Childrens Unit, Cardiff CF14 4AY, UK",
+            "long_address": "Childrens Unit, Cardiff CF14 4AY, UK",
             "lat": 51.5079998,
             "lng": -3.1891872,
             "phone": null,
@@ -1115,7 +1115,7 @@
         "fields": {
             "doctor": 75,
             "hospital_name": "Queen Alexandra Hospital",
-            "address": "RWXH+VQ Portsmouth, UK",
+            "long_address": "RWXH+VQ Portsmouth, UK",
             "lat": 50.8497257,
             "lng": -1.0705618,
             "phone": null,
@@ -1130,7 +1130,7 @@
         "fields": {
             "doctor": 76,
             "hospital_name": "Spire Murrayfield Hospital, Wirral",
-            "address": "9W2F+PQ Wirral, UK",
+            "long_address": "9W2F+PQ Wirral, UK",
             "lat": 53.351795,
             "lng": -3.075506,
             "phone": null,
@@ -1145,7 +1145,7 @@
         "fields": {
             "doctor": 76,
             "hospital_name": "Wirral University Teaching Hospital",
-            "address": "9W93+HJ Wirral, UK",
+            "long_address": "9W93+HJ Wirral, UK",
             "lat": 53.3689606,
             "lng": -3.0959034,
             "phone": "0151-678-5111",
@@ -1160,7 +1160,7 @@
         "fields": {
             "doctor": 78,
             "hospital_name": "Whipps Cross University Hospital",
-            "address": "Whipps Cross University Hospital, Whipps Cross Rd, London E11 1NR, UK",
+            "long_address": "Whipps Cross University Hospital, Whipps Cross Rd, London E11 1NR, UK",
             "lat": 51.5781482,
             "lng": 0.0026007,
             "phone": null,
@@ -1175,7 +1175,7 @@
         "fields": {
             "doctor": 79,
             "hospital_name": "Spire Cambridge Lea Hospital",
-            "address": "Spire Cambridge Lea Hospital, 30 New Rd, Impington, Cambridge CB24 9EL, UK",
+            "long_address": "Spire Cambridge Lea Hospital, 30 New Rd, Impington, Cambridge CB24 9EL, UK",
             "lat": 52.2447053,
             "lng": 0.1133034,
             "phone": "079-5096-2003",
@@ -1190,7 +1190,7 @@
         "fields": {
             "doctor": 81,
             "hospital_name": null,
-            "address": "GR55+6X Cardiff, UK",
+            "long_address": "GR55+6X Cardiff, UK",
             "lat": 51.5080532,
             "lng": -3.1900991,
             "phone": "020-3423-7613",
@@ -1205,7 +1205,7 @@
         "fields": {
             "doctor": 82,
             "hospital_name": "Spire Bristol Hospital",
-            "address": "Spire Bristol Hospital & The Glen, Redland Hill, Redland, Bristol BS6 6UT, UK",
+            "long_address": "Spire Bristol Hospital & The Glen, Redland Hill, Redland, Bristol BS6 6UT, UK",
             "lat": 51.4721881,
             "lng": -2.6148051,
             "phone": null,
@@ -1220,7 +1220,7 @@
         "fields": {
             "doctor": 83,
             "hospital_name": null,
-            "address": "9W93+JQ Wirral, UK",
+            "long_address": "9W93+JQ Wirral, UK",
             "lat": 53.3690502,
             "lng": -3.0955279,
             "phone": "0151-604-7357",
@@ -1235,7 +1235,7 @@
         "fields": {
             "doctor": 84,
             "hospital_name": "St George's Hospital",
-            "address": "Hospital Helipad, St. James Wing, St George's Hospital, Blackshaw Rd, London SW17 0QT, UK",
+            "long_address": "Hospital Helipad, St. James Wing, St George's Hospital, Blackshaw Rd, London SW17 0QT, UK",
             "lat": 51.426563,
             "lng": -0.1752284,
             "phone": null,
@@ -1250,7 +1250,7 @@
         "fields": {
             "doctor": 85,
             "hospital_name": "St George's Hospital",
-            "address": "Hospital Helipad, St. James Wing, St George's Hospital, Blackshaw Rd, London SW17 0QT, UK",
+            "long_address": "Hospital Helipad, St. James Wing, St George's Hospital, Blackshaw Rd, London SW17 0QT, UK",
             "lat": 51.4267436,
             "lng": -0.1758185,
             "phone": null,
@@ -1265,7 +1265,7 @@
         "fields": {
             "doctor": 86,
             "hospital_name": "BMI The Priory Hospital",
-            "address": "the prory hospital, Birmingham B5 7UG, UK",
+            "long_address": "the prory hospital, Birmingham B5 7UG, UK",
             "lat": 52.4560581,
             "lng": -1.9127819,
             "phone": null,
@@ -1280,7 +1280,7 @@
         "fields": {
             "doctor": 86,
             "hospital_name": "The Endometriosis Clinic",
-            "address": "41 Welbeck St, London W1G 8DU, UK",
+            "long_address": "41 Welbeck St, London W1G 8DU, UK",
             "lat": 51.5183821,
             "lng": -0.150062,
             "phone": null,
@@ -1295,7 +1295,7 @@
         "fields": {
             "doctor": 86,
             "hospital_name": "BMI The Edgbaston Hospital",
-            "address": "22 Somerset Rd, Birmingham B15 2QD, UK",
+            "long_address": "22 Somerset Rd, Birmingham B15 2QD, UK",
             "lat": 52.45782,
             "lng": -1.932901,
             "phone": null,
@@ -1310,7 +1310,7 @@
         "fields": {
             "doctor": 86,
             "hospital_name": "Spire Parkway Hospital",
-            "address": "1 Damson Pkwy, Solihull B91 2PP, UK",
+            "long_address": "1 Damson Pkwy, Solihull B91 2PP, UK",
             "lat": 52.4212001,
             "lng": -1.7626165,
             "phone": null,
@@ -1325,7 +1325,7 @@
         "fields": {
             "doctor": 90,
             "hospital_name": null,
-            "address": "61 Harley St, London W1G 8QU, UK",
+            "long_address": "61 Harley St, London W1G 8QU, UK",
             "lat": 51.5190736,
             "lng": -0.1472271,
             "phone": null,
@@ -1340,7 +1340,7 @@
         "fields": {
             "doctor": 91,
             "hospital_name": null,
-            "address": "150 Artillery Ln, Du Cane Rd, London W12 0HS, UK",
+            "long_address": "150 Artillery Ln, Du Cane Rd, London W12 0HS, UK",
             "lat": 51.5162259,
             "lng": -0.2372476,
             "phone": null,
@@ -1355,7 +1355,7 @@
         "fields": {
             "doctor": 92,
             "hospital_name": "Cheshire Fertility & Gynaecology Ltd",
-            "address": "4QP, Middlewich Rd, Crewe CW1 4QJ, UK",
+            "long_address": "4QP, Middlewich Rd, Crewe CW1 4QJ, UK",
             "lat": 53.1191403,
             "lng": -2.4787937,
             "phone": null,
@@ -1370,7 +1370,7 @@
         "fields": {
             "doctor": 93,
             "hospital_name": "Central Middlesex Hospital",
-            "address": "Central Middlesex Hospital (Stop B), London NW10 7RB, UK",
+            "long_address": "Central Middlesex Hospital (Stop B), London NW10 7RB, UK",
             "lat": 51.5308168,
             "lng": -0.2689231,
             "phone": null,
@@ -1385,7 +1385,7 @@
         "fields": {
             "doctor": 94,
             "hospital_name": "Tallaght Hospital",
-            "address": "Tallaght Hospital, Belgard Square North, Cookstown, Dublin 24, Ireland",
+            "long_address": "Tallaght Hospital, Belgard Square North, Cookstown, Dublin 24, Ireland",
             "lat": 53.2906459,
             "lng": -6.3782541,
             "phone": null,
@@ -1400,7 +1400,7 @@
         "fields": {
             "doctor": 95,
             "hospital_name": "Princess Anne Hospital",
-            "address": "Princess Anne Hospital, Coxford Rd, Southampton SO16 5YA, UK",
+            "long_address": "Princess Anne Hospital, Coxford Rd, Southampton SO16 5YA, UK",
             "lat": 50.9352943,
             "lng": -1.4356145,
             "phone": null,
@@ -1415,7 +1415,7 @@
         "fields": {
             "doctor": 96,
             "hospital_name": "Worcestershire Royal Hospital",
-            "address": "Worcestershire Royal Hospital/Richard Young Centre/Aconbury, Worcester WR5 1DD, UK",
+            "long_address": "Worcestershire Royal Hospital/Richard Young Centre/Aconbury, Worcester WR5 1DD, UK",
             "lat": 52.1912499,
             "lng": -2.1811171,
             "phone": null,
@@ -1430,7 +1430,7 @@
         "fields": {
             "doctor": 97,
             "hospital_name": "Worcestershire Royal Hospital",
-            "address": "Worcestershire Royal Hospital/Richard Young Centre/Aconbury, Worcester WR5 1DD, UK",
+            "long_address": "Worcestershire Royal Hospital/Richard Young Centre/Aconbury, Worcester WR5 1DD, UK",
             "lat": 52.1913486,
             "lng": -2.1814819,
             "phone": null,
@@ -1445,7 +1445,7 @@
         "fields": {
             "doctor": 98,
             "hospital_name": "Nuffield Department of Women's & Reproductive Health, University of Oxford",
-            "address": "The Women's Centre, Headington, Oxford OX3 0AG, UK",
+            "long_address": "The Women's Centre, Headington, Oxford OX3 0AG, UK",
             "lat": 51.7627137,
             "lng": -1.2179815,
             "phone": null,
@@ -1460,7 +1460,7 @@
         "fields": {
             "doctor": 11,
             "hospital_name": null,
-            "address": "Strada Doctor Benone Georgescu 12, T\u00e2rgovi\u0219te, Romania",
+            "long_address": "Strada Doctor Benone Georgescu 12, T\u00e2rgovi\u0219te, Romania",
             "lat": 44.9207785,
             "lng": 25.4529932,
             "phone": "722-640-649",
@@ -1475,7 +1475,7 @@
         "fields": {
             "doctor": 100,
             "hospital_name": "Gynekologick\u00e1 Ambulance",
-            "address": "Chmelov\u00e1 2920/6, 106 00 Praha 10, Czechia",
+            "long_address": "Chmelov\u00e1 2920/6, 106 00 Praha 10, Czechia",
             "lat": 50.0589696,
             "lng": 14.4973633,
             "phone": null,
@@ -1490,7 +1490,7 @@
         "fields": {
             "doctor": 101,
             "hospital_name": null,
-            "address": "V392+JF Znojmo, Czechia",
+            "long_address": "V392+JF Znojmo, Czechia",
             "lat": 48.8690311,
             "lng": 16.0511508,
             "phone": "515-215-280",
@@ -1505,7 +1505,7 @@
         "fields": {
             "doctor": 102,
             "hospital_name": null,
-            "address": "Via Calata S. Vito, 56, 84126 Salerno SA, Italy",
+            "long_address": "Via Calata S. Vito, 56, 84126 Salerno SA, Italy",
             "lat": 40.6901067,
             "lng": 14.7743823,
             "phone": null,
@@ -1520,7 +1520,7 @@
         "fields": {
             "doctor": 103,
             "hospital_name": null,
-            "address": "9QWM+RM Cheadle, UK",
+            "long_address": "9QWM+RM Cheadle, UK",
             "lat": 53.3970559,
             "lng": -2.2158345,
             "phone": null,
@@ -1535,7 +1535,7 @@
         "fields": {
             "doctor": 104,
             "hospital_name": null,
-            "address": "Klausstrasse 4, 8008 Z\u00fcrich, Switzerland",
+            "long_address": "Klausstrasse 4, 8008 Z\u00fcrich, Switzerland",
             "lat": 47.358761,
             "lng": 8.5485611,
             "phone": "41-44-520-36-00",
@@ -1550,7 +1550,7 @@
         "fields": {
             "doctor": 105,
             "hospital_name": null,
-            "address": "The Regus Building, Manchester Business Park Aviator Way, Aviator Way, Wythenshawe, Manchester M22 5TG, UK",
+            "long_address": "The Regus Building, Manchester Business Park Aviator Way, Aviator Way, Wythenshawe, Manchester M22 5TG, UK",
             "lat": 53.3673943,
             "lng": -2.2650903,
             "phone": "0161-998-7070",
@@ -1565,7 +1565,7 @@
         "fields": {
             "doctor": 106,
             "hospital_name": "CEI Clinic",
-            "address": "Atrium Saldanha, Pra\u00e7a Duque de Saldanha 1 11\u00ba, 1050-054 Lisboa, Portugal",
+            "long_address": "Atrium Saldanha, Pra\u00e7a Duque de Saldanha 1 11\u00ba, 1050-054 Lisboa, Portugal",
             "lat": 38.7329252,
             "lng": -9.1446561,
             "phone": null,
@@ -1580,7 +1580,7 @@
         "fields": {
             "doctor": 107,
             "hospital_name": "CEI Clinic",
-            "address": "Atrium Saldanha, Pra\u00e7a Duque de Saldanha 1 11\u00ba, 1050-054 Lisboa, Portugal",
+            "long_address": "Atrium Saldanha, Pra\u00e7a Duque de Saldanha 1 11\u00ba, 1050-054 Lisboa, Portugal",
             "lat": 38.7329252,
             "lng": -9.1446561,
             "phone": null,
@@ -1595,7 +1595,7 @@
         "fields": {
             "doctor": 108,
             "hospital_name": null,
-            "address": "Av. de la Roseraie 76B, 1205 Gen\u00e8ve, Switzerland",
+            "long_address": "Av. de la Roseraie 76B, 1205 Gen\u00e8ve, Switzerland",
             "lat": 46.1918443,
             "lng": 6.1493564,
             "phone": null,
@@ -1610,7 +1610,7 @@
         "fields": {
             "doctor": 109,
             "hospital_name": null,
-            "address": "33 Queen Square, London WC1N 3BG, UK",
+            "long_address": "33 Queen Square, London WC1N 3BG, UK",
             "lat": 51.5218467,
             "lng": -0.1218867,
             "phone": "020 3447 9411",
@@ -1625,7 +1625,7 @@
         "fields": {
             "doctor": 11,
             "hospital_name": "Bucharest Endometriosis Centre",
-            "address": "Bloc Nr. 3, Strada Mizil, Bucure\u0219ti 077160, Romania",
+            "long_address": "Bloc Nr. 3, Strada Mizil, Bucure\u0219ti 077160, Romania",
             "lat": 44.4084462,
             "lng": 26.1774322,
             "phone": null,
@@ -1640,7 +1640,7 @@
         "fields": {
             "doctor": 111,
             "hospital_name": "Oxford Women's Clinic",
-            "address": "The Manor Hospital Headington, Headington, Oxford OX3 7RP, UK",
+            "long_address": "The Manor Hospital Headington, Headington, Oxford OX3 7RP, UK",
             "lat": 51.7602722,
             "lng": -1.2153656,
             "phone": null,
@@ -1655,7 +1655,7 @@
         "fields": {
             "doctor": 112,
             "hospital_name": null,
-            "address": "Via Don Angelo Sempreboni, 5, 37024 Negrar di Valpolicella VR, Italy",
+            "long_address": "Via Don Angelo Sempreboni, 5, 37024 Negrar di Valpolicella VR, Italy",
             "lat": 45.5303851,
             "lng": 10.9364015,
             "phone": null,
@@ -1670,7 +1670,7 @@
         "fields": {
             "doctor": 40,
             "hospital_name": null,
-            "address": "Piazza Ezio Mosna, 8, 38122 Trento TN, Italy",
+            "long_address": "Piazza Ezio Mosna, 8, 38122 Trento TN, Italy",
             "lat": 46.0665169,
             "lng": 11.1147728,
             "phone": null,
@@ -1685,7 +1685,7 @@
         "fields": {
             "doctor": 114,
             "hospital_name": null,
-            "address": "Strada Brodina nr. 3, Bucure\u0219ti, Romania",
+            "long_address": "Strada Brodina nr. 3, Bucure\u0219ti, Romania",
             "lat": 44.4967368,
             "lng": 26.0738797,
             "phone": null,
@@ -1700,7 +1700,7 @@
         "fields": {
             "doctor": 115,
             "hospital_name": null,
-            "address": "Av. de la Roseraie 76A, 1205 Gen\u00e8ve, Switzerland",
+            "long_address": "Av. de la Roseraie 76A, 1205 Gen\u00e8ve, Switzerland",
             "lat": 46.1916547,
             "lng": 6.1492779,
             "phone": null,
@@ -1715,7 +1715,7 @@
         "fields": {
             "doctor": 116,
             "hospital_name": null,
-            "address": "Via della Commenda, 12, 20122 Milano MI, Italy",
+            "long_address": "Via della Commenda, 12, 20122 Milano MI, Italy",
             "lat": 45.4587673,
             "lng": 9.197003,
             "phone": "02-57992330/1",
@@ -1730,7 +1730,7 @@
         "fields": {
             "doctor": 117,
             "hospital_name": null,
-            "address": "Wolfenb\u00fctteler Str. 43, 38124 Braunschweig, Germany",
+            "long_address": "Wolfenb\u00fctteler Str. 43, 38124 Braunschweig, Germany",
             "lat": 52.241321,
             "lng": 10.528163,
             "phone": null,
@@ -1745,7 +1745,7 @@
         "fields": {
             "doctor": 117,
             "hospital_name": null,
-            "address": "Steinheimer Str. 69, 63500 Seligenstadt, Germany",
+            "long_address": "Steinheimer Str. 69, 63500 Seligenstadt, Germany",
             "lat": 50.0498582,
             "lng": 8.9750354,
             "phone": null,
@@ -1760,7 +1760,7 @@
         "fields": {
             "doctor": 119,
             "hospital_name": "Aarhus Universitetshospital",
-            "address": "N\u00f8rrebrogade 44, 8000 Aarhus, Denmark",
+            "long_address": "N\u00f8rrebrogade 44, 8000 Aarhus, Denmark",
             "lat": 56.1702462,
             "lng": 10.2069365,
             "phone": "45-7845-0000",
@@ -1775,7 +1775,7 @@
         "fields": {
             "doctor": 120,
             "hospital_name": "Rigshospitalet",
-            "address": "Blegdamsvej 9, 2100 K\u00f8benhavn, Denmark",
+            "long_address": "Blegdamsvej 9, 2100 K\u00f8benhavn, Denmark",
             "lat": 55.6960231,
             "lng": 12.5665622,
             "phone": "45-3545-3545",
@@ -1790,7 +1790,7 @@
         "fields": {
             "doctor": 121,
             "hospital_name": "Oslo University Hospital",
-            "address": "Ekebergveien 150C, 1177 Oslo, Norway",
+            "long_address": "Ekebergveien 150C, 1177 Oslo, Norway",
             "lat": 59.8785706,
             "lng": 10.7884033,
             "phone": null,
@@ -1805,7 +1805,7 @@
         "fields": {
             "doctor": 122,
             "hospital_name": "University Medical Center Groningen",
-            "address": "Hanzeplein 1, 9713 GZ Groningen, Netherlands",
+            "long_address": "Hanzeplein 1, 9713 GZ Groningen, Netherlands",
             "lat": 53.220974,
             "lng": 6.5770261,
             "phone": null,
@@ -1820,7 +1820,7 @@
         "fields": {
             "doctor": 123,
             "hospital_name": null,
-            "address": "LIEGE Chalet, 4000 Li\u00e8ge, Belgium",
+            "long_address": "LIEGE Chalet, 4000 Li\u00e8ge, Belgium",
             "lat": 50.6531907,
             "lng": 5.5743879,
             "phone": "04-2256111",
@@ -1835,7 +1835,7 @@
         "fields": {
             "doctor": 124,
             "hospital_name": null,
-            "address": "VMHF+CP Leuven, Belgium",
+            "long_address": "VMHF+CP Leuven, Belgium",
             "lat": 50.8785917,
             "lng": 4.6743355,
             "phone": "016-33-22-11",
@@ -1850,7 +1850,7 @@
         "fields": {
             "doctor": 125,
             "hospital_name": "The Edinburgh Endometriosis Centre",
-            "address": "51 Little France Cres, Edinburgh EH16 4SA, UK",
+            "long_address": "51 Little France Cres, Edinburgh EH16 4SA, UK",
             "lat": 55.9217072,
             "lng": -3.1353284,
             "phone": "0131-242-2415/6",
@@ -1865,7 +1865,7 @@
         "fields": {
             "doctor": 126,
             "hospital_name": "Castle Hill Hospital",
-            "address": "Castle Hill Hospital, Cottingham HU16 5JN, UK",
+            "long_address": "Castle Hill Hospital, Cottingham HU16 5JN, UK",
             "lat": 53.7788201,
             "lng": -0.4438447,
             "phone": "01482-624-259",
@@ -1880,7 +1880,7 @@
         "fields": {
             "doctor": 127,
             "hospital_name": "Castle Hill Hospital",
-            "address": "Castle Hill Hospital, Cottingham HU16 5JN, UK",
+            "long_address": "Castle Hill Hospital, Cottingham HU16 5JN, UK",
             "lat": 54.7788201,
             "lng": 0.5561553,
             "phone": "01482-624-259",
@@ -1895,7 +1895,7 @@
         "fields": {
             "doctor": 128,
             "hospital_name": null,
-            "address": "RQ5C+MQ Burnley, UK",
+            "long_address": "RQ5C+MQ Burnley, UK",
             "lat": 52.8091649,
             "lng": -3.228015,
             "phone": null,
@@ -1910,7 +1910,7 @@
         "fields": {
             "doctor": 129,
             "hospital_name": null,
-            "address": "RQ5C+MQ Burnley, UK",
+            "long_address": "RQ5C+MQ Burnley, UK",
             "lat": 53.8091649,
             "lng": -2.228015,
             "phone": "01282-804-271",
@@ -1925,7 +1925,7 @@
         "fields": {
             "doctor": 130,
             "hospital_name": "Spire Elland Hospital",
-            "address": "Spire Elland Hospital, Elland Ln, Elland HX5 9EB, UK",
+            "long_address": "Spire Elland Hospital, Elland Ln, Elland HX5 9EB, UK",
             "lat": 53.6888786,
             "lng": -1.8288143,
             "phone": "01422-324-000",
@@ -1940,7 +1940,7 @@
         "fields": {
             "doctor": 131,
             "hospital_name": "Royal Oldham Hospital",
-            "address": "Royal Oldham Hospital: Chalmers Keddie, Rochdale Rd, Oldham OL1 2JH, UK",
+            "long_address": "Royal Oldham Hospital: Chalmers Keddie, Rochdale Rd, Oldham OL1 2JH, UK",
             "lat": 53.55355,
             "lng": -2.1234986,
             "phone": "0161-627-8161",
@@ -1955,7 +1955,7 @@
         "fields": {
             "doctor": 132,
             "hospital_name": "Royal Oldham Hospital",
-            "address": "Royal Oldham Hospital: Chalmers Keddie, Rochdale Rd, Oldham OL1 2JH, UK",
+            "long_address": "Royal Oldham Hospital: Chalmers Keddie, Rochdale Rd, Oldham OL1 2JH, UK",
             "lat": 54.55355,
             "lng": -1.1234986,
             "phone": "0161-627-8161",
@@ -1970,7 +1970,7 @@
         "fields": {
             "doctor": 133,
             "hospital_name": "Stockport Endometriosis Centre",
-            "address": "stepping hill hospital, Poplar Grove, Stockport SK2 7JE, UK",
+            "long_address": "stepping hill hospital, Poplar Grove, Stockport SK2 7JE, UK",
             "lat": 53.3843971,
             "lng": -2.1330712,
             "phone": "784-579-9817",
@@ -1985,7 +1985,7 @@
         "fields": {
             "doctor": 134,
             "hospital_name": "Kent Endometriosis Center",
-            "address": "Tunbridge Wells Hospital, Royal Tunbridge Wells, Tunbridge Wells TN2 4QJ, UK",
+            "long_address": "Tunbridge Wells Hospital, Royal Tunbridge Wells, Tunbridge Wells TN2 4QJ, UK",
             "lat": 51.1483335,
             "lng": 0.3069464,
             "phone": "01892-633-669",
@@ -2000,7 +2000,7 @@
         "fields": {
             "doctor": 135,
             "hospital_name": null,
-            "address": "189 Du Cane Rd, London W12 0TZ, UK",
+            "long_address": "189 Du Cane Rd, London W12 0TZ, UK",
             "lat": 51.5159758,
             "lng": -0.2371429,
             "phone": null,
@@ -2015,7 +2015,7 @@
         "fields": {
             "doctor": 136,
             "hospital_name": null,
-            "address": "8PM6+WC Dublin 8, Ireland",
+            "long_address": "8PM6+WC Dublin 8, Ireland",
             "lat": 53.3347921,
             "lng": -6.2889039,
             "phone": null,
@@ -2030,7 +2030,7 @@
         "fields": {
             "doctor": 137,
             "hospital_name": null,
-            "address": "16 Devonshire St, London W1G 7AF, UK",
+            "long_address": "16 Devonshire St, London W1G 7AF, UK",
             "lat": 51.5220411,
             "lng": -0.1470934,
             "phone": "020-7118-0298",
@@ -2045,7 +2045,7 @@
         "fields": {
             "doctor": 138,
             "hospital_name": "Nuffeld Health Tunbridge Wells",
-            "address": "Halliwell Nursing Home, Kingswood Rd, Tunbridge Wells TN2 4UN, UK",
+            "long_address": "Halliwell Nursing Home, Kingswood Rd, Tunbridge Wells TN2 4UN, UK",
             "lat": 51.1314199,
             "lng": 0.2777976,
             "phone": "79-2721-2369",
@@ -2060,7 +2060,7 @@
         "fields": {
             "doctor": 138,
             "hospital_name": "Spencer hospital - Ashford",
-            "address": "William Harvey Hospital, Willesborough, Ashford TN24 0LZ, UK",
+            "long_address": "William Harvey Hospital, Willesborough, Ashford TN24 0LZ, UK",
             "lat": 51.1407055,
             "lng": 0.9157192,
             "phone": "79-2721-2370",
@@ -2075,7 +2075,7 @@
         "fields": {
             "doctor": 138,
             "hospital_name": "Spencer hospital - Kent",
-            "address": "Mid Kent Healthcare N H S Trus, Hermitage Ln, Maidstone ME16 9QQ, UK",
+            "long_address": "Mid Kent Healthcare N H S Trus, Hermitage Ln, Maidstone ME16 9QQ, UK",
             "lat": 51.2744875,
             "lng": 0.4855864,
             "phone": "79-2721-2371",
@@ -2090,7 +2090,7 @@
         "fields": {
             "doctor": 138,
             "hospital_name": "Maidstone and Tunbridge Wells NHS Trust",
-            "address": "Ferguson House, Sutton, Carshalton SM5 1AA, UK",
+            "long_address": "Ferguson House, Sutton, Carshalton SM5 1AA, UK",
             "lat": 51.3804071,
             "lng": -0.1847452,
             "phone": "79-2721-2371",
@@ -2105,7 +2105,7 @@
         "fields": {
             "doctor": 142,
             "hospital_name": "St Helier University Hospital",
-            "address": "The Warren, Ashtead KT21 2RY, UK",
+            "long_address": "The Warren, Ashtead KT21 2RY, UK",
             "lat": 51.3047166,
             "lng": -0.3026991,
             "phone": "077-57-310098",
@@ -2120,7 +2120,7 @@
         "fields": {
             "doctor": 142,
             "hospital_name": "Epsom General Hospita",
-            "address": "Hascombe House, Grange Rd, Woking GU21 4DA, UK",
+            "long_address": "Hascombe House, Grange Rd, Woking GU21 4DA, UK",
             "lat": 51.3314826,
             "lng": -0.560399,
             "phone": "077-57-310098",
@@ -2135,7 +2135,7 @@
         "fields": {
             "doctor": 144,
             "hospital_name": null,
-            "address": "Social Services Block St Peters Hospital, Guildford St, Lyne, Chertsey KT16 0PZ, UK",
+            "long_address": "Social Services Block St Peters Hospital, Guildford St, Lyne, Chertsey KT16 0PZ, UK",
             "lat": 51.3769285,
             "lng": -0.5287479,
             "phone": "014-83-616408",
@@ -2150,7 +2150,7 @@
         "fields": {
             "doctor": 145,
             "hospital_name": "St Peter's Hospital, Chertsey",
-            "address": "42-52 Nottingham Pl, London W1U 5NL, UK",
+            "long_address": "42-52 Nottingham Pl, London W1U 5NL, UK",
             "lat": 51.5226779,
             "lng": -0.1530021,
             "phone": null,
@@ -2165,7 +2165,7 @@
         "fields": {
             "doctor": 146,
             "hospital_name": null,
-            "address": "35 Weymouth St, London W1G 8BJ, UK",
+            "long_address": "35 Weymouth St, London W1G 8BJ, UK",
             "lat": 51.5203839,
             "lng": -0.1479875,
             "phone": null,
@@ -2180,7 +2180,7 @@
         "fields": {
             "doctor": 147,
             "hospital_name": "Princess Royal Hospital",
-            "address": "Lewes Road, Haywards Heath RH16 4EX, UK",
+            "long_address": "Lewes Road, Haywards Heath RH16 4EX, UK",
             "lat": 50.9907992,
             "lng": -0.0912844,
             "phone": null,
@@ -2195,7 +2195,7 @@
         "fields": {
             "doctor": 148,
             "hospital_name": "IFEMENDO Center",
-            "address": "91 Rue de Rivi\u00e8re, 33000 Bordeaux, France",
+            "long_address": "91 Rue de Rivi\u00e8re, 33000 Bordeaux, France",
             "lat": 44.8574415,
             "lng": -0.5878651,
             "phone": "05-64-10-09-45",
@@ -2210,7 +2210,7 @@
         "fields": {
             "doctor": 149,
             "hospital_name": "Gyneco Marseille",
-            "address": "6 Rue Rocca, 13008 Marseille, France",
+            "long_address": "6 Rue Rocca, 13008 Marseille, France",
             "lat": 43.270133,
             "lng": 5.3865215,
             "phone": "33610243838",
@@ -2225,7 +2225,7 @@
         "fields": {
             "doctor": 150,
             "hospital_name": null,
-            "address": "Leof. Mesogeion 161, Athina 115 26, Greece",
+            "long_address": "Leof. Mesogeion 161, Athina 115 26, Greece",
             "lat": 37.9926202,
             "lng": 23.7744736,
             "phone": "302106922614",
@@ -2240,7 +2240,7 @@
         "fields": {
             "doctor": 151,
             "hospital_name": "Oslo University Hospital",
-            "address": "Kirkeveien 166, 0450 Oslo, Norway",
+            "long_address": "Kirkeveien 166, 0450 Oslo, Norway",
             "lat": 59.9369779,
             "lng": 10.7369409,
             "phone": null,
@@ -2255,7 +2255,7 @@
         "fields": {
             "doctor": 152,
             "hospital_name": "Aleris Frogner",
-            "address": "Frederik Stangs gate 11, 0264 Oslo, Norway",
+            "long_address": "Frederik Stangs gate 11, 0264 Oslo, Norway",
             "lat": 59.9150519,
             "lng": 10.7085851,
             "phone": "22 54 10 00",
@@ -2270,7 +2270,7 @@
         "fields": {
             "doctor": 153,
             "hospital_name": "Aberdeen Royal Infirmary",
-            "address": "35 Foresterhill Rd, Aberdeen AB16 5BR, UK",
+            "long_address": "35 Foresterhill Rd, Aberdeen AB16 5BR, UK",
             "lat": 57.1540996,
             "lng": -2.1357159,
             "phone": "01224-553-471",

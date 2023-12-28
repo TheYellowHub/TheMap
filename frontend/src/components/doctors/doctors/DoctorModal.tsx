@@ -88,11 +88,19 @@ function DoctorModal({ doctor, showModal, onCancel, onSave, isSaving, isSavingEr
                 },
                 {
                     type: "address",
-                    label: "Address",
-                    getter: (location) => location.address,
-                    setter: async (location, newAddress) => {
-                        const newLatLng = await getLocation(newAddress);
-                        return { ...location, address: newAddress, lat: newLatLng?.lat, lng: newLatLng?.lng };
+                    label: "Short address",
+                    getter: (location) => location.shortAddress,
+                    setter: (location, newShortAddress) => {
+                        return { ...location, shortAddress: newShortAddress };
+                    },
+                },
+                {
+                    type: "address",
+                    label: "Full address",
+                    getter: (location) => location.longAddress,
+                    setter: async (location, newLongAddress) => {
+                        const newLatLng = await getLocation(newLongAddress);
+                        return { ...location, longAddress: newLongAddress, lat: newLatLng?.lat, lng: newLatLng?.lng };
                     },
                 },
                 // {

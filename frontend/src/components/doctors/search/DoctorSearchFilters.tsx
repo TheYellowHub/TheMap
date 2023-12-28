@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Col, Container, Form, Row } from "react-bootstrap";
+import { Container, Row, Col, Form } from "react-bootstrap";
 
 import config from "../../../config.json";
 import { Location } from "../../../utils/googleMaps/useGoogleMaps";
@@ -14,6 +14,7 @@ import Select from "../../utils/Select";
 import { DoctorCategory } from "../../../types/doctors/doctorCategory";
 import useAuth from "../../../auth/useAuth";
 import useUser from "../../../hooks/auth/useUsers";
+import Tooltip from "../../utils/Tooltip";
 
 interface DoctorSearchFiltersProps {
     address: string | undefined;
@@ -72,11 +73,14 @@ export default function DoctorSearchFilters({
     const [listFilter, setListFilter] = useState<string[]>([]);
     const [showFilters, setShowFilters] = useState(true);
 
-    const defaultSortKey = "Closest first";
+    const distanceSortKey = "Closest first";
+    const nameSortKey = "A - Z";
+    const defaultSortKey = address ? distanceSortKey : nameSortKey;
     const [sortKey, setSortKey] = useState<string>(defaultSortKey);
 
     const listOptions: ReadonlyMap<string, (doctor: Doctor) => boolean> = new Map([
-        ["icarebetter.com", (doctor: Doctor) => Boolean(doctor.iCareBetter)],        ["Nancy’s Nook", (doctor: Doctor) => doctor.nancysNook === true],
+        ["icarebetter.com", (doctor: Doctor) => Boolean(doctor.iCareBetter)],        
+        ["Nancy’s Nook", (doctor: Doctor) => doctor.nancysNook === true],
     ]);
 
     const filtered = (address !== undefined || 0 < categoriesFilter.length || 0 < specialitiesFilter.length || 0 < listFilter.length);
@@ -88,9 +92,14 @@ export default function DoctorSearchFilters({
         return nameA < nameB ? -1 : nameA > nameB ? 1 : 0;
     };
 
-    const sortOptions: ReadonlyMap<string, (a: Doctor, b: Doctor) => number> = new Map([
-        [
-            defaultSortKey, // "Closest first",
+    const sortOptionsDraft: Map<string, (a: Doctor, b: Doctor) => number> = new Map([
+        [nameSortKey, (a, b) => sortByName(a, b)],
+        [nameSortKey.split("").reverse().join(""), (a, b) => -sortByName(a, b)],
+    ]);
+
+    if (address) {
+        sortOptionsDraft.set(
+            distanceSortKey, 
             (a, b) => {
                 if (addressLocation === undefined) {
                     return 0;
@@ -99,11 +108,11 @@ export default function DoctorSearchFilters({
                     const distanceB = getDoctorMinimalDistance(b, addressLocation, distanceUnit);
                     return distanceA < distanceB ? -1 : distanceB < distanceA ? 1 : 0;
                 }
-            },
-        ],
-        ["A - Z", (a, b) => sortByName(a, b)],
-        ["Z - A", (a, b) => -sortByName(a, b)],
-    ]);
+            }
+        );
+    }
+
+    const sortOptions: ReadonlyMap<string, (a: Doctor, b: Doctor) => number> = new Map(sortOptionsDraft);
 
     const refilterDoctors = (filterDistance: number | undefined) => {
         
@@ -164,7 +173,10 @@ export default function DoctorSearchFilters({
             }
             setIgnoreNextDistanceChange(true);
             setDistance(filterDistance);
-        }  
+            setSortKey(distanceSortKey);
+        } else {
+            setSortKey(nameSortKey);
+        }
     }, [addressLocation]);
 
     useEffect(() => {
@@ -226,20 +238,22 @@ export default function DoctorSearchFilters({
                             isMulti={true}
                         />
                     </Col>
-                    <Col xs={5} lg={3} className="px-0">
-                        <Select
-                            values={specialities.filter((speciality) => 0 < doctors.filter((doctor) => doctor.specialities.includes(speciality.name)).length).map((speciality: DoctorSpeciality) => speciality.name)}
-                            currentValue={specialitiesFilter}
-                            allowEmptySelection={true}
-                            placeHolder="All specialities"
-                            title="Specialities"
-                            onChange={(newValue: string[]) => {
-                                setSpecialitiesFilter(newValue);
-                                setValueChange(true);
-                            }}
-                            isMulti={true}
-                        />
-                    </Col>
+                    <Tooltip text={"Many providers haven’t disclosed specialties yet"}>
+                        <Col xs={5} lg={3} className="px-0">
+                            <Select
+                                values={specialities.filter((speciality) => 0 < doctors.filter((doctor) => doctor.specialities.includes(speciality.name)).length).map((speciality: DoctorSpeciality) => speciality.name)}
+                                currentValue={specialitiesFilter}
+                                allowEmptySelection={true}
+                                placeHolder="All specialities"
+                                title="Specialities"
+                                onChange={(newValue: string[]) => {
+                                    setSpecialitiesFilter(newValue);
+                                    setValueChange(true);
+                                }}
+                                isMulti={true}
+                            />
+                        </Col>
+                    </Tooltip>
                     <Col xs={6} lg={3} className="px-0">
                         <Select
                             values={Array.from(listOptions.keys())}

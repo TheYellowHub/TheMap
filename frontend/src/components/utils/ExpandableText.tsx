@@ -2,19 +2,24 @@ import { useId, useState } from "react";
 
 interface ExpandableTextProps {
     text: string;
-    initialLength: number;
+    maxLength: number;
+    maxRows: number;
     className?: string;
 }
 
-function ExpandableText({ text, initialLength, className }: ExpandableTextProps) {
+function getNthIndexOf(str: string, subStr: string, index: number) {
+    return str.split(subStr, index).join(subStr).length;
+}
+
+function ExpandableText({ text, maxLength, maxRows, className }: ExpandableTextProps) {
     const [showAll, setShowAll] = useState(false);
     const space = "\u00A0\u00A0";
     const id = useId();
 
     return (
         <div className={`p-0 m-0 ${className}`} id={id}>
-            {(showAll ? text : text.substring(0, initialLength)).replaceAll("\n", "\r\n")}
-            {initialLength < text.length && (
+            {(showAll ? text : text.substring(0, getNthIndexOf(text, "\n", maxRows)).substring(0, maxLength)).replaceAll("\n", "\r\n")}
+            {maxLength < text.length && (
                 <>
                     {space + "..." + space}
                     <a

@@ -1,15 +1,17 @@
 import React, { useState } from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import { Container, Row } from "react-bootstrap";
 
 
 import { ID } from "../../types/utils/id";
 import { Doctor } from "../../types/doctors/doctor";
-import { useUserReviews } from "../../hooks/doctors/useReviews";
+import { useReviews } from "../../hooks/doctors/useReviews";
 import { getNewReview, reviewEditableStatuses } from "../../types/doctors/review";
 import SingleReviewForm from "./SingleReviewForm";
 import SingleReviewCard from "./SingleReviewCard";
 import NoResults from "../doctors/search/NoResults";
 import useUser from "../../hooks/auth/useUsers";
+import { mainMapUrl } from "../../AppRouter";
+import { sameUser } from "../../auth/userInfo";
 
 interface UserReviewsPropsWithoutAddingOption {
     doctor?: never;
@@ -18,6 +20,7 @@ interface UserReviewsPropsWithoutAddingOption {
     allowAddingReview?: false;
     showOnlyEditableReviews?: boolean;
     showDoctorName?: boolean;
+    showEditMessageInsteadOfCOntent?: boolean;
     containerClassName?: string;
 }
 
@@ -28,6 +31,7 @@ interface UserReviewsPropsWithAddingOption {
     allowAddingReview?: true;
     showOnlyEditableReviews?: boolean;
     showDoctorName?: boolean;
+    showEditMessageInsteadOfCOntent?: boolean;
     containerClassName?: string;
 }
 
@@ -40,10 +44,12 @@ function UserReviews({
     allowAddingReview = false,
     showOnlyEditableReviews = false,
     showDoctorName = true,
+    showEditMessageInsteadOfCOntent = true,
     containerClassName = "",
 }: UserReviewsProps) {
     const { userInfo } = useUser();
-    const { data: userReviews } = useUserReviews(userInfo!, doctor);
+    const { data: allReviews } = useReviews();
+    const userReviews = allReviews.filter((review) => sameUser(userInfo, review.addedBy) && (doctor === undefined || doctor.id === review.doctor.id));
     const notDeletedReviews = userReviews.filter((review) => review.status !== "DELETED");
 
     const newReview = allowAddingReview && doctor && getNewReview(doctor, userInfo!);
@@ -51,7 +57,9 @@ function UserReviews({
 
     return (
         <Container className={`${containerClassName}`}>
-            {userInfo && (0 < notDeletedReviews.length  || allowAddingReview)
+            {doctor === undefined && <Row className="xl-font w-700 mb-3 justify-content-center">My Reviews</Row>}
+
+            {userInfo && (0 < notDeletedReviews.length || allowAddingReview)
             ? (<Row className="m-0">
                     {allowAddingReview && newReview && addingReview && (
                         <Row key={newReview.id!} className="m-0 p-0 pt-4">
@@ -75,30 +83,20 @@ function UserReviews({
                         .sort((a, b) => ((a.id ? a.id : 0) < (b.id ? b.id : 0) ? 1 : -1))
                         .map((review) => (
                             <React.Fragment key={`review-${review.id}`}>
-                                {showDoctorName && (
-                                    <Row key={`review-${review.id}-doctor`} className="m-0 p-0 pt-4 pb-1">
-                                        <Col className="p-0 m-0">
-                                            <a href={`/${review.doctor.id}`} className="strong">
-                                                {review.doctor.fullName}
-                                            </a>
-                                        </Col>
-                                    </Row>
-                                )}
-                                <Row key={`review-${review.id}`} className={`m-0 p-0 ${showDoctorName || "pt-4"}`}>
-                                    <SingleReviewCard review={review} key={`review-${review.id}`} /> 
+                                <Row key={`review-${review.id}`} className={`m-0 p-0 pb-4`}>
+                                    <SingleReviewCard review={review} key={`review-${review.id}`} showDoctorName={showDoctorName} showEditMessageInsteadOfCOntent={showEditMessageInsteadOfCOntent} /> 
                                 </Row>
                             </React.Fragment>
                         ))}
                 </Row>
             )
             : <NoResults
-                title="My Reviews"
-                icon="fa-star" 
+                icon="fa-star-half-stroke" 
                 subtitle="No Reviews"
                 message="Review providers to help others reach the right care."
                 linkTitle="Find providers now"
-                linkTo="#"
-                className="m-3 w-100"
+                linkTo={mainMapUrl}
+                className="w-100"
             />
             }
         </Container>

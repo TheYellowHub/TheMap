@@ -12,7 +12,7 @@ export default function logError(error: Error) {
             action: String(error),
         });
     } else {
-        console.log();
+        console.log(error);
     }
 }
 

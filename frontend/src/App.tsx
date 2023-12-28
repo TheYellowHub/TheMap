@@ -13,8 +13,9 @@ if (process.env.REACT_APP_GA_TRACKING_ID) {
     ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID!);
 }
 
+const queryClient = new QueryClient();
+
 function App() {
-    const queryClient = new QueryClient();
     const history = createBrowserHistory();
     const [state, setState] = useState({
         action: history.action,
@@ -26,12 +27,12 @@ function App() {
     }, [history]);
 
     return (
-        <Router
-            location={state.location}
-            navigator={history}
-            navigationType={state.action}
-        >
-            <QueryClientProvider client={queryClient}>
+        <QueryClientProvider client={queryClient}>
+            <Router
+                location={state.location}
+                navigator={history}
+                navigationType={state.action}
+            >
                 <GoogleMapsLoader>
                     <>
                         <header>
@@ -45,8 +46,8 @@ function App() {
                         </footer>
                     </>
                 </GoogleMapsLoader>
-            </QueryClientProvider>
-        </Router>
+            </Router>
+        </QueryClientProvider>
     );
 }
 

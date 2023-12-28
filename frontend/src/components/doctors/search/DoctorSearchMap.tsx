@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
+import { useLocation, useNavigate } from "react-router-dom";
 
-import { Doctor, DoctorLocation } from "../../../types/doctors/doctor";
+import { Doctor, DoctorLocation, getDoctorUrl } from "../../../types/doctors/doctor";
 import useGoogleMaps, { Location } from "../../../utils/googleMaps/useGoogleMaps";
 import GoogleMap, { Marker } from "../../map/GoogleMap";
 import { getDoctorMarkerIcon, getGroupMarkerIcon } from "../../map/markerIcon";
@@ -15,6 +16,7 @@ interface DoctorSearchMapProps {
     setCurrentDoctor: (currentDoctor: Doctor | null) => void;
     currentDoctorLocation: DoctorLocation | null;
     setCurrentDoctorLocation: (currentDoctorLocation: DoctorLocation | null) => void;
+    onlyMyList?: boolean;
 }
 
 export default function DoctorSearchMap({
@@ -22,12 +24,16 @@ export default function DoctorSearchMap({
     centerLocation,
     boundsDistanceFromCenter,
     currentDoctor,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     setCurrentDoctor,
     currentDoctorLocation,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     setCurrentDoctorLocation,
+    onlyMyList = false
 }: DoctorSearchMapProps) {
+    const navigate = useNavigate();
+    const { pathname } = useLocation();
     const { getDistance } = useGoogleMaps();
-
     const [markers, setMarkers] = useState<Marker[]>([]);
 
     useEffect(() => {
@@ -59,8 +65,11 @@ export default function DoctorSearchMap({
                             doctorLocationObj === currentDoctorLocation
                         ),
                         onClick: () => {
-                            setCurrentDoctor(doctor);
-                            setCurrentDoctorLocation(doctorLocationObj);
+                            const url = getDoctorUrl(doctor, onlyMyList);
+                            if (url !== pathname) {
+                                navigate(url);
+                                setCurrentDoctorLocation(doctorLocationObj);
+                            }
                         },
                     });
                 }
@@ -76,11 +85,7 @@ export default function DoctorSearchMap({
                 center={centerLocation} 
                 currentLocation={currentDoctorLocation?.lat && currentDoctorLocation?.lng  && {lat: currentDoctorLocation.lat, lng: currentDoctorLocation.lng} || undefined}
                 markers={markers} 
-                getGroupIcon={getGroupMarkerIcon} 
-                resetClicks={() => {
-                    setCurrentDoctor(null);
-                    setCurrentDoctorLocation(null);
-                }}
+                getGroupIcon={getGroupMarkerIcon}
             />
             <div className="aboveMap">
                 <a href="https://urlzs.com/bVdAh" target="_blank" rel="noreferrer">

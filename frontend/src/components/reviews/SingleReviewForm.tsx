@@ -1,4 +1,4 @@
-import { Col, Row, Form, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Col, Row, Form } from "react-bootstrap";
 import { useEffect, useRef, useState } from "react";
 
 import {
@@ -10,7 +10,7 @@ import {
     setOperationMonthAndYear,
     reviewEditableStatuses,
 } from "../../types/doctors/review";
-import { useUserReviews } from "../../hooks/doctors/useReviews";
+import { useReviews } from "../../hooks/doctors/useReviews";
 import LoadingWrapper from "../utils/LoadingWrapper";
 import { ResponseError } from "../../hooks/useApiRequest";
 import Icon from "../utils/Icon";
@@ -26,16 +26,19 @@ import useUser from "../../hooks/auth/useUsers";
 import useAuth from "../../auth/useAuth";
 import SetUsernameModal from "./SetUsernameModal";
 import useFormValidation from "../../hooks/useFormValidation";
+import Tooltip from "../utils/Tooltip";
+import { range } from "../../utils/utils";
 
 interface SingleReviewFormProps {
     originalReview: DoctorReview;
     onCancel: () => void;
+    onSuccess?: () => void;
     setId?: (id: ID) => void;
 }
 
 export const getGuidelinesLink = (text = "Community Guidelines", className = "strong") => <a href="https://www.theyellowhub.org/guidelines" className={className} target="_blank" rel="noreferrer">{text}</a>;
 
-function SingleReviewForm({ originalReview, onCancel, setId }: SingleReviewFormProps) {
+function SingleReviewForm({ originalReview, onCancel, onSuccess, setId }: SingleReviewFormProps) {
     const [review, setReview] = useState(originalReview);
 
     const { user } = useAuth();
@@ -47,10 +50,7 @@ function SingleReviewForm({ originalReview, onCancel, setId }: SingleReviewFormP
         isMutateSuccess, 
         isMutateError, 
         mutateError 
-    } = useUserReviews(
-        review.addedBy,
-        review.doctor
-    );
+    } = useReviews();
 
     const disabled = !reviewEditableStatuses.includes(review.status);
 
@@ -74,7 +74,7 @@ function SingleReviewForm({ originalReview, onCancel, setId }: SingleReviewFormP
     const currentDate = new Date();
     const currentMonthName = monthNames[currentDate.getMonth()];
     const currentYear = currentDate.getFullYear();
-    const years = [currentYear - 2, currentYear - 1, currentYear, currentYear + 1, currentYear + 2];
+    const years = range(currentYear - 15,  currentYear + 2);
 
     const CURRENT_USERNAME = "CURRENT_USERNAME";
     const NEW_USERNAME = "NEW_USERNAME";
@@ -99,6 +99,7 @@ function SingleReviewForm({ originalReview, onCancel, setId }: SingleReviewFormP
                     ...usernameFieldOptions.filter((option) => option.value !== CURRENT_USERNAME)
                 ]);
                 setChangingUsername(false);
+
             }
         } else {
             if (!review?.anonymous) {
@@ -108,8 +109,12 @@ function SingleReviewForm({ originalReview, onCancel, setId }: SingleReviewFormP
     }, [userInfo, userInfo?.username]);
 
     useEffect(() => {    
-        if (!changingUsername && !review.anonymous && userInfo?.username === undefined) {
-            setReview({...review, anonymous: true});
+        if (!changingUsername) {
+            if (!review.anonymous && !userInfo?.username) {
+                setReview({...review, anonymous: true});
+            } else if (review.anonymous && userInfo?.username) {
+                setReview({...review, anonymous: false});
+            }
         }
     }, [changingUsername]);
 
@@ -120,6 +125,7 @@ function SingleReviewForm({ originalReview, onCancel, setId }: SingleReviewFormP
                 setId && setId(newId);
                 setReview({ ...review, id: newId });
             }
+            onSuccess && onSuccess();
         }
     }, [mutateResult]);
 
@@ -313,11 +319,8 @@ function SingleReviewForm({ originalReview, onCancel, setId }: SingleReviewFormP
                     </Form.Group>
                 )}
             </fieldset>
-            <Form.Group as={Row} className="p-0 m-0 py-3 w-100 gap-3">
-                <OverlayTrigger
-                    placement="bottom"
-                    overlay={<Tooltip className="tooltip">Cancel</Tooltip>}
-                >
+            <Form.Group as={Row} className="p-0 m-0 pb-3 pt-4 w-100 gap-3">
+                <Tooltip text="Cancel">
                     <Col className="m-0 p-0 flex-grow-0">
                         <Button
                             label=""
@@ -329,7 +332,7 @@ function SingleReviewForm({ originalReview, onCancel, setId }: SingleReviewFormP
                             <Icon icon="fa-close" padding={false} />
                         </Button>
                     </Col>
-                </OverlayTrigger>
+                </Tooltip>
                 <Col></Col>
                 <Col className="m-0 p-0 d-flex flex-grow-0 justify-content-center">
                     <Button

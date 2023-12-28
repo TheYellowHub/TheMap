@@ -8,25 +8,29 @@ interface DoctorLocationAddressProps {
     doctorLocation: DoctorLocation;
     locationForDistanceCalculation?: Location;
     distanceUnit?: DistanceUnit;
+    showDistanceAndNavigator?: boolean;
+    useShortAddress?: boolean;
 }
 
 function DoctorLocationAddress({
     doctorLocation,
     locationForDistanceCalculation,
     distanceUnit,
+    showDistanceAndNavigator = true,
+    useShortAddress = false
 }: DoctorLocationAddressProps) {
     return (
         <Row className="d-flex p-0 m-0 gap-0 justify-content-between doctor-address">
             <Col className="p-0 pe-3">
-                <p className="p-0 m-0 med-dark-grey">{doctorLocation?.address || ""}</p>
+                <p className="p-0 m-0 med-dark-grey sm-font">{(useShortAddress && doctorLocation.shortAddress) || doctorLocation.longAddress || ""}</p>
             </Col>
-            {locationForDistanceCalculation && distanceUnit && (<Col className="d-flex flex-grow-0 text-nowrap flex-nowrap p-0">
-                <DoctorLocationDistance
+            <Col className="d-flex flex-grow-0 text-nowrap flex-nowrap p-0">
+                {showDistanceAndNavigator && <DoctorLocationDistance
                     doctorLocation={doctorLocation}
                     locationForDistanceCalculation={locationForDistanceCalculation}
                     distanceUnit={distanceUnit}
-                />
-            </Col>)}
+                />}
+            </Col>
         </Row>
     );
 }

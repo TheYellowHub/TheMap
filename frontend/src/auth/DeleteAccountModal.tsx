@@ -13,7 +13,7 @@ interface DeleteAccountModalProps {
 }
 
 export default function DeleteAccountModal({ show, onHide } : DeleteAccountModalProps) {
-    const { logout } = useAuth()
+    const { logout } = useAuth();
     const { deleteUser, isDeleteUserMutationLoading, isDeleteUsersMutationSuccess, isDeleteUserMutationError, deleteUserMutationError } = useUser();
 
     useEffect(() => {
@@ -43,7 +43,7 @@ export default function DeleteAccountModal({ show, onHide } : DeleteAccountModal
                         label="Delete account"
                         type="button"
                         onClick={() => {
-                            deleteUser()
+                            deleteUser();
                         }}
                         className="w-max-content"
                     />

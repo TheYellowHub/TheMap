@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Col, Container, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 
 import { Doctor, DoctorLocation, getDoctorReviews } from "../../../types/doctors/doctor";
 import { Location } from "../../../utils/googleMaps/useGoogleMaps";
@@ -13,7 +13,6 @@ import Rating from "../../utils/Rating";
 import useAuth from "../../../auth/useAuth";
 import useUser from "../../../hooks/auth/useUsers";
 import SingleReviewCard from "../../reviews/SingleReviewCard";
-import { useUserReviews } from "../../../hooks/doctors/useReviews";
 import UserReviews from "../../reviews/UserReviews";
 import DoctorLocationSelector from "./DoctorLocationSelector";
 import SaveDoctorIcon from "./SaveDoctorIcon";
@@ -21,6 +20,7 @@ import BackButton from "../../utils/BackButton";
 import DoctorLocationCard from "./DoctorLocationCard";
 import ReportIssueModal from "../../issues/ReportIssueModal";
 import { sameUser } from "../../../auth/userInfo";
+import Tooltip from "../../utils/Tooltip";
 
 interface DoctorBigCardProps {
     doctor: Doctor;
@@ -32,10 +32,10 @@ interface DoctorBigCardProps {
 }
 
 function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation, locationForDistanceCalculation, distanceUnit = "mi", onClose }: DoctorBigCardProps) {
-    const allReviews = getDoctorReviews(doctor);
     const { user, login } = useAuth();
     const { userInfo } = useUser(user);
-    const { data: userReviews } = (userInfo && useUserReviews(userInfo, doctor)) || { data: [] };
+    const allReviews = getDoctorReviews(doctor);
+    const userReviews = allReviews.filter((review) => sameUser(userInfo, review.addedBy));
     const [reportingIssue, setReportingIssue] = useState(false);
     const [addingReview, setAddingReview] = useState(false);
     const addingReviewContainerId = "adding-review-container";
@@ -46,28 +46,28 @@ function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation
 
     return (
         <Container className={`doctorBigCard`}>
-            {onClose && <BackButton onClick={onClose} />}
-            <Row className="flex-nowrap p-0">
-                <Col className="flex-grow-0 pe-1">
-                    <DoctorImage doctor={doctor} big={true} />
+            <BackButton />
+            <Row className="flex-nowrap p-0 m-0">
+                <Col className="flex-grow-0 p-0 pe-1">
+                    <DoctorImage doctor={doctor} />
                 </Col>
-                <Col className="d-grid px-2 py-1 gap-2 align-content-between">
+                <Col className="d-grid ps-2 pe-0 py-1 gap-2 align-content-between">
                     <Row className="d-flex p-0 align-content-between h-doctorBigCardImg">
                         <Row className="w-100 m-0 pb-1">
                             <Col className="px-0 doctorBigCardName font-assistant lg-font">{doctor.fullName}</Col>
                             <Col className="px-0 d-flex flex-grow-0 flex-nowrap">
-                                <OverlayTrigger placement="top-end" overlay={reportingIssue ? <></> : <Tooltip className="tooltip">Report an issue</Tooltip>}>
+                                <ReportIssueModal doctor={doctor} show={reportingIssue} onHide={() => setReportingIssue(false)} />
+                                <Tooltip text="Report an issue" className="only-desktop">
                                     <Col className="px-0 doctorBigCardButtons d-flex justify-content-end" sm="auto">
-                                        <Icon icon="fa-circle-info fa-sm " onClick={() => user ? setReportingIssue(true) : login()} />
-                                        <ReportIssueModal doctor={doctor} show={reportingIssue} onHide={() => setReportingIssue(false)} />
+                                        <Icon icon="fa-circle-info fa-sm" onClick={() => user ? setReportingIssue(true) : login()} />
                                     </Col>
-                                </OverlayTrigger>
+                                </Tooltip>
                                 <SaveDoctorIcon doctor={doctor} colClassName="px-0 doctorBigCardButtons d-flex justify-content-end" />
-                                <OverlayTrigger placement="top-end" overlay={<Tooltip className="tooltip">Close</Tooltip>}>
+                                <Tooltip text="Close">
                                     <Col className="px-0 doctorBigCardButtons d-flex justify-content-end" sm="auto">
                                         <Icon icon="fa-minus fa-sm" onClick={onClose} className="only-desktop" />
                                     </Col>
-                                </OverlayTrigger>
+                                </Tooltip>
                             </Col>
                         </Row>
                         <Row className="w-100 m-0 gap-4 py-1">
@@ -78,7 +78,7 @@ function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation
                                 <DoctorVerification doctor={doctor} />
                             </Col>
                         </Row>
-                        <Row className="m-0 gap-3 py-1">
+                        <Row className="m-0 gap-3 pb-1 pt-3 pt-md-1">
                             {doctor.specialities.map((speciality: string) => (
                                 <Col className="p-0 m-0 flex-grow-0" key={speciality}>
                                     <DoctorSpecialityRibbon speciality={speciality} />
@@ -122,7 +122,7 @@ function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation
             <Row className="m-0 p-0 pt-3">
                 <Col className="m-0 p-0">
                     <img src="/images/line.png" className="only-desktop" width="100%" />
-                    <Row className="mx-0 pt-3">
+                    <Row className="mx-0 py-3">
                         <Col className="p-0 m-0" xs="auto">
                             {doctor.avgRating && doctor.numOfReviews && (
                                 <Rating averageRating={doctor.avgRating} totalReviews={doctor.numOfReviews} />

@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 
 import useApiRequests, { RequestDataItem } from "./useApiRequest";
+import config from "../config.json";
 
 export default function useApi<T extends RequestDataItem>(
     urlDirectory: string,
@@ -10,7 +11,7 @@ export default function useApi<T extends RequestDataItem>(
     return function () {
         const queryClient = useQueryClient();
         const { get, post, patch } = useApiRequests();
-        const key = `${urlDirectory}${fetchListUrlParams ? "/" + fetchListUrlParams : ""}`;
+        const key = `${urlDirectory}/${fetchListUrlParams ? fetchListUrlParams : ""}`;
 
         const fetchList = async () => {
             const response = await get(`/api/${urlDirectory}/list${fetchListUrlParams ? fetchListUrlParams : ""}`);
@@ -27,6 +28,8 @@ export default function useApi<T extends RequestDataItem>(
         } = useQuery({
             queryKey: [key],
             queryFn: fetchList,
+            cacheTime: config.app.queryCacheMinutes * 60 * 1000,
+            staleTime: Infinity
         });
 
         const updateItem = async (t: T) => {
@@ -63,9 +66,11 @@ export default function useApi<T extends RequestDataItem>(
 
         const mutation = useMutation({
             mutationFn: (t: T) => updateItem(t),
-            onSuccess: () => queryClient.invalidateQueries({ 
-                predicate: query => (query.queryKey[0] as string).startsWith(urlDirectory)  
-            }),
+            onSuccess: () => {
+                queryClient.invalidateQueries({ 
+                    predicate: query => (query.queryKey[0] as string).startsWith(urlDirectory) || (query.queryKey[0] as string) === urlDirectory
+                });
+            },
         });
 
         const {

@@ -39,8 +39,8 @@ function ReviewModal({ review, showModal, onCancel, onSave, isSaving, isSavingEr
             isSavingError={isSavingError}
             savingError={savingError}
         >
-            {review.anonymous ? <strong>{review.addedBy.remoteId}</strong> : <></>}
-            <SingleReviewCard review={review} />
+            <div className="strong pb-1">{review.addedBy.remoteId}</div>
+            <SingleReviewCard review={review} showDoctorName={true} />
         </Modal>
     );
 }
