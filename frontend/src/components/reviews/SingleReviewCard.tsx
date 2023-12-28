@@ -86,7 +86,7 @@ function SingleReviewCard({ review, showDoctorName = false, showEditMessageInste
                             </Row>
                         </Col>
                         <Col className="m-0 p-0 flex-grow-0">
-                            {currentUser && <span className="align-middle med-dark-grey fst-italic sm-font lh-normal">
+                            {currentUser && <span className="align-middle med-dark-grey fst-italic sm-font lh-normal text-nowrap">
                                 {review.status === "APPROVED" ? review.updatedAt && (new Date(review.updatedAt)).toLocaleDateString("en-US") : reviewStatusToString(review.status)}
                             </span>}
                         </Col>

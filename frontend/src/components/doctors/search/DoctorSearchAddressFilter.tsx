@@ -16,6 +16,7 @@ export default function DoctorSearchAddressFilter({
     address,
     setAddress,
     useCurrenetLocation,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     addressLocation,
     setAddressLocation,
     setValueChange,
