@@ -63,9 +63,11 @@ export default function useApi<T extends RequestDataItem>(
 
         const mutation = useMutation({
             mutationFn: (t: T) => updateItem(t),
-            onSuccess: () => queryClient.invalidateQueries({ 
-                predicate: query => (query.queryKey[0] as string).startsWith(urlDirectory)  
-            }),
+            onSuccess: () => {
+                queryClient.invalidateQueries({ 
+                    predicate: query => (query.queryKey[0] as string).startsWith(urlDirectory) || (query.queryKey[0] as string) === urlDirectory
+                });
+            }
         });
 
         const {

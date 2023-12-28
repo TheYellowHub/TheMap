@@ -12,8 +12,8 @@ interface StarRatingProps {
 function StarRating({ rating, setRating, color = false }: StarRatingProps) {
     const fontAwesomeRegular = new FontFaceObserver("Font Awesome 6 Pro", {weight: 400});
     const fontAwesomeSolid = new FontFaceObserver("Font Awesome 6 Pro", {weight: 900});
-    fontAwesomeRegular.load().then(() => document.documentElement.classList.add('font-awesome-regular-ready'));
-    fontAwesomeSolid.load().then(() => document.documentElement.classList.add('font-awesome-solid-ready'));
+    fontAwesomeRegular.load().then(() => document.documentElement.classList.add("font-awesome-regular-ready"));
+    fontAwesomeSolid.load().then(() => document.documentElement.classList.add("font-awesome-solid-ready"));
 
     function renderStars() {
         const stars = [];

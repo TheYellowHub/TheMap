@@ -6,7 +6,7 @@ import useAuth from "../../auth/useAuth";
 import Icon from "./Icon";
 import { Link } from "react-router-dom";
 import useUser from "../../hooks/auth/useUsers";
-import { useAllReviews } from "../../hooks/doctors/useReviews";
+import { useReviews } from "../../hooks/doctors/useReviews";
 import { DoctorReview } from "../../types/doctors/review";
 import DeleteAccountModal from "../../auth/DeleteAccountModal";
 import { mainMapUrl, userSavedProvidersUrl } from "../../AppRouter";
@@ -18,19 +18,10 @@ function Header() {
 
     const { user, isAuthenticated, isAdmin, login, logout } = useAuth();
     const { userInfo } = useUser();
-    const userReviews = useAllReviews().data.filter((review: DoctorReview) => review.status !== "DELETED" && sameUser(review.addedBy, userInfo));
+    const { data: reviews } = useReviews();
     const [deletingAccount, setDeletingAccount] = useState(false);
 
     const dontHandleEventKey = "dontHandleEventKey";
-
-    type Link = {
-        title: string;
-        to: string;
-        onClick?: React.MouseEventHandler;
-        newWindow?: boolean;
-        icon?: string;
-        eventKey?: string;
-    };
 
     type Title = {
         title: string;
@@ -39,13 +30,22 @@ function Header() {
 
     type Separator = "Separator";
 
+    type Link = {
+        title: string;
+        to: string;
+        onClick?: React.MouseEventHandler;
+        newWindow?: boolean;
+        icon?: string;
+        eventKey?: string;
+        show?: () => boolean;
+    };
+
     type LinksGroup = {
         title: string;
         links: (Link | Title | Separator)[];
         icon?: string;
+        show?: () => boolean;
     };
-
-    const [links, setLinks] = useState<(Link | LinksGroup)[]>([]);
 
     function getMenuItemContent(link: Link) {
         return (
@@ -84,7 +84,14 @@ function Header() {
         to: "/user/login",
         onClick: login,
         title: "Login",
+        show: () => !isAuthenticated
     };
+
+    const numOfReviews = reviews.filter((review: DoctorReview) => review.status !== "DELETED" && sameUser(review.addedBy, userInfo)).length.toString() || "0";
+
+    // useEffect(() => {
+    //     console.log(numOfReviews, reviews.filter((review: DoctorReview) => review.status !== "DELETED" && sameUser(review.addedBy, userInfo)).length.toString() || "0");
+    // }, [JSON.stringify(reviews)])
 
     const userMenu = {
         title: "My account",
@@ -100,7 +107,7 @@ function Header() {
             },
             {
                 to: "/user/reviews",
-                title: `My reviews (${userReviews.length || "0"})`,
+                title: `My Reviews (${numOfReviews})`,
                 icon: "fa-star",
             },
             {
@@ -118,8 +125,9 @@ function Header() {
                 eventKey: dontHandleEventKey
             },
         ],
+        show: () => isAuthenticated
     };
-
+    
     const adminMenu = {
         title: "Admin",
         links: [
@@ -144,23 +152,10 @@ function Header() {
                 title: "Issues",
             },
         ],
+        show: () => isAdmin
     };
 
-    useEffect(() => {
-        console.log(user, isAuthenticated, isAdmin, userInfo?.savedDoctors?.length, userReviews.length)
-        const newLinks: (Link | LinksGroup)[] = [...publicLinks];
-        if (user && isAuthenticated) {
-            newLinks.push(userMenu);
-            if (isAdmin) {
-                newLinks.push(adminMenu);
-            }
-        } else {
-            newLinks.push(loginLink);
-        }
-        if (JSON.stringify(newLinks) !== JSON.stringify(links)) {
-            setLinks(newLinks);
-        }
-    }, [user, isAuthenticated, isAdmin, userInfo?.savedDoctors?.length, userReviews.length]);
+    const links: (Link | LinksGroup)[] = [...publicLinks, loginLink, userMenu, adminMenu];
 
     return (<>
 
@@ -180,57 +175,63 @@ function Header() {
                     ((eventKey: string) => eventKey !== dontHandleEventKey && setSelectedPage(eventKey)) as SelectCallback
                 }>
                     {links.map((link: LinksGroup | Link, index) => {
-                        if (isGroup(link)) {
-                            const dropdown = link;
-                            return (
-                                <NavDropdown
-                                    key={`${index}-${dropdown.title}`}
-                                    active={selectedSubMenu === dropdown.title}
-                                    title={
-                                        <>
-                                            {dropdown.icon && <Icon icon={dropdown.icon} />}
-                                            {dropdown.title}
-                                        </>
-                                    }
-                                >
-                                    {dropdown.links.map((link, index) => 
-                                        link === "Separator" 
-                                        ? <div key={`${index}-Separator`} className="d-flex justify-content-center py-1 only-desktop"><img src="/images/line.png" width="90%"/></div>
-                                        : link.to === undefined
-                                        ? <div key={`${index}-${dropdown.title}`} className="dropdown-title med-grey pb-2">{link.title}</div>
-                                        : (<NavDropdown.Item
-                                            className="d-flex"
-                                            key={`${index}-${dropdown.title}`}
-                                            as={Link}
-                                            to={link.to}
-                                            target={isExternalLink(link) ? "_blank" : "_self"}
-                                            onClick={(e) => {
-                                                link.eventKey !== dontHandleEventKey && setSelectedSubMenu(dropdown.title);
-                                                link.onClick && link.onClick(e);
-                                            }}
-                                            eventKey={link.eventKey || link.to}
-                                        >
-                                            {getMenuItemContent(link)}
-                                        </NavDropdown.Item>
-                                    ))}
-                                </NavDropdown>
-                            );
+                        if (link.show && link.show() === false) {
+                            return <></>;
                         } else {
-                            return (
-                                <Nav.Link
-                                    key={`${index}-${link.title}`}
-                                    as={Link}
-                                    to={link.to}
-                                    target={isExternalLink(link) ? "_blank" : "_self"}
-                                    onClick={(e) => {
-                                        !isExternalLink(link) && setSelectedSubMenu(null);
-                                        link.onClick && link.onClick(e);
-                                    }}
-                                    eventKey={isExternalLink(link) ? undefined : link.to}
-                                >
-                                    {getMenuItemContent(link)}
-                                </Nav.Link>
-                            );
+                            if (isGroup(link)) {
+                                const dropdown = link;
+                                return (
+                                    <NavDropdown
+                                        key={`${index}-${dropdown.title}`}
+                                        active={selectedSubMenu === dropdown.title}
+                                        title={
+                                            <>
+                                                {dropdown.icon && <Icon icon={dropdown.icon} />}
+                                                {dropdown.title}
+                                            </>
+                                        }
+                                    >
+                                        {dropdown.links.map((link, index) => 
+                                            link === "Separator" 
+                                            ? <div key={`${index}-Separator`} className="d-flex justify-content-center py-1 only-desktop"><img src="/images/line.png" width="90%"/></div>
+                                            : link.to === undefined
+                                            ? <div key={`${index}-${dropdown.title}`} className="dropdown-title med-grey pb-2">{link.title}</div>
+                                            : link.show && link.show() === false
+                                            ? <></>
+                                            : (<NavDropdown.Item
+                                                className="d-flex"
+                                                key={`${index}-${dropdown.title}`}
+                                                as={Link}
+                                                to={link.to}
+                                                target={isExternalLink(link) ? "_blank" : "_self"}
+                                                onClick={(e) => {
+                                                    link.eventKey !== dontHandleEventKey && setSelectedSubMenu(dropdown.title);
+                                                    link.onClick && link.onClick(e);
+                                                }}
+                                                eventKey={link.eventKey || link.to}
+                                            >
+                                                {getMenuItemContent(link)}
+                                            </NavDropdown.Item>
+                                        ))}
+                                    </NavDropdown>
+                                );
+                            } else {
+                                return (
+                                    <Nav.Link
+                                        key={`${index}-${link.title}`}
+                                        as={Link}
+                                        to={link.to}
+                                        target={isExternalLink(link) ? "_blank" : "_self"}
+                                        onClick={(e) => {
+                                            !isExternalLink(link) && setSelectedSubMenu(null);
+                                            link.onClick && link.onClick(e);
+                                        }}
+                                        eventKey={isExternalLink(link) ? undefined : link.to}
+                                    >
+                                        {getMenuItemContent(link)}
+                                    </Nav.Link>
+                                );
+                            }
                         }
                     })}
                 </Nav>

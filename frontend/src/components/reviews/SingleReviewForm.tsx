@@ -10,7 +10,7 @@ import {
     setOperationMonthAndYear,
     reviewEditableStatuses,
 } from "../../types/doctors/review";
-import { useUserReviews } from "../../hooks/doctors/useReviews";
+import { useReviews } from "../../hooks/doctors/useReviews";
 import LoadingWrapper from "../utils/LoadingWrapper";
 import { ResponseError } from "../../hooks/useApiRequest";
 import Icon from "../utils/Icon";
@@ -49,10 +49,7 @@ function SingleReviewForm({ originalReview, onCancel, onSuccess, setId }: Single
         isMutateSuccess, 
         isMutateError, 
         mutateError 
-    } = useUserReviews(
-        review.addedBy,
-        review.doctor
-    );
+    } = useReviews();
 
     const disabled = !reviewEditableStatuses.includes(review.status);
 

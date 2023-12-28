@@ -4,13 +4,14 @@ import { Container, Row } from "react-bootstrap";
 
 import { ID } from "../../types/utils/id";
 import { Doctor } from "../../types/doctors/doctor";
-import { useUserReviews } from "../../hooks/doctors/useReviews";
+import { useReviews } from "../../hooks/doctors/useReviews";
 import { getNewReview, reviewEditableStatuses } from "../../types/doctors/review";
 import SingleReviewForm from "./SingleReviewForm";
 import SingleReviewCard from "./SingleReviewCard";
 import NoResults from "../doctors/search/NoResults";
 import useUser from "../../hooks/auth/useUsers";
 import { mainMapUrl } from "../../AppRouter";
+import { sameUser } from "../../auth/userInfo";
 
 interface UserReviewsPropsWithoutAddingOption {
     doctor?: never;
@@ -47,7 +48,8 @@ function UserReviews({
     containerClassName = "",
 }: UserReviewsProps) {
     const { userInfo } = useUser();
-    const { data: userReviews } = useUserReviews(userInfo!, doctor);
+    const { data: allReviews } = useReviews();
+    const userReviews = allReviews.filter((review) => sameUser(userInfo, review.addedBy) && (doctor === undefined || doctor.id === review.doctor.id));
     const notDeletedReviews = userReviews.filter((review) => review.status !== "DELETED");
 
     const newReview = allowAddingReview && doctor && getNewReview(doctor, userInfo!);
@@ -57,7 +59,7 @@ function UserReviews({
         <Container className={`${containerClassName}`}>
             {doctor === undefined && <Row className="xl-font w-700 mb-3 justify-content-center">My Reviews</Row>}
 
-            {userInfo && (0 < notDeletedReviews.length  || allowAddingReview)
+            {userInfo && (0 < notDeletedReviews.length || allowAddingReview)
             ? (<Row className="m-0">
                     {allowAddingReview && newReview && addingReview && (
                         <Row key={newReview.id!} className="m-0 p-0 pt-4">

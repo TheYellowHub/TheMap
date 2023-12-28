@@ -13,7 +13,6 @@ import Rating from "../../utils/Rating";
 import useAuth from "../../../auth/useAuth";
 import useUser from "../../../hooks/auth/useUsers";
 import SingleReviewCard from "../../reviews/SingleReviewCard";
-import { useUserReviews } from "../../../hooks/doctors/useReviews";
 import UserReviews from "../../reviews/UserReviews";
 import DoctorLocationSelector from "./DoctorLocationSelector";
 import SaveDoctorIcon from "./SaveDoctorIcon";
@@ -33,10 +32,10 @@ interface DoctorBigCardProps {
 }
 
 function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation, locationForDistanceCalculation, distanceUnit = "mi", onClose }: DoctorBigCardProps) {
-    const allReviews = getDoctorReviews(doctor);
     const { user, login } = useAuth();
     const { userInfo } = useUser(user);
-    const { data: userReviews } = (useUserReviews(userInfo!, doctor)) || { data: [] };
+    const allReviews = getDoctorReviews(doctor);
+    const userReviews = allReviews.filter((review) => sameUser(userInfo, review.addedBy));
     const [reportingIssue, setReportingIssue] = useState(false);
     const [addingReview, setAddingReview] = useState(false);
     const addingReviewContainerId = "adding-review-container";

@@ -4,7 +4,7 @@ import LoadingWrapper from "../components/utils/LoadingWrapper";
 import Title from "../components/utils/Title";
 import { objectsDiff } from "../utils/utils";
 import { ResponseError } from "../hooks/useApiRequest";
-import { useAllReviews } from "../hooks/doctors/useReviews";
+import { useReviews } from "../hooks/doctors/useReviews";
 import { DoctorReview } from "../types/doctors/review";
 import ReviewsTable from "../components/reviews/ReviewsTable";
 import ReviewModal from "../components/reviews/ReviewModal";
@@ -21,7 +21,7 @@ function ReviewsScreen() {
         isMutateSuccess,
         isMutateError,
         mutateError,
-    } = useAllReviews();
+    } = useReviews();
 
     const [currentReview, setCurrentReview] = useState<DoctorReview | null>(null);
 

@@ -10,7 +10,7 @@ import { sameUser } from "../../auth/userInfo";
 import SingleReviewForm, { getGuidelinesLink } from "./SingleReviewForm";
 import Button from "../utils/Button";
 import Select from "../utils/Select";
-import { useUserReviews } from "../../hooks/doctors/useReviews";
+import { useReviews } from "../../hooks/doctors/useReviews";
 import LoadingWrapper from "../utils/LoadingWrapper";
 import { ResponseError } from "../../hooks/useApiRequest";
 import Tooltip from "../utils/Tooltip";
@@ -29,7 +29,7 @@ function SingleReviewCard({ review, showDoctorName = false, showEditMessageInste
         isMutateLoading, 
         isMutateError, 
         mutateError 
-    } = useUserReviews(userInfo!);
+    } = useReviews();
 
     const [editingMode, setEditingMode] = useState(false);
 

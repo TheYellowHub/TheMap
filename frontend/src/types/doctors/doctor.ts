@@ -1,7 +1,7 @@
 import { userSavedProvidersUrl } from "../../AppRouter";
 import { UserInfo } from "../../auth/userInfo";
 import { DistanceUnit } from "../../components/utils/DistanceUnit";
-import { useDoctorReviews } from "../../hooks/doctors/useReviews";
+import { useReviews } from "../../hooks/doctors/useReviews";
 import useGoogleMaps, { Location } from "../../utils/googleMaps/useGoogleMaps";
 import { ImageFileOrUrl } from "../Image";
 import { DateTime } from "../utils/dateTime";
@@ -9,6 +9,7 @@ import { Email } from "../utils/email";
 import { ID } from "../utils/id";
 import { Phone } from "../utils/phone";
 import { Url } from "../utils/url";
+import { DoctorReview } from "./review";
 
 export type AbstractLocation = {
     lat?: number;
@@ -112,8 +113,8 @@ export function getDoctorMinimalDistance(doctor: Doctor, location: Location, dis
 }
 
 export function getDoctorReviews(doctor: Doctor) {
-    const { data } = useDoctorReviews(doctor);
-    return data;
+    const { data } = useReviews();
+    return data.filter((review: DoctorReview) => review.doctor.id === doctor.id);
 }
 
 export function getDoctorUrl(doctor: Doctor, onlyMyList = false) {
