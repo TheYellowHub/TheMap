@@ -44,12 +44,12 @@ def prepare_fixtures(doctors_raw_data: List) -> tuple[List[dict], List[dict]]:
                             else ""
                         ),
                         "nancys_nook": True if doctor_data["Nancy's Nook?"] else False,
-                        "status": "APPROVED" if doctor_data["Status"].lower() == "approved" else "DELETED",
-                        "internal_notes": "" if doctor_data["Status"].lower() == "approved" else doctor_data["Status"],
+                        "status": doctor_data["Status"].upper() if doctor_data["Status"] else "APPROVED",
+                        "internal_notes": "",
                         "added_at": datetime.datetime.now().strftime(
                             "%Y-%m-%d %H:%M:%S"
                         ),
-                        "image": f"images/{doctor_id}.jpg" if doctor_data["Img"].lower() == "yes" else None
+                        "image": f"images/{doctor_id}.jpg" if doctor_data["Img"] and doctor_data["Img"].lower() == "yes" else None
                     },
                 }
             )
@@ -63,7 +63,7 @@ def prepare_fixtures(doctors_raw_data: List) -> tuple[List[dict], List[dict]]:
                     "doctor": doctor_id,
                     "hospital_name": doctor_data["Hospital"],
                     "long_address": doctor_data["Address"],
-                    "short_address": doctor_data["City, State"],
+                    "short_address": doctor_data["City,State"],
                     "lat": float(doctor_data["Lat"]),
                     "lng": float(doctor_data["Long"]),
                     "phone": doctor_data["Phone"],

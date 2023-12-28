@@ -16,6 +16,7 @@ export default function AuthProvider({ children }: React.PropsWithChildren) {
         };
     }, [user?.updated_at, rest.isLoading, rest.isAuthenticated]);
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const onRedirectCallback = (appState: any) => {
         window.location.replace(
           appState && appState.returnTo ? appState.returnTo : getCurrentUrl()

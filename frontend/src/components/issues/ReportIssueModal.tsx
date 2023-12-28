@@ -1,5 +1,5 @@
 import { Col, Row, Modal, Form } from "react-bootstrap";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 import LoadingWrapper from "../utils/LoadingWrapper";
 import { ResponseError } from "../../hooks/useApiRequest";
