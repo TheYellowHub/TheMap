@@ -10,6 +10,7 @@ import { Doctor } from "../../types/doctors/doctor";
 import { useIssues } from "../../hooks/doctors/useIssues";
 import { getNewIssue } from "../../types/doctors/issue";
 import DoctorTinyCard from "../doctors/doctors/DoctorTinyCard";
+import { getGuidelinesLink } from "../reviews/SingleReviewForm";
 
 interface ReportIssueModalProps {
     doctor: Doctor;
@@ -39,8 +40,17 @@ export default function ReportIssueModal({ doctor, show, onHide }: ReportIssueMo
             
         {isMutateSuccess 
             ? <>
-                <Modal.Body>
-                    
+                <Modal.Body className="d-flex flex-column justify-content-between align-items-center">
+                    <Row></Row>
+                    <Row className="p-0 m-0 w-70 gap-3 text-center">
+                        <Col className="m-0 p-0">
+                            <div className="pb-3 strong lg-font">Thank you!</div>
+                            <br />We appreciate you being a part of TheYellowHub
+                            <br />and helping other patients!
+                            <br />
+                            <br />We read every review and take actions according to {getGuidelinesLink("our guidelines")} and to support our mission statement.
+                        </Col>
+                    </Row>
                     <Row className="d-flex justify-content-center gap-3 mt-3">
                         <Col className="m-0 p-0 d-flex flex-grow-0 justify-content-center">
                             <Button
