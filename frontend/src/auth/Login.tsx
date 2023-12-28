@@ -4,12 +4,14 @@ import useAuth from "./useAuth";
 import { mainMapUrl } from "../AppRouter";
 
 function Login() {
-    const { login } = useAuth();
+    const { login, isAuthenticated } = useAuth();
 
     useEffect(() => {
-        login();
+        if (!isAuthenticated) {
+            login();
+        }
         window.history.replaceState(null, "", mainMapUrl);
-    });
+    }, []);
 
     return <></>;
 }
