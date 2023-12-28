@@ -49,7 +49,7 @@ def prepare_fixtures(doctors_raw_data: List) -> tuple[List[dict], List[dict]]:
                         "added_at": datetime.datetime.now().strftime(
                             "%Y-%m-%d %H:%M:%S"
                         ),
-                        "image": f"images/{doctor_id}.jpg"  # TODO: only if "yes"
+                        "image": f"images/{doctor_id}.jpg" if doctor_data["Img"].lower() == "yes" else None
                     },
                 }
             )
@@ -62,7 +62,8 @@ def prepare_fixtures(doctors_raw_data: List) -> tuple[List[dict], List[dict]]:
                 "fields": {
                     "doctor": doctor_id,
                     "hospital_name": doctor_data["Hospital"],
-                    "address": doctor_data["Address"],  # TODO: short and long addresses
+                    "long_address": doctor_data["Address"],
+                    "short_address": doctor_data["City, State"],
                     "lat": float(doctor_data["Lat"]),
                     "lng": float(doctor_data["Long"]),
                     "phone": doctor_data["Phone"],
