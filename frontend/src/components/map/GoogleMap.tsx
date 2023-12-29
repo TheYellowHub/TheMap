@@ -1,4 +1,4 @@
-import { GoogleMap as GoogleMapBase, MarkerF, InfoWindowF, useGoogleMap } from "@react-google-maps/api";
+import { GoogleMap as GoogleMapBase, MarkerF, InfoWindowF } from "@react-google-maps/api";
 
 import { Location } from "../../utils/googleMaps/useGoogleMaps";
 import { Fragment, useEffect, useRef, useState } from "react";
@@ -14,7 +14,7 @@ export interface Marker {
     onClick?: () => void;
 }
 
-interface GoogleMapProps {
+interface GoogleMapProps extends React.PropsWithChildren {
     center: Location | undefined;
     currentLocation: Location | undefined;
     markers?: Marker[];
@@ -24,7 +24,7 @@ interface GoogleMapProps {
 
 const emptyMarkersArray: Marker[] = [];
 
-function GoogleMap({ center, currentLocation, markers = emptyMarkersArray as Marker[], getGroupIcon, resetClicks }: GoogleMapProps) {
+function GoogleMap({ center, currentLocation, markers = emptyMarkersArray as Marker[], getGroupIcon, resetClicks, children }: GoogleMapProps) {
     const minimalZoom = 5;    
     const maximalZoom = 13;
     const mapRef = useRef<google.maps.Map | null>(null);
@@ -70,13 +70,14 @@ function GoogleMap({ center, currentLocation, markers = emptyMarkersArray as Mar
         if (mapRef.current !== null && !fitBoundsDone) {
             const markersInBounds = markers.filter((marker) => marker.inBounds);
             if (config.app.minimumDoctorsInResults <= markersInBounds.length) {
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 const bounds = new window.google.maps.LatLngBounds();
                 markersInBounds.forEach((marker) => bounds.extend(marker.location));
                 if (center !== undefined) {
                     bounds.extend(center);
                 }
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 const originalMinZoom = (mapRef.current as any).minZoom;
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 const originalMaxZoom = (mapRef.current as any).maxZoom;
                 mapRef.current.setOptions({minZoom: minimalZoom, maxZoom: maximalZoom});
                 mapRef.current.fitBounds(bounds);
@@ -109,7 +110,7 @@ function GoogleMap({ center, currentLocation, markers = emptyMarkersArray as Mar
 
     useEffect(() => {
         if (mapRef.current) {
-            google.maps.event.addListenerOnce(mapRef.current, 'bounds_changed', function() { 
+            google.maps.event.addListenerOnce(mapRef.current, "bounds_changed", function() { 
                 const currentZoom = mapRef.current?.getZoom();
                 if (currentZoom === undefined || maximalZoom < currentZoom) { 
                     mapRef.current?.setZoom(maximalZoom); 
@@ -183,6 +184,7 @@ function GoogleMap({ center, currentLocation, markers = emptyMarkersArray as Mar
                         </Fragment>);
                     }
                 })}
+                {children}
             </GoogleMapBase>
         </div>
     );

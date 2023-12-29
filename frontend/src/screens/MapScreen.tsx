@@ -19,6 +19,7 @@ import BackButton from "../components/utils/BackButton";
 import NoResults from "../components/doctors/search/NoResults";
 import { mainMapUrl, userSavedProvidersUrl } from "../AppRouter";
 import axios from "axios";
+import logError from "../utils/log";
 
 interface MapScreenProps {
     onlyMyList?: boolean;
@@ -80,13 +81,14 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
     };
 
     const getCountryCenter = () => {
-        axios.get("https://ipinfo.io/json?token=915184f5538242").then(async (result: any) => {  // TODO: envkey
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        axios.get(`https://ipinfo.io/json?token=${process.env.REACT_APP_IPINFO_TOKEN}`).then(async (result: any) => {
             const country = await getLocation(result.data.region);
             const countryLoction = {lat: country!.lat, lng: country!.lng};
             setCountryLocation(countryLoction);
             setCenter(countryLoction);
-        })
-    }
+        }).catch(error => logError(error));
+    };
 
     const isMapBelowRsults = () => {
         const mapColumn = document.getElementById(doctorsMapColumnId);

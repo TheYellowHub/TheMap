@@ -1171,19 +1171,31 @@ div:has(.small-address-filter) {
 }
 
 .above-map {
-    position: relative;
+    position: absolute;
     z-index: 2;
     text-align: end;
 }
 
 .above-map.add-doctor {
-    bottom: 70px;
+    bottom: 20px;
     right: 70px;
 }
 
-.doctors-map-next-to-results .above-map.legend {
-    bottom: calc(var(--main-part-height) + var(--footer-height-desktop) - 20px);
+.above-map.legend {
+    top: 0;
     right: 70px;
+}
+
+.above-map.legend .gm-control-active-copy {
+    background: none rgb(255, 255, 255); 
+    border: 0px;
+    margin: 10px; 
+    padding: 0px; 
+    cursor: pointer;
+    border-radius: 2px; 
+    min-height: 40px; 
+    min-width: 40px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px; 
 }
 
 .gm-style-mtc-bbw {
@@ -1455,6 +1467,16 @@ div:has(.small-address-filter) {
     .footer {
         height: var(--footer-height-mobile);
         min-height: var(--footer-height-mobile);
+    }
+
+    .footer-content,
+    .footer-content a {
+        font-size: 0.7rem;
+    }
+
+    .footer-content-smaller,
+    .footer-content-smaller a {
+        font-size: 0.6rem;
     }
 
     .only-desktop {

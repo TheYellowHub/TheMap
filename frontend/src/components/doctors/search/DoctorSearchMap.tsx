@@ -36,6 +36,7 @@ export default function DoctorSearchMap({
     const { pathname } = useLocation();
     const { getDistance } = useGoogleMaps();
     const [markers, setMarkers] = useState<Marker[]>([]);
+    const [legendIsOpen, setLegendIsOpen] = useState(false);
 
     useEffect(() => {
         const matchedDoctorsMarkers: Marker[] = [];
@@ -87,16 +88,24 @@ export default function DoctorSearchMap({
                 currentLocation={currentDoctorLocation?.lat && currentDoctorLocation?.lng  && {lat: currentDoctorLocation.lat, lng: currentDoctorLocation.lng} || undefined}
                 markers={markers} 
                 getGroupIcon={getGroupMarkerIcon}
-            />
-            <div className="above-map add-doctor">
-                <a href="https://urlzs.com/bVdAh" target="_blank" rel="noreferrer">
-                    <Button variant="primary" label="Recommend a doctor"></Button>
-                </a>
-            </div>
-            <div className="above-map legend">
-                <Icon icon="fa-circle-info" className="gm-control-active" />    {/* TODO: style + open a legend */}
-                {/* gm-control-active / background: none rgb(255, 255, 255); border: 0px; margin: 10px; padding: 0px; text-transform: none; appearance: none; position: absolute; cursor: pointer; user-select: none; border-radius: 2px; height: 40px; width: 40px; box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px; overflow: hidden; top: 0px; right: 0px; */}
-            </div>
+            >  
+                <div className="above-map add-doctor">
+                    <a href="https://urlzs.com/bVdAh" target="_blank" rel="noreferrer">
+                        <Button variant="primary" label="Recommend a doctor"></Button>
+                    </a>
+                </div>
+                <div className="above-map legend d-flex justify-content-end">
+                    <div className="gm-control-active-copy w-fit-content d-flex justify-content-center align-items-center"> 
+                        {legendIsOpen 
+                            ? <>
+                                TODO: Legend
+                                <Icon icon="fa-close" onClick={() => setLegendIsOpen(false)} />
+                            </> 
+                            : <Icon icon="fa-circle-info" onClick={() => setLegendIsOpen(true)} />
+                        }    {/* TODO: open a legend */}
+                    </div>
+                </div>
+            </GoogleMap>
         </Container>
     );
 }
