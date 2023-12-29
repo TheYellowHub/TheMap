@@ -81,7 +81,6 @@ function GoogleMap({ center, currentLocation, markers = emptyMarkersArray as Mar
                 mapRef.current.fitBounds(bounds);
                 mapRef.current.setOptions({minZoom: originalMinZoom, maxZoom: originalMaxZoom});
             } else {
-                console.log("..")
                 mapRef.current.setZoom(minimalZoom);
             }
             setFitBoundsDone(true);
