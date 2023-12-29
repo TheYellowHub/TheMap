@@ -69,7 +69,7 @@ function GoogleMap({ center, currentLocation, markers = emptyMarkersArray as Mar
     const fitBounds = () => {
         if (mapRef.current !== null && !fitBoundsDone) {
             const markersInBounds = markers.filter((marker) => marker.inBounds);
-            if (config.app.minimumDoctorsInResults < markersInBounds.length) {
+            if (config.app.minimumDoctorsInResults <= markersInBounds.length) {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 const bounds = new window.google.maps.LatLngBounds();
                 markersInBounds.forEach((marker) => bounds.extend(marker.location));
