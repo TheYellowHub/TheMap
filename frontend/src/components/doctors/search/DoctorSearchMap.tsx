@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import { Doctor, DoctorLocation, getDoctorUrl } from "../../../types/doctors/doctor";
+import { Doctor, DoctorLocation, getDoctorUrl, locationToStr } from "../../../types/doctors/doctor";
 import useGoogleMaps, { Location } from "../../../utils/googleMaps/useGoogleMaps";
 import GoogleMap, { Marker } from "../../map/GoogleMap";
 import { getDoctorMarkerIcon, getGroupMarkerIcon } from "../../map/markerIcon";
@@ -80,7 +80,7 @@ export default function DoctorSearchMap({
     }, [doctors, currentDoctor, currentDoctorLocation, centerLocation, boundsDistanceFromCenter]);
 
     return (
-        <Container fluid className="map px-0 mx-0" key={`search-map-distance=${boundsDistanceFromCenter}`}>
+        <Container fluid className="map px-0 mx-0" key={`search-map-distance=${boundsDistanceFromCenter}-center=${centerLocation && locationToStr(centerLocation)}`}>
             <GoogleMap 
                 center={centerLocation} 
                 currentLocation={currentDoctorLocation?.lat && currentDoctorLocation?.lng  && {lat: currentDoctorLocation.lat, lng: currentDoctorLocation.lng} || undefined}

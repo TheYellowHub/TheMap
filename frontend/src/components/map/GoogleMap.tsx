@@ -1,4 +1,4 @@
-import { GoogleMap as GoogleMapBase, MarkerF, InfoWindowF } from "@react-google-maps/api";
+import { GoogleMap as GoogleMapBase, MarkerF, InfoWindowF, useGoogleMap } from "@react-google-maps/api";
 
 import { Location } from "../../utils/googleMaps/useGoogleMaps";
 import { Fragment, useEffect, useRef, useState } from "react";
@@ -24,12 +24,13 @@ interface GoogleMapProps {
 const emptyMarkersArray: Marker[] = [];
 
 function GoogleMap({ center, currentLocation, markers = emptyMarkersArray as Marker[], getGroupIcon, resetClicks }: GoogleMapProps) {
-    const minimalZoom = 13;
+    const minimalZoom = 6;    
+    const maximalZoom = 10;
     const mapRef = useRef<google.maps.Map | null>(null);
     const [markersMap, setMarkersMap] = useState(new Map<string, Marker[]>());
     const [currentLocationStr, setCurrentLocationStr] = useState<string | null>();
     const [fitBoundsDone, setFitBoundsDone] = useState(false);
-
+    
     const handleMapLoad = (map: google.maps.Map) => {
         mapRef.current = map;
     };
@@ -74,10 +75,11 @@ function GoogleMap({ center, currentLocation, markers = emptyMarkersArray as Mar
             }
             
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const originalMinZoom = (mapRef.current as any).minZoom;
             const originalMaxZoom = (mapRef.current as any).maxZoom;
-            mapRef.current.setOptions({maxZoom: minimalZoom});
+            mapRef.current.setOptions({minZoom: minimalZoom, maxZoom: maximalZoom});
             mapRef.current.fitBounds(bounds);
-            mapRef.current.setOptions({maxZoom: originalMaxZoom});
+            mapRef.current.setOptions({minZoom: originalMinZoom, maxZoom: originalMaxZoom});
             setFitBoundsDone(true);
         }
     };
@@ -101,7 +103,7 @@ function GoogleMap({ center, currentLocation, markers = emptyMarkersArray as Mar
         if (!fitBoundsDone) {
             fitBounds();
         }
-    }, [markers, mapRef, fitBoundsDone]);
+    }, [markers, center, mapRef, fitBoundsDone]);
 
     return (
         <div id="map" key={`${center && locationToStr(center)}`}>

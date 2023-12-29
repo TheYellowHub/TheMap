@@ -18,6 +18,7 @@ import Button from "../components/utils/Button";
 import BackButton from "../components/utils/BackButton";
 import NoResults from "../components/doctors/search/NoResults";
 import { mainMapUrl, userSavedProvidersUrl } from "../AppRouter";
+import axios from "axios";
 
 interface MapScreenProps {
     onlyMyList?: boolean;
@@ -27,6 +28,7 @@ export const MAP_CONTAINER_ID = "map-container";
 
 function MapScreen({ onlyMyList = false }: MapScreenProps) {
     const navigate = useNavigate();
+    const { getLocation } = useGoogleMaps();
 
     const { data: doctors, isListLoading, isListError, listError } = useDoctors();
     const { doctorId: doctorIdParam } = useParams();
@@ -41,6 +43,7 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
     const { setCurrentLocation, getAddress } = useGoogleMaps();
     const [address, setAddress] = useState<string | undefined>(undefined);
     const [addressLocation, setAddressLocation] = useState<Location | undefined>();
+    const [center, setCenter] = useState(addressLocation);
     const distanceDefault = config.app.distanceDefault;
     const [distance, setDistance] = useState<number | undefined>(distanceDefault);
     const distanceUnit = addressLocation?.country === "US" ? "mi" : "km";
@@ -55,7 +58,7 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
 
     const mapNode = (<DoctorSearchMap
         doctors={matchedDoctorsIgnoringDistance}
-        centerLocation={addressLocation}
+        centerLocation={center}
         boundsDistanceFromCenter={distance}
         currentDoctor={currentDoctor}
         setCurrentDoctor={setCurrentDoctor}
@@ -74,6 +77,15 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
             });
         });
     };
+
+    const setCountryCenter = () => {
+        axios.get("http://ip-api.com/json").then(async (result: any) => {
+            const centerLoction = await getLocation(result.data.country);
+            if (centerLoction) {
+                setCenter({lat: centerLoction.lat, lng: centerLoction.lng});
+            }
+        })
+    }
 
     const isMapBelowRsults = () => {
         const mapColumn = document.getElementById(doctorsMapColumnId);
@@ -148,6 +160,14 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
             setMapIsOpen(true);
         }
     }, [address]);
+
+    useEffect(() => {
+        if (addressLocation) {
+            setCenter(addressLocation);
+        } else {
+            setCountryCenter();
+        }
+    }, [addressLocation]);
 
     return (
         <LoadingWrapper isLoading={isListLoading} isError={isListError} error={listError as ResponseError} center={true}>
