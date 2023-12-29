@@ -4,6 +4,7 @@ import { Location } from "../../utils/googleMaps/useGoogleMaps";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { locationToStr } from "../../types/doctors/doctor";
 import Loader from "../utils/Loader";
+import config from "../../config.json";
 
 export interface Marker {
     title: string;
@@ -66,9 +67,9 @@ function GoogleMap({ center, currentLocation, markers = emptyMarkersArray as Mar
     };
 
     const fitBounds = () => {
-        if (mapRef.current !== null) {
+        if (mapRef.current !== null && !fitBoundsDone) {
             const markersInBounds = markers.filter((marker) => marker.inBounds);
-            if (0 < markersInBounds.length) {
+            if (config.app.minimumDoctorsInResults < markersInBounds.length) {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 const bounds = new window.google.maps.LatLngBounds();
                 markersInBounds.forEach((marker) => bounds.extend(marker.location));
@@ -103,10 +104,19 @@ function GoogleMap({ center, currentLocation, markers = emptyMarkersArray as Mar
     }, [currentLocation]);
 
     useEffect(() => {
-        if (!fitBoundsDone) {
-            fitBounds();
+        fitBounds();
+    }, [markers, center, mapRef.current, fitBoundsDone]);
+
+    useEffect(() => {
+        if (mapRef.current) {
+            google.maps.event.addListenerOnce(mapRef.current, 'bounds_changed', function() { 
+                const currentZoom = mapRef.current?.getZoom();
+                if (currentZoom === undefined || maximalZoom < currentZoom) { 
+                    mapRef.current?.setZoom(maximalZoom); 
+                } 
+            });
         }
-    }, [markers, center, mapRef, fitBoundsDone]);
+    }, [mapRef.current]);
 
     return (
         <div id="map" key={`${center && locationToStr(center)}`}>

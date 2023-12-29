@@ -43,6 +43,7 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
     const { setCurrentLocation, getAddress } = useGoogleMaps();
     const [address, setAddress] = useState<string | undefined>(undefined);
     const [addressLocation, setAddressLocation] = useState<Location | undefined>();
+    const [countryLocation, setCountryLocation] = useState<Location | undefined>();
     const [center, setCenter] = useState(addressLocation);
     const distanceDefault = config.app.distanceDefault;
     const [distance, setDistance] = useState<number | undefined>(distanceDefault);
@@ -78,13 +79,12 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
         });
     };
 
-    const setCountryCenter = () => {
-        axios.get("https://ipinfo.io/json?token=915184f5538242").then(async (result: any) => {
-            console.log(result)
-            const centerLoction = await getLocation(result.data.region);
-            if (centerLoction) {
-                setCenter({lat: centerLoction.lat, lng: centerLoction.lng});
-            }
+    const getCountryCenter = () => {
+        axios.get("https://ipinfo.io/json?token=915184f5538242").then(async (result: any) => {  // TODO: envkey
+            const country = await getLocation(result.data.region);
+            const countryLoction = {lat: country!.lat, lng: country!.lng};
+            setCountryLocation(countryLoction);
+            setCenter(countryLoction);
         })
     }
 
@@ -94,7 +94,7 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
     };
 
     useEffect(() => {
-        setCountryCenter();
+        getCountryCenter();
     }, []);
 
     useEffect(() => {
@@ -167,11 +167,7 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
     }, [address]);
 
     useEffect(() => {
-        if (addressLocation) {
-            setCenter(addressLocation);
-        } else {
-            setCountryCenter();
-        }
+        setCenter(addressLocation ? addressLocation : countryLocation);
     }, [addressLocation]);
 
     return (

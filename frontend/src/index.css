@@ -1170,12 +1170,20 @@ div:has(.small-address-filter) {
     display: none;
 }
 
-.aboveMap {
+.above-map {
     position: relative;
-    bottom: 70px;
-    right: 70px;
     z-index: 2;
     text-align: end;
+}
+
+.above-map.add-doctor {
+    bottom: 70px;
+    right: 70px;
+}
+
+.doctors-map-next-to-results .above-map.legend {
+    bottom: calc(var(--main-part-height) + var(--footer-height-desktop) - 20px);
+    right: 70px;
 }
 
 .gm-style-mtc-bbw {

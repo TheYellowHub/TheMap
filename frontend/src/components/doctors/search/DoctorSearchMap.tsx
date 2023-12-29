@@ -7,6 +7,7 @@ import useGoogleMaps, { Location } from "../../../utils/googleMaps/useGoogleMaps
 import GoogleMap, { Marker } from "../../map/GoogleMap";
 import { getDoctorMarkerIcon, getGroupMarkerIcon } from "../../map/markerIcon";
 import Button from "../../utils/Button";
+import Icon from "../../utils/Icon";
 
 interface DoctorSearchMapProps {
     doctors: Doctor[];
@@ -87,10 +88,14 @@ export default function DoctorSearchMap({
                 markers={markers} 
                 getGroupIcon={getGroupMarkerIcon}
             />
-            <div className="aboveMap">
+            <div className="above-map add-doctor">
                 <a href="https://urlzs.com/bVdAh" target="_blank" rel="noreferrer">
                     <Button variant="primary" label="Recommend a doctor"></Button>
                 </a>
+            </div>
+            <div className="above-map legend">
+                <Icon icon="fa-circle-info" className="gm-control-active" />    {/* TODO: style + open a legend */}
+                {/* gm-control-active / background: none rgb(255, 255, 255); border: 0px; margin: 10px; padding: 0px; text-transform: none; appearance: none; position: absolute; cursor: pointer; user-select: none; border-radius: 2px; height: 40px; width: 40px; box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px; overflow: hidden; top: 0px; right: 0px; */}
             </div>
         </Container>
     );
