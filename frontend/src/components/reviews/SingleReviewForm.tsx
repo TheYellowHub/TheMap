@@ -19,7 +19,7 @@ import StarRating from "../utils/StarRating";
 import InputFormField from "../utils/form/inputField";
 import SingleSelectFormField from "../utils/form/singleSelectField";
 import BooleanFormField from "../utils/form/booleanField";
-import { BooleanField, TextField } from "../../utils/fields";
+import { BooleanField, NumberField, TextField } from "../../utils/fields";
 import { MonthName, monthNames } from "../../types/utils/dateTime";
 import { ID } from "../../types/utils/id";
 import useUser from "../../hooks/auth/useUsers";
@@ -254,13 +254,17 @@ function SingleReviewForm({ originalReview, onCancel, onSuccess, setId }: Single
                         />
                     </Col>
                     <Col className="m-0 p-0 d-flex justify-content-end">
-                        {
-                            <StarRating
-                                rating={review.rating || 0}
-                                setRating={disabled ? undefined : (newRating) => setReview({ ...review, rating: newRating })}
-                                color={true}
-                            />
-                        }
+                        <InputFormField<DoctorReview>
+                            field={reviewFieldsMap.get("rating") as NumberField<DoctorReview>}
+                            object={review}
+                            onChange={setReview}
+                            className="dummy-input"
+                        />
+                        <StarRating
+                            rating={review.rating || 0}
+                            setRating={disabled ? undefined : (newRating) => setReview({ ...review, rating: newRating })}
+                            color={true}
+                        />
                     </Col>
                 </Form.Group>
                 <Form.Group as={Row} className="p-0 m-0 pb-2">

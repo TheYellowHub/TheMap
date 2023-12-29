@@ -814,6 +814,16 @@ input,
     padding: 0.3rem 0;
 }
 
+.dummy-input,
+.dummy-input .form-control:focus {
+    width: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border-color: white !important;
+    background-color: white !important;
+    box-shadow: none !important;
+}
+
 .form-label {
     margin: 0.3rem;
     padding: 0.3rem;
