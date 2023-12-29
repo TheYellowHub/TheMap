@@ -79,8 +79,9 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
     };
 
     const setCountryCenter = () => {
-        axios.get("http://ip-api.com/json").then(async (result: any) => {
-            const centerLoction = await getLocation(result.data.country);
+        axios.get("https://ipinfo.io/json?token=915184f5538242").then(async (result: any) => {
+            console.log(result)
+            const centerLoction = await getLocation(result.data.region);
             if (centerLoction) {
                 setCenter({lat: centerLoction.lat, lng: centerLoction.lng});
             }
