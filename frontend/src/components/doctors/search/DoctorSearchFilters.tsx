@@ -92,14 +92,8 @@ export default function DoctorSearchFilters({
         return nameA < nameB ? -1 : nameA > nameB ? 1 : 0;
     };
 
-    const sortOptionsDraft: Map<string, (a: Doctor, b: Doctor) => number> = new Map([
-        [nameSortKey, (a, b) => sortByName(a, b)],
-        [nameSortKey.split("").reverse().join(""), (a, b) => -sortByName(a, b)],
-    ]);
-
-    if (address) {
-        sortOptionsDraft.set(
-            distanceSortKey, 
+    const sortOptions: ReadonlyMap<string, (a: Doctor, b: Doctor) => number> = new Map([
+        [distanceSortKey, 
             (a, b) => {
                 if (addressLocation === undefined) {
                     return 0;
@@ -109,10 +103,10 @@ export default function DoctorSearchFilters({
                     return distanceA < distanceB ? -1 : distanceB < distanceA ? 1 : 0;
                 }
             }
-        );
-    }
-
-    const sortOptions: ReadonlyMap<string, (a: Doctor, b: Doctor) => number> = new Map(sortOptionsDraft);
+        ],
+        [nameSortKey, (a, b) => sortByName(a, b)],
+        [nameSortKey.split("").reverse().join(""), (a, b) => -sortByName(a, b)],
+    ]);
 
     const refilterDoctors = (filterDistance: number | undefined) => {
         
@@ -162,6 +156,12 @@ export default function DoctorSearchFilters({
             refilterDoctors(distance);
         }
     }, [distance]);
+
+    useEffect(() => {
+        if (sortKey === distanceSortKey && addressLocation === undefined) {
+            useCurrenetLocation();
+        }
+    }, [sortKey]);
 
     useEffect(() => {
         if (addressLocation !== undefined) {
