@@ -93,6 +93,10 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
     };
 
     useEffect(() => {
+        setCountryCenter();
+    }, []);
+
+    useEffect(() => {
         if (shouldClearAddress) {
             setAddress(undefined);
             setAddressLocation(undefined);
