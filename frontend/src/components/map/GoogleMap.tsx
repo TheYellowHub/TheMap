@@ -24,8 +24,8 @@ interface GoogleMapProps {
 const emptyMarkersArray: Marker[] = [];
 
 function GoogleMap({ center, currentLocation, markers = emptyMarkersArray as Marker[], getGroupIcon, resetClicks }: GoogleMapProps) {
-    const minimalZoom = 6;    
-    const maximalZoom = 10;
+    const minimalZoom = 5;    
+    const maximalZoom = 13;
     const mapRef = useRef<google.maps.Map | null>(null);
     const [markersMap, setMarkersMap] = useState(new Map<string, Marker[]>());
     const [currentLocationStr, setCurrentLocationStr] = useState<string | null>();
@@ -67,19 +67,23 @@ function GoogleMap({ center, currentLocation, markers = emptyMarkersArray as Mar
 
     const fitBounds = () => {
         if (mapRef.current !== null) {
-            const bounds = new window.google.maps.LatLngBounds();
             const markersInBounds = markers.filter((marker) => marker.inBounds);
-            markersInBounds.forEach((marker) => bounds.extend(marker.location));
-            if (center !== undefined) {
-                bounds.extend(center);
+            if (0 < markersInBounds.length) {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                const bounds = new window.google.maps.LatLngBounds();
+                markersInBounds.forEach((marker) => bounds.extend(marker.location));
+                if (center !== undefined) {
+                    bounds.extend(center);
+                }
+                const originalMinZoom = (mapRef.current as any).minZoom;
+                const originalMaxZoom = (mapRef.current as any).maxZoom;
+                mapRef.current.setOptions({minZoom: minimalZoom, maxZoom: maximalZoom});
+                mapRef.current.fitBounds(bounds);
+                mapRef.current.setOptions({minZoom: originalMinZoom, maxZoom: originalMaxZoom});
+            } else {
+                console.log("..")
+                mapRef.current.setZoom(minimalZoom);
             }
-            
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            const originalMinZoom = (mapRef.current as any).minZoom;
-            const originalMaxZoom = (mapRef.current as any).maxZoom;
-            mapRef.current.setOptions({minZoom: minimalZoom, maxZoom: maximalZoom});
-            mapRef.current.fitBounds(bounds);
-            mapRef.current.setOptions({minZoom: originalMinZoom, maxZoom: originalMaxZoom});
             setFitBoundsDone(true);
         }
     };

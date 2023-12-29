@@ -18,13 +18,12 @@ function DoctorLocationDistance({
     const distance = locationForDistanceCalculation && getDoctorLocationDistance(doctorLocation, locationForDistanceCalculation, distanceUnit);
 
     return (
-        <Tooltip text={`${doctorLocation.longAddress ? "Navigate" : "No link to address"}`}>
+        <Tooltip text={`${doctorLocation.longAddress ? "Navigate" : "No address"}`}>
             <p className="med-grey p-0 m-0">
                     <a
                         href={`${
                             doctorLocation?.longAddress
-                                ? "http://maps.google.com/maps/dir/?api=1&dir_action=navigate&destination=" +
-                                doctorLocation.longAddress
+                                ? `http://maps.google.com/maps/dir//${doctorLocation.longAddress}`
                                 : "#"
                         }`}
                         target="_blank"
