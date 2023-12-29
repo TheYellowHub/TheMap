@@ -147,7 +147,7 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
         if (0 < matchedDoctorsIncludingDistance.length && !mapIsOpen && !onlyMyList) {
             setMapIsOpen(true);
         }
-    }, [matchedDoctorsIncludingDistance]);
+    }, [address]);
 
     return (
         <LoadingWrapper isLoading={isListLoading} isError={isListError} error={listError as ResponseError} center={true}>
