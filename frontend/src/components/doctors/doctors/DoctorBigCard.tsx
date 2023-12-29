@@ -59,7 +59,7 @@ function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation
                                 <ReportIssueModal doctor={doctor} show={reportingIssue} onHide={() => setReportingIssue(false)} />
                                 <Tooltip text="Report an issue" className="only-desktop">
                                     <Col className="px-0 doctorBigCardButtons d-flex justify-content-end" sm="auto">
-                                        <Icon icon="fa-circle-info fa-sm" onClick={() => user ? setReportingIssue(true) : login()} />
+                                        <Icon icon="fa-message-exclamation" onClick={() => user ? setReportingIssue(true) : login()} />
                                     </Col>
                                 </Tooltip>
                                 <SaveDoctorIcon doctor={doctor} colClassName="px-0 doctorBigCardButtons d-flex justify-content-end" />

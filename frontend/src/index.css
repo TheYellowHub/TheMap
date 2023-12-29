@@ -158,6 +158,13 @@
     color: var(--med-blue);
 }
 
+.fa-message-exclamation::before {
+    content: "\f4a5";
+    font-family: "Font Awesome 6 Pro";
+    font-weight: 400;
+    color: var(--dark-grey);
+}
+
 .fa-circle-info::before {
     content: "\f05a";
     font-family: "Font Awesome 6 Pro";
