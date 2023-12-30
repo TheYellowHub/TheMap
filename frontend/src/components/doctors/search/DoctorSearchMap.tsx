@@ -8,6 +8,7 @@ import GoogleMap, { Marker } from "../../map/GoogleMap";
 import { getDoctorMarkerIcon, getGroupMarkerIcon } from "../../map/markerIcon";
 import Button from "../../utils/Button";
 import Icon from "../../utils/Icon";
+import DoctorSearchMapLegend from "./DoctorSearchMapLegend";
 
 interface DoctorSearchMapProps {
     doctors: Doctor[];
@@ -95,15 +96,13 @@ export default function DoctorSearchMap({
                     </a>
                 </div>
                 <div className="above-map legend d-flex justify-content-end">
-                    <div className="gm-control-active-copy w-fit-content d-flex justify-content-center align-items-center"> 
+                   
                         {legendIsOpen 
-                            ? <>
-                                TODO: Legend
-                                <Icon icon="fa-close" onClick={() => setLegendIsOpen(false)} />
-                            </> 
-                            : <Icon icon="fa-circle-info" onClick={() => setLegendIsOpen(true)} />
-                        }    {/* TODO: open a legend */}
-                    </div>
+                            ?  <div className="gm-control-active-copy w-fit-content d-flex justify-content-center align-items-center"> 
+                                    <Icon icon="fa-circle-info" onClick={() => setLegendIsOpen(false)} />
+                               </div>
+                            : <DoctorSearchMapLegend onClick={() => setLegendIsOpen(true)} />
+                        }
                 </div>
             </GoogleMap>
         </Container>
