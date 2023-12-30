@@ -21,6 +21,7 @@ function DoctorLocationCard({ doctorLocation, locationForDistanceCalculation, di
                     doctorLocation={doctorLocation}
                     locationForDistanceCalculation={locationForDistanceCalculation}
                     distanceUnit={distanceUnit}
+                    icon="fa-hospital"
                 />
             </Row>
             <Row className="m-0 gap-3 py-1 doctor-location">

@@ -7,8 +7,7 @@ interface DoctorSpecialityProps {
 function DoctorSpeciality({ speciality }: DoctorSpecialityProps) {
     if (speciality) {
         return (
-            <div className="doctor-speciality text-black text-nowrap dark-grey">
-                <Icon icon="fa-check" />
+            <div className="doctor-speciality text-nowrap">
                 {speciality}
             </div>
         );

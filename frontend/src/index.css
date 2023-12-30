@@ -47,6 +47,8 @@
     --very-light-yellow: #fff9e7;
     --dark-blue: #035763;
     --med-blue: #137c8a;
+    --light-blue: #95e0e5;
+    --very-light-blue: #f2feff;
 }
 
 @media (max-width: 768px)  { 
@@ -146,6 +148,10 @@
 }
 
 .xs-font {
+    font-size: 0.75rem;
+}
+
+.xxs-font {
     font-size: 0.625rem;
 }
 
@@ -224,6 +230,7 @@
     box-sizing: border-box !important;
     scroll-margin-top: var(--header-height);
     scroll-behavior: auto !important;
+    letter-spacing: normal;
 }
 
 .overflow-y-auto-hover *,
@@ -1248,7 +1255,7 @@ div:has(.small-address-filter) {
 /* Doctor's cards */
 
 .doctorSmallCard,
-.doctorBigCard {
+.doctor-big-card {
     border-radius: 0.25rem;
     gap: 1rem;
     min-height: 8.875rem;
@@ -1258,17 +1265,17 @@ div:has(.small-address-filter) {
     max-width: 22rem;
 }
 
-.doctorBigCard {
+.doctor-big-card {
     width: 100% !important;
     padding: 1.8rem 1.5rem !important;
 }
 
-.doctorBigCard .btn {
+.doctor-big-card .btn {
     line-height: 2rem;
     padding: 0 1rem;
 }
 
-.doctorBigCard .doctor-location .btn {
+.doctor-big-card .doctor-location .btn {
     word-break: break-all;
     overflow: hidden;
     display: -webkit-box;
@@ -1279,21 +1286,28 @@ div:has(.small-address-filter) {
 
 .doctor-category {
     padding: 2px 8px 2px 8px;
+    display: flex;
+    align-items: center;
     border-radius: 100px;
     background: var(--light-yellow);
     font-size: 0.75rem;
+    height: 22px;
 }
 
 .doctor-speciality {
-    padding: 2px, 8px, 2px, 8px;
+    padding: 4px 12px 4px 12px;
+    display: flex;
+    align-items: center;
     border-radius: 100px;
-    gap: 10px;
-    background: var(--light-yellow);
-
+    border: 1px var(--light-blue) solid !important;
+    color: var(--med-blue);
+    background: var(--very-light-blue);
+    font-size: 0.75rem;
+    height: 22px;
 }
 
 .verification img {
-    height: 100% !important;
+    height: 22px;
     filter: grayscale(100%);
 }
 
@@ -1301,12 +1315,8 @@ div:has(.small-address-filter) {
     filter: grayscale(0%);
 }
 
-.doctorBigCard .doctor-address * {
-    font-size: 1rem;
-}
-
-.doctor-address *,
-.star-rating * {
+.doctor-big-card .doctor-address,
+.doctor-big-card .doctor-address * {
     font-size: 0.875rem;
 }
 
@@ -1322,44 +1332,32 @@ div:has(.small-address-filter) {
 
 /* Doctor's location */
 
-.doctorLocationBtn,
-.doctorLocationBtnSelected {
+.doctor-location-btn,
+.doctor-location-btn-selected {
     display: flex !important;
     flex-wrap: nowrap;
+    background-color: transparent;
+    border: 0;
+    border-radius: 0;
+    border-bottom: 1px solid var(--light-grey);
     gap: 0.75rem;
-    padding: 0.25rem 0.5rem 0.125rem 0.5rem !important;
+    padding: 0.25rem 0.75rem 0.25rem 0.75rem !important;
     width: fit-content;
-    height: 40px !important;
-    background-color: white;
-    color: var(--dark-blue);
-    border-radius: 0.25rem 0.25rem 0rem 0rem;
-    border: 0.75px solid #95E0E5;
-    border-bottom: 1px solid #2BC2CC;
-    height: auto;
 }
 
-.doctorLocationBtn *,
-.doctorLocationBtnSelected * {
-    padding: 0;
-    margin: 0;
+.doctor-location-btn-selected {
+    border-bottom-color: var(--med-grey);
 }
 
-.doctorLocationBtnSelected {
-    border: 1px solid #2BC2CC;
-    background-color: #F2FEFF;
-    box-shadow: 4px 2px 8px 6px rgba(120, 120, 120, 0.15);
+.doctor-location-btn:hover,
+.doctor-location-btn-selected:hover,
+.doctor-location-btn:active,
+.doctor-location-btn-selected:active  {
+    border-bottom-color: var(--med-grey);
+    background-color: transparent !important;
 }
 
-.doctorLocationBtn:hover,
-.doctorLocationBtnSelected:hover,
-.doctorLocationBtn:active,
-.doctorLocationBtnSelected:active  {
-    color: var(--dark-blue) !important;
-    border: 1px solid #2BC2CC !important;
-    background-color: #F2FEFF !important;
-}
-
-.doctorLocationPrivateLabel {
+.doctor-location-private-label {
     color: #AB3319;
     font-weight: 700;
     text-transform: uppercase;
@@ -1390,7 +1388,7 @@ div:has(.small-address-filter) {
         max-width: 50%;
     }
 
-    .doctorBigCard {
+    .doctor-big-card {
         box-shadow: 5px 5px 12px 2px rgba(120, 120, 120, 0.25), 0px 4px 20px 3px rgba(65, 65, 65, 0.25);
     }
 
@@ -1417,7 +1415,7 @@ div:has(.small-address-filter) {
         width: 54px;
     }
 
-    .doctorBigCard .doctor-image {
+    .doctor-big-card .doctor-image {
         height: 178px;
         width: 142px;
     }
@@ -1497,12 +1495,8 @@ div:has(.small-address-filter) {
         max-width: 100%;
     }
 
-    .doctorBigCard {
+    .doctor-big-card {
         padding: 0rem !important;
-    }
-
-    .doctorBigCardName {
-        font-size: 1.2rem;
     }
 
     .doctorBigCard

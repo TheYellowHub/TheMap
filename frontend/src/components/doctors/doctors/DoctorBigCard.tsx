@@ -22,6 +22,7 @@ import DoctorLocationCard from "./DoctorLocationCard";
 import ReportIssueModal from "../../issues/ReportIssueModal";
 import { sameUser } from "../../../auth/userInfo";
 import Tooltip from "../../utils/Tooltip";
+import { getCurrentUrl } from "../../../utils/utils";
 
 interface DoctorBigCardProps {
     doctor: Doctor;
@@ -46,68 +47,67 @@ function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation
     }, [addingReview]);
 
     return (
-        <Container className={`doctorBigCard`}>
+        <Container className={`doctor-big-card`}>
             <BackButton />
 
             <Helmet>
+                <meta property="og:url" content={getCurrentUrl()} />
                 <meta property="og:title" content={`${doctor.fullName}, ${doctor.category}`} />
                 <meta property="og:description" content={`${doctor.fullName} in ${doctor.locations[0].shortAddress} is an ${doctor.category}, recommended by TheYellowHub community.`} />
                 <meta property="og:image" content="/images/logo.png" />
             </Helmet>
 
-            <Row className="flex-nowrap p-0 m-0">
-                <Col className="flex-grow-0 p-0 pe-1">
+            <Row className="flex-nowrap p-0 m-0 gap-4">
+                <Col className="flex-grow-0 p-0 m-0">
                     <DoctorImage doctor={doctor} />
                 </Col>
-                <Col className="d-grid ps-2 pe-0 py-1 gap-2 align-content-between">
-                    <Row className="d-flex p-0 align-content-between h-doctorBigCardImg">
-                        <Row className="w-100 m-0 pb-1">
-                            <Col className="px-0 doctorBigCardName font-assistant lg-font">{doctor.fullName}</Col>
-                            <Col className="px-0 d-flex flex-grow-0 flex-nowrap">
+                <Col className="d-grid m-0 p-0 gap-3">
+                    <Row className="d-flex m-0 p-0 gap-3">
+                        <Row className="w-100 m-0 p-0">
+                            <Col className="px-0 font-assistant lg-font">{doctor.fullName}</Col>
+                            <Col className="px-0 d-flex flex-grow-0 flex-nowrap gap-2">
                                 <ReportIssueModal doctor={doctor} show={reportingIssue} onHide={() => setReportingIssue(false)} />
                                 <Tooltip text="Report an issue" className="only-desktop">
-                                    <Col className="px-0 doctorBigCardButtons d-flex justify-content-end" sm="auto">
-                                        <Icon icon="fa-message-exclamation" onClick={() => user ? setReportingIssue(true) : login()} />
+                                    <Col className="px-0 d-flex justify-content-end" sm="auto">
+                                        <Icon icon="fa-message-exclamation fa-sm" onClick={() => user ? setReportingIssue(true) : login()} padding={false}/>
                                     </Col>
                                 </Tooltip>
-                                <SaveDoctorIcon doctor={doctor} colClassName="px-0 doctorBigCardButtons d-flex justify-content-end" />
+                                <SaveDoctorIcon doctor={doctor} colClassName="px-0 d-flex justify-content-end" iconClassName="fa-sm" />
                                 <Tooltip text="Close">
-                                    <Col className="px-0 doctorBigCardButtons d-flex justify-content-end" sm="auto">
-                                        <Icon icon="fa-minus fa-sm" onClick={onClose} className="only-desktop" />
+                                    <Col className="px-0 d-flex justify-content-end" sm="auto">
+                                        <Icon icon="fa-minus fa-sm" onClick={onClose} className="only-desktop" padding={false}/>
                                     </Col>
                                 </Tooltip>
                             </Col>
                         </Row>
-                        <Row className="w-100 m-0 gap-4 py-1">
-                            <Col className="p-0 flex-grow-0">
-                                <DoctorCategoryRibbon category={doctor.category} />
-                            </Col>
-                            <Col className="p-0 flex-grow-0">
-                                <DoctorVerification doctor={doctor} />
-                            </Col>
-                        </Row>
-                        <Row className="m-0 gap-3 pb-1 pt-3 pt-md-1">
-                            {doctor.specialities.map((speciality: string) => (
-                                <Col className="p-0 m-0 flex-grow-0" key={speciality}>
-                                    <DoctorSpecialityRibbon speciality={speciality} />
+                        <Row className="w-100 m-0 p-0 gap-4">
+                            <Col className="p-0 d-flex flex-nowrap gap-1">
+                                <Col className="p-0 flex-grow-0">
+                                    <DoctorCategoryRibbon category={doctor.category} />
                                 </Col>
-                            ))}
+                                <Col className="p-0 flex-grow-0">
+                                    <DoctorVerification doctor={doctor} />
+                                </Col>
+                            </Col>
+                            <Col className="p-0 justify-content-end d-flex flex-nowrap gap-1">
+                                {doctor.specialities.map((speciality: string) => (
+                                    <DoctorSpecialityRibbon speciality={speciality} key={speciality} />
+                                ))}
+                            </Col>
                         </Row>
-                        <Row className="only-desktop p-0 m-0">
+                        <Row className="only-desktop p-0 m-0 gap-3">
                             <DoctorLocationSelector
                                 doctor={doctor}
                                 currentDoctorLocation={currentDoctorLocation}
                                 setCurrentDoctorLocation={setCurrentDoctorLocation}
                                 locationForDistanceCalculation={locationForDistanceCalculation}
                             />
+                            {currentDoctorLocation && <DoctorLocationCard 
+                                doctorLocation={currentDoctorLocation} 
+                                locationForDistanceCalculation={locationForDistanceCalculation}
+                                distanceUnit={distanceUnit}
+                            />}
                         </Row>
-                    </Row>
-                    <Row className="only-desktop p-0 m-0">
-                        {currentDoctorLocation && <DoctorLocationCard 
-                            doctorLocation={currentDoctorLocation} 
-                            locationForDistanceCalculation={locationForDistanceCalculation}
-                            distanceUnit={distanceUnit}
-                        />}
                     </Row>
                 </Col>
             </Row>

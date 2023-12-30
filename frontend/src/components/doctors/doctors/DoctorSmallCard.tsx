@@ -56,7 +56,7 @@ export default function DoctorSmallCard({
                                 />
                             )}
                         </Col>
-                        {1 < doctor.locations.length && <Col className="m-0 p-0 d-flex flex-nowrap circle bg-med-light-grey med-dark-grey xs-font px-1 flex-grow-0">
+                        {1 < doctor.locations.length && <Col className="m-0 p-0 d-flex flex-nowrap circle bg-med-light-grey med-dark-grey xxs-font px-1 flex-grow-0">
                             +{doctor.locations.length - 1}
                         </Col>}
                         <Col className="d-flex justify-content-end m-0 p-0">
