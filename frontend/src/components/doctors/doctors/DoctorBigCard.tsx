@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
+import { Helmet } from "react-helmet";
 
 import { Doctor, DoctorLocation, getDoctorReviews } from "../../../types/doctors/doctor";
 import { Location } from "../../../utils/googleMaps/useGoogleMaps";
@@ -47,6 +48,13 @@ function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation
     return (
         <Container className={`doctorBigCard`}>
             <BackButton />
+
+            <Helmet>
+                <meta property="og:title" content={`${doctor.fullName}, ${doctor.category}`} />
+                <meta name="og:description" content={`${doctor.fullName} in ${doctor.locations[0].shortAddress} is an ${doctor.category}, recommended by TheYellowHub community.`} />
+                <meta property="og:image" content="/images/logo.png" />
+            </Helmet>
+
             <Row className="flex-nowrap p-0 m-0">
                 <Col className="flex-grow-0 p-0 pe-1">
                     <DoctorImage doctor={doctor} />

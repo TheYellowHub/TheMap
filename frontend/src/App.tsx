@@ -2,6 +2,7 @@ import { Router } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { createBrowserHistory } from "history";
 import ReactGA from "react-ga4";
+import { Helmet } from "react-helmet";
 
 import AppRouter from "./AppRouter";
 import Header from "./components/utils/Header";
@@ -35,6 +36,11 @@ function App() {
             >
                 <GoogleMapsLoader>
                     <>
+                        <Helmet>
+                            <meta property="og:title" content="Endometriosis Providers Map | TheYellowHub" />
+                            <meta name="og:description" content="Community-sourced user friendly database. Find excision specialist and other endometriosis providers near you." />
+                            <meta property="og:image" content="/images/logo.png" />
+                        </Helmet>
                         <header>
                             <Header />
                         </header>

@@ -40,7 +40,7 @@ export const markerIcons: MarkerIcon[] = [
         title: "Excision Surgeon", 
         imgFileName: "default"
     },
-]
+];
 
 export function getMarkerIconDir(isDoctorSelected: boolean, isLocationSelected: boolean) {
     return isLocationSelected ? "selectedLocation" : isDoctorSelected ? "selectedDoctor" : "notSelected";

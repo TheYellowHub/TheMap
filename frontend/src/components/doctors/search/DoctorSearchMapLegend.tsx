@@ -1,7 +1,6 @@
-import { Fragment } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 
-import { getMarkerIconDir, getMarkerIconUrl, markerIcons } from "../../map/markerIcon"
+import { getMarkerIconDir, getMarkerIconUrl, markerIcons } from "../../map/markerIcon";
 import Icon from "../../utils/Icon";
 
 interface DoctorSearchMapLegendProps {
@@ -17,7 +16,7 @@ export default function DoctorSearchMapLegend({ onClick }: DoctorSearchMapLegend
         </Row>
     ));
 
-    return <Container className="gm-control-active-copy w-fit-content d-flex p-2">
+    return (<Container className="gm-control-active-copy w-fit-content d-flex p-2">
         <Row>
             <Col className="d-flex flex-column gap-1">
                 {legendItems}
@@ -26,5 +25,5 @@ export default function DoctorSearchMapLegend({ onClick }: DoctorSearchMapLegend
                 <Icon icon="fa-close"onClick={onClick} />
             </Col>
         </Row>
-    </Container>
+    </Container>);
 }
