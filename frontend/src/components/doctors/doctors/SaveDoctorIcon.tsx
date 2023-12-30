@@ -22,9 +22,10 @@ export default function SaveDoctorIcon({doctor, colClassName, iconClassName} : S
         <Tooltip text={tooltip}>
             <Col className={colClassName} xs="auto">
                 <Icon
-                icon="fa-bookmark fa-sm"
+                icon="fa-bookmark fa-sm fa-regular"
                 className={iconClassName}
                 solid={userInfo?.savedDoctors?.includes(doctor.id!) === true}
+                padding={false}
                 onClick={(e) => {
                     e.stopPropagation();
                     if (user && isAuthenticated) {

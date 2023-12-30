@@ -15,7 +15,7 @@ function Icon({ icon, solid = true, onClick, onMouseEnter, onMouseLeave, link, p
             <></>
         ) : (
             <i
-                className={`${solid ? "fa-solid" : "fa-regular"} ${icon} 
+                className={`${solid && !icon.includes("regular") && !icon.includes("light") ? "fa-solid" : ""} ${icon} 
                             ${padding ? "" : "p-0"} ${className} ${onClick !== undefined ? "pointer" : ""}`}
                 onClick={onClick}
                 onMouseEnter={onMouseEnter}

@@ -19,7 +19,7 @@ function DoctorLocationDistance({
 
     return (
         <Tooltip text={`${doctorLocation.longAddress ? "Navigate" : "No address"}`}>
-            <p className="med-grey p-0 m-0">
+            <p className="med-grey p-0 m-0 ps-3">
                     <a
                         href={`${
                             doctorLocation?.longAddress
@@ -29,10 +29,11 @@ function DoctorLocationDistance({
                         target="_blank"
                         rel="noreferrer"
                         onClick={(e) => e.stopPropagation()}
-                        className="a-only-hover-decoration"
+                        className="a-only-hover-decoration text-nowrap "
+                        style={{whiteSpace: "nowrap"}}
                     >
                             {distance && distance !== Infinity && <>{distance.toFixed(1)} {distanceUnit}</>}
-                            <Icon icon="fas fa-location-arrow ps-1" solid={false} />
+                            <Icon icon="fas fa-circle-location-arrow ps-2 pe-0" solid={false} />
                     </a>
             </p>
         </Tooltip>

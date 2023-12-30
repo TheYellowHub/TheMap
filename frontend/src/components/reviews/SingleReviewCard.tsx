@@ -121,7 +121,7 @@ function SingleReviewCard({ review, showDoctorName = false, showEditMessageInste
                 </Col>
                 <Col className="d-flex flex-column justify-content-end flex-grow-0 gap-3">
                     {showEditMessage && reviewEditableStatuses.includes(review.status) && <Button
-                            variant="primary"
+                            variant="secondary"
                             label="Edit Review"
                             type="button"
                             onClick={() => setEditingMode(true)}

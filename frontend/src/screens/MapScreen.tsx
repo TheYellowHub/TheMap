@@ -175,9 +175,9 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
     return (
         <LoadingWrapper isLoading={isListLoading} isError={isListError} error={listError as ResponseError} center={true}>
             <Container fluid>
-                {onlyMyList && currentDoctor === null && <BackButton className="only-mobile mx-2" />}
+                {onlyMyList && currentDoctor === null && <BackButton className="only-mobile-and-tablets mx-2" />}
                 <Row className={`d-flex mt-${currentDoctor === null ? "2" : "0"} mt-md-2 mb-0 flex-md-nowrap gap-md-3`}>
-                    {onlyMyList && matchedDoctorsIncludingDistance.length === 0 && <Col className={`mx-3 px-3`}>
+                    {onlyMyList && matchedDoctorsIncludingDistance.length === 0 && <Col className={`px-3`}>
                         <NoResults 
                             title="Saved providers"
                             icon="fa-user-doctor" 
@@ -189,9 +189,9 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
                         />
                     </Col>}
                     
-                    <Col className={`mx-3 px-3 ${onlyMyList && matchedDoctorsIncludingDistance.length === 0 ? "d-none" : ""}`} id={doctorsSearchColumnId}>
+                    <Col className={`px-3 ${onlyMyList && matchedDoctorsIncludingDistance.length === 0 ? "d-none" : ""}`} id={doctorsSearchColumnId}>
                         {onlyMyList && <Row className={`xl-font w-700 mb-3 justify-content-center ${currentDoctor ? "only-desktop" : ""}`}>Saved providers</Row>}
-                        <Row className={`pb-2 mb-2 ${currentDoctor ? "only-desktop" : ""}`}>
+                        <Row className={`mx-3 pb-2 mb-2 ${currentDoctor ? "only-desktop" : ""}`}>
                             <DoctorSearchFilters
                                 address={address}
                                 setAddress={setAddress}
@@ -230,9 +230,9 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
                             )}
                         </Row>
 
-                        {!currentDoctor && !onlyMyList && <Row className="d-flex pb-2 mb-2 gap-3">
-                            <Col className="p-0">
-                                <div className="med-dark-grey sm-font fst-italic d-inline">
+                        {!currentDoctor && !onlyMyList && <Row className="d-flex mx-2 pb-2 mb-2 gap-3">
+                            <Col className="m-0 p-0">
+                                <div className="m-0 p-0 med-dark-grey sm-font fst-italic d-inline">
                                     {matchedDoctorsIncludingDistance.length} results
                                     {address && distance && (
                                         <>
@@ -240,7 +240,7 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
                                         </>
                                     )}
                                 </div>
-                                <div className="px-2 med-dark-grey sm-font text-decoration-underline d-inline">
+                                <div className="m-0 p-0 px-2 med-dark-grey sm-font text-decoration-underline d-inline">
                                     {address && distance && (
                                         <a onClick={() => setDistance(distance + config.app.distanceJumps)} className="a-only-hover-decoration">
                                             Search larger area
@@ -250,7 +250,7 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
                             </Col>
                         </Row>}
 
-                        <Row className="py-md-2 my-md-2" id={doctorsSearchResultsId}>
+                        <Row className="px-0 mx-0 spy-md-2 my-md-2" id={doctorsSearchResultsId}>
                             {currentDoctor !== null || matchedDoctorsIncludingDistance.length > 0 ? (
                                 <DoctorSearchResults
                                     doctors={matchedDoctorsIncludingDistance}
@@ -280,7 +280,7 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
                     </Col>
                 </Row>
 
-                {<Container className={`mx-0 px-0 only-mobile doctors-map-below-results`} fluid>
+                {<Container className={`mx-0 px-0 only-mobile-and-tablets doctors-map-below-results`} fluid>
                     <Row className={`mx-0 px-0 ${currentDoctor === null ? "" : "d-none"}`}>
                         <Col className="mx-0 px-0 d-flex justify-content-end">
                             <Button onClick={() => setMapIsOpen(!mapIsOpen)} label={`${mapIsOpen ? "Hide" : "Show"} Map`} icon="fa-location-dot" className="btn-map" />

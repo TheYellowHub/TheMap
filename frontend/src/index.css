@@ -32,6 +32,7 @@
     --main-padding-top: calc(var(--header-height) + var(--layout-padding-y));
     --main-part-height: calc(var(--main-height) - var(--main-padding-top) - 0.5rem);
     --dark-grey: #333;
+    --med-dark-grey-2: #504745;
     --med-dark-grey: #6a6a6a;
     --med-grey: #989898;
     --med-light-grey: #e7e7e7;
@@ -163,6 +164,24 @@
 
 /* Icons */
 
+.fa-globe,
+.fa-phone,
+.fa-hospital {
+    font-family: "Font Awesome 6 Pro";
+}
+
+/* .fa-hospital::before {
+    content: "\f0f8";
+    font-family: "Font Awesome 6 Pro";
+    font-weight: 300;
+} */
+
+.fa-circle-location-arrow::before {
+    content: "\f602";
+    font-family: "Font Awesome 6 Pro";
+    font-weight: 300;
+}
+
 .fa-location-dot::before {
     content: "\f3c5";
     font-family: "Font Awesome 6 Pro";
@@ -230,7 +249,7 @@
     box-sizing: border-box !important;
     scroll-margin-top: var(--header-height);
     scroll-behavior: auto !important;
-    letter-spacing: normal;
+    /* letter-spacing: normal; */
 }
 
 .overflow-y-auto-hover *,
@@ -325,8 +344,9 @@ a.a-no-decoration-line {
 
 a:hover, a:not([href]):not([class]):hover,
 a.a-only-hover-decoration:hover {
-    color: var(--med-blue);
+    color: var(--med-blue) !important;
     text-decoration: underline;
+    font-weight: 500;
 }
 
 a:hover i, a:not([href]):not([class]) i {
@@ -793,6 +813,7 @@ td {
 .btn-no-colors:hover,
 .btn-no-colors:active,
 .btn-no-colors:disabled {
+    padding: 0 !important;
     background: white;
     border-color: white !important;
 }
@@ -1262,7 +1283,7 @@ div:has(.small-address-filter) {
 }
 
 .doctor-small-card {
-    max-width: 22rem;
+    width: 22rem;
 }
 
 .doctor-big-card {
@@ -1275,15 +1296,6 @@ div:has(.small-address-filter) {
     padding: 0 1rem;
 }
 
-.doctor-big-card .doctor-location .btn {
-    word-break: break-all;
-    overflow: hidden;
-    display: -webkit-box;
-    line-clamp: 1;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-}
-
 .doctor-category {
     padding: 2px 8px 2px 8px;
     display: flex;
@@ -1292,6 +1304,7 @@ div:has(.small-address-filter) {
     background: var(--light-yellow);
     font-size: 0.75rem;
     height: 22px;
+    color: var(--med-dark-grey-2) !important;
 }
 
 .doctor-speciality {
@@ -1315,15 +1328,43 @@ div:has(.small-address-filter) {
     filter: grayscale(0%);
 }
 
+
+.doctor-big-card .doctor-location-contact {
+    display: inline-block;
+    min-width: 260px;
+    max-width: 260px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: left;
+}
+
 .doctor-big-card .doctor-address,
-.doctor-big-card .doctor-address * {
+.doctor-big-card .doctor-address *,
+.doctor-big-card .doctor-location .btn {
     font-size: 0.875rem;
+}
+
+.doctor-big-card .doctor-address,
+.doctor-big-card .doctor-address *,
+.doctor-big-card .doctor-address i,
+.doctor-location-btn-selected,
+.doctor-big-card .doctor-location .btn {
+    color: var(--med-dark-grey);
 }
 
 .doctor-small-card .doctor-address,
 .doctor-small-card .doctor-address *,
 .doctor-small-card .star-rating * {
     font-size: 0.75rem;
+    max-width: 10rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.doctor-small-card .doctor-address,
+.doctor-small-card .doctor-address * {
+    color: var(--med-dark-grey-2) !important;
 }
 
 .doctor-small-card .star-rating i {
@@ -1341,7 +1382,7 @@ div:has(.small-address-filter) {
     border-radius: 0;
     border-bottom: 1px solid var(--light-grey);
     gap: 0.75rem;
-    padding: 0.25rem 0.75rem 0.25rem 0.75rem !important;
+    padding: 0.25rem 0.75rem 0.2rem 0.75rem !important;
     width: fit-content;
 }
 
@@ -1372,12 +1413,15 @@ div:has(.small-address-filter) {
 /* Desktop */
 
 @media (min-width: 1024px)  { 
-    .only-mobile {
-        display: none;
-    }
-    
+    .only-mobile-and-tablets,
+    .only-mobile-and-tablets *,
+    .only-mobile,
     .only-mobile * {
         display: none;
+    }
+
+    .ps-2-desktop {
+        padding-left: 8px !important;
     }
 
     .w-70-desktop {
@@ -1388,20 +1432,12 @@ div:has(.small-address-filter) {
         max-width: 50%;
     }
 
-    .doctor-big-card {
-        box-shadow: 5px 5px 12px 2px rgba(120, 120, 120, 0.25), 0px 4px 20px 3px rgba(65, 65, 65, 0.25);
-    }
-
     .doctor-small-card {
         border: 1.5px solid transparent;
     }
 
     .doctor-small-card:hover {
         background-color: #F8F8F8 !important;
-    }
-
-    .h-doctorBigCardImg {
-        height: 11.0625rem;
     }
 
     .doctor-small-card .h-doctor-image,
@@ -1429,6 +1465,17 @@ div:has(.small-address-filter) {
         --logo-max-height: 2rem;
     }
 
+    .only-desktop,
+    .only-desktop *,
+    .only-mobile,
+    .only-mobile * {
+        display: none;
+    }
+
+    .w-mobile-100 {
+        width: 100% !important;
+    }
+
     .footer {
         height: var(--footer-height-mobile);
         min-height: var(--footer-height-mobile);
@@ -1444,15 +1491,7 @@ div:has(.small-address-filter) {
         font-size: 0.6rem;
     }
 
-    .only-desktop {
-        display: none;
-    }
-
-    .only-desktop * {
-        display: none; 
-    }
-
-    .gap-3 {
+    /* .gap-3 {
         gap: 0.6rem !important
     }
 
@@ -1478,7 +1517,7 @@ div:has(.small-address-filter) {
 
     .py-3, .pb-3 {
         padding-bottom: 0.5rem !important;
-    }
+    } */
 
     .navbar-collapse,
     .navbar-nav {
@@ -1499,7 +1538,7 @@ div:has(.small-address-filter) {
         padding: 0rem !important;
     }
 
-    .doctorBigCard
+    .doctor-big-card .doctor-image,
     .doctor-small-card .h-doctor-image,
     .doctor-small-card .doctor-image {
         height: 125px;
@@ -1515,5 +1554,27 @@ div:has(.small-address-filter) {
         width: auto;
         padding: 0.375rem 1rem;
         margin: 0;
+    }
+}
+
+/* Mobile */
+
+@media (max-width: 576px)  { 
+    .only-mobile,
+    .only-mobile * {
+        display: unset;
+    }
+
+    .only-desktop,
+    .only-desktop *,
+    .only-tablets-and-desktop,
+    .only-tablets-and-desktop * {
+        display: none;
+    }
+    
+    .doctor-big-card .doctor-location-contact {
+        /* display: block; */
+        min-width: 90%;
+        max-width: 90%;
     }
 }

@@ -23,6 +23,8 @@ import ReportIssueModal from "../../issues/ReportIssueModal";
 import { sameUser } from "../../../auth/userInfo";
 import Tooltip from "../../utils/Tooltip";
 import { getCurrentUrl } from "../../../utils/utils";
+import Line from "../../utils/Line";
+import Button from "../../utils/Button";
 
 interface DoctorBigCardProps {
     doctor: Doctor;
@@ -47,7 +49,7 @@ function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation
     }, [addingReview]);
 
     return (
-        <Container className={`doctor-big-card`}>
+        <Container className={`doctor-big-card d-flex flex-column gap-4`}>
             <BackButton />
 
             <Helmet>
@@ -61,20 +63,20 @@ function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation
                 <Col className="flex-grow-0 p-0 m-0">
                     <DoctorImage doctor={doctor} />
                 </Col>
-                <Col className="d-grid m-0 p-0 gap-3">
+                <Col className="d-flex flex-column m-0 p-0 gap-3">
                     <Row className="d-flex m-0 p-0 gap-3">
                         <Row className="w-100 m-0 p-0">
                             <Col className="px-0 font-assistant lg-font">{doctor.fullName}</Col>
-                            <Col className="px-0 d-flex flex-grow-0 flex-nowrap gap-2">
+                            <Col className="px-0 d-flex flex-grow-0 flex-nowrap">
                                 <ReportIssueModal doctor={doctor} show={reportingIssue} onHide={() => setReportingIssue(false)} />
-                                <Tooltip text="Report an issue" className="only-desktop">
-                                    <Col className="px-0 d-flex justify-content-end" sm="auto">
-                                        <Icon icon="fa-message-exclamation fa-sm" onClick={() => user ? setReportingIssue(true) : login()} padding={false}/>
+                                <Tooltip text="Report an issue" className="only-tablets-and-desktop">
+                                    <Col className="px-0 ps-2 d-flex justify-content-end" sm="auto">
+                                        <Icon icon="fa-message-exclamation fa-xs" onClick={() => user ? setReportingIssue(true) : login()} padding={false}/>
                                     </Col>
                                 </Tooltip>
-                                <SaveDoctorIcon doctor={doctor} colClassName="px-0 d-flex justify-content-end" iconClassName="fa-sm" />
-                                <Tooltip text="Close">
-                                    <Col className="px-0 d-flex justify-content-end" sm="auto">
+                                <SaveDoctorIcon doctor={doctor} colClassName="px-0 ps-2 d-flex justify-content-end" iconClassName="fa-sm" />
+                                <Tooltip text="Close" className="px-0 d-flex justify-content-end only-desktop">
+                                    <Col className="px-0 ps-2-desktop d-flex justify-content-end only-desktop" sm="auto">
                                         <Icon icon="fa-minus fa-sm" onClick={onClose} className="only-desktop" padding={false}/>
                                     </Col>
                                 </Tooltip>
@@ -95,13 +97,13 @@ function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation
                                 ))}
                             </Col>
                         </Row>
-                        <Row className="only-desktop p-0 m-0 gap-3">
+                        <Row className="only-tablets-and-desktop p-0 m-0 gap-3">
                             <DoctorLocationSelector
                                 doctor={doctor}
                                 currentDoctorLocation={currentDoctorLocation}
                                 setCurrentDoctorLocation={setCurrentDoctorLocation}
                                 locationForDistanceCalculation={locationForDistanceCalculation}
-                            />
+                            />    
                             {currentDoctorLocation && <DoctorLocationCard 
                                 doctorLocation={currentDoctorLocation} 
                                 locationForDistanceCalculation={locationForDistanceCalculation}
@@ -112,7 +114,11 @@ function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation
                 </Col>
             </Row>
 
-            <Row className="only-mobile m-0 p-0 pt-3">
+            <Row className="m-0 p-0 only-tablets-and-desktop">
+                <Line />
+            </Row>
+
+            <Row className="only-mobile m-0 p-0 d-flex flex-column gap-4">
                 <DoctorLocationSelector
                     doctor={doctor}
                     currentDoctorLocation={currentDoctorLocation}
@@ -127,25 +133,22 @@ function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation
                 />}
             </Row>
 
-            <Row className="m-0 p-0 pt-3">
-                <Col className="m-0 p-0">
-                    <img src="/images/line.png" className="only-desktop" width="100%" />
-                    <Row className="mx-0 py-3">
-                        <Col className="p-0 m-0" xs="auto">
+            <Row className="m-0 p-0 gap-4">
+                <Col className="d-flex flex-column m-0 p-0 gap-4">
+                    <Row className="m-0 p-0 w-100">
+                        <Col className="p-0 m-0 d-flex align-items-center">
                             {doctor.avgRating && doctor.numOfReviews && (
                                 <Rating averageRating={doctor.avgRating} totalReviews={doctor.numOfReviews} />
                             )}
                         </Col>
-
                         <Col className="px-0 d-flex justify-content-end">
                             {!addingReview && !(0 < userReviews?.filter((review) => review.status !== "DELETED").length) && (
-                                <a
+                                <Button
+                                    label="Add a review"
+                                    icon="fa-plus"
                                     onClick={() => userInfo ? setAddingReview(true) : login()}
                                     className="inherit-font-style a-no-decoration-line"
-                                >
-                                    <Icon icon="fa-plus" />
-                                    Add a review
-                                </a>
+                                />
                             )}
                         </Col>
                     </Row>

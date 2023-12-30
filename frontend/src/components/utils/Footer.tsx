@@ -75,7 +75,7 @@ function Footer() {
     }, [scrollDir]);
 
     const tyhDiv = (<div className="footer-content">
-        <Icon icon="fa-copyright" solid={false} />
+        <Icon icon="fa-copyright" solid={true} />
         2024 Community-sourced by <Link to="https://www.theyellowhub.org/">TYH</Link>
     </div>);
 
@@ -98,8 +98,8 @@ function Footer() {
                     {developerDiv}
                 </Col>
             </Row>
-            <Row className={`footer ${displayFooterOnMobile ? "only-mobile" : "d-none"}`}>
-                <Col className="text-center only-mobile">
+            <Row className={`footer ${displayFooterOnMobile ? "only-mobile-and-tablets" : "d-none"}`}>
+                <Col className="text-center only-mobile-and-tablets">
                     {tyhDiv}
                     {developerDiv}
                 </Col>
