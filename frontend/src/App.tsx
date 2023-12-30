@@ -36,11 +36,6 @@ function App() {
             >
                 <GoogleMapsLoader>
                     <>
-                        <Helmet>
-                            <meta property="og:title" content="Endometriosis Providers Map | TheYellowHub" />
-                            <meta name="og:description" content="Community-sourced user friendly database. Find excision specialist and other endometriosis providers near you." />
-                            <meta property="og:image" content="/images/logo.png" />
-                        </Helmet>
                         <header>
                             <Header />
                         </header>
