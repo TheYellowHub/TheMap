@@ -4,6 +4,7 @@ type MarkerIcon = {
     predicate: (doctor: Doctor) => boolean,
     title: string,
     imgFileName: string; 
+    order?: number;
 };
 
 const doctorHasCategory = (categoryKey: RegExp) => 
@@ -38,7 +39,8 @@ export const markerIcons: MarkerIcon[] = [
     {
         predicate: doctorHasCategory(/.*surgeon.*/), 
         title: "Excision Surgeon", 
-        imgFileName: "default"
+        imgFileName: "default",
+        order: 1
     },
 ];
 

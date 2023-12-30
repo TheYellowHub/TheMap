@@ -98,10 +98,10 @@ export default function DoctorSearchMap({
                 <div className="above-map legend d-flex justify-content-end">
                    
                         {legendIsOpen 
-                            ?  <div className="gm-control-active-copy w-fit-content d-flex justify-content-center align-items-center"> 
-                                    <Icon icon="fa-circle-info" onClick={() => setLegendIsOpen(false)} />
+                            ? <DoctorSearchMapLegend markers={markers} onClick={() => setLegendIsOpen(false)} />
+                            :  <div className="gm-control-active-copy w-fit-content d-flex justify-content-center align-items-center"> 
+                                    <Icon icon="fa-circle-info" onClick={() => setLegendIsOpen(true)} />
                                </div>
-                            : <DoctorSearchMapLegend onClick={() => setLegendIsOpen(true)} />
                         }
                 </div>
             </GoogleMap>
