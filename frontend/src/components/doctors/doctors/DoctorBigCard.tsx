@@ -50,9 +50,9 @@ function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation
             <BackButton />
 
             <Helmet>
-                <meta property="og:title" content={`${doctor.fullName}, ${doctor.category}`} />
-                <meta name="og:description" content={`${doctor.fullName} in ${doctor.locations[0].shortAddress} is an ${doctor.category}, recommended by TheYellowHub community.`} />
-                <meta property="og:image" content="/images/logo.png" />
+                <meta property="title" content={`${doctor.fullName}, ${doctor.category}`} />
+                <meta name="description" content={`${doctor.fullName} in ${doctor.locations[0].shortAddress} is an ${doctor.category}, recommended by TheYellowHub community.`} />
+                <meta property="image" content="/images/logo.png" />
             </Helmet>
 
             <Row className="flex-nowrap p-0 m-0">
