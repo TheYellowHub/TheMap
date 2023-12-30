@@ -22,7 +22,7 @@ function DoctorLocationSelector({ doctor, currentDoctorLocation, setCurrentDocto
     }, [doctor]);
 
     return (
-        <Row className={`p-0 m-0 gap-0 py-1 doctor-location ${className}`}>
+        <Row className={`p-0 m-0 gap-0 py-1 doctor-location ${className} d-flex`}>
             {doctor.locations.map((location, index) => {
                 const isSameLocation = currentDoctorLocation && sameLocation(location, currentDoctorLocation);
                 return (<Button
