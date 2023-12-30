@@ -76,7 +76,7 @@ function Footer() {
 
     const tyhDiv = (<div className="footer-content">
         <Icon icon="fa-copyright" solid={false} />
-        2024 Community-sourced by <Link to="https://www.theyellowhub.org/">TheYellowHub.org</Link>
+        2024 Community-sourced by <Link to="https://www.theyellowhub.org/">TYH</Link>
     </div>);
 
     const developerDiv = (<div className="footer-content-smaller">
