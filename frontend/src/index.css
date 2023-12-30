@@ -1555,6 +1555,10 @@ div:has(.small-address-filter) {
         padding: 0.375rem 1rem;
         margin: 0;
     }
+
+    .w-100-mobile {
+        width: 100%;
+    }
 }
 
 /* Mobile */
@@ -1570,10 +1574,6 @@ div:has(.small-address-filter) {
     .only-tablets-and-desktop,
     .only-tablets-and-desktop * {
         display: none;
-    }
-
-    .w-100-mobile {
-        width: 100%;
     }
     
     .doctor-big-card .doctor-location-contact {
