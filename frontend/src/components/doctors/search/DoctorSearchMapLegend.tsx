@@ -23,7 +23,7 @@ export default function DoctorSearchMapLegend({ markers, onClick }: DoctorSearch
     ));   
 
     return (<Container className="gm-control-active-copy w-fit-content d-flex p-2">
-        <Row>
+        <Row className="d-flex flex-nowrap">
             <Col className="d-flex flex-column gap-1">
                 {legendItems}
             </Col>
