@@ -76,7 +76,7 @@ export default function ReportIssueModal({ doctor, show, onHide }: ReportIssueMo
                 </Modal.Body>
                 <Modal.Body><Form ref={formRef}>
                         <Row>
-                            <Col className="d-flex justify-content-center my-3">
+                            <Col className="d-flex justify-content-center my-3 px-1 px-md-4">
                                 <Form.Control
                                     as={"textarea"}
                                     value={issueDescription}

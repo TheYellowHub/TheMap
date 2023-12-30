@@ -34,6 +34,7 @@
     --dark-grey: #333;
     --med-dark-grey: #6a6a6a;
     --med-grey: #989898;
+    --med-light-grey: #e7e7e7;
     --light-grey: #d6d6d6;
     --very-light-grey: #f8f9fa;
     --dark-yellow: #97750b;
@@ -108,6 +109,10 @@
     background: var(--very-light-yellow);
 }
 
+.bg-med-light-grey {
+    background: var(--med-light-grey);
+}
+
 /* Font family */
 
 .font-assistant {
@@ -151,6 +156,12 @@
 }
 
 /* Icons */
+
+.fa-location-dot::before {
+    content: "\f3c5";
+    font-family: "Font Awesome 6 Pro";
+    font-weight: 300;
+}
 
 .fa-scalpel::before {
     content: "\f61d";
@@ -414,6 +425,10 @@ a.a-no-decoration-line:hover {
 
 .column-gap-10p {
     column-gap: 10%;
+}
+
+.gray-circle {
+    border-radius: 100px;
 }
 
 /* Scrollbar */
@@ -921,6 +936,10 @@ input[type="checkbox"] {
     border-radius: 0.625rem !important;
 }
 
+.circle {
+    border-radius: 100px;;
+}
+
 /* react-datetime */
 
 .react-datetime-picker,
@@ -1235,54 +1254,13 @@ div:has(.small-address-filter) {
     min-height: 8.875rem;
 }
 
-.doctorSmallCard {
+.doctor-small-card {
     max-width: 22rem;
 }
 
 .doctorBigCard {
     width: 100% !important;
     padding: 1.8rem 1.5rem !important;
-}
-
-.doctor-image {
-    width: 7.125rem;
-    height: 100%;
-    border-radius: 0.25rem;
-    object-fit: cover;
-    padding: 0;
-}
-
-.doctorTinyCard .doctor-image {
-    width: 3.4rem;
-}
-
-.doctorBigCard .doctor-image {
-    width: 8.875rem;
-    height: 11.0625rem;
-}
-
-.doctorBigCardName,
-.doctorSmallCardName {
-    font-family: "Assistant", sans-serif;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 1.25rem;
-}
-
-.doctorSmallCardName {
-    font-size: 1rem;
-}
-
-.doctorBigCardName {
-    font-size: 1.5rem;
-}
-
-.doctorSmallCardName {
-    overflow: hidden;
-    display: -webkit-box;
-    line-clamp: 1;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
 }
 
 .doctorBigCard .btn {
@@ -1299,68 +1277,28 @@ div:has(.small-address-filter) {
     -webkit-box-orient: vertical;
 }
 
-.doctorCategoryRibbon {
-    padding-left: 0.25rem;
-    padding-right: 1rem;
-    width: fit-content;
-    overflow: hidden;
-    max-width: 100%;
-    background: var(--med-yellow);
-    clip-path: polygon(
-        0% 0%,
-        100% 0%,
-        calc(100% - 11px) 50%,
-        100% 100%,
-        0% 100%
-    );
+.doctor-category {
+    padding: 2px 8px 2px 8px;
+    border-radius: 100px;
+    background: var(--light-yellow);
+    font-size: 0.75rem;
 }
 
-.doctorSmallCard .doctorCategoryRibbon {
-    font-size: 0.875rem;
-    height: 1.3125rem;
-    line-height: 1.3125rem;
-}
+.doctor-speciality {
+    padding: 2px, 8px, 2px, 8px;
+    border-radius: 100px;
+    gap: 10px;
+    background: var(--light-yellow);
 
-.doctorBigCard .doctorCategoryRibbon {
-    font-size: 1rem;
-    height: 1.5rem;
-    line-height: 1.5rem;
-}
-
-.doctorSpecialityRibbon {
-    font-size: 1rem;
-}
-
-.doctorEmptyCategory {
-    padding-left: 0.25rem;
-    padding-right: 2rem;
-    width: 160px;
-    height: 21px;
 }
 
 .verification img {
+    height: 100% !important;
     filter: grayscale(100%);
 }
 
 .verification img:hover {
     filter: grayscale(0%);
-}
-
-.doctorTinyCard .verification img,
-.doctorSmallCard .verification img {
-    height: 0.84156rem;
-}
-
-.doctorBigCard .verification img {
-    height: 1.5rem;
-}
-
-.doctor-address p {
-    overflow: hidden;
-    display: -webkit-box;
-    line-clamp: 2;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
 }
 
 .doctorBigCard .doctor-address * {
@@ -1372,9 +1310,14 @@ div:has(.small-address-filter) {
     font-size: 0.875rem;
 }
 
-.star-rating i {
+.doctor-small-card .doctor-address,
+.doctor-small-card .doctor-address *,
+.doctor-small-card .star-rating * {
+    font-size: 0.75rem;
+}
+
+.doctor-small-card .star-rating i {
     font-size: 0.625rem;
-    vertical-align: top;
 }
 
 /* Doctor's location */
@@ -1422,6 +1365,12 @@ div:has(.small-address-filter) {
     text-transform: uppercase;
 }
 
+.doctor-image {
+    border-radius: 0.25rem;
+    object-fit: cover;
+    padding: 0;
+}
+
 /* Desktop */
 
 @media (min-width: 1024px)  { 
@@ -1445,17 +1394,32 @@ div:has(.small-address-filter) {
         box-shadow: 5px 5px 12px 2px rgba(120, 120, 120, 0.25), 0px 4px 20px 3px rgba(65, 65, 65, 0.25);
     }
 
-    .doctorSmallCard {
+    .doctor-small-card {
         border: 1.5px solid transparent;
     }
 
-    .doctorSmallCard:hover {
-        border-radius: 4px;
-        border: 1.5px solid var(--dark-blue);
+    .doctor-small-card:hover {
+        background-color: #F8F8F8 !important;
     }
 
     .h-doctorBigCardImg {
         height: 11.0625rem;
+    }
+
+    .doctor-small-card .h-doctor-image,
+    .doctor-small-card .doctor-image {
+        height: 125px;
+        width: 100px;
+    }
+
+    .doctor-tiny-card .doctor-image {
+        height: 67px;
+        width: 54px;
+    }
+
+    .doctorBigCard .doctor-image {
+        height: 178px;
+        width: 142px;
     }
 }
 
@@ -1540,14 +1504,17 @@ div:has(.small-address-filter) {
     .doctorBigCardName {
         font-size: 1.2rem;
     }
-    
-    .doctorSmallCard .doctor-image,
-    .doctorBigCard .doctor-image {
-        width: 5.875rem;
+
+    .doctorBigCard
+    .doctor-small-card .h-doctor-image,
+    .doctor-small-card .doctor-image {
+        height: 125px;
+        width: 100px;
     }
 
-    .doctorBigCard .doctor-image {
-        height: 7.323rem;
+    .doctor-tiny-card .doctor-image {
+        height: 67px;
+        width: 54px;
     }
 
     .alert {

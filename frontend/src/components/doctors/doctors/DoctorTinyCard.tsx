@@ -10,7 +10,7 @@ interface DoctorTinyCardProps {
     onClick: (() => void) | undefined;
 }
 
-export const doctorTinyCardClassName = "doctorTinyCard";
+export const doctorTinyCardClassName = "doctor-tiny-card";
 
 export default function DoctorTinyCard({
     doctor,
@@ -18,11 +18,11 @@ export default function DoctorTinyCard({
 }: DoctorTinyCardProps) {
     return (
         <Container className={`${doctorTinyCardClassName} mx-0 px-0 ${onClick && "pointer"} w-fit-content`} onClick={onClick} fluid>
-            <Row className="flex-nowrap">
-                <Col className="flex-grow-0 pe-1">
+            <Row className="flex-nowrap gap-3">
+                <Col className="flex-grow-0 p-0 m-0">
                     <DoctorImage doctor={doctor} />
                 </Col>
-                <Col className="d-grid px-2 py-1 gap-2 align-content-between">
+                <Col className="d-grid p-0 m-2 gap-2 align-content-between">
                     <Row className="w-100 m-0 pe-1">
                         <Col className="px-0 doctorSmallCardName font-assistant lg-font w-fit-content">{doctor.fullName}</Col>
                     </Row>
