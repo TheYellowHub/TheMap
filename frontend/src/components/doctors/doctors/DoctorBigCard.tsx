@@ -135,7 +135,7 @@ function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation
 
             <Row className="m-0 p-0 gap-4">
                 <Col className="d-flex flex-column m-0 p-0 gap-4">
-                    <Row className="m-0 p-0 w-100">
+                    <Row className="m-0 p-0 w-100 d-flex gap-3">
                         <Col className="p-0 m-0 d-flex align-items-center">
                             {doctor.avgRating && doctor.numOfReviews && (
                                 <Rating averageRating={doctor.avgRating} totalReviews={doctor.numOfReviews} />
@@ -147,7 +147,7 @@ function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation
                                     label="Add a review"
                                     icon="fa-plus"
                                     onClick={() => userInfo ? setAddingReview(true) : login()}
-                                    className="inherit-font-style a-no-decoration-line"
+                                    className="inherit-font-style a-no-decoration-line w-100-mobile"
                                 />
                             )}
                         </Col>
@@ -171,7 +171,7 @@ function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation
                         {allReviews
                             .filter((review) => review.status === "APPROVED" && !sameUser(review.addedBy, userInfo))
                             .map((review) => (
-                                <Row key={review.id!} className="m-0 p-0 pt-4">
+                                <Row key={review.id!} className="m-0 p-0">
                                     <SingleReviewCard review={review} />
                                 </Row>
                             ))}

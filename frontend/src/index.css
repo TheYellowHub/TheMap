@@ -1571,9 +1571,12 @@ div:has(.small-address-filter) {
     .only-tablets-and-desktop * {
         display: none;
     }
+
+    .w-100-mobile {
+        width: 100%;
+    }
     
     .doctor-big-card .doctor-location-contact {
-        /* display: block; */
         min-width: 90%;
         max-width: 90%;
     }
