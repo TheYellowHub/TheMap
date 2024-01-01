@@ -91,7 +91,7 @@ function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation
                                     <DoctorVerification doctor={doctor} />
                                 </Col>
                             </Col>
-                            <Col className="p-0 d-flex flex-nowrap gap-1">
+                            <Col className="p-0 d-flex flex-nowrap gap-1 flex-grow-0">
                                 {doctor.specialities.map((speciality: string) => (
                                     <DoctorSpecialityRibbon speciality={speciality} key={speciality} />
                                 ))}
