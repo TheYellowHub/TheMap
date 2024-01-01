@@ -63,7 +63,7 @@ def prepare_fixtures(doctors_raw_data: List) -> tuple[List[dict], List[dict]]:
                     "doctor": doctor_id,
                     "hospital_name": doctor_data["Hospital"],
                     "long_address": doctor_data["Address"],
-                    "short_address": doctor_data["City,State"],
+                    "short_address": doctor_data["City, State"],
                     "lat": float(doctor_data["Lat"]),
                     "lng": float(doctor_data["Long"]),
                     "phone": doctor_data["Phone"],
