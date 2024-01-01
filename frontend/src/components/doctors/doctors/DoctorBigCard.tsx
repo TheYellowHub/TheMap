@@ -71,7 +71,7 @@ function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation
                                 <ReportIssueModal doctor={doctor} show={reportingIssue} onHide={() => setReportingIssue(false)} />
                                 <Tooltip text="Report an issue" className="only-tablets-and-desktop">
                                     <Col className="px-0 ps-2 d-flex justify-content-end" sm="auto">
-                                        <Icon icon="fa-message-exclamation fa-xs" onClick={() => user ? setReportingIssue(true) : login()} padding={false}/>
+                                        <Icon icon="fa-message-exclamation fa-sm" onClick={() => user ? setReportingIssue(true) : login()} padding={false}/>
                                     </Col>
                                 </Tooltip>
                                 <SaveDoctorIcon doctor={doctor} colClassName="px-0 ps-2 d-flex justify-content-end" iconClassName="fa-sm" />
