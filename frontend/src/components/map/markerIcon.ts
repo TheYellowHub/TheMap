@@ -8,11 +8,11 @@ type MarkerIcon = {
 };
 
 const doctorHasCategory = (categoryKey: RegExp) => 
-    (doctor: Doctor) => doctor.category !== undefined && categoryKey.test(doctor.category.toLowerCase());
+    (doctor: Doctor) => doctor.category ? categoryKey.test(doctor.category.toLowerCase()) : false;
 
 export const markerIcons: MarkerIcon[] = [
     {
-        predicate: (doctor: Doctor) => doctor.iCareBetter !== undefined && doctor.iCareBetter !== "", 
+        predicate: (doctor: Doctor) => doctor.iCareBetter ? doctor.iCareBetter !== "" : false, 
         title: "icarebetter Vetted", 
         imgFileName: "icb"
     },

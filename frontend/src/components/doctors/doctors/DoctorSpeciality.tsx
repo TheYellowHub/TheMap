@@ -1,5 +1,3 @@
-import Icon from "../../utils/Icon";
-
 interface DoctorSpecialityProps {
     speciality?: string;
 }

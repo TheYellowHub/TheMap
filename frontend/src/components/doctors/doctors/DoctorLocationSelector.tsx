@@ -40,7 +40,7 @@ function DoctorLocationSelector({ doctor, currentDoctorLocation, setCurrentDocto
                             {currentDoctorLocation && sameLocation(location, currentDoctorLocation) ? "private" : "p"}
                         </p>
                     )}
-                </Button>)
+                </Button>);
             })}
         </Row>
     );

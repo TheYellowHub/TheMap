@@ -25,7 +25,7 @@ function DoctorLocationCard({ doctorLocation, locationForDistanceCalculation, di
                     icon="fa-hospital fa-light"
                 />
             </Row>
-            <Line />
+            {(doctorLocation.website || doctorLocation.phone || doctorLocation.email) && <Line />}
             <Row className="m-0 column-gap-5 py-1">
                 {doctorLocation.website && (<Col className="px-0">
                     <Button
