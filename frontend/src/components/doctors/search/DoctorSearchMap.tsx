@@ -91,7 +91,7 @@ export default function DoctorSearchMap({
                 getGroupIcon={getGroupMarkerIcon}
             >  
                 <div className="above-map add-doctor">
-                    <a href="https://urlzs.com/bVdAh" target="_blank" rel="noreferrer">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLScXkk35fRFrQ34IAZGwdkXw0Q4Y-66figgCQaYJOVyesMqY-w/viewform?usp=sf_link" target="_blank" rel="noreferrer">
                         <Button variant="primary" label="Recommend a doctor"></Button>
                     </a>
                 </div>
