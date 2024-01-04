@@ -45,7 +45,9 @@ function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation
     const addingReviewContainerId = "adding-review-container";
 
     useEffect(() => {
-        document.getElementById(addingReviewContainerId)?.scrollIntoView();
+        if (addingReview) {
+            document.getElementById(addingReviewContainerId)?.scrollIntoView();
+        }
     }, [addingReview]);
 
     return (
