@@ -52,7 +52,7 @@ function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation
 
     return (
         <Container className={`doctor-big-card d-flex flex-column gap-4`}>
-            <BackButton />
+            <BackButton className="mb-0" />
 
             <Helmet>
                 <meta property="og:url" content={getCurrentUrl()} />
@@ -138,18 +138,16 @@ function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation
             <Row className="m-0 p-0 gap-4">
                 <Col className="d-flex flex-column m-0 p-0 gap-4">
                     <Row className="m-0 p-0 w-100 d-flex gap-3">
-                        <Col className="p-0 m-0 d-flex align-items-center">
-                            {doctor.avgRating && doctor.numOfReviews && (
-                                <Rating averageRating={doctor.avgRating} totalReviews={doctor.numOfReviews} />
-                            )}
-                        </Col>
+                        {doctor.avgRating && doctor.numOfReviews && <Col className="p-0 m-0 d-flex align-items-center">
+                            <Rating averageRating={doctor.avgRating} totalReviews={doctor.numOfReviews} />
+                        </Col>}
                         <Col className="px-0 d-flex justify-content-end">
                             {!addingReview && !(0 < userReviews?.filter((review) => review.status !== "DELETED").length) && (
                                 <Button
                                     label="Add a review"
                                     icon="fa-plus"
                                     onClick={() => userInfo ? setAddingReview(true) : login()}
-                                    className="inherit-font-style a-no-decoration-line w-100-mobile"
+                                    className="inherit-font-style a-no-decoration-line w-100vw-mobile"
                                 />
                             )}
                         </Col>

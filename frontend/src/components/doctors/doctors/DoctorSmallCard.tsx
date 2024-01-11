@@ -59,7 +59,7 @@ export default function DoctorSmallCard({
                         {1 < doctor.locations.length && <Col className="m-0 p-0 d-flex flex-nowrap circle bg-med-light-grey med-dark-grey xxs-font px-1 flex-grow-0">
                             +{doctor.locations.length - 1}
                         </Col>}
-                        <Col className="d-flex justify-content-end m-0 p-0">
+                        <Col className="d-flex justify-content-end m-0 p-0 med-dark-grey">
                             {doctor.avgRating && doctor.numOfReviews && (
                                 <Rating averageRating={doctor.avgRating} totalReviews={undefined} shorterFormat={true} />
                             )}

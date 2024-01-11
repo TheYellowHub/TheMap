@@ -23,8 +23,8 @@
     --logo-height: 4rem;
     --logo-max-height: 4rem;
     --header-height: calc(var(--logo-height) + var(--layout-padding-y));
-    --footer-height: 4rem;
-    --footer-height-mobile: 4rem;
+    --footer-height: 3.0rem;
+    --footer-height-mobile: 3.0rem;
     --footer-height-desktop: 2.5rem;
     --layout-padding-y: 1.3rem;
     --layout-padding-x: 1.3rem;
@@ -1358,6 +1358,10 @@ div:has(.small-address-filter) {
 .doctor-small-card .star-rating * {
     font-size: 0.75rem;
     max-width: 10rem;
+}
+
+.doctor-small-card .doctor-address,
+.doctor-small-card .doctor-address * {
     overflow: hidden;
     text-overflow: ellipsis;
 }
@@ -1365,10 +1369,6 @@ div:has(.small-address-filter) {
 .doctor-small-card .doctor-address,
 .doctor-small-card .doctor-address * {
     color: var(--med-dark-grey-2) !important;
-}
-
-.doctor-small-card .star-rating i {
-    font-size: 0.625rem;
 }
 
 /* Doctor's location */
@@ -1417,7 +1417,7 @@ div:has(.small-address-filter) {
     .only-mobile-and-tablets *,
     .only-mobile,
     .only-mobile * {
-        display: none;
+        display: none !important;
     }
 
     .ps-2-desktop {
@@ -1457,19 +1457,23 @@ div:has(.small-address-filter) {
     }
 }
 
+/* Tablets */
+
+@media (min-width: 577px) and (max-width: 1023px)  { 
+    .only-desktop,
+    .only-desktop *,
+    .only-mobile,
+    .only-mobile * {
+        display: none !important;
+    }
+}
+
 /* Mobile & tablets */
 
 @media (max-width: 1023px)  { 
     :root {
         --logo-height: 2rem;
         --logo-max-height: 2rem;
-    }
-
-    .only-desktop,
-    .only-desktop *,
-    .only-mobile,
-    .only-mobile * {
-        display: none;
     }
 
     .w-mobile-100 {
@@ -1484,11 +1488,13 @@ div:has(.small-address-filter) {
     .footer-content,
     .footer-content a {
         font-size: 0.7rem;
+        line-height: 0.7rem;
     }
 
     .footer-content-smaller,
     .footer-content-smaller a {
         font-size: 0.6rem;
+        line-height: 1rem;
     }
 
     /* .gap-3 {
@@ -1556,24 +1562,19 @@ div:has(.small-address-filter) {
         margin: 0;
     }
 
-    .w-100-mobile {
-        width: 100%;
+    .w-100vw-mobile {
+        width: 100vw;
     }
 }
 
 /* Mobile */
 
 @media (max-width: 576px)  { 
-    .only-mobile,
-    .only-mobile * {
-        display: unset;
-    }
-
     .only-desktop,
     .only-desktop *,
     .only-tablets-and-desktop,
     .only-tablets-and-desktop * {
-        display: none;
+        display: none !important;
     }
     
     .doctor-big-card .doctor-location-contact {

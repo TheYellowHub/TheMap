@@ -12,9 +12,9 @@ function Rating({ averageRating, totalReviews, shorterFormat = false }: RatingPr
     return (
         <Row className="d-flex justify-content-center flex-nowrap p-0 m-0 gap-2 dark-grey star-rating">
             <Col className={`d-flex flex-nowrap p-0 flex-grow-0`}>
-                {shorterFormat ? <Icon icon="fa-star" padding={false} solid={false} /> : <StarRating rating={averageRating} color={true} />}
+                {shorterFormat ? <Icon icon="fa-star fa-regular" className="med-dark-grey" padding={false} solid={false} /> : <StarRating rating={averageRating} color={true} />}
             </Col>
-            <Col className={`d-flex flex-nowrap p-0 flex-grow-0 md-font strong`}>
+            <Col className={`d-flex flex-nowrap p-0 flex-grow-0 md-font strong ${shorterFormat && "med-dark-grey"}`}>
                 {averageRating}
             </Col>
             {totalReviews && <Col className="d-flex flex-nowrap text-nowrap p-0 flex-grow-0 pe-3 med-dark-grey sm-font">{shorterFormat ? `/ ${totalReviews}` : `(${totalReviews} Reviews)`}</Col>}
