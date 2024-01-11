@@ -71,17 +71,17 @@ function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation
                             <Col className="px-0 font-assistant lg-font">{doctor.fullName}</Col>
                             <Col className="px-0 d-flex flex-grow-0 flex-nowrap">
                                 <ReportIssueModal doctor={doctor} show={reportingIssue} onHide={() => setReportingIssue(false)} />
-                                <Tooltip text="Report an issue" className="only-tablets-and-desktop">
-                                    <Col className="px-0 ps-2 d-flex justify-content-end" sm="auto">
+                                <Col className="px-0 ps-2 d-flex justify-content-end" sm="auto">
+                                    <Tooltip text="Report an issue" className="only-tablets-and-desktop">
                                         <Icon icon="fa-message-exclamation fa-sm" onClick={() => user ? setReportingIssue(true) : login()} padding={false}/>
-                                    </Col>
-                                </Tooltip>
+                                    </Tooltip>
+                                </Col>
                                 <SaveDoctorIcon doctor={doctor} colClassName="px-0 ps-2 d-flex justify-content-end" iconClassName="fa-sm" />
-                                <Tooltip text="Close" className="px-0 d-flex justify-content-end only-desktop">
-                                    <Col className="px-0 ps-2-desktop d-flex justify-content-end only-desktop" sm="auto">
+                                <Col className="px-0 ps-2-desktop d-flex justify-content-end only-desktop" sm="auto">
+                                    <Tooltip text="Close" className="px-0 d-flex justify-content-end only-desktop">
                                         <Icon icon="fa-minus fa-sm" onClick={onClose} className="only-desktop" padding={false}/>
-                                    </Col>
-                                </Tooltip>
+                                    </Tooltip>
+                                </Col>
                             </Col>
                         </Row>
                         <Row className="w-100 m-0 p-0 gap-4">

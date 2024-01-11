@@ -291,10 +291,10 @@
 }
 
 .inherit-font-style {
-    color: inherit;
-    font-family: inherit;
-    font-size: inherit;
-    font-weight: inherit;
+    color: inherit !important;
+    font-family: inherit !important;
+    font-size: inherit !important;
+    font-weight: inherit !important;
 }
 
 .bold {

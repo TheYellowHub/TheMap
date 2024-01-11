@@ -238,8 +238,8 @@ export default function DoctorSearchFilters({
                             isMulti={true}
                         />
                     </Col>
-                    <Tooltip text={"Many providers haven’t disclosed specialties yet"}>
-                        <Col xs={5} lg={3} className="px-0">
+                    <Col xs={5} lg={3} className="px-0">
+                        <Tooltip text={"Many providers haven’t disclosed specialties yet"}>
                             <Select
                                 values={specialities.filter((speciality) => 0 < doctors.filter((doctor) => doctor.specialities.includes(speciality.name)).length).map((speciality: DoctorSpeciality) => speciality.name)}
                                 currentValue={specialitiesFilter}
@@ -252,8 +252,8 @@ export default function DoctorSearchFilters({
                                 }}
                                 isMulti={true}
                             />
-                        </Col>
-                    </Tooltip>
+                        </Tooltip>
+                    </Col>
                     <Col xs={6} lg={3} className="px-0">
                         <Select
                             values={Array.from(listOptions.keys())}

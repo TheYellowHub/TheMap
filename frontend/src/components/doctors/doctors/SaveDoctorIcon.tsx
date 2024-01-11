@@ -19,22 +19,22 @@ export default function SaveDoctorIcon({doctor, colClassName, iconClassName} : S
         : "Add to my list";
 
     return (
-        <Tooltip text={tooltip}>
-            <Col className={colClassName} xs="auto">
+        <Col className={colClassName} xs="auto">
+            <Tooltip text={tooltip}>
                 <Icon
-                icon="fa-bookmark fa-sm fa-regular"
-                className={iconClassName}
-                solid={userInfo?.savedDoctors?.includes(doctor.id!) === true}
-                padding={false}
-                onClick={(e) => {
-                    e.stopPropagation();
-                    if (user && isAuthenticated) {
-                        mutateSavedDoctors(doctor.id!);
-                    } else {
-                        login();
-                    }
-                }} />
-            </Col>
-        </Tooltip>
+                    icon={`fa-bookmark fa-sm ${userInfo?.savedDoctors?.includes(doctor.id!) === true ? "fa-solid" : "fa-regular"}`}
+                    className={iconClassName}
+                    padding={false}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        if (user && isAuthenticated) {
+                            mutateSavedDoctors(doctor.id!);
+                        } else {
+                            login();
+                        }
+                    }} 
+                />
+            </Tooltip>
+        </Col>
     );
 }

@@ -96,7 +96,8 @@ function SingleReviewForm({ originalReview, onCancel, onSuccess, setId }: Single
                     || (currentUsernameOptions.length === 1 && currentUsernameOptions[0].value !== userInfo.username!)) {
                 setUsernameFieldOptions([
                     { value: CURRENT_USERNAME, label: userInfo.username! }, 
-                    ...usernameFieldOptions.filter((option) => option.value !== CURRENT_USERNAME)
+                    { value: NEW_USERNAME, label: "Edit public username" },
+                    { value: ANONYMOUS, label: "Anonymous" },
                 ]);
                 setChangingUsername(false);
 
@@ -324,8 +325,8 @@ function SingleReviewForm({ originalReview, onCancel, onSuccess, setId }: Single
                 )}
             </fieldset>
             <Form.Group as={Row} className="p-0 m-0 pb-3 pt-4 w-100 gap-3">
-                <Tooltip text="Cancel">
-                    <Col className="m-0 p-0 flex-grow-0">
+                <Col className="m-0 p-0 flex-grow-0">
+                    <Tooltip text="Cancel">
                         <Button
                             label=""
                             type="button"
@@ -335,8 +336,8 @@ function SingleReviewForm({ originalReview, onCancel, onSuccess, setId }: Single
                         >
                             <Icon icon="fa-close" padding={false} />
                         </Button>
-                    </Col>
-                </Tooltip>
+                    </Tooltip>
+                </Col>
                 <Col></Col>
                 <Col className="m-0 p-0 d-flex flex-grow-0 justify-content-center">
                     <Button
