@@ -251,7 +251,7 @@ function SingleReviewForm({ originalReview, onCancel, onSuccess, setId }: Single
                             }}
                             object={review}
                             onChange={setReview}
-                            className="select-no-border h-3"
+                            className="select-no-border h-2"
                         />
                     </Col>
                     <Col className="m-0 p-0 d-flex justify-content-end">
@@ -277,7 +277,7 @@ function SingleReviewForm({ originalReview, onCancel, onSuccess, setId }: Single
                         className="textarea"
                     />
                 </Form.Group>
-                <Form.Group as={Row} className="p-0 m-0 pb-2 d-flex flex-row align-items-center ">
+                <Form.Group as={Row} className="p-0 m-0 pb-2 d-flex flex-row align-items-center row-gap-2">
                     <Col className="px-0 py-1 m-0 pe-2 h-2"  xs={11} xl={"auto"}>
                         <BooleanFormField<DoctorReview>
                             field={reviewFieldsMap.get("pastOperation") as BooleanField<DoctorReview>}
@@ -299,7 +299,7 @@ function SingleReviewForm({ originalReview, onCancel, onSuccess, setId }: Single
                     <Col className="p-0 m-0 d-flex gap-2 h-2">{review.pastOperation && dateFields}</Col>
                 </Form.Group>
                 {!review.pastOperation && (
-                    <Form.Group as={Row} className="p-0 m-0 pb-1 d-flex flex-row align-items-center">
+                    <Form.Group as={Row} className="p-0 m-0 pb-1 d-flex flex-row align-items-center row-gap-2">
                         <Col className="px-0 py-1 m-0 pe-2" xs={11} xxl={"auto"}>
                             <BooleanFormField<DoctorReview>
                                 field={reviewFieldsMap.get("futureOperation") as BooleanField<DoctorReview>}

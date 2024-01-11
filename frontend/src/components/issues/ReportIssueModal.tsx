@@ -42,7 +42,7 @@ export default function ReportIssueModal({ doctor, show, onHide }: ReportIssueMo
             ? <>
                 <Modal.Body className="d-flex flex-column justify-content-between align-items-center">
                     <Row></Row>
-                    <Row className="p-0 m-0 w-70 gap-3 text-center">
+                    <Row className="p-0 m-0 w-70-desktop gap-3 text-center">
                         <Col className="m-0 p-0">
                             <div className="pb-3 strong lg-font">Thank you!</div>
                             <br />We appreciate you being a part of TheYellowHub

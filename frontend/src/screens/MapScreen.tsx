@@ -191,7 +191,7 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
                     
                     <Col className={`px-3 ${onlyMyList && matchedDoctorsIncludingDistance.length === 0 ? "d-none" : ""}`} id={doctorsSearchColumnId}>
                         {onlyMyList && <Row className={`xl-font w-700 mb-3 justify-content-center ${currentDoctor ? "only-desktop" : ""}`}>Saved providers</Row>}
-                        <Row className={`mx-3 pb-2 mb-2 ${currentDoctor ? "only-desktop" : ""}`}>
+                        <Row className={`mx-${onlyMyList ? "0" : "3"} pb-2 mb-2 ${currentDoctor ? "only-desktop" : ""}`}>
                             <DoctorSearchFilters
                                 address={address}
                                 setAddress={setAddress}
