@@ -14,27 +14,26 @@ interface SaveDoctorIconProps {
 export default function SaveDoctorIcon({doctor, colClassName, iconClassName} : SaveDoctorIconProps) {
     const { user, isAuthenticated, login } = useAuth();
     const { userInfo, mutateSavedDoctors } = useUser(user); // TODO: handle mutation errors?
-    const tooltip = userInfo?.savedDoctors?.includes(doctor.id!)
-        ? "Remove from my list"
-        : "Add to my list";
+    const icon = <Icon
+        icon={`fa-bookmark fa-sm ${userInfo?.savedDoctors?.includes(doctor.id!) === true ? "fa-solid" : "fa-regular"}`}
+        className={iconClassName}
+        padding={false}
+        onClick={(e) => {
+            e.stopPropagation();
+            if (user && isAuthenticated) {
+                mutateSavedDoctors(doctor.id!);
+            } else {
+                login();
+            }
+        }} 
+    />;
 
     return (
         <Col className={colClassName} xs="auto">
-            <Tooltip text={tooltip}>
-                <Icon
-                    icon={`fa-bookmark fa-sm ${userInfo?.savedDoctors?.includes(doctor.id!) === true ? "fa-solid" : "fa-regular"}`}
-                    className={iconClassName}
-                    padding={false}
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        if (user && isAuthenticated) {
-                            mutateSavedDoctors(doctor.id!);
-                        } else {
-                            login();
-                        }
-                    }} 
-                />
-            </Tooltip>
+            {userInfo?.savedDoctors?.includes(doctor.id!) 
+                ? <Tooltip text="Remove from my list">{icon}</Tooltip>
+                : <Tooltip text="Add to my list">{icon}</Tooltip>
+            }
         </Col>
     );
 }
