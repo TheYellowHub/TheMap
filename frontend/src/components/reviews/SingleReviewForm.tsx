@@ -172,19 +172,21 @@ function SingleReviewForm({ originalReview, onCancel, onSuccess, setId }: Single
                         }
                         return setOperationMonthAndYear(review, newValue as MonthName, year);
                     },
-                    options: monthNames
-                        .filter((month) =>
-                            getOperationYear(review) === undefined
-                                ? false
+                    options: monthNames.map((month) => {
+                        return { 
+                            value: month, 
+                            label: month,
+                            disabled: (
+                                getOperationYear(review) === undefined
+                                ? true
                                 : getOperationYear(review) === currentYear
-                                ? review.pastOperation
-                                    ? monthNames.indexOf(month) <= monthNames.indexOf(currentMonthName)
-                                    : monthNames.indexOf(currentMonthName) <= monthNames.indexOf(month)
-                                : true
-                        )
-                        .map((month) => {
-                            return { value: month, label: month };
-                        }),
+                                    ? review.futureOperation
+                                        ? monthNames.indexOf(month) <= monthNames.indexOf(currentMonthName)
+                                        : monthNames.indexOf(currentMonthName) <= monthNames.indexOf(month)
+                                    : false
+                            ) 
+                        };
+                    }),
                 }}
                 object={review}
                 onChange={setReview}
