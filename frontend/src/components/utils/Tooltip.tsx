@@ -11,12 +11,12 @@ export default function Tooltip({ text, className = "", children }: TooltipProps
     return (
         <OverlayTrigger placement="top"
             overlay={<ReactTooltip className={`tooltip ${className} position-fixed`}>{text}</ReactTooltip>}
-            popperConfig={{
-                modifiers: [{
-                    name: 'preventOverflow',
-                    enabled: false
-                }]
-            }}
+            // popperConfig={{
+            //     modifiers: [{
+            //         name: 'preventOverflow',
+            //         enabled: false
+            //     }]
+            // }}
         >
             <span className="inherit-font-style">{children}</span>
         </OverlayTrigger>
