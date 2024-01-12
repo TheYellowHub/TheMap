@@ -136,6 +136,32 @@ function SingleReviewForm({ originalReview, onCancel, onSuccess, setId }: Single
                 field={{
                     type: "singleSelect",
                     label: "",
+                    getter: (review: DoctorReview) => getOperationYear(review)?.toString(),
+                    setter: disabled ? undefined : (review: DoctorReview, newValue: string | undefined) => {
+                        let month = getOperationMonthName(review);
+                        if (month === undefined && newValue !== undefined) {
+                            month = currentMonthName;
+                        } else if (month !== undefined && newValue === undefined) {
+                            month = undefined;
+                        }
+                        return setOperationMonthAndYear(review, month, Number(newValue));
+                    },
+                    options: years
+                        .filter((year) => (review.pastOperation ? year <= currentYear : currentYear <= year))
+                        .sort((a, b) => review.pastOperation ? b - a : a - b)
+                        .map((year) => {
+                            return { value: year.toString(), label: year.toString() };
+                        }),
+                }}
+                object={review}
+                onChange={setReview}
+                className="d-inline-block"
+                allowEmptySelection={review.futureOperation}
+            />
+            <SingleSelectFormField<DoctorReview>
+                field={{
+                    type: "singleSelect",
+                    label: "",
                     getter: (review: DoctorReview) => getOperationMonthName(review)?.toString(),
                     setter: disabled ? undefined : (review: DoctorReview, newValue: string | undefined) => {
                         let year = getOperationYear(review);
@@ -163,32 +189,7 @@ function SingleReviewForm({ originalReview, onCancel, onSuccess, setId }: Single
                 object={review}
                 onChange={setReview}
                 className="d-inline-block"
-                allowEmptySelection={review.futureOperation}
-            />
-            <SingleSelectFormField<DoctorReview>
-                field={{
-                    type: "singleSelect",
-                    label: "",
-                    getter: (review: DoctorReview) => getOperationYear(review)?.toString(),
-                    setter: disabled ? undefined : (review: DoctorReview, newValue: string | undefined) => {
-                        let month = getOperationMonthName(review);
-                        if (month === undefined && newValue !== undefined) {
-                            month = currentMonthName;
-                        } else if (month !== undefined && newValue === undefined) {
-                            month = undefined;
-                        }
-                        return setOperationMonthAndYear(review, month, Number(newValue));
-                    },
-                    options: years
-                        .filter((year) => (review.pastOperation ? year <= currentYear : currentYear <= year))
-                        .map((year) => {
-                            return { value: year.toString(), label: year.toString() };
-                        }),
-                }}
-                object={review}
-                onChange={setReview}
-                className="d-inline-block"
-                allowEmptySelection={review.futureOperation}
+                allowEmptySelection={false}
             />
         </>
     );
