@@ -168,7 +168,7 @@ function GoogleMap({ center, currentLocation, markers = emptyMarkersArray as Mar
                                 {currentLocationStr === locationStr && <InfoWindowF position={location}>
                                     <>
                                         {markers?.map((marker, index) =>  (
-                                            <div key={`${locationToStr(location)}-link-${index}`}>
+                                            <div key={`${locationToStr(location)}-link-${index}`} className="d-flex align-items-center">
                                                 <a onClick={() => {
                                                     if (marker.onClick !== undefined) {
                                                         marker.onClick();
