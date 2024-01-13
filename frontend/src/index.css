@@ -290,6 +290,7 @@
     min-width: 100%;
 }
 
+
 .inherit-font-style {
     color: inherit !important;
     font-family: inherit !important;
@@ -342,7 +343,7 @@ a.a-no-decoration-line {
     text-decoration-line: none;
 }
 
-a:hover, a:not([href]):not([class]):hover,
+a:hover::before, a:not([href]):not([class]):hover,
 a.a-only-hover-decoration:hover {
     color: var(--med-blue) !important;
     text-decoration: underline;
@@ -778,6 +779,10 @@ td {
     font-weight: 400;
     line-height: 1.25rem;
     height: fit-content;
+}
+
+.btn:active {
+    background-color: inherit !important;
 }
 
 .btn-primary {
@@ -1374,7 +1379,8 @@ div:has(.small-address-filter) {
 /* Doctor's location */
 
 .doctor-location-btn,
-.doctor-location-btn-selected {
+.doctor-location-btn-selected,
+.doctor-location-btn:active {
     display: flex;
     flex-wrap: nowrap;
     background-color: transparent;
@@ -1408,6 +1414,20 @@ div:has(.small-address-filter) {
     border-radius: 0.25rem;
     object-fit: cover;
     padding: 0;
+}
+
+@media (hover: none) {
+    a:hover::before, 
+    a:not([href]):not([class]):hover,
+    a.a-only-hover-decoration:hover, 
+    a:hover i, 
+    a.a-no-decoration-line:hover {
+        color: inherit !important;
+        text-decoration: inherit !important;
+        /* font-family: inherit !important; */
+        /* font-size: inherit !important; */
+        /* font-weight: inherit !important; */
+    }
 }
 
 /* Desktop */
