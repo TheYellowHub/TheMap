@@ -118,5 +118,5 @@ export function getDoctorReviews(doctor: Doctor) {
 }
 
 export function getDoctorUrl(doctor: Doctor, onlyMyList = false) {
-    return `${onlyMyList ? userSavedProvidersUrl : ""}/${doctor.id}/${doctor.fullName.replaceAll(" ", "-").replaceAll("/","")}}`;
+    return `${onlyMyList ? userSavedProvidersUrl : ""}/${doctor.id}/${doctor.fullName.replaceAll(" ", "-").replaceAll("/","")}`;
 }
