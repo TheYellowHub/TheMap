@@ -14,7 +14,7 @@ import {
 } from "../../../types/doctors/doctor";
 import { DoctorCategory } from "../../../types/doctors/doctorCategory";
 import { Url } from "../../../types/utils/url";
-import Modal from "../../utils/Modal";
+import Modal from "../../utils/ObjectModal";
 import { ListField, ModalField } from "../../../utils/fields";
 import { Phone } from "../../../types/utils/phone";
 import { Email } from "../../../types/utils/email";

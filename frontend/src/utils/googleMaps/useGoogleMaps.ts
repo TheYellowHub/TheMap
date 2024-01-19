@@ -11,11 +11,35 @@ const locationPerAddressCache = new Map<string, Location>();
 
 const addressPerlocationCache = new Map<Location, string>();
 
-function setCurrentLocation(setLocation: (location: Location) => void): void {
+function setCurrentLocation(
+    setLocation: (location: Location) => void,
+    onRefuseToShareLocation?: () => void
+): void {
     if ("geolocation" in navigator) {
-        navigator.geolocation.getCurrentPosition(function (position) {
-            setLocation({ lat: position.coords.latitude, lng: position.coords.longitude });
-        });
+        navigator.geolocation.getCurrentPosition(
+            function (position) {
+                setLocation({ lat: position.coords.latitude, lng: position.coords.longitude });
+            },
+            function showError(error) {
+                switch(error.code) {
+                    case error.PERMISSION_DENIED:
+                        logError("User denied the request for Geolocation.");
+                        onRefuseToShareLocation && onRefuseToShareLocation();
+                        break;
+                    case error.POSITION_UNAVAILABLE:
+                        logError("Location information is unavailable.");
+                        break;
+                    case error.TIMEOUT:
+                        logError("The request to get user location timed out.");
+                        break;
+                    default:
+                        logError("An unknown error occurred.");
+                        break;
+                }
+            }
+          );
+    } else {
+        console.log("Location information is unavailable.")
     }
 }
 

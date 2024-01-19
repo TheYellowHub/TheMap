@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Container, Row, Col, Modal as ReactModal } from "react-bootstrap";
+import { Container, Row, Col, Modal as ReactModal, Modal } from "react-bootstrap";
 
 import config from "../config.json";
 import LoadingWrapper from "../components/utils/LoadingWrapper";
@@ -20,6 +20,8 @@ import NoResults from "../components/doctors/search/NoResults";
 import { mainMapUrl, userSavedProvidersUrl } from "../AppRouter";
 import axios from "axios";
 import logError from "../utils/log";
+import UserModal from "../components/utils/UserModal";
+import RefuseToShareLocationModal from "../components/map/RefuseToShareLocationModal";
 
 interface MapScreenProps {
     onlyMyList?: boolean;
@@ -42,6 +44,7 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
     const [currentDoctorLocation, setCurrentDoctorLocation] = useState<DoctorLocation | null>(null);
 
     const { setCurrentLocation, getAddress } = useGoogleMaps();
+    const [showRefusedToShareLocationModal, setShowRefusedToShareLocationModal] = useState(false);
     const [address, setAddress] = useState<string | undefined>(undefined);
     const [addressLocation, setAddressLocation] = useState<Location | undefined>();
     const [countryLocation, setCountryLocation] = useState<Location | undefined>();
@@ -70,14 +73,16 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
     />);
 
     const useCurrenetLocation = () => {
-        setCurrentLocation((location) => {
+        const setLocation = (location: Location) => {
             setAddressLocation(location);
             getAddress(location).then((address) => {
                 if (address !== undefined) {
                     setAddress(address);
                 }
             });
-        });
+        };
+        const onRefuseToShareLocation = () => setShowRefusedToShareLocationModal(true);
+        setCurrentLocation(setLocation, onRefuseToShareLocation);
     };
 
     const getCountryCenter = () => {
@@ -174,6 +179,8 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
 
     return (
         <LoadingWrapper isLoading={isListLoading} isError={isListError} error={listError as ResponseError} center={true}>
+            <RefuseToShareLocationModal show={showRefusedToShareLocationModal} onHide={() => setShowRefusedToShareLocationModal(false)} />
+
             <Container fluid>
                 {onlyMyList && currentDoctor === null && <BackButton className="only-mobile-and-tablets mx-2" />}
                 <Row className={`d-flex mt-${currentDoctor === null ? "2" : "0"} mt-md-2 mb-0 flex-md-nowrap gap-md-3`}>

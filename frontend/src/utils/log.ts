@@ -5,7 +5,7 @@ import { getCurrentUrl } from "./utils";
 
 const isProductionEnv = process.env.NODE_ENV === "production";
 
-export default function logError(error: Error) {
+export default function logError(error: Error | string) {
     if (isProductionEnv) {
         ReactGA.event({
             category: "Errors",

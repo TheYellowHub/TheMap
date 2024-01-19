@@ -11,6 +11,7 @@ import { useIssues } from "../../hooks/doctors/useIssues";
 import { getNewIssue } from "../../types/doctors/issue";
 import DoctorTinyCard from "../doctors/doctors/DoctorTinyCard";
 import { getGuidelinesLink } from "../reviews/SingleReviewForm";
+import UserModal from "../utils/UserModal";
 
 interface ReportIssueModalProps {
     doctor: Doctor;
@@ -36,7 +37,7 @@ export default function ReportIssueModal({ doctor, show, onHide }: ReportIssueMo
     const { reportValidity, isFormValid } = useFormValidation(formRef);
 
     return (        
-        <Modal show={show} backdrop="static" onHide={onHide} className="user-modal modal-white modal-content-h-25vh-plus-300" centered>
+        <UserModal show={show} onHide={onHide} className="modal-white modal-content-h-25vh-plus-300">
             
         {isMutateSuccess 
             ? <>
@@ -125,6 +126,6 @@ export default function ReportIssueModal({ doctor, show, onHide }: ReportIssueMo
                     </Form>
                 </Modal.Body>
             </>}
-        </Modal>
+        </UserModal>
     );
 }
