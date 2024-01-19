@@ -252,6 +252,15 @@
     /* letter-spacing: normal; */
 }
 
+.unselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
 .overflow-y-auto-hover *,
 .overflow-y-auto-hover:hover {
     visibility: visible;
