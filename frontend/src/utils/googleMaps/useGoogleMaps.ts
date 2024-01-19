@@ -1,5 +1,5 @@
 import { DistanceUnit, kmToMile } from "../../components/utils/DistanceUnit";
-import logError from "../log";
+import { logError, logEvent } from "../log";
 
 export type Location = {
     lat: number;
@@ -18,28 +18,29 @@ function setCurrentLocation(
     if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition(
             function (position) {
+                logEvent("User shared her location", "LocationSharing");
                 setLocation({ lat: position.coords.latitude, lng: position.coords.longitude });
             },
             function showError(error) {
                 switch(error.code) {
                     case error.PERMISSION_DENIED:
-                        logError("User denied the request for Geolocation.");
+                        logEvent("User refused to share location", "LocationSharing");
                         onRefuseToShareLocation && onRefuseToShareLocation();
                         break;
                     case error.POSITION_UNAVAILABLE:
-                        logError("Location information is unavailable.");
+                        logEvent("Location information is unavailable", "LocationSharing");
                         break;
                     case error.TIMEOUT:
-                        logError("The request to get user location timed out.");
+                        logEvent("The request to get user location timed out", "LocationSharing");
                         break;
                     default:
-                        logError("An unknown error occurred.");
+                        logEvent("An unknown error occurred", "LocationSharing");
                         break;
                 }
             }
           );
     } else {
-        console.log("Location information is unavailable.")
+        logEvent("Location information is unavailable", "LocationSharing");
     }
 }
 

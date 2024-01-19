@@ -4,6 +4,7 @@ import useUser from "../../../hooks/auth/useUsers";
 import { Doctor } from "../../../types/doctors/doctor";
 import Icon from "../../utils/Icon";
 import Tooltip from "../../utils/Tooltip";
+import { logEvent } from "../../../utils/log";
 
 interface SaveDoctorIconProps {
     doctor: Doctor;
@@ -23,6 +24,7 @@ export default function SaveDoctorIcon({doctor, colClassName, iconClassName} : S
             if (user && isAuthenticated) {
                 mutateSavedDoctors(doctor.id!);
             } else {
+                logEvent("Add a bookmark - new user (redirection to login)", "Bookmarks");
                 login();
             }
         }} 

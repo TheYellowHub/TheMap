@@ -28,6 +28,7 @@ import SetUsernameModal from "./SetUsernameModal";
 import useFormValidation from "../../hooks/useFormValidation";
 import Tooltip from "../utils/Tooltip";
 import { range } from "../../utils/utils";
+import { logEvent } from "../../utils/log";
 
 interface SingleReviewFormProps {
     originalReview: DoctorReview;
@@ -60,11 +61,15 @@ function SingleReviewForm({ originalReview, onCancel, onSuccess, setId }: Single
     const formRef = useRef<HTMLFormElement>(null);
     const { reportValidity, isFormValid } = useFormValidation(formRef);
 
-    const submitReview = (review: DoctorReview, newReviewStatue: ReviewStatus, newEditStatus: EditStatus) => {
+    const submitReview = (review: DoctorReview, newReviewStatus: ReviewStatus, newEditStatus: EditStatus) => {
         reportValidity();
 
         if (isFormValid() === true) {
-            const newReview = { ...review, status: newReviewStatue };
+            const from = review.id ? review.status : "NEW";
+            const to = newReviewStatus;
+            logEvent(`Submitting review - ${from} -> ${to}`, "Reviews");
+
+            const newReview = { ...review, status: newReviewStatus };
             setReview(newReview);
             mutateItem(newReview);
             setEditStatus(newEditStatus);

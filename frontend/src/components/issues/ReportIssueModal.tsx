@@ -12,6 +12,7 @@ import { getNewIssue } from "../../types/doctors/issue";
 import DoctorTinyCard from "../doctors/doctors/DoctorTinyCard";
 import { getGuidelinesLink } from "../reviews/SingleReviewForm";
 import UserModal from "../utils/UserModal";
+import { logEvent } from "../../utils/log";
 
 interface ReportIssueModalProps {
     doctor: Doctor;
@@ -107,6 +108,7 @@ export default function ReportIssueModal({ doctor, show, onHide }: ReportIssueMo
                                     onClick={() => {
                                         reportValidity();
                                         if (isFormValid()) {
+                                            logEvent("Submit an issue", "ReportAnIssue");
                                             mutateItem({...getNewIssue(doctor, userInfo!), description: issueDescription});
                                         }
                                     }}

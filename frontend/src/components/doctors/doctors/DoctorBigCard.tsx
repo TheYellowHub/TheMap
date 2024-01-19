@@ -25,6 +25,7 @@ import Tooltip from "../../utils/Tooltip";
 import { getCurrentUrl } from "../../../utils/utils";
 import Line from "../../utils/Line";
 import Button from "../../utils/Button";
+import { logEvent } from "../../../utils/log";
 
 interface DoctorBigCardProps {
     doctor: Doctor;
@@ -73,7 +74,16 @@ function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation
                                 <ReportIssueModal doctor={doctor} show={reportingIssue} onHide={() => setReportingIssue(false)} />
                                 <Col className="px-0 ps-2 d-flex justify-content-end" sm="auto">
                                     <Tooltip text="Report an issue" className="only-tablets-and-desktop">
-                                        <Icon icon="fa-message-exclamation fa-sm" onClick={() => user ? setReportingIssue(true) : login()} padding={false}/>
+                                        <Icon icon="fa-message-exclamation fa-sm" onClick={() => {
+                                                const eventPrefix = "Report an issue button - ";
+                                                if (user) {
+                                                    logEvent(`${eventPrefix} existing user`, "ReportAnIssue");
+                                                    setReportingIssue(true);
+                                                } else {
+                                                    logEvent(`${eventPrefix} new user (redirection to login)`, "ReportAnIssue");
+                                                    login();
+                                                }}
+                                            } padding={false}/>
                                     </Tooltip>
                                 </Col>
                                 <SaveDoctorIcon doctor={doctor} colClassName="px-0 ps-2 d-flex justify-content-end" iconClassName="fa-sm" />
@@ -146,7 +156,16 @@ function DoctorBigCard({ doctor, currentDoctorLocation, setCurrentDoctorLocation
                                 <Button
                                     label="Add a review"
                                     icon="fa-plus"
-                                    onClick={() => userInfo ? setAddingReview(true) : login()}
+                                    onClick={() => {
+                                        const eventPrefix = "Add a review button - ";
+                                        if (userInfo) {
+                                            logEvent(`${eventPrefix} existing user`, "Reviews");
+                                            setAddingReview(true);
+                                        } else {
+                                            logEvent(`${eventPrefix} new user (redirection to login)`, "Reviews");
+                                            login();
+                                        }
+                                    }}
                                     className="inherit-font-style a-no-decoration-line w-100vw-mobile"
                                 />
                             )}

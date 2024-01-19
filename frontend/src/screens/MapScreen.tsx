@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Container, Row, Col, Modal as ReactModal, Modal } from "react-bootstrap";
+import { Container, Row, Col, Modal as ReactModal } from "react-bootstrap";
+import axios from "axios";
 
 import config from "../config.json";
 import LoadingWrapper from "../components/utils/LoadingWrapper";
@@ -18,9 +19,7 @@ import Button from "../components/utils/Button";
 import BackButton from "../components/utils/BackButton";
 import NoResults from "../components/doctors/search/NoResults";
 import { mainMapUrl, userSavedProvidersUrl } from "../AppRouter";
-import axios from "axios";
-import logError from "../utils/log";
-import UserModal from "../components/utils/UserModal";
+import { logError } from "../utils/log";
 import RefuseToShareLocationModal from "../components/map/RefuseToShareLocationModal";
 
 interface MapScreenProps {
