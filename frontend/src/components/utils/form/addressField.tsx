@@ -14,7 +14,7 @@ export default function AddressInputFormField<T>({
     onChange = undefined,
 }: AddressInputFormFieldProps<T>) {
     const { getLocation } = useGoogleMaps();
-
+    const addressFieldId = "addressInputField";
     const [valid, setValid] = useState(true);
 
     useEffect(() => {
@@ -25,6 +25,10 @@ export default function AddressInputFormField<T>({
             getLocation(address).then((location) => {
                 setValid(location !== undefined);
             });
+
+            if ((document.getElementById(addressFieldId) as HTMLInputElement).value !== address) {
+                (document.getElementById(addressFieldId) as HTMLInputElement).value = address;
+            }
         }
     }, [field.getter(object)]);
 
@@ -36,6 +40,7 @@ export default function AddressInputFormField<T>({
             }}
         >
             <InputFormField
+                id={addressFieldId}
                 field={field}
                 object={object}
                 onChange={onChange}

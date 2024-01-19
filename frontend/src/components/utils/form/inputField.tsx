@@ -13,24 +13,22 @@ import {
     UrlField,
 } from "../../../utils/fields";
 
-export interface TextInputFormFieldProps<T> {
-    field: TextField<T> | LongTextField<T> | UrlField<T> | EmailField<T> | PhoneField<T> | AddressField<T>;
+interface InputFormFieldProps<T> {
     object: T;
     onChange?: (newObject: T) => void;
     isInvalid?: boolean;
     placeHolder?: string;
     className?: string;
     required?: boolean;
+    id?: string;
 }
 
-export interface NumberInputFormFieldProps<T> {
+export interface TextInputFormFieldProps<T> extends InputFormFieldProps<T> {
+    field: TextField<T> | LongTextField<T> | UrlField<T> | EmailField<T> | PhoneField<T> | AddressField<T>;
+}
+
+export interface NumberInputFormFieldProps<T> extends InputFormFieldProps<T> {
     field: NumberField<T>;
-    object: T;
-    onChange?: (newObject: T) => void;
-    isInvalid?: boolean;
-    placeHolder?: string;
-    className?: string;
-    required?: boolean;
 }
 
 export default function InputFormField<T>({
@@ -39,8 +37,9 @@ export default function InputFormField<T>({
     onChange = undefined,
     isInvalid = false,
     placeHolder,
+    required = false,
     className,
-    required = false
+    id
 }: TextInputFormFieldProps<T> | NumberInputFormFieldProps<T>) {
     const pattern = new Map([
         ["text", undefined],
@@ -73,7 +72,7 @@ export default function InputFormField<T>({
         case "long-text":
             return (
                 <Form.Control
-                    id={field.label}
+                    id={id ? id : field.label}
                     as={"textarea"}
                     defaultValue={field.getter(object)}
                     readOnly={field.setter === undefined}
@@ -88,7 +87,7 @@ export default function InputFormField<T>({
         default:
             return (
                 <Form.Control
-                    id={field.label}
+                    id={id ? id : field.label}
                     type={field.type}
                     defaultValue={field.getter(object)}
                     readOnly={field.setter === undefined}
