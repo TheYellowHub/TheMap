@@ -87,7 +87,7 @@ function DoctorModal({ doctor, showModal, onCancel, onSave, isSaving, isSavingEr
                     },
                 },
                 {
-                    type: "address",
+                    type: "text",
                     label: "Short address",
                     getter: (location) => location.shortAddress,
                     setter: (location, newShortAddress) => {
