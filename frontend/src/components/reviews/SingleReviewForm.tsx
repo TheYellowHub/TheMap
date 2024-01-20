@@ -306,31 +306,31 @@ function SingleReviewForm({ originalReview, onCancel, onSuccess, setId }: Single
                     </Col>
                     <Col className="p-0 m-0 d-flex gap-2 h-2">{review.pastOperation && dateFields}</Col>
                 </Form.Group>
-                {!review.pastOperation && (
-                    <Form.Group as={Row} className="p-0 m-0 pb-1 d-flex flex-row align-items-center row-gap-2">
-                        <Col className="px-0 py-1 m-0 pe-2" xs={11} xxl={"auto"}>
-                            <BooleanFormField<DoctorReview>
-                                field={reviewFieldsMap.get("futureOperation") as BooleanField<DoctorReview>}
-                                withLabel={true}
-                                label={`I have surgery scheduled with this doctor${
-                                    review.futureOperation ? ", in " : ""
-                                }`}
-                                object={review}
-                                key={`surgery1-${review.pastOperation}-${review.futureOperation}`}
-                                onChange={(newReview: DoctorReview) => {
-                                    newReview = setOperationMonthAndYear(newReview, currentMonthName, currentYear);
-                                    newReview = {
-                                        ...newReview,
-                                        pastOperation: newReview.futureOperation ? false : newReview.pastOperation,
-                                    };
-                                    setReview(newReview);
-                                }}
-                                className="h-2"
-                            />
-                        </Col>
-                        <Col className="p-0 m-0 d-flex gap-2">{review.futureOperation && dateFields}</Col>
-                    </Form.Group>
-                )}
+                <Form.Group as={Row} className="p-0 m-0 pb-1 d-flex flex-row align-items-center row-gap-2">
+                    <Col className="px-0 py-1 m-0 pe-2 h-3" xs={11} xxl={"auto"}>
+                        {!review.pastOperation && (
+                        <BooleanFormField<DoctorReview>
+                            field={reviewFieldsMap.get("futureOperation") as BooleanField<DoctorReview>}
+                            withLabel={true}
+                            label={`I have surgery scheduled with this doctor${
+                                review.futureOperation ? ", in " : ""
+                            }`}
+                            object={review}
+                            key={`surgery1-${review.pastOperation}-${review.futureOperation}`}
+                            onChange={(newReview: DoctorReview) => {
+                                newReview = setOperationMonthAndYear(newReview, currentMonthName, currentYear);
+                                newReview = {
+                                    ...newReview,
+                                    pastOperation: newReview.futureOperation ? false : newReview.pastOperation,
+                                };
+                                setReview(newReview);
+                            }}
+                            className="h-2"
+                        />
+                        )}
+                    </Col>
+                    <Col className="p-0 m-0 d-flex gap-2">{review.futureOperation && dateFields}</Col>
+                </Form.Group>
             </fieldset>
             <Form.Group as={Row} className="p-0 m-0 pb-3 pt-4 w-100 gap-3">
                 <Col className="m-0 p-0 flex-grow-0">
