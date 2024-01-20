@@ -12,19 +12,22 @@ function RefuseToShareLocationModal({ show, onHide }: RefuseToShareLocationModal
     return (
         <UserModal show={show} onHide={onHide}>
             <Modal.Body>
-                <Row>
-                    <div>
-                        <strong>Allowing location access</strong>
-                        <br/><br/>
-                        You&apos;ve previously denied access.
+                <Row className="justify-content-center">
+                    <div className="w-fit-content">
+                        <p className="text-center text-left-mobile">
+                            <strong>Allowing location access</strong>
+                            <br/><br/>
+                            You&apos;ve previously denied access.
+                        </p>
+                        <img src="/images/browser/siteSettingsMobile.png" className="only-mobile" />
+                        <img src="/images/browser/siteSettingsDesktop.png" className="only-tablets-and-desktop" />
                         <br/><br/>
                         Undo this by going to:
                         <ul>
-                            <li><strong>Browser menu</strong> on the top right</li>
-                            <li>Select <strong>&quot;settings&quot;</strong></li>
-                            <li>Scroll down to <strong>&quot;site settings&quot;</strong></li>
-                            <li>Then <strong>select &quot;location&quot;</strong> and search for <u><strong>app.theyellowhub.org</strong></u> in the <strong>&quot;denied&quot; list</strong>.</li>
-                            <li>Select <strong>&quot;allow&quot;</strong>, and <strong>refresh</strong> this page</li>
+                            <li><strong>Settings menu</strong> left to the url</li>
+                            <li>Select <strong>&quot;Permissions&quot;</strong>
+                            <br/>and <strong>toggle location access</strong> on</li>
+                            <li>Then <strong>refresh</strong> this page</li>
                         </ul>
                     </div>
                 </Row>

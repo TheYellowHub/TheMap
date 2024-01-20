@@ -1610,4 +1610,8 @@ div:has(.small-address-filter) {
         min-width: 90%;
         max-width: 90%;
     }
+
+    .text-left-mobile {
+        text-align: left !important;
+    }
 }
