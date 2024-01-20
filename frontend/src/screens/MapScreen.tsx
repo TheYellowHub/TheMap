@@ -120,6 +120,7 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
 
     useEffect(() => {
         setCurrentDoctor(null);
+        setFilterChangeSinceLastDoctorPick(false);
         if (onlyMyList) {
             setMapIsOpen(false);
         }
@@ -183,7 +184,8 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
             <Container fluid>
                 {onlyMyList && currentDoctor === null && <BackButton className="only-mobile-and-tablets mx-2" />}
                 <Row className={`d-flex mt-${currentDoctor === null ? "2" : "0"} mt-md-2 mb-0 flex-md-nowrap gap-md-3`}>
-                    {onlyMyList && matchedDoctorsIncludingDistance.length === 0 && <Col className={`px-3`}>
+                    {onlyMyList && matchedDoctorsIncludingDistance.length === 0 
+                            && !filterChangeSinceLastDoctorPick && <Col className={`px-3`}>
                         <NoResults 
                             title="Saved providers"
                             icon="fa-user-doctor" 
@@ -195,7 +197,7 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
                         />
                     </Col>}
                     
-                    <Col className={`px-3 ${onlyMyList && matchedDoctorsIncludingDistance.length === 0 ? "d-none" : ""}`} id={doctorsSearchColumnId}>
+                    <Col className={`px-3 ${onlyMyList && matchedDoctorsIncludingDistance.length === 0 && !filterChangeSinceLastDoctorPick ? "d-none" : ""}`} id={doctorsSearchColumnId}>
                         {onlyMyList && <Row className={`xl-font w-700 mb-3 justify-content-center ${currentDoctor ? "only-desktop" : ""}`}>Saved providers</Row>}
                         <Row className={`mx-${onlyMyList ? "0" : "3"} pb-2 mb-2 ${currentDoctor ? "only-desktop" : ""}`}>
                             <DoctorSearchFilters
