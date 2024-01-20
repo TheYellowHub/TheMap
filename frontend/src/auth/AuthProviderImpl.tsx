@@ -23,13 +23,13 @@ export default function AuthProvider({ children }: React.PropsWithChildren) {
 
     const login = useCallback(async () => {
         const url = getCurrentUrl();
-        logEvent("Start loging", "UserSession");
+        logEvent("Start login", "UserSession");
         await auth0login({
             appState: url.includes(loginUrl) ? undefined : {
                 returnTo: url
             }
         });
-        logEvent("Finish loging", "UserSession");
+        logEvent("Finish login", "UserSession");
     }, [auth0login]);
 
     const logout = useCallback(async () => {
