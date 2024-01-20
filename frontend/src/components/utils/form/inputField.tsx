@@ -21,6 +21,7 @@ interface InputFormFieldProps<T> {
     className?: string;
     required?: boolean;
     id?: string;
+    preSelectText?: boolean;
 }
 
 export interface TextInputFormFieldProps<T> extends InputFormFieldProps<T> {
@@ -39,8 +40,11 @@ export default function InputFormField<T>({
     placeHolder,
     required = false,
     className,
-    id
+    id,
+    preSelectText = false
 }: TextInputFormFieldProps<T> | NumberInputFormFieldProps<T>) {
+    id = id ? id : field.label;
+
     const pattern = new Map([
         ["text", undefined],
         ["long-text", undefined],
@@ -49,6 +53,8 @@ export default function InputFormField<T>({
         ["email", emailValidation],
         ["tel", phoneValidation],
     ]).get(field.type);
+
+    const onClick = preSelectText ? (() => (document.getElementById(id!) as HTMLInputElement).select()) : undefined;
 
     const onBlur = (e: FocusEvent<HTMLInputElement>) => {
         if (field.setter !== undefined && e.target.value != e.target.defaultValue) {
@@ -72,10 +78,11 @@ export default function InputFormField<T>({
         case "long-text":
             return (
                 <Form.Control
-                    id={id ? id : field.label}
+                    id={id}
                     as={"textarea"}
                     defaultValue={field.getter(object)}
                     readOnly={field.setter === undefined}
+                    onClick={onClick}
                     onBlur={onBlur}
                     required={field.required || required}
                     isInvalid={isInvalid}
@@ -87,10 +94,11 @@ export default function InputFormField<T>({
         default:
             return (
                 <Form.Control
-                    id={id ? id : field.label}
+                    id={id}
                     type={field.type}
                     defaultValue={field.getter(object)}
                     readOnly={field.setter === undefined}
+                    onClick={onClick}
                     onBlur={onBlur}
                     required={field.required || required}
                     pattern={pattern}
