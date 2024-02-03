@@ -19,7 +19,7 @@ interface ButtonProps extends React.PropsWithChildren {
 function Button({ label = "", disabled, variant, type, icon, iconClassName, onClick, href, target, className, children }: ButtonProps) {
     return (
         <ReactButton
-            className={`${className} ${onClick === undefined && href === undefined && "cursor-inherit"}`}
+            className={`${className} ${onClick === undefined && href === undefined && "cursor-inherit"} text-nowrap`}
             onClick={onClick}
             href={href}
             target={target}
@@ -27,7 +27,7 @@ function Button({ label = "", disabled, variant, type, icon, iconClassName, onCl
             type={type}
             disabled={disabled}
         >
-            {icon && <Icon icon={icon} className={iconClassName} />}
+            {icon && <Icon icon={icon} className={iconClassName} padding={false} />}
             {label}
             {children}
         </ReactButton>

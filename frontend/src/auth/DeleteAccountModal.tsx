@@ -6,6 +6,7 @@ import useUser from "../hooks/auth/useUsers";
 import { ResponseError } from "../hooks/useApiRequest";
 import Button from "../components/utils/Button";
 import LoadingWrapper from "../components/utils/LoadingWrapper";
+import UserModal from "../components/utils/UserModal";
 
 interface DeleteAccountModalProps {
     show: boolean;
@@ -23,7 +24,7 @@ export default function DeleteAccountModal({ show, onHide } : DeleteAccountModal
         }
     }, [isDeleteUsersMutationSuccess]);
 
-    return (<Modal show={show} backdrop="static" onHide={onHide} className="user-modal" centered>
+    return (<UserModal show={show} onHide={onHide}>
         <Modal.Body>
             <Row><Col className="text-center my-2"><strong>Delete account</strong></Col></Row>
             <Row><Col className="text-center my-2">All your information is going to be permanantly deleted.<br />Are you sure you would like to delete your account?</Col></Row>
@@ -59,5 +60,5 @@ export default function DeleteAccountModal({ show, onHide } : DeleteAccountModal
                 />
             </Row>
         </Modal.Body>
-    </Modal>);
+    </UserModal>);
 }

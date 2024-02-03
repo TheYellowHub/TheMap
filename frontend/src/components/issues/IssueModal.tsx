@@ -1,4 +1,4 @@
-import Modal from "../utils/Modal";
+import Modal from "../utils/ObjectModal";
 import { ResponseError } from "../../hooks/useApiRequest";
 import { DoctorIssue, issueFieldsMap } from "../../types/doctors/issue";
 

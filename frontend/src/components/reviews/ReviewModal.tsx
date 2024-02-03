@@ -1,4 +1,4 @@
-import Modal from "../utils/Modal";
+import Modal from "../utils/ObjectModal";
 import { ResponseError } from "../../hooks/useApiRequest";
 import { DoctorReview, reviewFieldsMap } from "../../types/doctors/review";
 import SingleReviewCard from "./SingleReviewCard";
@@ -40,7 +40,7 @@ function ReviewModal({ review, showModal, onCancel, onSave, isSaving, isSavingEr
             savingError={savingError}
         >
             <div className="strong pb-1">{review.addedBy.remoteId}</div>
-            <SingleReviewCard review={review} showDoctorName={true} />
+            <SingleReviewCard review={review} showDoctorName={true} showEditMessageInsteadOfCOntent={false} />
         </Modal>
     );
 }

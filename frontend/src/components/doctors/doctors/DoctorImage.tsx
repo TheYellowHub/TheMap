@@ -12,7 +12,7 @@ function DoctorImage({ doctor }: DoctorImageProps) {
         ? doctor.image.toString()
         : `/images/default-doctor-${doctor.gender === "F" ? "f" : "m"}.png`;
     return (
-        <img onError={() => setError(true)} className="doctor-image" src={image} alt={doctor.fullName} />
+        <img onError={() => setError(true)} className="doctor-image" loading="lazy" src={image} alt={doctor.fullName} />
     );
 }
 

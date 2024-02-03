@@ -5,6 +5,7 @@ import useApiRequests from "../useApiRequest";
 import { UserInfo } from "../../auth/userInfo";
 import useAuth from "../../auth/useAuth";
 import config from "../../config.json";
+import { logEvent } from "../../utils/log";
 
 export default function useUser(user?: User) {
     const userRemoteId = (user || useAuth().user)?.sub;
@@ -79,10 +80,12 @@ export default function useUser(user?: User) {
             return undefined;
         } else {
             if (userInfo.savedDoctors?.includes(doctorId)) {
+                logEvent("Remove a bookmark", "Bookmarks");
                 userInfo.savedDoctors = userInfo.savedDoctors?.filter(
                     (existingDoctorId: number) => existingDoctorId !== doctorId
                 );
             } else {
+                logEvent("Add a bookmark - existing user", "Bookmarks");
                 userInfo.savedDoctors?.push(doctorId);
             }
             const response = await patch(url, { ...userInfo });

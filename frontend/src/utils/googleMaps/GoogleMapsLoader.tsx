@@ -2,7 +2,7 @@ import { ReactElement, createContext, useEffect, useMemo, useState } from "react
 import { Libraries, LoadScriptNext } from "@react-google-maps/api";
 import makeAsyncScriptLoader from "react-async-script";
 
-import logError from "../log";
+import { logError } from "../log";
 import Loader from "../../components/utils/Loader";
 
 export const GoogleMapsLoaderContext = createContext(false);

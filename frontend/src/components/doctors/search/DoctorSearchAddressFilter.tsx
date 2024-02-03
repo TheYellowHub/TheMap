@@ -16,6 +16,7 @@ export default function DoctorSearchAddressFilter({
     address,
     setAddress,
     useCurrenetLocation,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     addressLocation,
     setAddressLocation,
     setValueChange,
@@ -40,7 +41,7 @@ export default function DoctorSearchAddressFilter({
                         object={undefined}
                     />
                 </Col>
-                <Col className="d-flex use-my-location">
+                <Col className="d-flex use-my-location unselectable">
                     <a onClick={useCurrenetLocation} className="sm-font">
                         Use my location
                     </a>

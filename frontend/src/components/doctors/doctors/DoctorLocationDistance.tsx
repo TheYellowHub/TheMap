@@ -18,25 +18,27 @@ function DoctorLocationDistance({
     const distance = locationForDistanceCalculation && getDoctorLocationDistance(doctorLocation, locationForDistanceCalculation, distanceUnit);
 
     return (
-        <Tooltip text={`${doctorLocation.longAddress ? "Navigate" : "No link to address"}`}>
-            <p className="med-grey p-0 m-0">
+            <p className="med-grey p-0 m-0 ps-3">
                     <a
                         href={`${
                             doctorLocation?.longAddress
-                                ? "http://maps.google.com/maps/dir/?api=1&dir_action=navigate&destination=" +
-                                doctorLocation.longAddress
+                                ? `http://maps.google.com/maps/dir//${doctorLocation.longAddress}`
                                 : "#"
                         }`}
                         target="_blank"
                         rel="noreferrer"
                         onClick={(e) => e.stopPropagation()}
-                        className="a-only-hover-decoration"
+                        className="a-only-hover-decoration text-nowrap "
+                        style={{whiteSpace: "nowrap"}}
                     >
-                            {distance && distance !== Infinity && <>{distance.toFixed(1)} {distanceUnit}</>}
-                            <Icon icon="fas fa-location-arrow ps-1" solid={false} />
+                        <Tooltip text={`${doctorLocation.longAddress ? "Navigate" : "No address"}`}>
+                            <>
+                                {distance && distance !== Infinity && <>{distance.toFixed(1)} {distanceUnit}</>}
+                                <Icon icon={`fas fa-circle-location-arrow ps-${distance && distance !== Infinity ? "2" : "0"} pe-0`} solid={false} />
+                            </>
+                        </Tooltip>
                     </a>
             </p>
-        </Tooltip>
     );
 }
 

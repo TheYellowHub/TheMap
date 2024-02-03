@@ -5,17 +5,6 @@ import { getCurrentUrl } from "./utils";
 
 const isProductionEnv = process.env.NODE_ENV === "production";
 
-export default function logError(error: Error) {
-    if (isProductionEnv) {
-        ReactGA.event({
-            category: "Errors",
-            action: String(error),
-        });
-    } else {
-        console.log(error);
-    }
-}
-
 export function logPageView() {
     const currentUrl = getCurrentUrl(false);
     if (isProductionEnv) {
@@ -24,3 +13,21 @@ export function logPageView() {
         console.log("Page view", currentUrl);
     }
 }
+
+export function logError(error: Error | string) {
+    logEvent(String(error), "Errors");
+}
+
+export function logEvent(event: string, category?: LogEventsCategory) {
+    category = category || "Events";
+    if (isProductionEnv) {
+        ReactGA.event({
+            category: category,
+            action: event,
+        });
+    } else {
+        console.log(`${category}: ${event}`);
+    }
+}
+
+export type LogEventsCategory = "LocationSharing" | "UserSession" | "Errors" | "Reviews" | "ReportAnIssue" | "Bookmarks" | "Events";

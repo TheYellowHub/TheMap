@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import { Doctor, DoctorLocation, getDoctorUrl } from "../../../types/doctors/doctor";
+import { Doctor, DoctorLocation, getDoctorUrl, locationToStr } from "../../../types/doctors/doctor";
 import useGoogleMaps, { Location } from "../../../utils/googleMaps/useGoogleMaps";
 import GoogleMap, { Marker } from "../../map/GoogleMap";
 import { getDoctorMarkerIcon, getGroupMarkerIcon } from "../../map/markerIcon";
 import Button from "../../utils/Button";
+import Icon from "../../utils/Icon";
+import DoctorSearchMapLegend from "./DoctorSearchMapLegend";
 
 interface DoctorSearchMapProps {
     doctors: Doctor[];
@@ -35,6 +37,7 @@ export default function DoctorSearchMap({
     const { pathname } = useLocation();
     const { getDistance } = useGoogleMaps();
     const [markers, setMarkers] = useState<Marker[]>([]);
+    const [legendIsOpen, setLegendIsOpen] = useState(false);
 
     useEffect(() => {
         const matchedDoctorsMarkers: Marker[] = [];
@@ -80,18 +83,28 @@ export default function DoctorSearchMap({
     }, [doctors, currentDoctor, currentDoctorLocation, centerLocation, boundsDistanceFromCenter]);
 
     return (
-        <Container fluid className="map px-0 mx-0" key={`search-map-distance=${boundsDistanceFromCenter}`}>
+        <Container fluid className="map px-0 mx-0" key={`search-map-distance=${boundsDistanceFromCenter}-center=${centerLocation && locationToStr(centerLocation)}`}>
             <GoogleMap 
                 center={centerLocation} 
                 currentLocation={currentDoctorLocation?.lat && currentDoctorLocation?.lng  && {lat: currentDoctorLocation.lat, lng: currentDoctorLocation.lng} || undefined}
                 markers={markers} 
                 getGroupIcon={getGroupMarkerIcon}
-            />
-            <div className="aboveMap">
-                <a href="https://urlzs.com/bVdAh" target="_blank" rel="noreferrer">
-                    <Button variant="primary" label="Recommend a doctor"></Button>
-                </a>
-            </div>
+            >  
+                <div className="above-map add-doctor">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLScXkk35fRFrQ34IAZGwdkXw0Q4Y-66figgCQaYJOVyesMqY-w/viewform?usp=sf_link" target="_blank" rel="noreferrer">
+                        <Button variant="primary" label="Recommend a doctor"></Button>
+                    </a>
+                </div>
+                <div className="above-map legend d-flex justify-content-end">
+                   
+                        {legendIsOpen 
+                            ? <DoctorSearchMapLegend markers={markers} onClick={() => setLegendIsOpen(false)} />
+                            :  <div className="gm-control-active-copy w-fit-content d-flex justify-content-center align-items-center"> 
+                                    <Icon icon="fa-circle-info" onClick={() => setLegendIsOpen(true)} />
+                               </div>
+                        }
+                </div>
+            </GoogleMap>
         </Container>
     );
 }

@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+import { useState } from "react";
 import { Image, Nav, NavDropdown, Navbar } from "react-bootstrap";
 import { EventKey, SelectCallback } from "@restart/ui/esm/types";
 
@@ -9,9 +9,8 @@ import useUser from "../../hooks/auth/useUsers";
 import { useReviews } from "../../hooks/doctors/useReviews";
 import { DoctorReview } from "../../types/doctors/review";
 import DeleteAccountModal from "../../auth/DeleteAccountModal";
-import { loginUrl, mainMapUrl, userSavedProvidersUrl } from "../../AppRouter";
+import { loginUrl } from "../../AppRouter";
 import { sameUser } from "../../auth/userInfo";
-import UserReviews from "../reviews/UserReviews";
 
 type Title = {
     title: string;
