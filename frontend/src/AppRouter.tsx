@@ -32,7 +32,7 @@ function AppRouter() {
             <Route path={loginUrl} element={<Login />} />
             <Route path={userSavedProvidersUrl} element={<MapScreen onlyMyList={true} />} />
             <Route path="/user/saved/:doctorId?/:name?" element={<MapScreen onlyMyList={true} />} />
-            <Route path="/user/reviews" element={<UserReviews showEditMessageInsteadOfCOntent={false} />} />
+            <Route path="/user/reviews" element={<UserReviews showEditMessageInsteadOfCOntent={true} />} />
             <Route path="/user/delete" element={<DeleteAccountModal show={true} onHide={() => {}} />} />
         </Routes>
     );

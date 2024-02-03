@@ -22,26 +22,26 @@ function DoctorLocationSelector({ doctor, currentDoctorLocation, setCurrentDocto
     }, [doctor]);
 
     return (
-        <Row className={`m-0 gap-0 py-1 doctor-location ${className}`}>
-            {doctor.locations.map((location, index) => (
-                <Button
+        <Row className={`p-0 m-0 gap-0 py-1 doctor-location ${className} d-flex`}>
+            {doctor.locations.map((location, index) => {
+                const isSameLocation = currentDoctorLocation && sameLocation(location, currentDoctorLocation);
+                return (<Button
                     label=""
-                    className={`${currentDoctorLocation && sameLocation(location, currentDoctorLocation) && 1 < doctor.locations.length ? "doctorLocationBtnSelected" : "doctorLocationBtn"}`}
-                    icon={location === currentDoctorLocation ? "fa-hospital" : ""}
+                    className={`${isSameLocation ? "doctor-location-btn-selected" : "doctor-location-btn"}`}
                     key={`${location?.hospitalName || location?.longAddress}-btn`}
-                    onClick={(currentDoctorLocation && sameLocation(location, currentDoctorLocation))
+                    onClick={isSameLocation
                         ? undefined 
                         : () => setCurrentDoctorLocation(location)
                     }
                 >
-                    <div className="one-line-text">{location?.hospitalName || `Office ${index + 1}`}</div>
+                    <div className={`one-line-text xs-font med${isSameLocation ? "-dark" : ""}-grey`}>{location?.hospitalName || `Office ${index + 1}`}</div>
                     {location.privateOnly && (
-                        <p className="doctorLocationPrivateLabel p-0 m-0">
+                        <p className="doctor-location-private-label xs-font p-0 m-0">
                             {currentDoctorLocation && sameLocation(location, currentDoctorLocation) ? "private" : "p"}
                         </p>
                     )}
-                </Button>
-            ))}
+                </Button>);
+            })}
         </Row>
     );
 }

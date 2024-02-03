@@ -2,6 +2,7 @@ import { Router } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { createBrowserHistory } from "history";
 import ReactGA from "react-ga4";
+import { Helmet } from "react-helmet";
 
 import AppRouter from "./AppRouter";
 import Header from "./components/utils/Header";

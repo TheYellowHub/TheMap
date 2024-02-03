@@ -1,5 +1,5 @@
 import { DoctorCategory } from "../../../types/doctors/doctorCategory";
-import Modal from "../../utils/Modal";
+import Modal from "../../utils/ObjectModal";
 import { ModalField } from "../../../utils/fields";
 import { ResponseError } from "../../../hooks/useApiRequest";
 

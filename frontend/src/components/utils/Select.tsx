@@ -4,7 +4,7 @@ import ReactSelect, { components } from "react-select";
 import Icon from "./Icon";
 import { Col, Row } from "react-bootstrap";
 
-export type SelectOption = { value: string; label: string };
+export type SelectOption = { value: string; label: string, disabled?: boolean };
 
 interface SingleSelectProps {
     id?: string;
@@ -92,6 +92,7 @@ export default function Select({
         <ReactSelect
             id={id}
             options={options}
+            isOptionDisabled={(option) => option?.disabled ? true : false}
             value={value}
             placeholder={placeHolder}
             menuIsOpen={dropdownOpen}
@@ -111,6 +112,7 @@ export default function Select({
         <ReactSelect
             id={id}
             options={options}
+            isOptionDisabled={(option) => option?.disabled ? true : false}
             value={value}
             placeholder={placeHolder}
             menuIsOpen={dropdownOpen}

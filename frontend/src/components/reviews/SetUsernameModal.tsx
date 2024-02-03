@@ -10,6 +10,7 @@ import { User } from "@auth0/auth0-react";
 import Button from "../utils/Button";
 import InputFormField from "../utils/form/inputField";
 import useFormValidation from "../../hooks/useFormValidation";
+import UserModal from "../utils/UserModal";
 
 interface SetUsernameModalProps {
     user: User;
@@ -44,7 +45,7 @@ function SetUsernameModal({ user, show, onHide }: SetUsernameModalProps) {
     }, [isUsernameMutationSuccess]);
 
     return (        
-        <Modal show={show} backdrop="static" onHide={onHide} className="user-modal" centered>
+        <UserModal show={show} onHide={onHide}>
             <Modal.Body>
                 <Form className="p-0 m-0" ref={formRef}>
                     <Row><Col className="text-center my-2"><strong>Set a public username</strong></Col></Row>
@@ -97,7 +98,7 @@ function SetUsernameModal({ user, show, onHide }: SetUsernameModalProps) {
                     </Row>
                 </Form>
             </Modal.Body>
-        </Modal>
+        </UserModal>
     );
 }
 

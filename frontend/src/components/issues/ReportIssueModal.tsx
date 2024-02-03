@@ -1,5 +1,5 @@
 import { Col, Row, Modal, Form } from "react-bootstrap";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 import LoadingWrapper from "../utils/LoadingWrapper";
 import { ResponseError } from "../../hooks/useApiRequest";
@@ -11,6 +11,8 @@ import { useIssues } from "../../hooks/doctors/useIssues";
 import { getNewIssue } from "../../types/doctors/issue";
 import DoctorTinyCard from "../doctors/doctors/DoctorTinyCard";
 import { getGuidelinesLink } from "../reviews/SingleReviewForm";
+import UserModal from "../utils/UserModal";
+import { logEvent } from "../../utils/log";
 
 interface ReportIssueModalProps {
     doctor: Doctor;
@@ -36,13 +38,13 @@ export default function ReportIssueModal({ doctor, show, onHide }: ReportIssueMo
     const { reportValidity, isFormValid } = useFormValidation(formRef);
 
     return (        
-        <Modal show={show} backdrop="static" onHide={onHide} className="user-modal modal-white modal-content-h-25vh-plus-300" centered>
+        <UserModal show={show} onHide={onHide} className="modal-white modal-content-h-25vh-plus-300">
             
         {isMutateSuccess 
             ? <>
                 <Modal.Body className="d-flex flex-column justify-content-between align-items-center">
                     <Row></Row>
-                    <Row className="p-0 m-0 w-70 gap-3 text-center">
+                    <Row className="p-0 m-0 w-70-desktop gap-3 text-center">
                         <Col className="m-0 p-0">
                             <div className="pb-3 strong lg-font">Thank you!</div>
                             <br />We appreciate you being a part of TheYellowHub
@@ -76,7 +78,7 @@ export default function ReportIssueModal({ doctor, show, onHide }: ReportIssueMo
                 </Modal.Body>
                 <Modal.Body><Form ref={formRef}>
                         <Row>
-                            <Col className="d-flex justify-content-center my-3">
+                            <Col className="d-flex justify-content-center my-3 px-1 px-md-4">
                                 <Form.Control
                                     as={"textarea"}
                                     value={issueDescription}
@@ -106,6 +108,7 @@ export default function ReportIssueModal({ doctor, show, onHide }: ReportIssueMo
                                     onClick={() => {
                                         reportValidity();
                                         if (isFormValid()) {
+                                            logEvent("Submit an issue", "ReportAnIssue");
                                             mutateItem({...getNewIssue(doctor, userInfo!), description: issueDescription});
                                         }
                                     }}
@@ -125,6 +128,6 @@ export default function ReportIssueModal({ doctor, show, onHide }: ReportIssueMo
                     </Form>
                 </Modal.Body>
             </>}
-        </Modal>
+        </UserModal>
     );
 }

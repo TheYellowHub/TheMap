@@ -92,14 +92,8 @@ export default function DoctorSearchFilters({
         return nameA < nameB ? -1 : nameA > nameB ? 1 : 0;
     };
 
-    const sortOptionsDraft: Map<string, (a: Doctor, b: Doctor) => number> = new Map([
-        [nameSortKey, (a, b) => sortByName(a, b)],
-        [nameSortKey.split("").reverse().join(""), (a, b) => -sortByName(a, b)],
-    ]);
-
-    if (address) {
-        sortOptionsDraft.set(
-            distanceSortKey, 
+    const sortOptions: ReadonlyMap<string, (a: Doctor, b: Doctor) => number> = new Map([
+        [distanceSortKey, 
             (a, b) => {
                 if (addressLocation === undefined) {
                     return 0;
@@ -109,10 +103,10 @@ export default function DoctorSearchFilters({
                     return distanceA < distanceB ? -1 : distanceB < distanceA ? 1 : 0;
                 }
             }
-        );
-    }
-
-    const sortOptions: ReadonlyMap<string, (a: Doctor, b: Doctor) => number> = new Map(sortOptionsDraft);
+        ],
+        [nameSortKey, (a, b) => sortByName(a, b)],
+        [nameSortKey.split("").reverse().join(""), (a, b) => -sortByName(a, b)],
+    ]);
 
     const refilterDoctors = (filterDistance: number | undefined) => {
         
@@ -162,6 +156,12 @@ export default function DoctorSearchFilters({
             refilterDoctors(distance);
         }
     }, [distance]);
+
+    useEffect(() => {
+        if (sortKey === distanceSortKey && addressLocation === undefined) {
+            useCurrenetLocation();
+        }
+    }, [sortKey]);
 
     useEffect(() => {
         if (addressLocation !== undefined) {
@@ -238,8 +238,8 @@ export default function DoctorSearchFilters({
                             isMulti={true}
                         />
                     </Col>
-                    <Tooltip text={"Many providers haven’t disclosed specialties yet"}>
-                        <Col xs={5} lg={3} className="px-0">
+                    <Col xs={5} lg={3} className="px-0">
+                        <Tooltip text={"Many providers haven’t disclosed specialties yet"}>
                             <Select
                                 values={specialities.filter((speciality) => 0 < doctors.filter((doctor) => doctor.specialities.includes(speciality.name)).length).map((speciality: DoctorSpeciality) => speciality.name)}
                                 currentValue={specialitiesFilter}
@@ -252,8 +252,8 @@ export default function DoctorSearchFilters({
                                 }}
                                 isMulti={true}
                             />
-                        </Col>
-                    </Tooltip>
+                        </Tooltip>
+                    </Col>
                     <Col xs={6} lg={3} className="px-0">
                         <Select
                             values={Array.from(listOptions.keys())}

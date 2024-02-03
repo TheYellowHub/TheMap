@@ -4,10 +4,14 @@ app=/app/backend/manage.py
 
 echo "Apply database migrations"
 python $app migrate
-python $app loaddata doctorCategories.json
-python $app loaddata doctorSpecialities.json
-python $app loaddata doctors.json
-python $app loaddata doctorLocations.json
+echo "\nDJANGO_LOAD_DATA: $DJANGO_LOAD_DATA\n"
+if [ "$DJANGO_LOAD_DATA" = "true" ]; then
+    python $app flush --no-input
+    python $app loaddata doctorCategories.json
+    python $app loaddata doctorSpecialities.json
+    python $app loaddata doctors.json
+    python $app loaddata doctorLocations.json
+fi
 
 echo "Collect static files"
 python $app collectstatic --noinput 

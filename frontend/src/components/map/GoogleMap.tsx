@@ -4,6 +4,7 @@ import { Location } from "../../utils/googleMaps/useGoogleMaps";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { locationToStr } from "../../types/doctors/doctor";
 import Loader from "../utils/Loader";
+import config from "../../config.json";
 
 export interface Marker {
     title: string;
@@ -13,7 +14,7 @@ export interface Marker {
     onClick?: () => void;
 }
 
-interface GoogleMapProps {
+interface GoogleMapProps extends React.PropsWithChildren {
     center: Location | undefined;
     currentLocation: Location | undefined;
     markers?: Marker[];
@@ -23,13 +24,14 @@ interface GoogleMapProps {
 
 const emptyMarkersArray: Marker[] = [];
 
-function GoogleMap({ center, currentLocation, markers = emptyMarkersArray as Marker[], getGroupIcon, resetClicks }: GoogleMapProps) {
-    const minimalZoom = 13;
+function GoogleMap({ center, currentLocation, markers = emptyMarkersArray as Marker[], getGroupIcon, resetClicks, children }: GoogleMapProps) {
+    const minimalZoom = 5;    
+    const maximalZoom = 13;
     const mapRef = useRef<google.maps.Map | null>(null);
     const [markersMap, setMarkersMap] = useState(new Map<string, Marker[]>());
     const [currentLocationStr, setCurrentLocationStr] = useState<string | null>();
     const [fitBoundsDone, setFitBoundsDone] = useState(false);
-
+    
     const handleMapLoad = (map: google.maps.Map) => {
         mapRef.current = map;
     };
@@ -65,19 +67,24 @@ function GoogleMap({ center, currentLocation, markers = emptyMarkersArray as Mar
     };
 
     const fitBounds = () => {
-        if (mapRef.current !== null) {
-            const bounds = new window.google.maps.LatLngBounds();
+        if (mapRef.current !== null && !fitBoundsDone) {
             const markersInBounds = markers.filter((marker) => marker.inBounds);
-            markersInBounds.forEach((marker) => bounds.extend(marker.location));
-            if (center !== undefined) {
-                bounds.extend(center);
+            if (config.app.minimumDoctorsInResults <= markersInBounds.length) {
+                const bounds = new window.google.maps.LatLngBounds();
+                markersInBounds.forEach((marker) => bounds.extend(marker.location));
+                if (center !== undefined) {
+                    bounds.extend(center);
+                }
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                const originalMinZoom = (mapRef.current as any).minZoom;
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                const originalMaxZoom = (mapRef.current as any).maxZoom;
+                mapRef.current.setOptions({minZoom: minimalZoom, maxZoom: maximalZoom});
+                mapRef.current.fitBounds(bounds);
+                mapRef.current.setOptions({minZoom: originalMinZoom, maxZoom: originalMaxZoom});
+            } else {
+                mapRef.current.setZoom(minimalZoom);
             }
-            
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            const originalMaxZoom = (mapRef.current as any).maxZoom;
-            mapRef.current.setOptions({maxZoom: minimalZoom});
-            mapRef.current.fitBounds(bounds);
-            mapRef.current.setOptions({maxZoom: originalMaxZoom});
             setFitBoundsDone(true);
         }
     };
@@ -98,10 +105,19 @@ function GoogleMap({ center, currentLocation, markers = emptyMarkersArray as Mar
     }, [currentLocation]);
 
     useEffect(() => {
-        if (!fitBoundsDone) {
-            fitBounds();
+        fitBounds();
+    }, [markers, center, mapRef.current, fitBoundsDone]);
+
+    useEffect(() => {
+        if (mapRef.current) {
+            google.maps.event.addListenerOnce(mapRef.current, "bounds_changed", function() { 
+                const currentZoom = mapRef.current?.getZoom();
+                if (currentZoom === undefined || maximalZoom < currentZoom) { 
+                    mapRef.current?.setZoom(maximalZoom); 
+                } 
+            });
         }
-    }, [markers, mapRef, fitBoundsDone]);
+    }, [mapRef.current]);
 
     return (
         <div id="map" key={`${center && locationToStr(center)}`}>
@@ -152,7 +168,7 @@ function GoogleMap({ center, currentLocation, markers = emptyMarkersArray as Mar
                                 {currentLocationStr === locationStr && <InfoWindowF position={location}>
                                     <>
                                         {markers?.map((marker, index) =>  (
-                                            <div key={`${locationToStr(location)}-link-${index}`}>
+                                            <div key={`${locationToStr(location)}-link-${index}`} className="d-flex align-items-center">
                                                 <a onClick={() => {
                                                     if (marker.onClick !== undefined) {
                                                         marker.onClick();
@@ -168,6 +184,7 @@ function GoogleMap({ center, currentLocation, markers = emptyMarkersArray as Mar
                         </Fragment>);
                     }
                 })}
+                {children}
             </GoogleMapBase>
         </div>
     );

@@ -19,7 +19,7 @@ import StarRating from "../utils/StarRating";
 import InputFormField from "../utils/form/inputField";
 import SingleSelectFormField from "../utils/form/singleSelectField";
 import BooleanFormField from "../utils/form/booleanField";
-import { BooleanField, TextField } from "../../utils/fields";
+import { BooleanField, NumberField, TextField } from "../../utils/fields";
 import { MonthName, monthNames } from "../../types/utils/dateTime";
 import { ID } from "../../types/utils/id";
 import useUser from "../../hooks/auth/useUsers";
@@ -28,6 +28,7 @@ import SetUsernameModal from "./SetUsernameModal";
 import useFormValidation from "../../hooks/useFormValidation";
 import Tooltip from "../utils/Tooltip";
 import { range } from "../../utils/utils";
+import { logEvent } from "../../utils/log";
 
 interface SingleReviewFormProps {
     originalReview: DoctorReview;
@@ -60,11 +61,15 @@ function SingleReviewForm({ originalReview, onCancel, onSuccess, setId }: Single
     const formRef = useRef<HTMLFormElement>(null);
     const { reportValidity, isFormValid } = useFormValidation(formRef);
 
-    const submitReview = (review: DoctorReview, newReviewStatue: ReviewStatus, newEditStatus: EditStatus) => {
+    const submitReview = (review: DoctorReview, newReviewStatus: ReviewStatus, newEditStatus: EditStatus) => {
         reportValidity();
 
         if (isFormValid() === true) {
-            const newReview = { ...review, status: newReviewStatue };
+            const from = review.id ? review.status : "NEW";
+            const to = newReviewStatus;
+            logEvent(`Submitting review - ${from} -> ${to}`, "Reviews");
+
+            const newReview = { ...review, status: newReviewStatus };
             setReview(newReview);
             mutateItem(newReview);
             setEditStatus(newEditStatus);
@@ -96,7 +101,8 @@ function SingleReviewForm({ originalReview, onCancel, onSuccess, setId }: Single
                     || (currentUsernameOptions.length === 1 && currentUsernameOptions[0].value !== userInfo.username!)) {
                 setUsernameFieldOptions([
                     { value: CURRENT_USERNAME, label: userInfo.username! }, 
-                    ...usernameFieldOptions.filter((option) => option.value !== CURRENT_USERNAME)
+                    { value: NEW_USERNAME, label: "Edit public username" },
+                    { value: ANONYMOUS, label: "Anonymous" },
                 ]);
                 setChangingUsername(false);
 
@@ -135,39 +141,6 @@ function SingleReviewForm({ originalReview, onCancel, onSuccess, setId }: Single
                 field={{
                     type: "singleSelect",
                     label: "",
-                    getter: (review: DoctorReview) => getOperationMonthName(review)?.toString(),
-                    setter: disabled ? undefined : (review: DoctorReview, newValue: string | undefined) => {
-                        let year = getOperationYear(review);
-                        if (year === undefined && newValue !== undefined) {
-                            year = currentYear;
-                        } else if (year !== undefined && newValue === undefined) {
-                            year = undefined;
-                        }
-                        return setOperationMonthAndYear(review, newValue as MonthName, year);
-                    },
-                    options: monthNames
-                        .filter((month) =>
-                            getOperationYear(review) === undefined
-                                ? false
-                                : getOperationYear(review) === currentYear
-                                ? review.pastOperation
-                                    ? monthNames.indexOf(month) <= monthNames.indexOf(currentMonthName)
-                                    : monthNames.indexOf(currentMonthName) <= monthNames.indexOf(month)
-                                : true
-                        )
-                        .map((month) => {
-                            return { value: month, label: month };
-                        }),
-                }}
-                object={review}
-                onChange={setReview}
-                className="d-inline-block"
-                allowEmptySelection={review.futureOperation}
-            />
-            <SingleSelectFormField<DoctorReview>
-                field={{
-                    type: "singleSelect",
-                    label: "",
                     getter: (review: DoctorReview) => getOperationYear(review)?.toString(),
                     setter: disabled ? undefined : (review: DoctorReview, newValue: string | undefined) => {
                         let month = getOperationMonthName(review);
@@ -180,6 +153,7 @@ function SingleReviewForm({ originalReview, onCancel, onSuccess, setId }: Single
                     },
                     options: years
                         .filter((year) => (review.pastOperation ? year <= currentYear : currentYear <= year))
+                        .sort((a, b) => review.pastOperation ? b - a : a - b)
                         .map((year) => {
                             return { value: year.toString(), label: year.toString() };
                         }),
@@ -188,6 +162,41 @@ function SingleReviewForm({ originalReview, onCancel, onSuccess, setId }: Single
                 onChange={setReview}
                 className="d-inline-block"
                 allowEmptySelection={review.futureOperation}
+            />
+            <SingleSelectFormField<DoctorReview>
+                field={{
+                    type: "singleSelect",
+                    label: "",
+                    getter: (review: DoctorReview) => getOperationMonthName(review)?.toString(),
+                    setter: disabled ? undefined : (review: DoctorReview, newValue: string | undefined) => {
+                        let year = getOperationYear(review);
+                        if (year === undefined && newValue !== undefined) {
+                            year = currentYear;
+                        } else if (year !== undefined && newValue === undefined) {
+                            year = undefined;
+                        }
+                        return setOperationMonthAndYear(review, newValue as MonthName, year);
+                    },
+                    options: monthNames.map((month) => {
+                        return { 
+                            value: month, 
+                            label: month,
+                            disabled: (
+                                getOperationYear(review) === undefined
+                                ? true
+                                : getOperationYear(review) === currentYear
+                                    ? review.futureOperation
+                                        ? monthNames.indexOf(month) <= monthNames.indexOf(currentMonthName)
+                                        : monthNames.indexOf(currentMonthName) <= monthNames.indexOf(month)
+                                    : false
+                            ) 
+                        };
+                    }),
+                }}
+                object={review}
+                onChange={setReview}
+                className="d-inline-block"
+                allowEmptySelection={false}
             />
         </>
     );
@@ -250,17 +259,21 @@ function SingleReviewForm({ originalReview, onCancel, onSuccess, setId }: Single
                             }}
                             object={review}
                             onChange={setReview}
-                            className="select-no-border h-3"
+                            className="select-no-border h-2"
                         />
                     </Col>
                     <Col className="m-0 p-0 d-flex justify-content-end">
-                        {
-                            <StarRating
-                                rating={review.rating || 0}
-                                setRating={disabled ? undefined : (newRating) => setReview({ ...review, rating: newRating })}
-                                color={true}
-                            />
-                        }
+                        <InputFormField<DoctorReview>
+                            field={reviewFieldsMap.get("rating") as NumberField<DoctorReview>}
+                            object={review}
+                            onChange={setReview}
+                            className="dummy-input"
+                        />
+                        <StarRating
+                            rating={review.rating || 0}
+                            setRating={disabled ? undefined : (newRating) => setReview({ ...review, rating: newRating })}
+                            color={true}
+                        />
                     </Col>
                 </Form.Group>
                 <Form.Group as={Row} className="p-0 m-0 pb-2">
@@ -272,7 +285,7 @@ function SingleReviewForm({ originalReview, onCancel, onSuccess, setId }: Single
                         className="textarea"
                     />
                 </Form.Group>
-                <Form.Group as={Row} className="p-0 m-0 pb-2 d-flex flex-row align-items-center ">
+                <Form.Group as={Row} className="p-0 m-0 pb-2 d-flex flex-row align-items-center row-gap-2">
                     <Col className="px-0 py-1 m-0 pe-2 h-2"  xs={11} xl={"auto"}>
                         <BooleanFormField<DoctorReview>
                             field={reviewFieldsMap.get("pastOperation") as BooleanField<DoctorReview>}
@@ -293,35 +306,35 @@ function SingleReviewForm({ originalReview, onCancel, onSuccess, setId }: Single
                     </Col>
                     <Col className="p-0 m-0 d-flex gap-2 h-2">{review.pastOperation && dateFields}</Col>
                 </Form.Group>
-                {!review.pastOperation && (
-                    <Form.Group as={Row} className="p-0 m-0 pb-1 d-flex flex-row align-items-center">
-                        <Col className="px-0 py-1 m-0 pe-2" xs={11} xxl={"auto"}>
-                            <BooleanFormField<DoctorReview>
-                                field={reviewFieldsMap.get("futureOperation") as BooleanField<DoctorReview>}
-                                withLabel={true}
-                                label={`I have surgery scheduled with this doctor${
-                                    review.futureOperation ? ", in " : ""
-                                }`}
-                                object={review}
-                                key={`surgery1-${review.pastOperation}-${review.futureOperation}`}
-                                onChange={(newReview: DoctorReview) => {
-                                    newReview = setOperationMonthAndYear(newReview, currentMonthName, currentYear);
-                                    newReview = {
-                                        ...newReview,
-                                        pastOperation: newReview.futureOperation ? false : newReview.pastOperation,
-                                    };
-                                    setReview(newReview);
-                                }}
-                                className="h-2"
-                            />
-                        </Col>
-                        <Col className="p-0 m-0 d-flex gap-2">{review.futureOperation && dateFields}</Col>
-                    </Form.Group>
-                )}
+                <Form.Group as={Row} className="p-0 m-0 pb-1 d-flex flex-row align-items-center row-gap-2">
+                    <Col className="px-0 py-1 m-0 pe-2 h-3" xs={11} xxl={"auto"}>
+                        {!review.pastOperation && (
+                        <BooleanFormField<DoctorReview>
+                            field={reviewFieldsMap.get("futureOperation") as BooleanField<DoctorReview>}
+                            withLabel={true}
+                            label={`I have surgery scheduled with this doctor${
+                                review.futureOperation ? ", in " : ""
+                            }`}
+                            object={review}
+                            key={`surgery1-${review.pastOperation}-${review.futureOperation}`}
+                            onChange={(newReview: DoctorReview) => {
+                                newReview = setOperationMonthAndYear(newReview, currentMonthName, currentYear);
+                                newReview = {
+                                    ...newReview,
+                                    pastOperation: newReview.futureOperation ? false : newReview.pastOperation,
+                                };
+                                setReview(newReview);
+                            }}
+                            className="h-2"
+                        />
+                        )}
+                    </Col>
+                    <Col className="p-0 m-0 d-flex gap-2">{review.futureOperation && dateFields}</Col>
+                </Form.Group>
             </fieldset>
             <Form.Group as={Row} className="p-0 m-0 pb-3 pt-4 w-100 gap-3">
-                <Tooltip text="Cancel">
-                    <Col className="m-0 p-0 flex-grow-0">
+                <Col className="m-0 p-0 flex-grow-0">
+                    <Tooltip text="Cancel">
                         <Button
                             label=""
                             type="button"
@@ -331,8 +344,8 @@ function SingleReviewForm({ originalReview, onCancel, onSuccess, setId }: Single
                         >
                             <Icon icon="fa-close" padding={false} />
                         </Button>
-                    </Col>
-                </Tooltip>
+                    </Tooltip>
+                </Col>
                 <Col></Col>
                 <Col className="m-0 p-0 d-flex flex-grow-0 justify-content-center">
                     <Button

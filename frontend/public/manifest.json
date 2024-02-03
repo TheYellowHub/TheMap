@@ -1,6 +1,6 @@
 {
-  "short_name": "The Yellow Hub Map",
-  "name": "The Yellow Hub Map",
+  "short_name": "TheYellowHub",
+  "name": "TheYellowHub | Endometriosis Providers Map",
   "icons": [
     {
       "src": "images/ribbon.svg",
@@ -18,8 +18,8 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": ".",
+  // "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
+  "theme_color": "#fabc05",
   "background_color": "#ffffff"
 }
