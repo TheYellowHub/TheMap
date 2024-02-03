@@ -1,7 +1,7 @@
+import { Fragment, useEffect, useRef, useState } from "react";
 import { GoogleMap as GoogleMapBase, MarkerF, InfoWindowF } from "@react-google-maps/api";
 
 import { Location } from "../../utils/googleMaps/useGoogleMaps";
-import { Fragment, useEffect, useRef, useState } from "react";
 import { locationToStr } from "../../types/doctors/doctor";
 import Loader from "../utils/Loader";
 import config from "../../config.json";

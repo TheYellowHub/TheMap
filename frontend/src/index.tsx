@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Profiler } from "react";
 import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
 import "./bootstrap.min.css";
@@ -10,11 +10,18 @@ import App from "./App";
 import AuthProvider from "./auth/AuthProvider";
 import "./index.css";
 
+// eslint-disable-next-line
+export function profilerOnRender(id: any, phase: any, actualDuration: any, baseDuration: any, startTime: any, commitTime: any) {
+    console.log(`${id} ${phase}: ${Math.floor(actualDuration)}ms`);
+}
+
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
     <React.StrictMode>
         <AuthProvider>
-            <App />
+            <Profiler id="App" onRender={profilerOnRender}>
+                <App />
+            </Profiler>
         </AuthProvider>
     </React.StrictMode>
 );
