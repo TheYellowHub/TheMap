@@ -1,15 +1,15 @@
-from decimal import Decimal
 from django.db import models
 from model_utils.fields import StatusField, MonitorField
 from model_utils import Choices
 from phonenumber_field.modelfields import PhoneNumberField
 
+from .abstractCacheRelatedClass import AbstractCacheRelatedClass
 from .doctorCategory import DoctorCategory
 from .doctorSpeciality import DoctorSpeciality
 from .review import DoctorReview
 
 
-class Doctor(models.Model):
+class Doctor(AbstractCacheRelatedClass):
     """
     A doctor info.
     """
@@ -58,7 +58,7 @@ class Doctor(models.Model):
     def avg_rating(self) -> float | None:
         ratings = [review.rating for review in self.reviews if review.rating]
         return (float(sum(ratings)) / len(ratings)) if ratings else None
-
+    
 
 class DoctorLocation(models.Model):
     """

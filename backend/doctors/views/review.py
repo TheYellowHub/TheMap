@@ -5,6 +5,8 @@ Doctor review model related APIs
 from rest_framework import generics, permissions
 from rest_framework.decorators import permission_classes
 from django_filters import MultipleChoiceFilter, rest_framework as filters
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 import logging
 
 from users.auth import IsAdmin
@@ -49,6 +51,10 @@ class DoctorReviewListView(generics.ListAPIView):
     queryset = DoctorReview.objects.all()
     serializer_class = DoctorReviewReadSerializer
     filterset_class = DoctorReviewFilter
+
+    @method_decorator(cache_page(timeout=None))
+    def get(self, *args, **kwargs):
+        return super().get(*args, **kwargs)
 
 
 PERMISSION_CLASSES = [

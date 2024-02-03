@@ -4,6 +4,8 @@ Doctor model related APIs
 
 from rest_framework import generics
 from django_filters import MultipleChoiceFilter, rest_framework as filters
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 import logging
 
 from users.auth import ADMIN_SCOPE, requires_scope
@@ -46,6 +48,10 @@ class DoctorListView(generics.ListAPIView):
     queryset = Doctor.objects.all()
     serializer_class = DoctorSerializer
     filterset_class = DoctorFilter
+
+    @method_decorator(cache_page(timeout=None))
+    def get(self, *args, **kwargs):
+        return super().get(*args, **kwargs)
 
 
 @requires_scope(ADMIN_SCOPE)
