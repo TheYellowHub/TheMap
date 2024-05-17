@@ -137,36 +137,6 @@ export default function Table<T>({ columns, columnsFilters, actionButton, data }
                             </tr>
                         ))}
                     </tbody>
-                    <tfoot>
-                        {table.getFooterGroups().map((footerGroup) => (
-                            <tr key={footerGroup.id}>
-                                {footerGroup.headers.map((header) => (
-                                    <th key={header.id}>
-                                        {header.isPlaceholder ? null : (
-                                            <div
-                                                {...{
-                                                    className: header.column.getCanSort()
-                                                        ? "cursor-pointer select-none"
-                                                        : "",
-                                                    onClick: header.column.getToggleSortingHandler(),
-                                                }}
-                                            >
-                                                {flexRender(header.column.columnDef.header, header.getContext())}
-                                                <Icon
-                                                    icon={
-                                                        {
-                                                            asc: "fa-arrow-up",
-                                                            desc: "fa-arrow-down",
-                                                        }[header.column.getIsSorted() as string] ?? null
-                                                    }
-                                                />
-                                            </div>
-                                        )}
-                                    </th>
-                                ))}
-                            </tr>
-                        ))}
-                    </tfoot>
                 </ReactTable>
             </Row>
 
