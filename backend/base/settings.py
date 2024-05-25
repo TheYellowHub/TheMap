@@ -279,3 +279,9 @@ LOGGING = {
         },
     },
 }
+
+
+# Emails & alerts
+ALERTS_RECEIVERS = os.environ.get("ALERTS_RECEIVERS", "").split(",")
+GMAIL_USERNAME = os.environ.get("GMAIL_USERNAME")
+GMAIL_PASSWORD = os.environ.get("GMAIL_PASSWORD")

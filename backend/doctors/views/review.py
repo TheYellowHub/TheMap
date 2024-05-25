@@ -10,6 +10,7 @@ from django.views.decorators.cache import cache_page
 import logging
 
 from users.auth import IsAdmin
+from base.gmail import GmailAlerts
 from ..models.review import DoctorReview
 from ..serializers.review import (
     DoctorReviewCreateSerializer,
@@ -74,7 +75,9 @@ class DoctorReviewCreateView(generics.CreateAPIView):
     http_method_names = ["post"]
 
     def post(self, request, *args, **kwargs):
-        logger.debug(f"Doctor review addition - post request data: {request.data}")
+        subject = "Doctor review addition"
+        logger.debug(f"{subject} - Post request data: {request.data}")
+        GmailAlerts.send_admin_alert(subject=subject, body=request.data)
         return super().post(request, *args, **kwargs)
 
 
@@ -90,5 +93,7 @@ class DoctorReviewUpdateView(generics.UpdateAPIView):
     http_method_names = ["patch"]
 
     def patch(self, request, *args, **kwargs):
-        logger.debug(f"Doctor review update - patch request data: {request.data}")
+        subject = "Doctor review update"
+        logger.debug(f"{subject} - Patch request data: {request.data}")
+        GmailAlerts.send_admin_alert(subject=subject, body=request.data)
         return super().patch(request, *args, **kwargs)
