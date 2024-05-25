@@ -85,13 +85,18 @@ function MapScreen({ onlyMyList = false }: MapScreenProps) {
     };
 
     const getCountryCenter = () => {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        axios.get(`https://ipinfo.io/json?token=${process.env.REACT_APP_IPINFO_TOKEN}`).then(async (result: any) => {
-            const country = await getLocation(result.data.region);
+        const getCountryCenterImpl = async (regionName: string) => {
+            const country = await getLocation(regionName);
             const countryLoction = {lat: country!.lat, lng: country!.lng};
             setCountryLocation(countryLoction);
             setCenter(countryLoction);
-        }).catch(error => logError(error));
+        };
+
+        axios.get(`https://ipinfo.io/json?token=${process.env.REACT_APP_IPINFO_TOKEN}`)
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            .then(async (result: any) => getCountryCenterImpl(result.data.region))
+            .catch(() => getCountryCenterImpl(process.env.REACT_APP_DEFAULT_LOCATION as string))
+            .catch(error => logError(error));
     };
 
     const isMapBelowRsults = () => {

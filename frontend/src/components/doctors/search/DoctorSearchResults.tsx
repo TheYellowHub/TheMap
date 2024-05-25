@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useMemo, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Col, Container, Row } from "react-bootstrap";
 
@@ -8,6 +8,7 @@ import Pagination from "../../utils/Pagination";
 import { DistanceUnit } from "../../utils/DistanceUnit";
 import { Location } from "../../../utils/googleMaps/useGoogleMaps";
 import DoctorBigCard from "../doctors/DoctorBigCard";
+
 
 interface DoctorSearchResultsProps {
     doctors: Doctor[];
@@ -46,8 +47,34 @@ export default function DoctorSearchResuls({
         width: window.innerWidth,
         height: window.innerHeight,
     });
-
+    
     const doctorCardsContainerId = "doctorSmallCards";
+
+    const doctorsSmallCards = useMemo(() => doctorsInPage.map((doctor: Doctor) => (
+        <DoctorSmallCard
+            key={doctor.id}
+            doctor={doctor}
+            locationForDistanceCalculation={locationForDistanceCalculation}
+            onClick={() => {
+                setPageYOffset(onlyDivScroll ? document.getElementById(doctorCardsContainerId)?.scrollTop : window.scrollY);
+                navigate(getDoctorUrl(doctor, onlyMyList));
+            }}
+        />
+    )), [doctorsInPage, locationForDistanceCalculation]);
+
+    const currentDoctorBigCard = currentDoctor && (
+        <DoctorBigCard
+            doctor={currentDoctor}
+            currentDoctorLocation={currentDoctorLocation}
+            setCurrentDoctorLocation={setCurrentDoctorLocation}
+            locationForDistanceCalculation={locationForDistanceCalculation}
+            distanceUnit={distanceUnit}
+            onClose={() => {
+                setCurrentDoctor(null);
+                setCurrentDoctorLocation(null);
+            }}
+        />
+    );
 
     const readjustPageSize = () => {
         const cardsDiv = document.getElementById(doctorCardsContainerId);
@@ -117,31 +144,7 @@ export default function DoctorSearchResuls({
                     id={doctorCardsContainerId}
                     className={`d-flex flex-wrap row-gap-4 column-gap-10p px-0 mx-0 mx-0 ${onlyDivScroll ? "overflow-y-auto-hover" : ""}`}
                 >
-                    {currentDoctor === null ? (
-                        doctorsInPage.map((doctor: Doctor) => (
-                            <DoctorSmallCard
-                                key={doctor.id}
-                                doctor={doctor}
-                                locationForDistanceCalculation={locationForDistanceCalculation}
-                                onClick={() => {
-                                    setPageYOffset(onlyDivScroll ? document.getElementById(doctorCardsContainerId)?.scrollTop : window.scrollY);
-                                    navigate(getDoctorUrl(doctor, onlyMyList));
-                                }}
-                            />
-                        ))
-                    ) : (
-                        <DoctorBigCard
-                            doctor={currentDoctor}
-                            currentDoctorLocation={currentDoctorLocation}
-                            setCurrentDoctorLocation={setCurrentDoctorLocation}
-                            locationForDistanceCalculation={locationForDistanceCalculation}
-                            distanceUnit={distanceUnit}
-                            onClose={() => {
-                                setCurrentDoctor(null);
-                                setCurrentDoctorLocation(null);
-                            }}
-                        />
-                    )}
+                    {currentDoctor === null ? doctorsSmallCards : currentDoctorBigCard}
                 </Container>
             </Row>
 

@@ -1,5 +1,6 @@
 import { ReactElement, createContext, useEffect, useMemo, useState } from "react";
 import { Libraries, LoadScriptNext } from "@react-google-maps/api";
+import makeAsyncScriptLoader from "react-async-script";
 
 import { logError } from "../log";
 import Loader from "../../components/utils/Loader";
@@ -54,4 +55,6 @@ function GoogleMapsLoader({ children }: GoogleMapsLoaderProps) {
     );
 }
 
-export default GoogleMapsLoader;
+const URL = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GMAPS_API_KEY}`;
+const AsyncScriptComponent = makeAsyncScriptLoader(URL)(GoogleMapsLoader);
+export default AsyncScriptComponent;

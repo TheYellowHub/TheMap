@@ -69,7 +69,7 @@ function DoctorsTable({ doctors, setCurrentDoctor, actionButton }: DoctorsTableP
                     ))}
                 </select>
             ),
-            initialValue: "PENDING_APPROVAL",
+            initialValue: "APPROVED",
         },
         {
             id: "addedAt",

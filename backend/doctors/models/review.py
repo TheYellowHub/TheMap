@@ -4,9 +4,10 @@ from model_utils.fields import MonitorField
 from model_utils import Choices
 
 from .abstractUserRelatedClass import AbstractUserRelatedClass
+from .abstractCacheRelatedClass import AbstractCacheRelatedClass
 
 
-class DoctorReview(AbstractUserRelatedClass):
+class DoctorReview(AbstractUserRelatedClass, AbstractCacheRelatedClass):
     """
     A doctor review.
     """

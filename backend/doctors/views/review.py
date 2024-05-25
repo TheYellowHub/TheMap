@@ -5,9 +5,12 @@ Doctor review model related APIs
 from rest_framework import generics, permissions
 from rest_framework.decorators import permission_classes
 from django_filters import MultipleChoiceFilter, rest_framework as filters
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 import logging
 
 from users.auth import IsAdmin
+from base.gmail import GmailAlerts
 from ..models.review import DoctorReview
 from ..serializers.review import (
     DoctorReviewCreateSerializer,
@@ -50,6 +53,10 @@ class DoctorReviewListView(generics.ListAPIView):
     serializer_class = DoctorReviewReadSerializer
     filterset_class = DoctorReviewFilter
 
+    @method_decorator(cache_page(timeout=None))
+    def get(self, *args, **kwargs):
+        return super().get(*args, **kwargs)
+
 
 PERMISSION_CLASSES = [
     permissions.IsAuthenticated & (IsAdmin | (DoctorReview.getPermissionClasses().IsCurrentUser & DoctorReview.getPermissionClasses().IsStatusAllowed))
@@ -68,7 +75,9 @@ class DoctorReviewCreateView(generics.CreateAPIView):
     http_method_names = ["post"]
 
     def post(self, request, *args, **kwargs):
-        logger.debug(f"Doctor review addition - post request data: {request.data}")
+        subject = "Doctor review addition"
+        logger.debug(f"{subject} - Post request data: {request.data}")
+        GmailAlerts.send_admin_alert(subject=subject, body=request.data)
         return super().post(request, *args, **kwargs)
 
 
@@ -84,5 +93,7 @@ class DoctorReviewUpdateView(generics.UpdateAPIView):
     http_method_names = ["patch"]
 
     def patch(self, request, *args, **kwargs):
-        logger.debug(f"Doctor review update - patch request data: {request.data}")
+        subject = "Doctor review update"
+        logger.debug(f"{subject} - Patch request data: {request.data}")
+        GmailAlerts.send_admin_alert(subject=subject, body=request.data)
         return super().patch(request, *args, **kwargs)
