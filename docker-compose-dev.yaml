@@ -11,7 +11,7 @@ services:
       context: .
       dockerfile: ./docker/backend/Dockerfile
     env_file:
-      - ./docker/backend/envkey.env
+      - ./docker/backend/doppler.env
     entrypoint: ./backend-entrypoint.sh
     volumes:
       - static_volume:/app/django_static

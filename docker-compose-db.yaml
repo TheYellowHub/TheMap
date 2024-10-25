@@ -6,8 +6,6 @@ services:
     image: postgres
     environment:
       POSTGRES_PASSWORD: postgres
-    env_file:
-      - ./docker/backend/envkey.env
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 10s

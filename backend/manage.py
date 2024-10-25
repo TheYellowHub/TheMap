@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 """Django's command-line utility for administrative tasks."""
-import envkey
 import os
 import sys
+
+from base.secrets import import_secrets
 
 
 def main():
@@ -20,4 +21,5 @@ def main():
 
 
 if __name__ == '__main__':
+    import_secrets()
     main()

@@ -1,22 +1,23 @@
 #!/bin/bash
 set -e
 app=/app/backend/manage.py
+python_cli=python
 
 echo "Apply database migrations"
 python $app migrate
 echo "\nDJANGO_LOAD_DATA: $DJANGO_LOAD_DATA\n"
 if [ "$DJANGO_LOAD_DATA" = "true" ]; then
-    python $app flush --no-input
-    python $app loaddata doctorCategories.json
-    python $app loaddata doctorSpecialities.json
-    python $app loaddata doctors.json
-    python $app loaddata doctorLocations.json
+    $python_cli $app flush --no-input
+    $python_cli $app loaddata doctorCategories.json
+    $python_cli $app loaddata doctorSpecialities.json
+    $python_cli $app loaddata doctors.json
+    $python_cli $app loaddata doctorLocations.json
 fi
 
 echo "Collect static files"
-python $app collectstatic --noinput 
+$python_cli $app collectstatic --noinput 
 echo "Create a superuser"
-python $app initadmin
+$python_cli $app initadmin
 
 # TODO
 # echo "Run tests"
