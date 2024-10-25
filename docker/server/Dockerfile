@@ -2,25 +2,26 @@
 
 # Build - react static files
 FROM node:20-alpine as frontend
-ARG ENVKEY
-ARG ENVKEY_FILE=envkey.env
+
+ARG DOPPLER_TOKEN
+ARG DOPPLER_FILE=doppler.env
+
 WORKDIR /app/frontend
-# Install EnvKeySource
-ARG ENVKEYSOURCE_INSTALLATION=envkey-source_2.4.3_linux_amd64.tar.gz
-COPY ./envkey-source/$ENVKEYSOURCE_INSTALLATION ./
-RUN tar zxf $ENVKEYSOURCE_INSTALLATION 1> /dev/null
-RUN mv envkey-source /usr/local/bin/
+## Install Doppler
+RUN wget -q -t3 'https://packages.doppler.com/public/cli/rsa.8004D9FF50437357.key' -O /etc/apk/keys/cli@doppler-8004D9FF50437357.rsa.pub \
+    && echo 'https://packages.doppler.com/public/cli/alpine/any-version/main' | tee -a /etc/apk/repositories \
+    && apk add doppler
 # Install dependencies
 COPY ./frontend/package.json ./
 COPY ./frontend/package-lock.json ./
 RUN npm ci --legacy-peer-deps --fetch-timeout=600000
 # Build app
 COPY ./frontend/ ./docker/server/*.env ./  
-RUN if [[ -z "$ENVKEY" ]]; \
-    then echo "ENVKEY argument wasn't provided - going to use the local $ENVKEY_FILE file"; \
-    else echo "ENVKEY argument was provided - going to ignore the local $ENVKEY_FILE file" && echo "ENVKEY=$ENVKEY" > $ENVKEY_FILE && cat $ENVKEY_FILE; \
-    fi
-RUN envkey-source --env-file $ENVKEY_FILE -- npm run build
+RUN if [[ -z "$DOPPLER_TOKEN" ]]; \
+    then echo "DOPPLER_TOKEN argument wasn't provided - going to use the local $DOPPLER_FILE file" && export $(cat $DOPPLER_FILE | xargs); \
+    else echo "DOPPLER_TOKEN argument was provided - going to ignore the local $DOPPLER_FILE file and use the existing enviroment variables"; \
+    fi && \ 
+    doppler run --project $DOPPLER_PROJECT --config $DOPPLER_CONFIG --token $DOPPLER_TOKEN -- npm run build
 
 # Deploy Django + the above
 FROM python:3.11.5 as backend

@@ -29,9 +29,9 @@ jobs:
             - name: Build
               env:
                   IMAGE_TAG: ${{ matrix.IMAGE_TAG }}
-                  BUILD_ARG: ENVKEY=${{ secrets.ENVKEY }}
+                  BUILD_ARGS: --build-arg DOPPLER_PROJECT=${{ secrets.DOPPLER_PROJECT }} --build-arg DOPPLER_CONFIG=${{ secrets.DOPPLER_CONFIG }} --build-arg DOPPLER_TOKEN=${{ secrets.DOPPLER_TOKEN }}
               run: |
-                  docker build . -f ./docker/${{ env.IMAGE_TAG }}/Dockerfile -t ${{ env.IMAGE_TAG }} --build-arg ${{ env.BUILD_ARG }}
+                  docker build . -f ./docker/${{ env.IMAGE_TAG }}/Dockerfile -t ${{ env.IMAGE_TAG }} ${{ env.BUILD_ARGS }}
 
             - uses: aws-actions/setup-sam@v2
               with:

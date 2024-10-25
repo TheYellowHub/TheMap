@@ -10,7 +10,7 @@ services:
       context: .
       dockerfile: ./docker/server/Dockerfile
     env_file:
-      - ./docker/server/envkey.env
+      - ./docker/server/doppler.env
       - ./docker/server/local_env.env
     volumes:
       - static_volume:/app/static
