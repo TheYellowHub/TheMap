@@ -3,6 +3,8 @@
 # Build - react static files
 FROM node:20-alpine as frontend
 
+ARG DOPPLER_PROJECT
+ARG DOPPLER_CONFIG
 ARG DOPPLER_TOKEN
 ARG DOPPLER_FILE=doppler.env
 
