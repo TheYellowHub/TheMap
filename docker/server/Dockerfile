@@ -19,7 +19,7 @@ RUN npm ci --legacy-peer-deps --fetch-timeout=600000
 COPY ./frontend/ ./docker/server/*.env ./  
 RUN if [[ -z "$DOPPLER_TOKEN" ]]; \
     then echo "DOPPLER_TOKEN argument wasn't provided - going to use the local $DOPPLER_FILE file" && export $(cat $DOPPLER_FILE | xargs); \
-    else echo "DOPPLER_TOKEN argument was provided - going to ignore the local $DOPPLER_FILE file and use the existing enviroment variables"; \
+    else echo "DOPPLER_TOKEN argument was provided - going to ignore the local $DOPPLER_FILE file and use the existing enviroment variables (DOPPLER_PROJECT=$DOPPLER_PROJECT, DOPPLER_CONFIG=$DOPPLER_CONFIG)"; \
     fi && \ 
     doppler run --project $DOPPLER_PROJECT --config $DOPPLER_CONFIG --token $DOPPLER_TOKEN -- npm run build
 
