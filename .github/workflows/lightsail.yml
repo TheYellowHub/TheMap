@@ -1,5 +1,4 @@
-# This workflow will build and push a new container image to AWS Lightsail Container,
-# when there is a push to the "main" branch.
+# This workflow builds and pushes a new container image to AWS Lightsail
 
 name: Deploy to AWS Lightsail Container
 
