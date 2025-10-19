@@ -48,6 +48,9 @@ class Doctor(AbstractCacheRelatedClass):
 
     @property
     def reviews(self) -> list[DoctorReview]:
+        # Use prefetched reviews if available, otherwise fallback to database query
+        if hasattr(self, '_prefetched_objects_cache') and 'doctorreview_set' in self._prefetched_objects_cache:
+            return [review for review in self.doctorreview_set.all() if review.status == "APPROVED"]
         return list(DoctorReview.objects.filter(doctor=self, status="APPROVED"))
 
     @property
