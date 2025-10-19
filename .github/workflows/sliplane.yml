@@ -4,7 +4,7 @@ name: Deploy to Slipplane
 
 on:
     push:
-        branches: ["sliplane"]
+        branches: ["main"]
 
 env:
     IMAGE_TAG_PREFIX: ${{ vars.AWS_LIGHTSAIL_SERVICE }}
