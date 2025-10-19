@@ -16,6 +16,18 @@ from ..serializers.doctor import DoctorSerializer
 logger = logging.getLogger(__name__)
 
 
+class DoctorQuerysetMixin:
+    def get_queryset(self):
+        return Doctor.objects.select_related(
+            'category',
+            'added_by'
+        ).prefetch_related(
+            'specialities',
+            'doctorlocation_set',
+            'doctorreview_set'
+        )
+
+
 class DoctorFilter(filters.FilterSet):
     """
     Filter options for DoctorListView
@@ -34,7 +46,7 @@ class DoctorFilter(filters.FilterSet):
         )
 
 
-class DoctorListView(generics.ListAPIView):
+class DoctorListView(DoctorQuerysetMixin, generics.ListAPIView):
     """
     Get list of doctors with thier info, matching the search criteria.
     Usage:
@@ -45,23 +57,21 @@ class DoctorListView(generics.ListAPIView):
         /api/doctors/doctor/list?&status=pending_approval
     """
 
-    queryset = Doctor.objects.all()
     serializer_class = DoctorSerializer
     filterset_class = DoctorFilter
-
+    
     @method_decorator(cache_page(timeout=None))
     def get(self, *args, **kwargs):
         return super().get(*args, **kwargs)
 
 
 @requires_scope(ADMIN_SCOPE)
-class DoctorUpdateView(generics.UpdateAPIView):
+class DoctorUpdateView(DoctorQuerysetMixin, generics.UpdateAPIView):
     """
     Update a doctor basic info.
     Usage: /api/doctors/doctor/<pk>/update
     """
 
-    queryset = Doctor.objects.all()
     serializer_class = DoctorSerializer
 
     def patch(self, request, *args, **kwargs):
@@ -71,11 +81,10 @@ class DoctorUpdateView(generics.UpdateAPIView):
 
 # TODO: change once we would like to allow users to add doctors, but also handle status permissions
 @requires_scope(ADMIN_SCOPE)
-class DoctorCreateView(generics.CreateAPIView):
+class DoctorCreateView(DoctorQuerysetMixin, generics.CreateAPIView):
     """
     Add a doctor.
     Usage: /api/doctors/doctor/create
     """
 
-    queryset = Doctor.objects.all()
     serializer_class = DoctorSerializer
