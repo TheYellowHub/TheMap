@@ -131,11 +131,11 @@ function Header() {
             to: "",
             title: "Specialists Map",
         },
-        {
-            to: "https://www.theyellowhub.org/blog",
-            title: "Blog",
+        ...[{link: "sign-up", label: "Programs"}, {link: "blog", label: "Blog"}, {link: "podcast", label: "Podcast"}].map((link) => ({
+            to: `https://www.theyellowhub.org/${link.link}`,
+            title: link.label,
             newWindow: true,
-        },
+        })),
     ];
 
     const loginLink = {
