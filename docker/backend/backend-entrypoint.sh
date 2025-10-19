@@ -26,7 +26,7 @@ $python_cli $app initadmin
 # coverage html
 
 echo "Starting gunicorn server in production mode"
-gunicorn base.wsgi --bind 0.0.0.0:8000 --workers $((2*$(grep -c ^processor /proc/cpuinfo) + 1)) --worker-class gthread
+gunicorn base.wsgi --bind 0.0.0.0:80 --workers $((2*$(grep -c ^processor /proc/cpuinfo) + 1)) --worker-class gthread
 
 # echo "Starting waitress server in production mode"
 # waitress-serve --port=8000 base.wsgi:application
