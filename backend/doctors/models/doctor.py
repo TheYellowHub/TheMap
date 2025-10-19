@@ -1,7 +1,6 @@
 from django.db import models
 from model_utils.fields import StatusField, MonitorField
 from model_utils import Choices
-from phonenumber_field.modelfields import PhoneNumberField
 
 from .abstractCacheRelatedClass import AbstractCacheRelatedClass
 from .doctorCategory import DoctorCategory
@@ -77,7 +76,7 @@ class DoctorLocation(models.Model):
     short_address = models.CharField(max_length=200, blank=True)
     lat = models.DecimalField(max_digits=22, decimal_places=16, blank=True, null=True)
     lng = models.DecimalField(max_digits=22, decimal_places=16, blank=True, null=True)
-    phone = PhoneNumberField(null=True, blank=True)
+    phone = models.CharField(max_length=20, null=True, blank=True)
     email = models.EmailField(null=True, blank=True)
     website = models.URLField(null=True, blank=True)
     private_only = models.BooleanField(default=False)
