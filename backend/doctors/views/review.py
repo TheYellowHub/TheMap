@@ -22,6 +22,18 @@ from ..serializers.review import (
 logger = logging.getLogger(__name__)
 
 
+class DoctorReviewQuerysetMixin:
+    """
+    Mixin to provide optimized queryset for DoctorReview views
+    """
+    
+    def get_queryset(self):
+        return DoctorReview.objects.select_related(
+            'doctor',
+            'added_by'
+        )
+
+
 class DoctorReviewFilter(filters.FilterSet):
     """
     Filter options for DoctorReviewListView
@@ -39,7 +51,7 @@ class DoctorReviewFilter(filters.FilterSet):
         )
 
 
-class DoctorReviewListView(generics.ListAPIView):
+class DoctorReviewListView(DoctorReviewQuerysetMixin, generics.ListAPIView):
     """
     Get list of doctors with thies basic info, matching the search criteria.
     Usage:
@@ -49,7 +61,6 @@ class DoctorReviewListView(generics.ListAPIView):
         /api/doctors/review/list?&status=pending_approval
     """
 
-    queryset = DoctorReview.objects.all()
     serializer_class = DoctorReviewReadSerializer
     filterset_class = DoctorReviewFilter
 
@@ -64,13 +75,12 @@ PERMISSION_CLASSES = [
 
 
 @permission_classes(PERMISSION_CLASSES)
-class DoctorReviewCreateView(generics.CreateAPIView):
+class DoctorReviewCreateView(DoctorReviewQuerysetMixin, generics.CreateAPIView):
     """
     Add a doctor review.
     Usage: /api/doctors/review/create
     """
 
-    queryset = DoctorReview.objects.all()
     serializer_class = DoctorReviewCreateSerializer
     http_method_names = ["post"]
 
@@ -82,13 +92,12 @@ class DoctorReviewCreateView(generics.CreateAPIView):
 
 
 @permission_classes(PERMISSION_CLASSES)
-class DoctorReviewUpdateView(generics.UpdateAPIView):
+class DoctorReviewUpdateView(DoctorReviewQuerysetMixin, generics.UpdateAPIView):
     """
     Update a doctor review.
     Usage: /api/doctors/review/<pk>/update
     """
 
-    queryset = DoctorReview.objects.all()
     serializer_class = DoctorReviewUpdateSerializer
     http_method_names = ["patch"]
 
