@@ -136,6 +136,7 @@ DATABASES_OPTIONS = {
         "PASSWORD": os.environ.get("POSTGRES_PASSWORD"),
         "HOST": os.environ.get("POSTGRES_HOST"),
         "PORT": 5432,
+        "OPTIONS": eval(os.environ.get("POSTGRES_OPTIONS", "{}")),
     },
 }
 DATABASES = {"default": DATABASES_OPTIONS[os.environ.get("DJANGO_DB", DB_SQLITE)]}
