@@ -4,7 +4,7 @@ name: Deploy to AWS Lightsail Container
 
 on:
     push:
-        branches: ["main"]
+        branches: ["lightsail"]
 
 env:
     IMAGE_TAG_PREFIX: ${{ vars.AWS_LIGHTSAIL_SERVICE }}
