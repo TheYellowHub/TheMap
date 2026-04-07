@@ -35,6 +35,6 @@ gunicorn base.wsgi --bind 0.0.0.0:80 --workers $((2*$(grep -c ^processor /proc/c
 # gunicorn base.wsgi --bind 0.0.0.0:8000 --workers 1 --threads 1 --log-level debug
 
 # echo "Starting development server in DEBUG mode"
-# DJANGO_DEBUG=True ./$app runserver 0.0.0.0:8000
+# DJANGO_DEBUG=True $python_cli $app runserver 0.0.0.0:8000
 
 echo "Exit status: $?"
