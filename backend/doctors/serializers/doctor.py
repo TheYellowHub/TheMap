@@ -43,6 +43,7 @@ class DoctorSerializer(WritableNestedModelSerializer):
         queryset=DoctorSpeciality.objects.all(), 
         slug_field="name",
         allow_null=True,
+        allow_empty=True 
     )
 
     added_by = UserBasicSerializer(many=False, read_only=True)
