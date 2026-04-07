@@ -91,4 +91,6 @@ class DoctorCreateView(DoctorQuerysetMixin, generics.CreateAPIView):
 
     def post(self, request, *args, **kwargs):
         logger.info(f"Doctor update - post request data: {request.data}")
+        if "specialities" not in request.data:
+            request.data["specialities"] = []
         return super().post(request, *args, **kwargs)
