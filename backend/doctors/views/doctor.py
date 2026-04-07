@@ -75,7 +75,7 @@ class DoctorUpdateView(DoctorQuerysetMixin, generics.UpdateAPIView):
     serializer_class = DoctorSerializer
 
     def patch(self, request, *args, **kwargs):
-        logger.debug(f"Doctor update - patch request data: {request.data}")
+        logger.info(f"Doctor update - patch request data: {request.data}")
         return super().patch(request, *args, **kwargs)
 
 
@@ -88,3 +88,7 @@ class DoctorCreateView(DoctorQuerysetMixin, generics.CreateAPIView):
     """
 
     serializer_class = DoctorSerializer
+
+    def post(self, request, *args, **kwargs):
+        logger.info(f"Doctor update - post request data: {request.data}")
+        return super().post(request, *args, **kwargs)
