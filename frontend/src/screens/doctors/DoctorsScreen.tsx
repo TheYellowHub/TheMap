@@ -52,7 +52,7 @@ function DoctorsScreen() {
                         showModal={currentDoctor !== null}
                         onCancel={() => setCurrentDoctor(null)}
                         onSave={(updatedDoctor) => {
-                            const dataToPost = { id: updatedDoctor.id, specialities: currentDoctor.specialities, ...objectsDiff(currentDoctor, updatedDoctor) };
+                            const dataToPost = { id: updatedDoctor.id, ...objectsDiff(currentDoctor, updatedDoctor), specialities: updatedDoctor.specialities };
                             mutateItem(dataToPost);
                         }}
                         isSaving={isMutateLoading}
